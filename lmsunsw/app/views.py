@@ -11,6 +11,7 @@ from app.models import *
 from app.forms import *
 from lmsunsw.settings import DEBUG
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     print "INDEX VIEW"
@@ -38,17 +39,13 @@ def register(request):
     
     return render(request, template, context_instance = RequestContext(request, extra_content))
 
-def login(request):
-    print "LOGIN VIEW"
+@login_required
+def account(request):
+    print "ACCOUNT VIEW"
     assert isinstance(request, HttpRequest)
-    template = 'app/login.html'
-    form = AuthenticationForm()
-    extra_content = {'browserheadline':'Log in', 'form':form}
-
-    if request.method == 'POST':
-        form = AuthenticationForm(request.POST, data=request.POST)
+    template = 'app/account.html'
+    extra_context = {'browserheadline':'Account'}
 
 
-
-    return render(request, template, context_instance = RequestContext(request, extra_content))
+    return render(request, template, context_instance = RequestContext(request, extra_context))
     

@@ -1,0 +1,14 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+LOG IN
+
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_ul }}
+    <input type="hidden" name="next" value="/" />
+    <input type="submit" value="Submit" />
+</form>
+
+{% endblock %}

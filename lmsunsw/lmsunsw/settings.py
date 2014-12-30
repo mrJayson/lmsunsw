@@ -18,16 +18,28 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'sql_server.pyodbc',
-        'NAME': 'lmsunswdb',
-        'USER': 'jason',
-        'PASSWORD': 'E35a844k',
-        'HOST': 'qlfgd09ybu.database.windows.net',
-        'PORT': '1433',
+if DEBUG:
+    DATABASES = {
+        'default':{
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': path.join(PROJECT_ROOT, 'db.sqlite3'),
+            'USER': '',
+            'PASSWORD': '',
+            'HOST': '',
+            'PORT': '',
+        }    
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'sql_server.pyodbc',
+            'NAME': 'lmsunswdb',
+            'USER': 'jason',
+            'PASSWORD': 'E35a844k',
+            'HOST': 'qlfgd09ybu.database.windows.net',
+            'PORT': '1433',
+        }
+    }
 
 LOGIN_URL = '/login'
 

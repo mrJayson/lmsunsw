@@ -6,7 +6,7 @@ from datetime import datetime
 from django.conf.urls import patterns, url
 from django.contrib.auth.views import login, logout
 from django.contrib.auth.forms import AuthenticationForm
-from app.views import account
+from app.views import account, course
 
 from django.contrib.auth.decorators import user_passes_test, login_required
 
@@ -31,6 +31,7 @@ urlpatterns = patterns('',
         name='login'),
     url(r'^logout/?$', logout, {'next_page':'/',}, name='logout'),
     url(r'^account/?$', login_required(account, None), name='account'),
+    url(r'^course/?$', login_required(course), name='course'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

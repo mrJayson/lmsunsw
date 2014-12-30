@@ -20,6 +20,7 @@ def populate():
     print "Populating database"
     add_class("COMP1917", "Higher Computing 1")
     add_user("JasonHuang", "Jason", "Huang", "jh@jh.com", "password1", True)
+    add_user("student", "stu", "dent", "stu@dent.com", "password1", False)
 
 def add_user(username, first_name, last_name, email, password, is_staff):
     user=User.objects.create_user(username=username, email=email,  password=password)

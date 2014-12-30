@@ -30,3 +30,11 @@ class RegisterUserForm(UserCreationForm):
         if commit:
             new_user.save()
         return new_user
+
+class RegisterClassForm(forms.Form):
+    class_name = forms.CharField(max_length=30)
+    class_code = forms.CharField(max_length=8, min_length=4)
+    class_description = forms.CharField(widget=forms.TextInput())
+
+    class Meta:
+        fields = ("class_name", "class_code", "class_description")

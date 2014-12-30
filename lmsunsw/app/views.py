@@ -18,6 +18,17 @@ def index(request):
     assert isinstance(request, HttpRequest)
     extra_content = {'browserheadline':'Index'}
     template = 'app/index.html'
+    if request.user.is_authenticated():
+        if request.user.is_staff:
+            template = 'app/staff.html'
+            class_form = RegisterClassForm()
+            extra_content.update({'class_form':class_form})
+            print extra_content
+        elif not request.user.is_staff:
+            template = 'app/student.html'
+        elif request.user.is_superuser:
+            template = 'app/superuser.html'
+
     return render(request, template, context_instance = RequestContext(request, extra_content))
 
 def register(request):
@@ -39,12 +50,21 @@ def register(request):
     
     return render(request, template, context_instance = RequestContext(request, extra_content))
 
-@login_required
+
 def account(request):
     print "ACCOUNT VIEW"
     assert isinstance(request, HttpRequest)
     template = 'app/account.html'
     extra_context = {'browserheadline':'Account'}
+
+
+    return render(request, template, context_instance = RequestContext(request, extra_context))
+
+def course(request):
+    print "course VIEW"
+    assert isinstance(request, HttpRequest)
+    template = 'app/course.html'
+    extra_context = {'browserheadline':'Course'}
 
 
     return render(request, template, context_instance = RequestContext(request, extra_context))

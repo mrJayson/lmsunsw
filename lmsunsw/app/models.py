@@ -15,4 +15,5 @@ class UserProfile(models.Model):
 
 class Class(models.Model):
     class_name = models.CharField(max_length=30)
+    class_code = models.CharField(max_length=8)
     class_description = models.TextField()

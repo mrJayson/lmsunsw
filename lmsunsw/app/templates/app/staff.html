@@ -1,0 +1,13 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+STAFF
+
+<form action="{% url 'course' %}" method="POST">
+    {% csrf_token%}
+    {{ class_form.as_ul }}
+    <input type="submit" value="Submit" />
+</form>
+
+{% endblock %}

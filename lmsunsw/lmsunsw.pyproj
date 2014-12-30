@@ -64,6 +64,9 @@
     <Content Include="app\templates\app\loginpartial.html" />
     <Content Include="app\templates\app\register.html" />
     <Content Include="app\templates\app\registerconfirmation.html" />
+    <Content Include="app\templates\app\staff.html" />
+    <Content Include="app\templates\app\student.html" />
+    <Content Include="app\templates\app\superuser.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />

@@ -13,12 +13,12 @@ def clear():
     print "Clearing database"
     User.objects.all().delete()
     UserProfile.objects.all().delete()
-    Class.objects.all().delete()
+    Course.objects.all().delete()
     django.contrib.sessions.models.Session.objects.all().delete()
 
 def populate():
     print "Populating database"
-    add_class("COMP1917", "Higher Computing 1")
+    add_course("COMP1917", "Higher Computing 1")
     add_user("JasonHuang", "Jason", "Huang", "jh@jh.com", "password1", True)
     add_user("student", "stu", "dent", "stu@dent.com", "password1", False)
 
@@ -31,8 +31,8 @@ def add_user(username, first_name, last_name, email, password, is_staff):
     user.save()
     return user
 
-def add_class(class_name, class_description):
-    c = Class.objects.get_or_create(class_name=class_name, class_description=class_description)[0]
+def add_course(course_name, course_description):
+    c = Course.objects.get_or_create(course_name=course_name, course_description=course_description)[0]
     return c
 
 def run():

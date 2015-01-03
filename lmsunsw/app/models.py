@@ -13,7 +13,12 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return self.user
 
-class Class(models.Model):
-    class_name = models.CharField(max_length=30)
-    class_code = models.CharField(max_length=8)
-    class_description = models.TextField()
+class Course(models.Model):
+    course_name = models.CharField(max_length=30)
+    course_code = models.CharField(max_length=8)
+    course_description = models.TextField()
+
+class Lecture(models.Model):
+    Lecture_name = models.CharField(max_length=30)
+    Lecture_week = models.IntegerField()
+    # add a file field or some sort later

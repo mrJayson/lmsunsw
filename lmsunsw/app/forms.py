@@ -16,6 +16,7 @@ class RegisterUserForm(UserCreationForm):
     #last_name = forms.CharField(max_length=30)
 
     class Meta:
+        # Provide an assoication between the ModelForm and a model
         model = User
         fields = ("username", "password1", "password2", "first_name", "last_name", "email")
 
@@ -31,10 +32,22 @@ class RegisterUserForm(UserCreationForm):
             new_user.save()
         return new_user
 
-class RegisterClassForm(forms.Form):
+class AddCourseForm(forms.ModelForm):
     class_name = forms.CharField(max_length=30)
     class_code = forms.CharField(max_length=8, min_length=4)
     class_description = forms.CharField(widget=forms.TextInput())
 
     class Meta:
-        fields = ("class_name", "class_code", "class_description")
+        # Provide an assoication between the ModelForm and a model
+        model = Course
+        fields = ('class_name', 'class_code', 'class_description')
+
+class AddLectureForm(forms.ModelForm):
+    lecture_name = forms.CharField(max_length=30)
+    lecture_week = forms.IntegerField()
+
+    class Meta:
+        # Provide an assoication between the ModelForm and a model
+        model = Lecture
+        fields = ('lecture_name', 'lecture_week')
+        

@@ -6,7 +6,7 @@ from datetime import datetime
 from django.conf.urls import patterns, url
 from django.contrib.auth.views import login, logout
 from django.contrib.auth.forms import AuthenticationForm
-from app.views import account, course
+from app.views import *
 
 from django.contrib.auth.decorators import user_passes_test, login_required
 
@@ -22,6 +22,12 @@ urlpatterns = patterns('',
     url(r'^$', 'app.views.index', name='index'),
     url(r'^accounts/profile/?$', 'app.views.index', name='index'),  # standard log in redirects to accounts/profile/
     url(r'^register/?$', 'app.views.register', name='register'),
+    url(r'^logout/?$', logout, {'next_page':'/',}, name='logout'),
+    url(r'^account/?$', login_required(account, None), name='account'),
+    url(r'^course/?$', login_required(course), name='course'),
+    url(r'^addcourse/?$', login_required(add_course), name='addcourse'),
+    url(r'^lecture/?$', login_required(lecture), name='lecture'),
+
     url(r'^login/?$', login_forbidden(login), 
         {'template_name':'app/login.html',
             #'redirect_field_name':'/',
@@ -29,9 +35,6 @@ urlpatterns = patterns('',
             'extra_context':
                 {'browser_headline':'Log In'}},
         name='login'),
-    url(r'^logout/?$', logout, {'next_page':'/',}, name='logout'),
-    url(r'^account/?$', login_required(account, None), name='account'),
-    url(r'^course/?$', login_required(course), name='course'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

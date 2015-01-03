@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\templates\app\account.html" />
+    <Content Include="app\templates\app\addcourse.html" />
     <Content Include="app\templates\app\index.html" />
     <None Include="lmsunsw.pubxml" />
     <Content Include="app\templates\app\layout.html" />

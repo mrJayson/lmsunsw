@@ -4,10 +4,6 @@
 
 STAFF
 
-<form action="{% url 'course' %}" method="POST">
-    {% csrf_token%}
-    {{ class_form.as_ul }}
-    <input type="submit" value="Submit" />
-</form>
+<li><a href="{% url 'addcourse' %}">Register</a></li>
 
 {% endblock %}

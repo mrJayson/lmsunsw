@@ -18,22 +18,29 @@ def clear():
 
 def populate():
     print "Populating database"
-    add_course("COMP1917", "Higher Computing 1")
-    add_user("JasonHuang", "Jason", "Huang", "jh@jh.com", "password1", True)
-    add_user("student", "stu", "dent", "stu@dent.com", "password1", False)
+    
+    add_user("admin", "", "", "", "password", True, True)
+    u = add_user("Lecturer", "Mr", "Lecturer", "lecturer@lecture.com", "password", True, False)
+    add_user("student", "stu", "dent", "stu@dent.com", "password", False, False)
+    add_course("COMP1917", "Higher Computing 1", "Beginning Computing For advanced students", u)
 
-def add_user(username, first_name, last_name, email, password, is_staff):
-    user=User.objects.create_user(username=username, email=email,  password=password)
-    user.first_name = first_name
-    user.last_name = last_name
-    user.is_staff = is_staff
+def add_user(username, first_name, last_name, email, password, is_staff, is_superuser):
+    new_user = User.objects.create_user(username=username, email=email,  password=password)
+    new_user.first_name = first_name
+    new_user.last_name = last_name
+    new_user.is_staff = is_staff
+    new_user.is_superuser = is_superuser
+    new_user.save()
+    # create accompanying entry for additional user data
+    new_user_profile, created = UserProfile.objects.get_or_create(user=new_user)
+    assert created
 
-    user.save()
-    return user
+    return new_user
 
-def add_course(course_name, course_description):
-    c = Course.objects.get_or_create(course_name=course_name, course_description=course_description)[0]
-    return c
+def add_course(course_code, course_name, course_description, course_head_lecturer):
+    course, created = Course.objects.get_or_create(course_code=course_code, course_name=course_name, course_description=course_description, course_head_lecturer=course_head_lecturer)
+    assert created
+    return course
 
 def run():
     clear()

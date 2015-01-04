@@ -15,17 +15,18 @@ from django.contrib.auth.decorators import login_required
 
 def index(request):
     print "INDEX VIEW"
-    assert isinstance(request, HttpRequest)
     extra_content = {'browserheadline':'Index'}
     template = 'app/index.html'
     if request.user.is_authenticated():
         if request.user.is_staff:
             template = 'app/staff.html'
-            class_form = AddCourseForm()
+            class_form = AddCourseForm(request.user)
             extra_content.update({'class_form':class_form})
             print extra_content
+
         elif not request.user.is_staff:
             template = 'app/student.html'
+
         elif request.user.is_superuser:
             template = 'app/superuser.html'
 
@@ -33,7 +34,6 @@ def index(request):
 
 def register(request):
     print "REGISTER VIEW"
-    assert isinstance(request, HttpRequest)
     template = 'app/register.html'
     form = RegisterUserForm()
     extra_content = {'browserheadline':'Register', 'form':form}
@@ -53,7 +53,6 @@ def register(request):
 
 def account(request):
     print "ACCOUNT VIEW"
-    assert isinstance(request, HttpRequest)
     template = 'app/account.html'
     extra_context = {'browserheadline':'Account'}
 
@@ -62,16 +61,19 @@ def account(request):
 
 def course(request):
     print "course VIEW"
-    assert isinstance(request, HttpRequest)
     template = 'app/course.html'
     extra_context = {'browserheadline':'Course'}
     # if request is a POST, then it is a course creation
+    print "REQUEST>METHOD"
+    print request.method
     if request.method == 'POST':
         form = AddCourseForm(request.POST)
         if form.is_valid():
+            print "form is valid"
             form.save(commit=True)
             # after course is created, need to redirect to the corresponding course url
         else:
+            print "form is not valid"
             print form.errors
     # else it is the standard course view
     else:
@@ -82,16 +84,14 @@ def course(request):
 
 def add_course(request):
     print "add_course VIEW"
-    assert isinstance(request, HttpRequest)
     template = 'app/addcourse.html'
-    add_course_form = AddCourseForm()
+    add_course_form = AddCourseForm(request.user)
     extra_context = {'browserheadline':'Add Course','add_course_form':add_course_form}
 
     return render(request, template, context_instance = RequestContext(request, extra_context))
 
 def add_lecture(request):
     print "add_lecture VIEW"
-    assert isinstance(request, HttpRequest)
     template = 'app/lecture.html'
     add_lecture_form = AddLectureForm()
     extra_context = {'browserheadline':'Lecture','add_lecture_form':add_lecture_form}

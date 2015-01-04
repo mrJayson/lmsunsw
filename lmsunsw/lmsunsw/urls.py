@@ -3,20 +3,19 @@ Definition of urls for lmsunsw.
 """
 
 from datetime import datetime
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, include, url
+from django.contrib import admin
 from django.contrib.auth.views import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from app.views import *
 
 from django.contrib.auth.decorators import user_passes_test, login_required
 
+
 # check for pages that require the user to not be logged in
 login_forbidden =  user_passes_test(lambda u: u.is_anonymous(), '/', None)
 
-# Uncomment the next lines to enable the admin:
-# from django.conf.urls import include
-# from django.contrib import admin
-# admin.autodiscover()
+admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'app.views.index', name='index'),
@@ -26,7 +25,7 @@ urlpatterns = patterns('',
     url(r'^account/?$', login_required(account, None), name='account'),
     url(r'^course/?$', login_required(course), name='course'),
     url(r'^addcourse/?$', login_required(add_course), name='addcourse'),
-    url(r'^lecture/?$', login_required(lecture), name='lecture'),
+    url(r'^addlecture/?$', login_required(add_lecture), name='addlecture'),
 
     url(r'^login/?$', login_forbidden(login), 
         {'template_name':'app/login.html',
@@ -37,8 +36,8 @@ urlpatterns = patterns('',
         name='login'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls)),
 )

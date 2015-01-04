@@ -37,6 +37,18 @@ class AddCourseForm(forms.ModelForm):
     class_code = forms.CharField(max_length=8, min_length=4)
     class_description = forms.CharField(widget=forms.TextInput())
 
+    def save(self, commit=True):
+        instance = super(AddCourseForm, self).save(commit=False)
+        instance.course_head_lecturer = self.user
+        if commit:
+            instance.save()
+        return instance
+
+    def __init__(self, user):
+        super(AddCourseForm, self).__init__()
+        self.user = user
+
+
     class Meta:
         # Provide an assoication between the ModelForm and a model
         model = Course

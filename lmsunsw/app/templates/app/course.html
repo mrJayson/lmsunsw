@@ -2,9 +2,9 @@
 
 {% block content %}
 
-<form action="{% url 'lecture' %}" method="POST">
+<form action="{% url 'addlecture' %}" method="POST">
     {% csrf_token%}
-    {{ add_course_form.as_ul }}
+    {{ add_lecture_form.as_ul }}
     <input type="submit" value="Submit" />
 </form>
 

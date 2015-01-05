@@ -13,9 +13,10 @@ from app.forms import *
 from lmsunsw.settings import DEBUG
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
+from django.db import IntegrityError
 
 def index(request):
-    print "INDEX VIEW"
     extra_content = {'browserheadline':'Index'}
     template = 'app/index.html'
     if request.user.is_authenticated():
@@ -31,7 +32,6 @@ def index(request):
     return render(request, template, context_instance = RequestContext(request, extra_content))
 
 def register(request):
-    print "REGISTER VIEW"
     if request.method == 'POST':
         return register_POST(request)
     else:
@@ -62,15 +62,12 @@ def register_GET(request):
 
 
 def account(request):
-    print "ACCOUNT VIEW"
     template = 'app/account.html'
     extra_context = {'browserheadline':'Account'}
-
 
     return render(request, template, context_instance = RequestContext(request, extra_context))
 
 def course_index(request):
-    print "course VIEW"
     template = 'app/courseindex.html'
     extra_context = {'browserheadline':'Course'}
     user = request.user
@@ -79,9 +76,20 @@ def course_index(request):
 
     return render(request, template, context_instance = RequestContext(request, extra_context))
 
-def course_details(request, *args, **kwargs):
+def course_details(request, course_code, *args, **kwargs):
+    #also lecture index
+    
+    # first check if the course code in the url is valid
+    try:
+        course = Course.objects.get(course_code=course_code)
+    except(ObjectDoesNotExist):
+        return redirect('courseindex')
+
     template = 'app/coursedetails.html'
     extra_context = {'browserheadline':'Course Details'}
+    extra_context.update({'course':course})
+    lecture_list = Lecture.objects.filter(course=course.id)
+    extra_context.update({'lecture_list':lecture_list})
 
     return render(request, template, context_instance = RequestContext(request, extra_context))
 
@@ -97,7 +105,7 @@ def add_course_POST(request):
     add_course_form = AddCourseForm(request.user, request.POST)
 
     if add_course_form.is_valid():
-    # all fields filled out
+    # fields filled out correctly
         instance = add_course_form.save()
         # after course is created, need to redirect to the corresponding course url
         #redirects according to the model instance using get_absolute_url()
@@ -115,11 +123,45 @@ def add_course_GET(request):
     return render(request, template, context_instance = RequestContext(request, extra_context))
 
 
-def add_lecture(request):
-    print "add_lecture VIEW"
-    template = 'app/lecture.html'
+def add_lecture(request, course_code, *args, **kwargs):
+    # first check if the course code in the url is valid
+    try:
+        course = Course.objects.get(course_code=course_code)
+    except(ObjectDoesNotExist):
+        return redirect('courseindex')
+
+    if request.method == 'POST':
+        return add_lecture_POST(request, course)
+    else:
+        return add_lecture_GET(request, course)
+
+
+def add_lecture_POST(request, course, *args, **kwargs):
+    template = 'app/addlecture.html'
+    extra_context = {'browserheadline':'Lecture'}
+
+    add_lecture_form = AddLectureForm(course, request.POST)
+    if add_lecture_form.is_valid():
+    # fields filled out correctly
+        instance = add_lecture_form.save()
+        return redirect(instance)
+
+    else:
+    # forms is not filled out properly, redisplay page with existing details
+        extra_context.update({'add_lecture_form':add_lecture_form})
+        return render(request, template, context_instance = RequestContext(request, extra_context))
+
+def add_lecture_GET(request, course, *args, **kwargs):
+    template = 'app/addlecture.html'
+    extra_context = {'browserheadline':'Lecture'}
     add_lecture_form = AddLectureForm()
-    extra_context = {'browserheadline':'Lecture','add_lecture_form':add_lecture_form}
+    extra_context.update({'add_lecture_form':add_lecture_form})
+    
+    return render(request, template, context_instance = RequestContext(request, extra_context))
+
+def lecture_details(request, course_code, lecture_number, *args, **kwargs):
+    template = 'app/lecturedetails.html'
+    extra_context = {'browserheadline':'Lecture'}
 
     return render(request, template, context_instance = RequestContext(request, extra_context))
     

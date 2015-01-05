@@ -14,7 +14,11 @@ def clear():
     User.objects.all().delete()
     UserProfile.objects.all().delete()
     Course.objects.all().delete()
+    Lecture.objects.all().delete()
+
+    # remove all user sessions
     django.contrib.sessions.models.Session.objects.all().delete()
+
 
 def populate():
     print "Populating database"

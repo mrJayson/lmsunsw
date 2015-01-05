@@ -2,13 +2,13 @@
 
 {% block content %}
 
-{% for course in course_list %}
+    {% for course in course_list %}
 
-<p><li><a href="{% url 'coursedetails' course.course_code %}">{{ course.course_code }}</a></li></p>
+        <p><li><a href="{% url 'coursedetails' course.course_code %}">{{ course.course_code }}</a></li></p>
 
-{% endfor %}
+    {% endfor %}
 
-<li><a href="{% url 'addcourse' %}">Add a Course</a></li>
+    <li><a href="{% url 'addcourse' %}">Add a Course</a></li>
 
 
 

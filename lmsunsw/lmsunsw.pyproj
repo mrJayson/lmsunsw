@@ -61,11 +61,13 @@
   <ItemGroup>
     <Content Include="app\templates\app\account.html" />
     <Content Include="app\templates\app\addcourse.html" />
+    <Content Include="app\templates\app\addlecture.html" />
     <Content Include="app\templates\app\coursedetails.html" />
     <Content Include="app\templates\app\index.html" />
     <None Include="lmsunsw.pubxml" />
     <Content Include="app\templates\app\layout.html" />
     <Content Include="app\templates\app\lecture.html" />
+    <Content Include="app\templates\app\lecturedetails.html" />
     <Content Include="app\templates\app\login.html" />
     <Content Include="app\templates\app\loginpartial.html" />
     <Content Include="app\templates\app\register.html" />

@@ -2,6 +2,12 @@
 
 {% block content %}
 
+    {% for lecture in lecture_list %}
 
+        <p><li><a href="{% url 'lecturedetails' course.course_code lecture.lecture_number %}">{{ lecture.lecture_number }}</a></li></p>
+
+    {% endfor %}
+
+    <li><a href="{% url 'addlecture' course.course_code %}">Add a Lecture</a></li>
 
 {% endblock %}

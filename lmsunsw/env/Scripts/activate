@@ -39,7 +39,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="$(if [ "$OSTYPE" "==" "cygwin" ]; then cygpath -u 'c:\users\jason\documents\visual studio 2013\Projects\lmsunsw\lmsunsw\env'; else echo '/c/users/jason/documents/visual studio 2013/Projects/lmsunsw/lmsunsw/env'; fi;)"
+VIRTUAL_ENV="$(if [ "$OSTYPE" "==" "cygwin" ]; then cygpath -u 'C:\Users\Jason\Documents\Visual Studio 2013\Projects\lmsunsw\lmsunsw\env'; else echo '/C/Users/Jason/Documents/Visual Studio 2013/Projects/lmsunsw/lmsunsw/env'; fi;)"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

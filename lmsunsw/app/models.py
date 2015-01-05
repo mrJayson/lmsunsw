@@ -13,6 +13,8 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return unicode(self.user)
 
+
+
 class Course(models.Model):
     course_name = models.CharField(max_length=30)
     course_code = models.CharField(max_length=8)
@@ -22,6 +24,9 @@ class Course(models.Model):
     # like a toString
     def __unicode__(self):
         return unicode(self.course_code)
+
+    def get_absolute_url(self):
+        return "/course/"+self.course_code
 
 class Lecture(models.Model):
     lecture_name = models.CharField(max_length=30)

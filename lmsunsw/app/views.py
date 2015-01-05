@@ -2,7 +2,8 @@
 Definition of views.
 """
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.core.urlresolvers import reverse
 from django.http import HttpRequest
 from django.template import RequestContext
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -20,9 +21,6 @@ def index(request):
     if request.user.is_authenticated():
         if request.user.is_staff:
             template = 'app/staff.html'
-            class_form = AddCourseForm(request.user)
-            extra_content.update({'class_form':class_form})
-            print extra_content
 
         elif not request.user.is_staff:
             template = 'app/student.html'
@@ -34,21 +32,33 @@ def index(request):
 
 def register(request):
     print "REGISTER VIEW"
-    template = 'app/register.html'
-    form = RegisterUserForm()
-    extra_content = {'browserheadline':'Register', 'form':form}
-
-    # process form
     if request.method == 'POST':
-        form = RegisterUserForm(request.POST)
-        if form.is_valid():
-            form.save()
-            template = 'app/registerconfirmation.html'
-        else:
-            # if error occurs, render the registration page again
-            print form.errors
-    
-    return render(request, template, context_instance = RequestContext(request, extra_content))
+        return register_POST(request)
+    else:
+        return register_GET(request)
+
+def register_POST(request):
+    template = 'app/register.html'
+    extra_context = {'browserheadline':'Register'}
+    register_user_form = RegisterUserForm(request.POST)
+    extra_context.update({'register_user_form':register_user_form})
+    if register_user_form.is_valid():
+        register_user_form.save()
+        # display confirmation page once successful
+        template = 'app/registerconfirmation.html'
+    else:
+        # if error occurs, render the registration page again
+        print register_user_form.errors
+
+    return render(request, template, context_instance = RequestContext(request, extra_context))
+
+def register_GET(request):
+    template = 'app/register.html'
+    extra_context = {'browserheadline':'Register'}
+    register_user_form = RegisterUserForm()
+    extra_context.update({'register_user_form':register_user_form})
+
+    return render(request, template, context_instance = RequestContext(request, extra_context))
 
 
 def account(request):
@@ -59,36 +69,47 @@ def account(request):
 
     return render(request, template, context_instance = RequestContext(request, extra_context))
 
-def course(request):
+def course_index(request):
     print "course VIEW"
-    template = 'app/course.html'
+    template = 'app/courseindex.html'
     extra_context = {'browserheadline':'Course'}
-    # if request is a POST, then it is a course creation
-    print "REQUEST>METHOD"
-    print request.method
-    if request.method == 'POST':
-        form = AddCourseForm(request.POST)
-        if form.is_valid():
-            print "form is valid"
-            form.save(commit=True)
-            # after course is created, need to redirect to the corresponding course url
-        else:
-            print "form is not valid"
-            print form.errors
-    # else it is the standard course view
-    else:
-        class_form = AddCourseForm()
-        extra_context.update({'class_form':class_form})
+
+    return render(request, template, context_instance = RequestContext(request, extra_context))
+
+def course_details(request, *args, **kwargs):
+    template = 'app/coursedetails.html'
+    extra_context = {'browserheadline':'Course Details'}
 
     return render(request, template, context_instance = RequestContext(request, extra_context))
 
 def add_course(request):
-    print "add_course VIEW"
-    template = 'app/addcourse.html'
-    add_course_form = AddCourseForm(request.user)
-    extra_context = {'browserheadline':'Add Course','add_course_form':add_course_form}
+    if request.method == 'POST':
+        return add_course_POST(request)
+    else:
+        return add_course_GET(request)
 
+def add_course_POST(request):
+    template = 'app/addcourse.html'
+    extra_context = {'browserheadline':'Add Course'}
+    add_course_form = AddCourseForm(request.user, request.POST)
+
+    if add_course_form.is_valid():
+    # all fields filled out
+        instance = add_course_form.save()
+        # after course is created, need to redirect to the corresponding course url
+        return redirect(reverse('coursedetails', kwargs=({'course_code':instance.course_code})))
+    else:
+    # forms is not filled out properly, redisplay page with existing details
+        extra_context.update({'add_course_form':add_course_form})
+        return render(request, template, context_instance = RequestContext(request, extra_context))
+
+def add_course_GET(request):
+    template = 'app/addcourse.html'
+    extra_context = {'browserheadline':'Add Course'}
+    add_course_form = AddCourseForm()
+    extra_context.update({'add_course_form':add_course_form})
     return render(request, template, context_instance = RequestContext(request, extra_context))
+
 
 def add_lecture(request):
     print "add_lecture VIEW"

@@ -73,6 +73,9 @@ def course_index(request):
     print "course VIEW"
     template = 'app/courseindex.html'
     extra_context = {'browserheadline':'Course'}
+    user = request.user
+    course_list = Course.objects.filter(course_head_lecturer=user.id)
+    extra_context.update({'course_list':course_list})
 
     return render(request, template, context_instance = RequestContext(request, extra_context))
 
@@ -97,7 +100,8 @@ def add_course_POST(request):
     # all fields filled out
         instance = add_course_form.save()
         # after course is created, need to redirect to the corresponding course url
-        return redirect(reverse('coursedetails', kwargs=({'course_code':instance.course_code})))
+        #redirects according to the model instance using get_absolute_url()
+        return redirect(instance)
     else:
     # forms is not filled out properly, redisplay page with existing details
         extra_context.update({'add_course_form':add_course_form})

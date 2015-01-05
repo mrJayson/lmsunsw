@@ -2,10 +2,14 @@
 
 {% block content %}
 
-<form action="{% url 'addlecture' %}" method="POST">
-    {% csrf_token%}
-    {{ add_lecture_form.as_ul }}
-    <input type="submit" value="Submit" />
-</form>
+{% for course in course_list %}
+
+<p><li><a href="{% url 'coursedetails' course.course_code %}">{{ course.course_code }}</a></li></p>
+
+{% endfor %}
+
+<li><a href="{% url 'addcourse' %}">Add a Course</a></li>
+
+
 
 {% endblock %}

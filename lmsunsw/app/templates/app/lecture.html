@@ -1,0 +1,17 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+test
+
+{% endblock %}
+
+{% block sidebar %}
+    <ul class="sidebar-nav">
+        {% for tab in sidebar %}
+            <li>
+                <a href="{% url 'quiz' tab.Lecture.id tab.Lecture.get_slug_field tab.id tab.question %}"> {{ tab.question }} </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

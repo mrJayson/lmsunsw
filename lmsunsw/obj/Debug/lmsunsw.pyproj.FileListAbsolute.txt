@@ -1,0 +1,15 @@
+C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\bin\Microsoft.PythonTools.WebRole.dll
+C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\obj\Debug\attach_server.py
+C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\obj\Debug\visualstudio_py_debugger.py
+C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\obj\Debug\visualstudio_py_repl.py
+C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\obj\Debug\visualstudio_py_util.py
+C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\obj\Debug\__init__.py
+C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\obj\Debug\__main__.py
+C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\bin\AzureSetup.cfg
+C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\bin\Microsoft.PythonTools.AzureSetup.exe
+C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\bin\Microsoft.PythonTools.AzureSetup.exe.config
+C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\bin\wfastcgi.py
+C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\obj\Debug\deployment-updated-orig-prefix.txt
+C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\ptvs_virtualenv_proxy.py
+C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\obj\Debug\web.config
+C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\obj\Debug\web.debug.config

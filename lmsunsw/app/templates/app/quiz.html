@@ -1,0 +1,18 @@
+﻿{% extends "app/layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+{% crispy form %}
+
+{% endblock %}
+
+{% block sidebar %}
+    <ul class="sidebar-nav">
+        {% for tab in sidebar %}
+            <li>
+                <a href="#"></a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -10,7 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 from app.models import *
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
+from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
 
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
@@ -48,14 +48,16 @@ class CreateUserForm(UserCreationForm):
 
 class QuizSelectionForm(ModelForm):
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, user, quiz_id, *args, **kwargs):
         super(QuizSelectionForm, self).__init__(*args, **kwargs)
-        self.user = kwargs.get('user')
-        self.quiz_id = kwargs.get('quiz_id')
-
-
+        #self.user = kwargs.get('user')
+        #self.quiz_id = kwargs.get('quiz_id')
+        print "QUIZ_ID" + quiz_id
+        self.question = Quiz.objects.get(pk=quiz_id).question
+        
 
         self.helper = FormHelper(self)
+        self.helper.layout = Layout(Fieldset(self.question, 'test2'))
         self.helper.add_input(Submit('submit', 'Submit'))
 
     class Meta:

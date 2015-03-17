@@ -37,7 +37,7 @@ class QuizView(FormView):
         quiz_id = self.kwargs.get('quiz_id')
         print user.first_name
         print quiz_id
-        form = QuizSelectionForm(**kwargs)
+        form = QuizSelectionForm(user, quiz_id)
         return form
 
     def get_context_data(self, **kwargs):

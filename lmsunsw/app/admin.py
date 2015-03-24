@@ -7,6 +7,8 @@ from app.models import *
 
 class QuizChoiceInLine(admin.TabularInline):
     model = QuizChoice
+    min_num = 2
+    extra = 2
 
 class QuizAdmin(admin.ModelAdmin):
     inlines = [QuizChoiceInLine]

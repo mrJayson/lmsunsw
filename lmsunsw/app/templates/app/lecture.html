@@ -2,16 +2,31 @@
 
 {% block content %}
 
-test
+
 
 {% endblock %}
 
 {% block sidebar %}
+
     <ul class="sidebar-nav">
-        {% for tab in sidebar %}
+        <li>
+            <a href="{% url 'index' %}"> Index </a>
+        </li>
+        {% for lecture in lecture_list %}
             <li>
-                <a href="{% url 'quiz' tab.Lecture.id tab.Lecture.get_slug_field tab.id tab.question %}"> {{ tab.question }} </a>
+                <a href="{% url 'lecture' lecture.id lecture.get_slug_field %}">{{ lecture.lecture_name }}</a>
+                <ul>
+                    {% for quiz in quiz_list %}
+                        {% if lecture.id == quiz.Lecture.id %}
+                            <li>
+                                <a href="{% url 'quiz' lecture.id lecture.get_slug_field quiz.id quiz.question %}"> {{ quiz.question }} </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                
             </li>
         {% endfor %}
     </ul>
+
 {% endblock %}

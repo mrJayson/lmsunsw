@@ -11,7 +11,7 @@ class IndexView(TemplateView):
         
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        context['sidebar'] = Lecture.objects.all()
+        context['lecture_list'] = Lecture.objects.all()
 
         return context
 
@@ -21,9 +21,9 @@ class LectureView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(LectureView, self).get_context_data(**kwargs)
         context['slug'] = self.kwargs['url_slug']
-        lecture_id = self.kwargs['lect_id']
-        context['sidebar'] = Quiz.objects.filter(Lecture = lecture_id, visible = True)
-        
+        #lecture_id = self.kwargs['lect_id']
+        context['lecture_list'] = Lecture.objects.all()
+        context['quiz_list'] = Quiz.objects.filter(Lecture = self.kwargs['lect_id'], visible = True)
         
         return context
 
@@ -37,31 +37,24 @@ class QuizView(FormView):
         user = self.request.user
         quiz_id = self.kwargs.get('quiz_id')
 
-        try:
-            #get is faster than filter so must use this exception
-            quiz_choice_selected = QuizChoiceSelected.objects.get(user=user,quiz_choice__Quiz=quiz_id)
-        except QuizChoiceSelected.DoesNotExist:
-            quiz_choice_selected = None
-
-        # if an this quiz has not been answered before
-        if quiz_choice_selected is None:
+        if self.request.method == "POST":
             form = QuizSelectionForm(user, quiz_id, data=self.request.POST)
-        else:
-            #this quiz has been answered already
-            form = QuizSelectionForm(user, quiz_id, quiz_choice_selected.id)
+        else: # mainly for GET requests
+            form = QuizSelectionForm(user, quiz_id)
+
         return form
 
     def get_context_data(self, **kwargs):
-        print "get_context_data"
         context = super(QuizView, self).get_context_data(**kwargs)
-        context['quizchoices'] = self.get_queryset()
+        context['lecture_list'] = Lecture.objects.all()
+        context['quiz_list'] = Quiz.objects.filter(Lecture = self.kwargs['lect_id'], visible = True)
         return context
 
-    def get_queryset(self):
+    '''def get_queryset(self):
         print "get_queryset"
         quiz_id = self.kwargs.get('quiz_id')
         qs = QuizChoice.objects.filter(Quiz = quiz_id)
-        return qs
+        return qs'''
 
     def form_valid(self, form):
         print "form_valid"

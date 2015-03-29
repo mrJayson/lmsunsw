@@ -6,6 +6,7 @@ from app.forms import QuizSelectionForm
 from django.core.urlresolvers import reverse
 
 
+
 class IndexView(TemplateView):
     template_name = 'app/index.html'
         
@@ -14,6 +15,7 @@ class IndexView(TemplateView):
         context['lecture_list'] = Lecture.objects.all()
 
         return context
+
 
 class LectureView(TemplateView):
     template_name = 'app/lecture.html'
@@ -24,6 +26,7 @@ class LectureView(TemplateView):
         #lecture_id = self.kwargs['lect_id']
         context['lecture_list'] = Lecture.objects.all()
         context['quiz_list'] = Quiz.objects.filter(Lecture = self.kwargs['lect_id'], visible = True)
+        context['lect'] = Lecture.objects.get(id=self.kwargs['lect_id'])
         
         return context
 

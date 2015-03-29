@@ -3,6 +3,9 @@ Django settings for lmsunsw project.
 """
 
 from os import path
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
+
+
 PROJECT_ROOT = path.dirname(path.abspath(path.dirname(__file__)))
 
 DEBUG = True
@@ -109,7 +112,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 ROOT_URLCONF = 'lmsunsw.urls'
@@ -137,9 +140,15 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
     'crispy_forms',
+    'fluent_contents',
+    'fluent_contents.plugins.googledocscollab',
+    'fluent_contents.plugins.googledocsviewer',
+    'fluent_contents.plugins.picture',
 )
 
 CRISPY_TEMPLATE_PACK = 'bootstrap'
+
+TEMPLATE_CONTEXT_PROCESSORS += ('django.core.context_processors.request',)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

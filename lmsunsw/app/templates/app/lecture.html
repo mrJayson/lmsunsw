@@ -1,7 +1,10 @@
 ﻿{% extends "app/layout.html" %}
+{% load fluent_contents_tags %}
+
 
 {% block content %}
-
+<!--<object data="https://docs.google.com/document/d/1yWFRMwszAXCBMiEwpv77h092J6Dr2NAs8wJvHsGVxaY/edit?usp=sharing" width="100%" height="100%"></object>-->
+{% render_placeholder lect.collab_doc %}
 
 
 {% endblock %}

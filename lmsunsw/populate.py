@@ -29,7 +29,6 @@ def populate():
     print "Populating database"
 
     create_user("admin", "", "", "", "admin", True, True)
-    create)user("JackJames", )
     lecture1 = create_lecture("Lecture 1")
     lecture2 = create_lecture("Lecture 2")
     lecture3 = create_lecture("Lecture 3")

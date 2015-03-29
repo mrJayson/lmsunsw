@@ -51,6 +51,7 @@
     <Compile Include="lmsunsw\settings.py" />
     <Compile Include="lmsunsw\urls.py" />
     <Compile Include="lmsunsw\wsgi.py" />
+    <Compile Include="populate.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\" />

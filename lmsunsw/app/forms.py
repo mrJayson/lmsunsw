@@ -79,30 +79,21 @@ class QuizSelectionForm(forms.Form):
         self.helper.form_show_labels = False
 
     def is_valid(self):
-
-        print "is_valid"
-        print self.data
-        print super(QuizSelectionForm, self).is_valid()
-        print self.errors
+        # this func is needed because is_valid would not run without defining it for some reason
         return super(QuizSelectionForm, self).is_valid()
 
     def clean_choices(self):
         choices = self.cleaned_data["choices"]
         return choices
 
-
     def save(self, *args, **kwargs):
         data = self.cleaned_data
+        # need user and choices to create object
         if data.get('user') and data.get('choices'):
-            print "user save"
-            print data.get('user')
-            print "user save"
-            print data.get('choices')
             user_object = User.objects.get(username=data.get('user'))
             quiz_choice_object = QuizChoice.objects.get(id=data.get('choices'))
-        to_be_saved = QuizChoiceSelected.objects.create(user=user_object, quiz_choice=quiz_choice_object)
-        return to_be_saved
-
+        new_quiz_choice_selected = QuizChoiceSelected.objects.create(user=user_object, quiz_choice=quiz_choice_object)
+        return new_quiz_choice_selected
 
     class Meta:
         fields = ()

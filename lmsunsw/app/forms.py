@@ -3,7 +3,7 @@ Definition of forms.
 """
 
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django.forms import ModelForm
 from django.utils.translation import ugettext_lazy as _
 

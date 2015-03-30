@@ -26,25 +26,38 @@
                         <span class="icon-bar"></span>
                     </button>
                 {% endif %}
-                <a href="/" class="navbar-brand">Application name</a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'index' %}" class="navbar-brand">Welcome {{ user.first_name }} {{ user.last_name }} </a>
+                {% else %}
+                <a href="{% url 'index' %}" class="navbar-brand">Welcome to LMSUNSW</a>
+                {% endif %}
             </div>
             {% if user.is_authenticated %}
 
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <!--buttons on the top right of the nav bar-->
+                    {% if user.is_superuser %}
+                    <!--Super User has link directly into admin pages-->
                     <li>
-                        <a href="#">Settings</a>
+                        <a href="/admin">Administration</a>
+                    </li>
+                    {% else %}
+                    <!--Normal users have link to their account pages-->
+                    <li>
+                        <a href="/settings/auth/user/{{ user.id }}">Settings</a>
                     </li>
                     <li>
-                        <a href="#">Profile</a>
-                    </li>
-                    <li>
-                        <a href="/logout">Logout</a>
+                        <a href="/settings/app/userprofile/{{ user.user_profile.id }}/">Profile</a>
                     </li>
                     <li>
                         <a href="#">Help</a>
                     </li>
+                    {% endif %}
+                    <li>
+                        <a href="/logout">Logout</a>
+                    </li>
+
                 </ul>
             </div>
             {% endif %}

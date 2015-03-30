@@ -5,7 +5,8 @@ Definition of urls for lmsunsw.
 # Uncomment the next lines to enable the admin:
 from django.conf.urls import include
 from django.contrib import admin
-admin.autodiscover()
+from app.admin import user_admin_site
+
 
 from datetime import datetime
 from django.conf.urls import patterns, url
@@ -27,10 +28,8 @@ urlpatterns = patterns('',
     url(r'^$', login_required(IndexView.as_view()), name='index'),
     url(r'^createuser/$',login_forbidden(CreateUser.as_view()), name='createuser'),
     url(r'^alert/(?P<tag>.*)$', AlertView.as_view(), name='alert'),
-    url(r'^course/(?P<lect_id>[0-9]+)/(?P<url_slug>[^/]+)$', login_required(xframe_options_exempt(LectureView.as_view())), name='lecture'),
+    url(r'^course/(?P<lect_id>[0-9]+)/(?P<url_slug>[^/]+)$', login_required(LectureView.as_view()), name='lecture'),
     url(r'^course/(?P<lect_id>[0-9]+)/(?P<url_slug>[^/]+)/quiz/(?P<quiz_id>[0-9]+)/(?P<quiz_slug>[^/]+)$', login_required(QuizView.as_view()), name='quiz'),
-
-
 
     url(r'^login/?$', login_forbidden(login), 
         {'template_name':'app/login.html',
@@ -51,4 +50,5 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^settings/', include(user_admin_site.urls), name='settings'),
 )

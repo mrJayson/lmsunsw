@@ -2,6 +2,7 @@ import sys
 import os
 os.environ.setdefault('DJANGO_SETTING_MODULE', 'lmsunsw.setting')
 
+from django.contrib.auth.models import Permission
 from app.models import *
 import django
 django.setup()
@@ -28,7 +29,8 @@ def clear():
 def populate():
     print "Populating database"
 
-    create_user("admin", "", "", "", "admin", True, True)
+    create_superuser("admin", "administration", "account", "admin@admin.com", "admin")
+    create_student("Jack", "Jack", "James", "Jack@James.com", "password")
     lecture1 = create_lecture("Lecture 1")
     lecture2 = create_lecture("Lecture 2")
     lecture3 = create_lecture("Lecture 3")
@@ -64,17 +66,20 @@ def populate():
     create_quiz_choice("Data Link", quiz5, False)
     create_quiz_choice("Physical", quiz5, False)
 
-    
 
+def create_user(username, first_name, last_name, email, password, is_superuser):
+    """
+    Set all users' is_staff to True to be able to access all of the django admin features
+    """
 
-
-def create_user(username, first_name, last_name, email, password, is_staff, is_superuser):
     sys.stdout.write("creating user... ")
     new_user = User.objects.create_user(username=username, email=email,  password=password)
     new_user.first_name = first_name
     new_user.last_name = last_name
-    new_user.is_staff = is_staff
+    new_user.is_staff = True
     new_user.is_superuser = is_superuser
+    if is_superuser == False:
+        new_user.user_permissions.add(Permission.objects.get(name='Can change user'), Permission.objects.get(name='Can change user profile')) 
     new_user.save()
     # create accompanying entry for additional user data
     new_user_profile, created = UserProfile.objects.get_or_create(user=new_user)
@@ -82,6 +87,12 @@ def create_user(username, first_name, last_name, email, password, is_staff, is_s
     assert created
 
     return new_user
+
+def create_student(username, first_name, last_name, email, password):
+    return create_user(username, first_name, last_name, email, password, False)
+
+def create_superuser(username, first_name, last_name, email, password):
+    return create_user(username, first_name, last_name, email, password, True)
 
 def create_lecture(lecture_name):
     sys.stdout.write("creating lecture... ")

@@ -13095,3 +13095,655 @@ ImportError: DLL load failed: The specified module could not be found.
 2015-03-29T09:22:18: Saving group "C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents"
 2015-03-29T09:22:19: End of group "C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents"
 2015-03-29T09:22:21: Deleting 0 files
+
+2015-03-29T21:22:53: Start analysis
+2015-03-29T21:22:54: IncludeModulesFromModulePath = win32com
+2015-03-29T21:22:56: Deleting 142 files
+2015-03-29T21:22:56: astropy.CallDepth = 0
+2015-03-29T21:22:56: matplotlib.CallDepth = 3
+2015-03-29T21:22:56: pandas.CallDepth = 0
+2015-03-29T21:22:56: sympy.CallDepth = 0
+2015-03-29T21:22:56: Start group "C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents" with 142 files
+2015-03-29T21:23:04: Parsing "fluent_contents.analyzer" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\analyzer.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.appsettings" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\appsettings.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.cache" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\cache.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.middleware" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\middleware.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.rendering" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\rendering.py")
+2015-03-29T21:23:04: Parsing "fluent_contents" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.admin.contentitems" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\admin\contentitems.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.admin.genericextensions" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\admin\genericextensions.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.admin.placeholdereditor" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\admin\placeholdereditor.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.admin.placeholderfield" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\admin\placeholderfield.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.admin" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\admin\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.extensions.model_fields" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\extensions\model_fields.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.extensions.pluginbase" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\extensions\pluginbase.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.extensions.pluginpool" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\extensions\pluginpool.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.extensions" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\extensions\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.forms.fields" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\forms\fields.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.forms.widgets" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\forms\widgets.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.forms" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\forms\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.management" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\management\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.management.commands.prefix_content_item_types" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\management\commands\prefix_content_item_types.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.management.commands" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\management\commands\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.models.db" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\models\db.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.models.fields" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\models\fields.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.models.managers" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\models\managers.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.models" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\models\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.code.appsettings" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\code\appsettings.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.code.backend" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\code\backend.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.code.content_plugins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\code\content_plugins.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.code.models" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\code\models.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.code" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\code\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.code.migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\code\migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.code.south_migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\code\south_migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.commentsarea.appsettings" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\commentsarea\appsettings.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.commentsarea.content_plugins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\commentsarea\content_plugins.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.commentsarea.models" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\commentsarea\models.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.commentsarea" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\commentsarea\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.commentsarea.migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\commentsarea\migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.commentsarea.south_migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\commentsarea\south_migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.commentsarea.templatetags.commentsarea_tags" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\commentsarea\templatetags\commentsarea_tags.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.commentsarea.templatetags" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\commentsarea\templatetags\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.disquswidgets.content_plugins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\disquswidgets\content_plugins.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.disquswidgets.models" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\disquswidgets\models.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.disquswidgets" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\disquswidgets\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.disquswidgets.migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\disquswidgets\migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.disquswidgets.south_migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\disquswidgets\south_migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.formdesignerlink.content_plugins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\formdesignerlink\content_plugins.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.formdesignerlink.models" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\formdesignerlink\models.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.formdesignerlink" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\formdesignerlink\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.formdesignerlink.migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\formdesignerlink\migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.formdesignerlink.south_migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\formdesignerlink\south_migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.gist.content_plugins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\gist\content_plugins.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.gist.models" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\gist\models.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.gist" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\gist\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.gist.migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\gist\migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.gist.south_migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\gist\south_migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.googledocscollab.content_plugins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\googledocscollab\content_plugins.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.googledocscollab.models" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\googledocscollab\models.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.googledocscollab" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\googledocscollab\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.googledocscollab.migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\googledocscollab\migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.googledocscollab.south_migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\googledocscollab\south_migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.googledocsviewer.content_plugins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\googledocsviewer\content_plugins.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.googledocsviewer.models" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\googledocsviewer\models.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.googledocsviewer" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\googledocsviewer\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.googledocsviewer.migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\googledocsviewer\migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.googledocsviewer.south_migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\googledocsviewer\south_migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.iframe.content_plugins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\iframe\content_plugins.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.iframe.models" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\iframe\models.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.iframe" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\iframe\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.iframe.migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\iframe\migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.iframe.south_migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\iframe\south_migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.markup.appsettings" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\markup\appsettings.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.markup.backend" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\markup\backend.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.markup.content_plugins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\markup\content_plugins.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.markup.models" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\markup\models.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.markup" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\markup\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.markup.migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\markup\migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.markup.south_migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\markup\south_migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.oembeditem.appsettings" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\oembeditem\appsettings.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.oembeditem.backend" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\oembeditem\backend.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.oembeditem.content_plugins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\oembeditem\content_plugins.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.oembeditem.fields" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\oembeditem\fields.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.oembeditem.models" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\oembeditem\models.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.oembeditem" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\oembeditem\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.oembeditem.management" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\oembeditem\management\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.oembeditem.management.commands.debug_oembed" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\oembeditem\management\commands\debug_oembed.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.oembeditem.management.commands" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\oembeditem\management\commands\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.oembeditem.migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\oembeditem\migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.oembeditem.south_migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\oembeditem\south_migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.picture.appsettings" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\picture\appsettings.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.picture.content_plugins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\picture\content_plugins.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.picture.models" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\picture\models.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.picture" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\picture\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.picture.migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\picture\migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.picture.south_migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\picture\south_migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.rawhtml.content_plugins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\rawhtml\content_plugins.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.rawhtml.models" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\rawhtml\models.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.rawhtml" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\rawhtml\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.rawhtml.migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\rawhtml\migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.rawhtml.south_migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\rawhtml\south_migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.sharedcontent.admin" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\sharedcontent\admin.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.sharedcontent.appsettings" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\sharedcontent\appsettings.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.sharedcontent.content_plugins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\sharedcontent\content_plugins.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.sharedcontent.managers" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\sharedcontent\managers.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.sharedcontent.models" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\sharedcontent\models.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.sharedcontent" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\sharedcontent\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.sharedcontent.migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\sharedcontent\migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.sharedcontent.south_migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\sharedcontent\south_migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.sharedcontent.templatetags.sharedcontent_tags" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\sharedcontent\templatetags\sharedcontent_tags.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.sharedcontent.templatetags" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\sharedcontent\templatetags\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.text.appsettings" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\text\appsettings.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.text.content_plugins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\text\content_plugins.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.text.models" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\text\models.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.text" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\text\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.text.migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\text\migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.text.south_migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\text\south_migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.twitterfeed.appsettings" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\twitterfeed\appsettings.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.twitterfeed.content_plugins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\twitterfeed\content_plugins.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.twitterfeed.models" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\twitterfeed\models.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.twitterfeed" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\twitterfeed\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.twitterfeed.migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\twitterfeed\migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.twitterfeed.south_migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\twitterfeed\south_migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.twitterfeed.templatetags.twitterfeed_tags" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\twitterfeed\templatetags\twitterfeed_tags.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.plugins.twitterfeed.templatetags" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\plugins\twitterfeed\templatetags\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.south_migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\south_migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.templatetags.fluent_contents_tags" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\templatetags\fluent_contents_tags.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.templatetags.placeholder_admin_tags" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\templatetags\placeholder_admin_tags.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.templatetags.placeholder_tags" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\templatetags\placeholder_tags.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.templatetags" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\templatetags\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.tests.admin" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\tests\admin.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.tests.templatetags" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\tests\templatetags.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.tests.utils" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\tests\utils.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.tests" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\tests\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.tests.testapp.admin" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\tests\testapp\admin.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.tests.testapp.content_plugins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\tests\testapp\content_plugins.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.tests.testapp.models" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\tests\testapp\models.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.tests.testapp.urls" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\tests\testapp\urls.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.tests.testapp" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\tests\testapp\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.tests.testapp.migrations" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\tests\testapp\migrations\__init__.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.utils.validators" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\utils\validators.py")
+2015-03-29T21:23:04: Parsing "fluent_contents.utils" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents\utils\__init__.py")
+2015-03-29T21:23:04: Parsing complete
+2015-03-29T21:23:04: Analyzing "fluent_contents.analyzer"
+2015-03-29T21:23:04: Analyzing "fluent_contents.appsettings"
+2015-03-29T21:23:04: Analyzing "fluent_contents.cache"
+2015-03-29T21:23:04: Analyzing "fluent_contents.middleware"
+2015-03-29T21:23:04: Analyzing "fluent_contents.rendering"
+2015-03-29T21:23:04: Analyzing "fluent_contents"
+2015-03-29T21:23:04: Analyzing "fluent_contents.admin.contentitems"
+2015-03-29T21:23:04: Analyzing "fluent_contents.admin.genericextensions"
+2015-03-29T21:23:04: Analyzing "fluent_contents.admin.placeholdereditor"
+2015-03-29T21:23:04: Analyzing "fluent_contents.admin.placeholderfield"
+2015-03-29T21:23:04: Analyzing "fluent_contents.admin"
+2015-03-29T21:23:04: Analyzing "fluent_contents.extensions.model_fields"
+2015-03-29T21:23:04: Analyzing "fluent_contents.extensions.pluginbase"
+2015-03-29T21:23:04: Analyzing "fluent_contents.extensions.pluginpool"
+2015-03-29T21:23:04: Analyzing "fluent_contents.extensions"
+2015-03-29T21:23:04: Analyzing "fluent_contents.forms.fields"
+2015-03-29T21:23:04: Analyzing "fluent_contents.forms.widgets"
+2015-03-29T21:23:04: Analyzing "fluent_contents.forms"
+2015-03-29T21:23:04: Analyzing "fluent_contents.management"
+2015-03-29T21:23:04: Analyzing "fluent_contents.management.commands.prefix_content_item_types"
+2015-03-29T21:23:04: Analyzing "fluent_contents.management.commands"
+2015-03-29T21:23:04: Analyzing "fluent_contents.migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.models.db"
+2015-03-29T21:23:04: Analyzing "fluent_contents.models.fields"
+2015-03-29T21:23:04: Analyzing "fluent_contents.models.managers"
+2015-03-29T21:23:04: Analyzing "fluent_contents.models"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.code.appsettings"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.code.backend"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.code.content_plugins"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.code.models"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.code"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.code.migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.code.south_migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.commentsarea.appsettings"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.commentsarea.content_plugins"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.commentsarea.models"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.commentsarea"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.commentsarea.migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.commentsarea.south_migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.commentsarea.templatetags.commentsarea_tags"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.commentsarea.templatetags"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.disquswidgets.content_plugins"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.disquswidgets.models"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.disquswidgets"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.disquswidgets.migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.disquswidgets.south_migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.formdesignerlink.content_plugins"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.formdesignerlink.models"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.formdesignerlink"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.formdesignerlink.migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.formdesignerlink.south_migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.gist.content_plugins"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.gist.models"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.gist"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.gist.migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.gist.south_migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.googledocscollab.content_plugins"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.googledocscollab.models"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.googledocscollab"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.googledocscollab.migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.googledocscollab.south_migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.googledocsviewer.content_plugins"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.googledocsviewer.models"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.googledocsviewer"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.googledocsviewer.migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.googledocsviewer.south_migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.iframe.content_plugins"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.iframe.models"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.iframe"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.iframe.migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.iframe.south_migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.markup.appsettings"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.markup.backend"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.markup.content_plugins"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.markup.models"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.markup"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.markup.migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.markup.south_migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.oembeditem.appsettings"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.oembeditem.backend"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.oembeditem.content_plugins"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.oembeditem.fields"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.oembeditem.models"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.oembeditem"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.oembeditem.management"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.oembeditem.management.commands.debug_oembed"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.oembeditem.management.commands"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.oembeditem.migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.oembeditem.south_migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.picture.appsettings"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.picture.content_plugins"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.picture.models"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.picture"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.picture.migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.picture.south_migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.rawhtml.content_plugins"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.rawhtml.models"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.rawhtml"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.rawhtml.migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.rawhtml.south_migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.sharedcontent.admin"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.sharedcontent.appsettings"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.sharedcontent.content_plugins"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.sharedcontent.managers"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.sharedcontent.models"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.sharedcontent"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.sharedcontent.migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.sharedcontent.south_migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.sharedcontent.templatetags.sharedcontent_tags"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.sharedcontent.templatetags"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.text.appsettings"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.text.content_plugins"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.text.models"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.text"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.text.migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.text.south_migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.twitterfeed.appsettings"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.twitterfeed.content_plugins"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.twitterfeed.models"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.twitterfeed"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.twitterfeed.migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.twitterfeed.south_migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.twitterfeed.templatetags.twitterfeed_tags"
+2015-03-29T21:23:04: Analyzing "fluent_contents.plugins.twitterfeed.templatetags"
+2015-03-29T21:23:04: Analyzing "fluent_contents.south_migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.templatetags.fluent_contents_tags"
+2015-03-29T21:23:04: Analyzing "fluent_contents.templatetags.placeholder_admin_tags"
+2015-03-29T21:23:04: Analyzing "fluent_contents.templatetags.placeholder_tags"
+2015-03-29T21:23:04: Analyzing "fluent_contents.templatetags"
+2015-03-29T21:23:04: Analyzing "fluent_contents.tests.admin"
+2015-03-29T21:23:04: Analyzing "fluent_contents.tests.templatetags"
+2015-03-29T21:23:04: Analyzing "fluent_contents.tests.utils"
+2015-03-29T21:23:04: Analyzing "fluent_contents.tests"
+2015-03-29T21:23:04: Analyzing "fluent_contents.tests.testapp.admin"
+2015-03-29T21:23:04: Analyzing "fluent_contents.tests.testapp.content_plugins"
+2015-03-29T21:23:04: Analyzing "fluent_contents.tests.testapp.models"
+2015-03-29T21:23:04: Analyzing "fluent_contents.tests.testapp.urls"
+2015-03-29T21:23:04: Analyzing "fluent_contents.tests.testapp"
+2015-03-29T21:23:04: Analyzing "fluent_contents.tests.testapp.migrations"
+2015-03-29T21:23:04: Analyzing "fluent_contents.utils.validators"
+2015-03-29T21:23:04: Analyzing "fluent_contents.utils"
+2015-03-29T21:23:04: Starting analysis of 142 modules
+2015-03-29T21:23:05: Analysis complete
+2015-03-29T21:23:05: Saving group "C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents"
+2015-03-29T21:23:06: End of group "C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\fluent_contents"
+2015-03-29T21:23:06: Start group "C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\nested_inlines" with 6 files
+2015-03-29T21:23:08: Parsing "nested_inlines.admin" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\nested_inlines\admin.py")
+2015-03-29T21:23:08: Parsing "nested_inlines.forms" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\nested_inlines\forms.py")
+2015-03-29T21:23:08: Parsing "nested_inlines.helpers" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\nested_inlines\helpers.py")
+2015-03-29T21:23:08: Parsing "nested_inlines.models" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\nested_inlines\models.py")
+2015-03-29T21:23:08: Parsing "nested_inlines.views" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\nested_inlines\views.py")
+2015-03-29T21:23:08: Parsing "nested_inlines" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\nested_inlines\__init__.py")
+2015-03-29T21:23:08: Parsing complete
+2015-03-29T21:23:08: Analyzing "nested_inlines.admin"
+2015-03-29T21:23:08: Analyzing "nested_inlines.forms"
+2015-03-29T21:23:08: Analyzing "nested_inlines.helpers"
+2015-03-29T21:23:08: Analyzing "nested_inlines.models"
+2015-03-29T21:23:08: Analyzing "nested_inlines.views"
+2015-03-29T21:23:08: Analyzing "nested_inlines"
+2015-03-29T21:23:08: Starting analysis of 6 modules
+2015-03-29T21:23:08: Analysis complete
+2015-03-29T21:23:08: Saving group "C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\nested_inlines"
+2015-03-29T21:23:08: End of group "C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\nested_inlines"
+2015-03-29T21:23:10: Deleting 0 files
+
+2015-03-29T23:44:11: Start analysis
+2015-03-29T23:44:11: IncludeModulesFromModulePath = win32com
+2015-03-29T23:44:14: Deleting 6 files
+
+2015-03-30T10:43:05: Start analysis
+2015-03-30T10:43:06: IncludeModulesFromModulePath = win32com
+2015-03-30T10:43:08: Deleting 0 files
+2015-03-30T10:43:08: astropy.CallDepth = 0
+2015-03-30T10:43:08: matplotlib.CallDepth = 3
+2015-03-30T10:43:08: pandas.CallDepth = 0
+2015-03-30T10:43:08: sympy.CallDepth = 0
+2015-03-30T10:43:08: Start group "C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments" with 158 files
+2015-03-30T10:43:18: Parsing "pygments.cmdline" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\cmdline.py")
+2015-03-30T10:43:19: Parsing "pygments.console" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\console.py")
+2015-03-30T10:43:19: Parsing "pygments.filter" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\filter.py")
+2015-03-30T10:43:19: Parsing "pygments.formatter" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\formatter.py")
+2015-03-30T10:43:19: Parsing "pygments.lexer" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexer.py")
+2015-03-30T10:43:19: Parsing "pygments.modeline" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\modeline.py")
+2015-03-30T10:43:19: Parsing "pygments.plugin" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\plugin.py")
+2015-03-30T10:43:19: Parsing "pygments.regexopt" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\regexopt.py")
+2015-03-30T10:43:19: Parsing "pygments.scanner" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\scanner.py")
+2015-03-30T10:43:19: Parsing "pygments.sphinxext" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\sphinxext.py")
+2015-03-30T10:43:19: Parsing "pygments.style" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\style.py")
+2015-03-30T10:43:19: Parsing "pygments.token" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\token.py")
+2015-03-30T10:43:19: Parsing "pygments.unistring" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\unistring.py")
+2015-03-30T10:43:19: Parsing "pygments.util" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\util.py")
+2015-03-30T10:43:19: Parsing "pygments" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\__init__.py")
+2015-03-30T10:43:19: Parsing "pygments.filters" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\filters\__init__.py")
+2015-03-30T10:43:19: Parsing "pygments.formatters.bbcode" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\formatters\bbcode.py")
+2015-03-30T10:43:19: Parsing "pygments.formatters.html" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\formatters\html.py")
+2015-03-30T10:43:19: Parsing "pygments.formatters.img" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\formatters\img.py")
+2015-03-30T10:43:19: Parsing "pygments.formatters.latex" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\formatters\latex.py")
+2015-03-30T10:43:19: Parsing "pygments.formatters.other" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\formatters\other.py")
+2015-03-30T10:43:19: Parsing "pygments.formatters.rtf" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\formatters\rtf.py")
+2015-03-30T10:43:19: Parsing "pygments.formatters.svg" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\formatters\svg.py")
+2015-03-30T10:43:19: Parsing "pygments.formatters.terminal" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\formatters\terminal.py")
+2015-03-30T10:43:19: Parsing "pygments.formatters.terminal256" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\formatters\terminal256.py")
+2015-03-30T10:43:19: Parsing "pygments.formatters._mapping" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\formatters\_mapping.py")
+2015-03-30T10:43:19: Parsing "pygments.formatters" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\formatters\__init__.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.actionscript" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\actionscript.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.agile" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\agile.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.algebra" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\algebra.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.ambient" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\ambient.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.apl" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\apl.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.asm" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\asm.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.automation" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\automation.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.basic" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\basic.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.business" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\business.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.chapel" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\chapel.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.compiled" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\compiled.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.configs" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\configs.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.console" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\console.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.css" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\css.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.c_cpp" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\c_cpp.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.c_like" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\c_like.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.d" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\d.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.dalvik" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\dalvik.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.data" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\data.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.diff" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\diff.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.dotnet" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\dotnet.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.dsls" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\dsls.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.dylan" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\dylan.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.ecl" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\ecl.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.eiffel" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\eiffel.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.erlang" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\erlang.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.esoteric" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\esoteric.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.factor" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\factor.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.fantom" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\fantom.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.felix" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\felix.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.fortran" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\fortran.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.foxpro" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\foxpro.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.functional" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\functional.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.go" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\go.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.graph" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\graph.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.graphics" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\graphics.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.haskell" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\haskell.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.haxe" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\haxe.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.hdl" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\hdl.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.html" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\html.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.idl" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\idl.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.igor" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\igor.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.inferno" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\inferno.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.installers" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\installers.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.int_fiction" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\int_fiction.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.iolang" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\iolang.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.javascript" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\javascript.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.julia" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\julia.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.jvm" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\jvm.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.lisp" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\lisp.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.make" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\make.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.markup" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\markup.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.math" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\math.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.matlab" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\matlab.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.ml" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\ml.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.modeling" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\modeling.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.nimrod" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\nimrod.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.nit" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\nit.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.nix" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\nix.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.objective" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\objective.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.ooc" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\ooc.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.other" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\other.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.parsers" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\parsers.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.pascal" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\pascal.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.pawn" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\pawn.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.perl" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\perl.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.php" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\php.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.prolog" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\prolog.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.python" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\python.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.r" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\r.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.rdf" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\rdf.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.rebol" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\rebol.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.resource" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\resource.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.robotframework" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\robotframework.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.ruby" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\ruby.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.rust" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\rust.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.scripting" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\scripting.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.shell" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\shell.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.smalltalk" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\smalltalk.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.snobol" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\snobol.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.special" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\special.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.sql" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\sql.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.tcl" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\tcl.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.templates" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\templates.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.testing" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\testing.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.text" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\text.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.textedit" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\textedit.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.textfmts" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\textfmts.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.theorem" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\theorem.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.urbi" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\urbi.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.web" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\web.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers.webmisc" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\webmisc.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers._asy_builtins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\_asy_builtins.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers._cl_builtins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\_cl_builtins.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers._cocoa_builtins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\_cocoa_builtins.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers._lasso_builtins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\_lasso_builtins.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers._lua_builtins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\_lua_builtins.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers._mapping" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\_mapping.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers._mql_builtins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\_mql_builtins.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers._openedge_builtins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\_openedge_builtins.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers._php_builtins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\_php_builtins.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers._postgres_builtins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\_postgres_builtins.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers._scilab_builtins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\_scilab_builtins.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers._sourcemod_builtins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\_sourcemod_builtins.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers._stan_builtins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\_stan_builtins.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers._vim_builtins" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\_vim_builtins.py")
+2015-03-30T10:43:19: Parsing "pygments.lexers" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\lexers\__init__.py")
+2015-03-30T10:43:19: Parsing "pygments.styles.autumn" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\styles\autumn.py")
+2015-03-30T10:43:19: Parsing "pygments.styles.borland" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\styles\borland.py")
+2015-03-30T10:43:19: Parsing "pygments.styles.bw" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\styles\bw.py")
+2015-03-30T10:43:19: Parsing "pygments.styles.colorful" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\styles\colorful.py")
+2015-03-30T10:43:19: Parsing "pygments.styles.default" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\styles\default.py")
+2015-03-30T10:43:19: Parsing "pygments.styles.emacs" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\styles\emacs.py")
+2015-03-30T10:43:19: Parsing "pygments.styles.friendly" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\styles\friendly.py")
+2015-03-30T10:43:19: Parsing "pygments.styles.fruity" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\styles\fruity.py")
+2015-03-30T10:43:19: Parsing "pygments.styles.igor" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\styles\igor.py")
+2015-03-30T10:43:19: Parsing "pygments.styles.manni" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\styles\manni.py")
+2015-03-30T10:43:19: Parsing "pygments.styles.monokai" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\styles\monokai.py")
+2015-03-30T10:43:19: Parsing "pygments.styles.murphy" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\styles\murphy.py")
+2015-03-30T10:43:19: Parsing "pygments.styles.native" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\styles\native.py")
+2015-03-30T10:43:19: Parsing "pygments.styles.paraiso_dark" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\styles\paraiso_dark.py")
+2015-03-30T10:43:19: Parsing "pygments.styles.paraiso_light" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\styles\paraiso_light.py")
+2015-03-30T10:43:19: Parsing "pygments.styles.pastie" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\styles\pastie.py")
+2015-03-30T10:43:19: Parsing "pygments.styles.perldoc" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\styles\perldoc.py")
+2015-03-30T10:43:19: Parsing "pygments.styles.rrt" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\styles\rrt.py")
+2015-03-30T10:43:19: Parsing "pygments.styles.tango" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\styles\tango.py")
+2015-03-30T10:43:19: Parsing "pygments.styles.trac" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\styles\trac.py")
+2015-03-30T10:43:19: Parsing "pygments.styles.vim" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\styles\vim.py")
+2015-03-30T10:43:19: Parsing "pygments.styles.vs" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\styles\vs.py")
+2015-03-30T10:43:19: Parsing "pygments.styles.xcode" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\styles\xcode.py")
+2015-03-30T10:43:19: Parsing "pygments.styles" ("C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments\styles\__init__.py")
+2015-03-30T10:43:19: Parsing complete
+2015-03-30T10:43:19: Analyzing "pygments.cmdline"
+2015-03-30T10:43:19: Analyzing "pygments.console"
+2015-03-30T10:43:19: Analyzing "pygments.filter"
+2015-03-30T10:43:19: Analyzing "pygments.formatter"
+2015-03-30T10:43:19: Analyzing "pygments.lexer"
+2015-03-30T10:43:19: Analyzing "pygments.modeline"
+2015-03-30T10:43:19: Analyzing "pygments.plugin"
+2015-03-30T10:43:19: Analyzing "pygments.regexopt"
+2015-03-30T10:43:19: Analyzing "pygments.scanner"
+2015-03-30T10:43:19: Analyzing "pygments.sphinxext"
+2015-03-30T10:43:19: Analyzing "pygments.style"
+2015-03-30T10:43:19: Analyzing "pygments.token"
+2015-03-30T10:43:19: Analyzing "pygments.unistring"
+2015-03-30T10:43:19: Analyzing "pygments.util"
+2015-03-30T10:43:19: Analyzing "pygments"
+2015-03-30T10:43:19: Analyzing "pygments.filters"
+2015-03-30T10:43:19: Analyzing "pygments.formatters.bbcode"
+2015-03-30T10:43:19: Analyzing "pygments.formatters.html"
+2015-03-30T10:43:19: Analyzing "pygments.formatters.img"
+2015-03-30T10:43:19: Analyzing "pygments.formatters.latex"
+2015-03-30T10:43:19: Analyzing "pygments.formatters.other"
+2015-03-30T10:43:19: Analyzing "pygments.formatters.rtf"
+2015-03-30T10:43:19: Analyzing "pygments.formatters.svg"
+2015-03-30T10:43:19: Analyzing "pygments.formatters.terminal"
+2015-03-30T10:43:19: Analyzing "pygments.formatters.terminal256"
+2015-03-30T10:43:19: Analyzing "pygments.formatters._mapping"
+2015-03-30T10:43:19: Analyzing "pygments.formatters"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.actionscript"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.agile"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.algebra"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.ambient"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.apl"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.asm"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.automation"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.basic"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.business"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.chapel"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.compiled"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.configs"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.console"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.css"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.c_cpp"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.c_like"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.d"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.dalvik"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.data"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.diff"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.dotnet"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.dsls"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.dylan"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.ecl"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.eiffel"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.erlang"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.esoteric"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.factor"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.fantom"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.felix"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.fortran"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.foxpro"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.functional"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.go"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.graph"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.graphics"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.haskell"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.haxe"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.hdl"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.html"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.idl"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.igor"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.inferno"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.installers"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.int_fiction"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.iolang"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.javascript"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.julia"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.jvm"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.lisp"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.make"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.markup"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.math"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.matlab"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.ml"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.modeling"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.nimrod"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.nit"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.nix"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.objective"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.ooc"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.other"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.parsers"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.pascal"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.pawn"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.perl"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.php"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.prolog"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.python"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.r"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.rdf"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.rebol"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.resource"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.robotframework"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.ruby"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.rust"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.scripting"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.shell"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.smalltalk"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.snobol"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.special"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.sql"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.tcl"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.templates"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.testing"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.text"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.textedit"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.textfmts"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.theorem"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.urbi"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.web"
+2015-03-30T10:43:19: Analyzing "pygments.lexers.webmisc"
+2015-03-30T10:43:19: Analyzing "pygments.lexers._asy_builtins"
+2015-03-30T10:43:19: Analyzing "pygments.lexers._cl_builtins"
+2015-03-30T10:43:19: Analyzing "pygments.lexers._cocoa_builtins"
+2015-03-30T10:43:19: Analyzing "pygments.lexers._lasso_builtins"
+2015-03-30T10:43:19: Analyzing "pygments.lexers._lua_builtins"
+2015-03-30T10:43:19: Analyzing "pygments.lexers._mapping"
+2015-03-30T10:43:19: Analyzing "pygments.lexers._mql_builtins"
+2015-03-30T10:43:19: Analyzing "pygments.lexers._openedge_builtins"
+2015-03-30T10:43:19: Analyzing "pygments.lexers._php_builtins"
+2015-03-30T10:43:19: Analyzing "pygments.lexers._postgres_builtins"
+2015-03-30T10:43:19: Analyzing "pygments.lexers._scilab_builtins"
+2015-03-30T10:43:19: Analyzing "pygments.lexers._sourcemod_builtins"
+2015-03-30T10:43:19: Analyzing "pygments.lexers._stan_builtins"
+2015-03-30T10:43:19: Analyzing "pygments.lexers._vim_builtins"
+2015-03-30T10:43:19: Analyzing "pygments.lexers"
+2015-03-30T10:43:19: Analyzing "pygments.styles.autumn"
+2015-03-30T10:43:19: Analyzing "pygments.styles.borland"
+2015-03-30T10:43:19: Analyzing "pygments.styles.bw"
+2015-03-30T10:43:19: Analyzing "pygments.styles.colorful"
+2015-03-30T10:43:19: Analyzing "pygments.styles.default"
+2015-03-30T10:43:19: Analyzing "pygments.styles.emacs"
+2015-03-30T10:43:19: Analyzing "pygments.styles.friendly"
+2015-03-30T10:43:19: Analyzing "pygments.styles.fruity"
+2015-03-30T10:43:19: Analyzing "pygments.styles.igor"
+2015-03-30T10:43:19: Analyzing "pygments.styles.manni"
+2015-03-30T10:43:19: Analyzing "pygments.styles.monokai"
+2015-03-30T10:43:19: Analyzing "pygments.styles.murphy"
+2015-03-30T10:43:19: Analyzing "pygments.styles.native"
+2015-03-30T10:43:19: Analyzing "pygments.styles.paraiso_dark"
+2015-03-30T10:43:19: Analyzing "pygments.styles.paraiso_light"
+2015-03-30T10:43:19: Analyzing "pygments.styles.pastie"
+2015-03-30T10:43:19: Analyzing "pygments.styles.perldoc"
+2015-03-30T10:43:19: Analyzing "pygments.styles.rrt"
+2015-03-30T10:43:19: Analyzing "pygments.styles.tango"
+2015-03-30T10:43:19: Analyzing "pygments.styles.trac"
+2015-03-30T10:43:19: Analyzing "pygments.styles.vim"
+2015-03-30T10:43:19: Analyzing "pygments.styles.vs"
+2015-03-30T10:43:19: Analyzing "pygments.styles.xcode"
+2015-03-30T10:43:19: Analyzing "pygments.styles"
+2015-03-30T10:43:19: Starting analysis of 158 modules
+2015-03-30T10:43:22: Analysis complete
+2015-03-30T10:43:22: Saving group "C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments"
+2015-03-30T10:43:23: End of group "C:\Users\Jason\visual studio 2013\Projects\lmsunsw\lmsunsw\env\Lib\site-packages\pygments"
+2015-03-30T10:43:26: Deleting 0 files

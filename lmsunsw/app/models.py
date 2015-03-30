@@ -5,19 +5,24 @@ Definition of models.
 from django.db import models
 from django.contrib.auth.models import User
 from fluent_contents.models import PlaceholderField
+from fluent_contents.models import Placeholder
 import string
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, related_name='user_profile')
     profile_picture = PlaceholderField("profile_picture")
-    
     # like a toString
     def __unicode__(self):
         return unicode(self.user)
 
 class Lecture(models.Model):
     lecture_name = models.CharField(max_length=30, unique=True)
-    collab_doc = PlaceholderField("collab_doc")
+    collab_doc = PlaceholderField("lecture_docs")
+
+    @property
+    def lecture_docs_used(self):
+        #returns whether the PlaceholderField is being used or not
+        return bool(len(Placeholder.objects.filter(slot='lecture_docs', parent_id=self.id)))
 
     @property
     def get_slug_field(self):

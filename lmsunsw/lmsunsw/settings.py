@@ -2,7 +2,7 @@
 Django settings for lmsunsw project.
 """
 
-from os import path
+from os import path, pardir
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 
 
@@ -120,11 +120,17 @@ ROOT_URLCONF = 'lmsunsw.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'lmsunsw.wsgi.application'
 
+SETTINGS_DIR = path.dirname(__file__)
+PROJECT_PATH = path.join(SETTINGS_DIR, pardir)
+PROJECT_PATH = path.abspath(PROJECT_PATH)
+TEMPLATE_PATH = path.join(PROJECT_PATH, 'app/templates').replace('\\','/')
+
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or
     # "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    TEMPLATE_PATH,
 )
 
 INSTALLED_APPS = (
@@ -136,7 +142,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'app',
     # Uncomment the next line to enable the admin:
-    'django.contrib.admin',
+    'django.contrib.admin.apps.SimpleAdminConfig',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
     'crispy_forms',
@@ -144,7 +150,22 @@ INSTALLED_APPS = (
     'fluent_contents.plugins.googledocscollab',
     'fluent_contents.plugins.googledocsviewer',
     'fluent_contents.plugins.picture',
+    'fluent_contents.plugins.code',                # requires pygments
+    'fluent_contents.plugins.gist',
 )
+# directory where PicturePlugin images are stored
+FLUENT_PICTURE_UPLOAD_TO = 'app/userProfileImages'
+
+FLUENT_CONTENTS_CACHE_OUTPUT = True
+
+FLUENT_CONTENTS_PLACEHOLDER_CONFIG = {
+    'lecture_docs': {
+        'plugins': ('GoogleDocsCollabPlugin', 'GoogleDocsViewerPlugin', 'CodePlugin', 'GistPlugin')
+    },
+    'profile_picture': {
+        'plugins': ('PicturePlugin',)
+    }
+}
 
 CRISPY_TEMPLATE_PACK = 'bootstrap'
 

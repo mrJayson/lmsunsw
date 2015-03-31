@@ -25,7 +25,7 @@ DEBUG = False
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'elasticbeanstalk.com']
+ALLOWED_HOSTS = ['*']
 
 # all login_required views redirect to this url
 LOGIN_URL = '/login'

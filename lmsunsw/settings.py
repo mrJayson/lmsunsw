@@ -25,6 +25,12 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# all login_required views redirect to this url
+LOGIN_URL = '/login'
+
+# once logged in, redirect to this url
+LOGIN_REDIRECT_URL = '/'
+
 
 # Application definition
 

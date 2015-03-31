@@ -8,6 +8,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -31,6 +33,8 @@ LOGIN_URL = '/login'
 # once logged in, redirect to this url
 LOGIN_REDIRECT_URL = '/'
 
+# Crispy Forms
+CRISPY_TEMPLATE_PACK = 'bootstrap'
 
 # Application definition
 
@@ -44,6 +48,11 @@ INSTALLED_APPS = (
     'app',
     'crispy_forms',
     'fluent_contents',
+    'app.fluent_contents_plugins.googledocscollab',
+    'fluent_contents.plugins.googledocsviewer',
+    'fluent_contents.plugins.picture',
+    'fluent_contents.plugins.code',
+    'fluent_contents.plugins.gist',
 
 )
 
@@ -126,14 +135,12 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATIC_URL = '/static/'
-
 
 STATICFILE_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -152,3 +159,20 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
 )
+
+TEMPLATE_CONTEXT_PROCESSORS += ('django.core.context_processors.request',)
+
+# Django Fluent Contents
+
+FLUENT_PICTURE_UPLOAD_TO = 'app/userProfileImages'
+
+FLUENT_CONTENTS_CACHE_OUTPUT = True
+
+FLUENT_CONTENTS_PLACEHOLDER_CONFIG = {
+    'lecture_docs': {
+        'plugins': ('GoogleDocsCollabPlugin', 'GoogleDocsViewerPlugin', 'CodePlugin', 'GistPlugin',)
+    },
+    'profile_picture': {
+        'plugins': ('PicturePlugin',)
+    }
+}

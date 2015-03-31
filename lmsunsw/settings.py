@@ -21,11 +21,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = '__-*0p(yvr=tgqny@l-459y@f68bjtre9kddy@gopn+l!iad#l'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 # all login_required views redirect to this url
 LOGIN_URL = '/login'
@@ -53,6 +53,7 @@ INSTALLED_APPS = (
     'fluent_contents.plugins.picture',
     'fluent_contents.plugins.code',
     'fluent_contents.plugins.gist',
+    'storages',
 
 )
 
@@ -138,7 +139,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(
+                  os.path.dirname(
+                      os.path.dirname(
+                          os.path.abspath(__file__)
+                      )
+                  ),
+                  'static'
+              )
 
 STATIC_URL = '/static/'
 
@@ -146,6 +154,14 @@ STATICFILE_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriedFinder',
 )
+
+if not DEBUG:
+    AWS_STORAGE_BUCKET_NAME = 'elasticbeanstalk-ap-southeast-2-374339935604'
+    AWS_ACCESS_KEY_ID = 'AKIAJJS4ZGC3V2ME5H3Q'
+    AWS_SECRET_ACCESS_KEY = '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'
+    STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    S3_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+    STATIC_URL = S3_URL
 
 # Template files (html)
 

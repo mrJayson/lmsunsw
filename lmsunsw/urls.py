@@ -32,7 +32,7 @@ urlpatterns = patterns('',
     url(r'^course/(?P<lect_id>[0-9]+)/(?P<url_slug>[^/]+)/quiz/(?P<quiz_id>[0-9]+)/(?P<quiz_slug>[^/]+)$', login_required(QuizView.as_view()), name='quiz'),
 
     url(r'^login/?$', login_forbidden(login), 
-        {'template_name':'login.html',
+        {'template_name':'app/login.html',
             #'redirect_field_name':'/',
             'authentication_form':AuthenticationForm,
             'extra_context':

@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
 class CreateUser(CreateView):
-    template_name = 'create_user.html'
+    template_name = 'app/create_user.html'
     form_class = CreateUserForm
 
     def get_success_url(self):

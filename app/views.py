@@ -12,7 +12,7 @@ from django.views.generic import TemplateView
 
 '''generic view for displaying single messages to the user'''
 class AlertView(TemplateView):
-    template_name = "alert.html"
+    template_name = "app/alert.html"
 
     def get_context_data(self, **kwargs):
         context = super(AlertView, self).get_context_data(**kwargs)

@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 
 
 class IndexView(TemplateView):
-    template_name = 'index.html'
+    template_name = 'app/index.html'
         
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
@@ -18,7 +18,7 @@ class IndexView(TemplateView):
 
 
 class LectureView(TemplateView):
-    template_name = 'lecture.html'
+    template_name = 'app/lecture.html'
 
     def get_context_data(self, **kwargs):
         context = super(LectureView, self).get_context_data(**kwargs)
@@ -31,7 +31,7 @@ class LectureView(TemplateView):
         return context
 
 class QuizView(FormView):
-    template_name = 'quiz.html'
+    template_name = 'app/quiz.html'
     #form_class = QuizSelectionForm
     #queryset = QuizChoice.objects.filter(Quiz = self.kwargs(quiz_id))
 

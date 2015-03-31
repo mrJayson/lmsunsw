@@ -1,0 +1,20 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+
+
+{% endblock %}
+
+{% block sidebar %}
+    <ul class="sidebar-nav">
+        <li>
+            <a href="{% url 'index' %}"> Index </a>
+        </li>
+        {% for lecture in lecture_list %}
+            <li>
+                <a href="{% url 'lecture' lecture.id lecture.get_slug_field %}">{{ lecture.lecture_name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

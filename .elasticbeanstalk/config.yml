@@ -1,0 +1,12 @@
+branch-defaults:
+  default:
+    environment: lmsunsw
+  master:
+    environment: lmsunsw
+global:
+  application_name: lmsunsw
+  default_ec2_keyname: lmsunsw
+  default_platform: 64bit Amazon Linux 2014.09 v1.2.0 running Python 2.7
+  default_region: ap-southeast-2
+  profile: eb-cli
+  sc: git

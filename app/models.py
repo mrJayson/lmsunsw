@@ -49,6 +49,10 @@ class QuizChoice(models.Model):
     Quiz = models.ForeignKey(Quiz)
     correct = models.BooleanField(default=False)
     #times_chosen = models.PositiveSmallIntegerField()
+    @property
+    def times_chosen(self):
+        return len(QuizChoiceSelected.objects.filter(quiz_choice=self.id))
+
     
 
 class QuizChoiceSelected(models.Model):

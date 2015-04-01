@@ -12,13 +12,58 @@ from django.utils.translation import ugettext_lazy as _
 
 # Admin settings for staff
 
-class QuizChoiceInLine(admin.TabularInline):
+class QuizChoiceInLine(admin.StackedInline):
     model = QuizChoice
+    # min number of quiz choices per quiz is two
     min_num = 2
+    # display two more quiz choices forms by default, giving 4 choices as standard
     extra = 2
 
 class QuizAdmin(admin.ModelAdmin):
+    """
+    the admin view for creating and editing quizzes, including quiz chocies
+    """
     inlines = [QuizChoiceInLine]
+
+class QuizProxy(Quiz):
+    # need proxy model since django admin does not allow a model to be registered twice
+    class Meta:
+        proxy = True
+
+class QuizChoiceResultsInLine(admin.StackedInline):
+    # inline models of quiz results
+    model = QuizChoice
+    extra = 0
+    fields = ('choice', 'times_chosen',)
+    readonly_fields = fields
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+    def has_edit_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+class QuizResultsAdmin(admin.ModelAdmin):
+    """
+    the admin view for displaying quiz results
+    """
+    inlines = [QuizChoiceResultsInLine]
+
+    fields = ('question',)
+    readonly_fields = fields
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+    def has_edit_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
 
 class LectureAdmin(PlaceholderFieldAdmin):
     pass
@@ -45,6 +90,7 @@ admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(Quiz, QuizAdmin)
+admin.site.register(QuizProxy, QuizResultsAdmin)
 admin.site.register(Lecture, LectureAdmin)
 
 #######################################################################

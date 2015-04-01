@@ -67,4 +67,13 @@ class Migration(migrations.Migration):
             },
             bases=(models.Model,),
         ),
+        migrations.CreateModel(
+            name='QuizProxy',
+            fields=[
+            ],
+            options={
+                'proxy': True,
+            },
+            bases=('app.quiz',),
+        ),
     ]

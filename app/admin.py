@@ -61,6 +61,9 @@ class UserAdminLimited(UserAdmin):
 
     fieldsets = ((None, {'fields': ('username', 'password')}),(_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),)
 
+    list_display = ('username',)
+    list_filter = ()
+
     def get_queryset(self, request):
         """Limit object instances shown to only those owned by the current user"""
         qs = super(UserAdminLimited, self).get_queryset(request)

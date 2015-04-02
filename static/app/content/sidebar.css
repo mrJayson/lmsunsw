@@ -15,6 +15,7 @@
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
+    height: 100%;
 }
 
 #wrapper.toggled {
@@ -44,6 +45,7 @@
     width: 100%;
     position: absolute;
     padding: 15px;
+    height: 100%;
 }
 
 #wrapper.toggled #page-content-wrapper {

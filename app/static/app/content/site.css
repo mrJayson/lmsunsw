@@ -1,6 +1,15 @@
-﻿body {
+﻿html {
+  height: 100%;
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
+    height: 100%;
+}
+
+.container {
+  height: 100%;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -68,4 +77,15 @@ input[type="checkbox"].input-validation-error {
 
 
     padding:4px;
+}
+
+/* iframe resizing css */
+
+#iframe_div {
+  height: 100%;
+}
+
+iframe {
+  height: 100%;
+  width: 100%;
 }

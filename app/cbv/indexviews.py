@@ -23,11 +23,31 @@ class LectureView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(LectureView, self).get_context_data(**kwargs)
         context['slug'] = self.kwargs['url_slug']
-        #lecture_id = self.kwargs['lect_id']
+
+        #need to pass identity of current lecture into template
+        context['current_lecture'] = Lecture.objects.get(id=self.kwargs['lect_id'])
+
+        #used on the sidebar to display tabs
+
         context['lecture_list'] = Lecture.objects.all()
         context['quiz_list'] = Quiz.objects.filter(Lecture = self.kwargs['lect_id'], visible = True)
-        context['lect'] = Lecture.objects.get(id=self.kwargs['lect_id'])
         
+        return context
+
+class LectureSlideView(TemplateView):
+    template_name = 'app/lecture_slide.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(LectureSlideView, self).get_context_data(**kwargs)
+        context['slug'] = self.kwargs['url_slug']
+
+        #need to pass identity of current lecture into template
+        context['current_lecture'] = Lecture.objects.get(id=self.kwargs['lect_id'])
+
+        #used on the sidebar to display tabs
+
+        context['lecture_list'] = Lecture.objects.all()
+        context['quiz_list'] = Quiz.objects.filter(Lecture = self.kwargs['lect_id'], visible = True)
         return context
 
 class QuizView(FormView):

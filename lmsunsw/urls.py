@@ -25,12 +25,21 @@ from app.cbv.createviews import *
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', login_required(IndexView.as_view()), name='index'),
-    url(r'^createuser/$',login_forbidden(CreateUser.as_view()), name='createuser'),
-    url(r'^alert/(?P<tag>.*)$', AlertView.as_view(), name='alert'),
-    url(r'^course/(?P<lect_id>[0-9]+)/(?P<url_slug>[^/]+)$', login_required(LectureView.as_view()), name='lecture'),
-    url(r'^course/(?P<lect_id>[0-9]+)/(?P<url_slug>[^/]+)/quiz/(?P<quiz_id>[0-9]+)/(?P<quiz_slug>[^/]+)$', login_required(QuizView.as_view()), name='quiz'),
 
+    # index page
+    url(r'^$', login_required(IndexView.as_view()), name='index'),
+    # user registration page
+    url(r'^createuser/$',login_forbidden(CreateUser.as_view()), name='createuser'),
+    # generic alert message page
+    url(r'^alert/(?P<tag>.*)$', AlertView.as_view(), name='alert'),
+    # lecture index page
+    url(r'^course/(?P<lect_id>[0-9]+)/(?P<url_slug>[^/]+)$', login_required(LectureView.as_view()), name='lecture'),
+    # quiz page
+    url(r'^course/(?P<lect_id>[0-9]+)/(?P<url_slug>[^/]+)/quiz/(?P<quiz_id>[0-9]+)/(?P<quiz_slug>[^/]+)$', login_required(QuizView.as_view()), name='quiz'),
+    # lecture slide page
+    url(r'^course/(?P<lect_id>[0-9]+)/(?P<url_slug>[^/]+)/lecture_slide/?$', login_required(LectureSlideView.as_view()), name='lecture_slide'),
+
+    # generic login page
     url(r'^login/?$', login_forbidden(login), 
         {'template_name':'app/login.html',
             #'redirect_field_name':'/',
@@ -38,6 +47,7 @@ urlpatterns = patterns('',
             'extra_context':
                 {'title':'LMSUNSW'}},
         name='login'),
+    #generic logout page
     url(r'^logout$',
         'django.contrib.auth.views.logout',
         {

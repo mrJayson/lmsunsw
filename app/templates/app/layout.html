@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }} - My Django Application</title>
     {% load staticfiles %}
-    <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.min.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/sidebar.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
     <script src="{% static 'scripts/modernizr-2.6.2.js' %}"></script>
 </head>
 
 <body>
+
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -63,19 +64,21 @@
             {% endif %}
         </div>
     </div>
-    {% if user.is_authenticated %}
-        <div id="wrapper">
-                <div id="sidebar-wrapper">
-                    {% block sidebar %}{% endblock %}
-                </div>
-                <div id="page-content-wrapper">
-                    {% endif %}
-                    {% block content %}{% endblock %}
-                    {% if user.is_authenticated %}
-                </div>
+        <div class="container">
+        {% if user.is_authenticated %}
+            <div id="wrapper">
+                    <div id="sidebar-wrapper">
+                        {% block sidebar %}{% endblock %}
+                    </div>
+                    <div id="page-content-wrapper">
+                        {% endif %}
+                        {% block content %}{% endblock %}
+                        {% if user.is_authenticated %}
+                    </div>
+            </div>
         </div>
 
-    {% endif %}
+        {% endif %}
     <hr/>
     <footer>
     </footer>

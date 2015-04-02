@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = '__-*0p(yvr=tgqny@l-459y@f68bjtre9kddy@gopn+l!iad#l'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_DEBUG = True
 
@@ -47,12 +47,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'app',
     'crispy_forms',
-    'fluent_contents',
-    'app.fluent_contents_plugins.googledocscollab',
-    'fluent_contents.plugins.googledocsviewer',
-    'fluent_contents.plugins.picture',
-    'fluent_contents.plugins.code',
-    'fluent_contents.plugins.gist',
     'storages',
 
 )
@@ -177,18 +171,3 @@ TEMPLATE_LOADERS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS += ('django.core.context_processors.request',)
-
-# Django Fluent Contents
-
-FLUENT_PICTURE_UPLOAD_TO = 'app/userProfileImages'
-
-FLUENT_CONTENTS_CACHE_OUTPUT = True
-
-FLUENT_CONTENTS_PLACEHOLDER_CONFIG = {
-    'lecture_docs': {
-        'plugins': ('GoogleDocsCollabPlugin', 'GoogleDocsViewerPlugin', 'CodePlugin', 'GistPlugin',)
-    },
-    'profile_picture': {
-        'plugins': ('PicturePlugin',)
-    }
-}

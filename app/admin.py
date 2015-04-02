@@ -4,7 +4,6 @@ Customizations for the Django administration interface
 from django.contrib import admin
 from django.contrib.admin.sites import AdminSite
 from app.models import *
-from fluent_contents.admin import PlaceholderFieldAdmin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
 
@@ -65,10 +64,10 @@ class QuizResultsAdmin(admin.ModelAdmin):
         return False
 
 
-class LectureAdmin(PlaceholderFieldAdmin):
+class LectureAdmin(admin.ModelAdmin):
     pass
 
-class UserProfileAdmin(PlaceholderFieldAdmin):
+class UserProfileAdmin(admin.ModelAdmin):
 
     # once user profile has been made, you should not be able to change the FK
     def change_view(self, request, object_id, form_url='', extra_context=None):

@@ -53,7 +53,7 @@ class QuizSelectionForm(forms.Form):
 
         try:
             #if quiz has been answered already, display result of answer
-            quiz_choice_selected = QuizChoiceSelected.objects.get(user=user,quiz_choice__Quiz=quiz_id) #get is faster than filter so must use this exception
+            quiz_choice_selected = QuizChoiceSelected.objects.get(User=user,QuizChoice__Quiz=quiz_id) #get is faster than filter so must use this exception
             initial_value = quiz_choice_selected.QuizChoice.id
             self.fields['choices'] = forms.ChoiceField(choices = quiz_choice_list, required=True, initial=initial_value, widget=forms.RadioSelect)
             self.helper.layout.append(Fieldset(quiz_question, Field('choices', disabled="true")))
@@ -92,7 +92,7 @@ class QuizSelectionForm(forms.Form):
         if data.get('user') and data.get('choices'):
             user_object = User.objects.get(username=data.get('user'))
             quiz_choice_object = QuizChoice.objects.get(id=data.get('choices'))
-        new_quiz_choice_selected = QuizChoiceSelected.objects.create(user=user_object, QuizChoice=quiz_choice_object)
+        new_quiz_choice_selected = QuizChoiceSelected.objects.create(User=user_object, QuizChoice=quiz_choice_object)
         return new_quiz_choice_selected
 
     class Meta:

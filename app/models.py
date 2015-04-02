@@ -34,7 +34,7 @@ class Lecture(models.Model):
             if lecture.collab_doc == gdoc:
                 return True
         return False
-    @property
+
     def get_unused_gdoc(self):
         for gdoc in glist:
             used = False
@@ -51,7 +51,6 @@ class Lecture(models.Model):
         if self.collab_doc == None:
             # no collab docs has been specified, need to link it with an ununsed gdoc
             self.collab_doc = self.get_unused_gdoc()
-
         return super(Lecture, self).save(*args, **kwargs)
 
 

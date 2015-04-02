@@ -14,8 +14,8 @@ class UserProfile(models.Model):
 
 class Lecture(models.Model):
     lecture_name = models.CharField(max_length=30, unique=True)
-    lecture_slide = models.URLField(blank=True, null=True)
-    collab_doc = models.URLField(blank=True, null=True)
+    lecture_slide = models.URLField(blank=True, null=True, help_text="Optional, Provide a URL link to the lecture slides to be displayed")
+    collab_doc = models.URLField(blank=True, null=True, help_text="Optional, Provide a URL Link to a specific google docs, a blank default will be used if empty")
 
     @property
     def get_slug_field(self):

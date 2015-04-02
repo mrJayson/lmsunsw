@@ -70,7 +70,7 @@ class QuizView(FormView):
         context = super(QuizView, self).get_context_data(**kwargs)
         context['lecture_list'] = Lecture.objects.all()
         context['quiz_list'] = Quiz.objects.filter(Lecture = self.kwargs['lect_id'], visible = True)
-        return contex
+        return context
 
     def form_valid(self, form):
         if form.is_valid():

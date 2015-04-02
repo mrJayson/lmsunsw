@@ -56,7 +56,6 @@ class QuizView(FormView):
     #queryset = QuizChoice.objects.filter(Quiz = self.kwargs(quiz_id))
 
     def get_form(self, data=None, files=None, **kwargs):
-        print "get_form"
         user = self.request.user
         quiz_id = self.kwargs.get('quiz_id')
 
@@ -71,25 +70,14 @@ class QuizView(FormView):
         context = super(QuizView, self).get_context_data(**kwargs)
         context['lecture_list'] = Lecture.objects.all()
         context['quiz_list'] = Quiz.objects.filter(Lecture = self.kwargs['lect_id'], visible = True)
-        return context
-
-    '''def get_queryset(self):
-        print "get_queryset"
-        quiz_id = self.kwargs.get('quiz_id')
-        qs = QuizChoice.objects.filter(Quiz = quiz_id)
-        return qs'''
+        return contex
 
     def form_valid(self, form):
-        print "form_valid"
-        print form.data
         if form.is_valid():
             form.save()
-        else:
-            print "FAILED"
         return super(QuizView, self).form_valid(form)
 
     def get_success_url(self):
-        print "get_success_url"
         lect_id = self.kwargs.get('lect_id')
         quiz_id = self.kwargs.get('quiz_id')
         lecture = Lecture.objects.get(id=self.kwargs.get('lect_id'))

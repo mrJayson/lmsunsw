@@ -1,11 +1,11 @@
 ﻿{% extends "app/layout.html" %}
 
-
-
 {% block content %}
-<!--<object data="https://docs.google.com/document/d/1yWFRMwszAXCBMiEwpv77h092J6Dr2NAs8wJvHsGVxaY/edit?usp=sharing" width="100%" height="100%"></object>-->
-
-
+    {% if current_lecture.collab_doc %}
+        <object data="{{ current_lecture.collab_doc }}" width="100%" height="100%"></object>
+    {% else %}
+        No Document Linked!
+    {% endif %}
 {% endblock %}
 
 {% block sidebar %}

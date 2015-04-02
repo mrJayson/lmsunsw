@@ -5,6 +5,7 @@ Definition of models.
 from django.db import models
 from django.contrib.auth.models import User
 import string
+from docsURL import glist
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='user_profile')
@@ -27,6 +28,32 @@ class Lecture(models.Model):
 
     def __unicode__(self):
         return unicode(self.lecture_name)
+
+    def gdoc_used(self, gdoc):
+        for lecture in Lecture.objects.all():
+            if lecture.collab_doc == gdoc:
+                return True
+        return False
+    @property
+    def get_unused_gdoc(self):
+        for gdoc in glist:
+            used = False
+            for lecture in Lecture.objects.all():
+                if lecture.collab_doc == gdoc:
+                    used = True
+            if used == False:
+                # no lectures are using this gdoc
+                return gdoc
+        # no unused gdocs
+        return ""
+
+    def save(self, *args, **kwargs):
+        if self.collab_doc == None:
+            # no collab docs has been specified, need to link it with an ununsed gdoc
+            self.collab_doc = self.get_unused_gdoc()
+
+        return super(Lecture, self).save(*args, **kwargs)
+
 
 class Quiz(models.Model):
     question = models.TextField()

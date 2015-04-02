@@ -10,4 +10,5 @@ glist = [
 'https://docs.google.com/document/d/1QjbM0grrY-RulEKTZKzDRddx2DcWfj9VdmZPNyvsgew/edit?usp=sharing',
 'https://docs.google.com/document/d/1md2CYh3MJc2t7R04txr1s0-UtAgQ1sHJFfn6Tb_U_Uk/edit?usp=sharing',
 'https://docs.google.com/document/d/1dVS5qwO9wt3Dbxotds6XeVeCXCAfJf0BGZ2jcaRYUac/edit?usp=sharing',
+'https://docs.google.com/document/d/1t6374TipgRDbho6jNwesopRNZ20qXvdeZGImjAGeEdE/edit?usp=sharing',
 ]

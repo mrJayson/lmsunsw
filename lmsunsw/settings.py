@@ -150,9 +150,9 @@ STATICFILE_FINDERS = (
 )
 
 if not DEBUG:
-    AWS_STORAGE_BUCKET_NAME = 'elasticbeanstalk-ap-southeast-2-374339935604'
-    AWS_ACCESS_KEY_ID = 'AKIAIAYMPZT7MA5ZRDCQ'
-    AWS_SECRET_ACCESS_KEY = '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'
+    AWS_STORAGE_BUCKET_NAME = ''
+    AWS_ACCESS_KEY_ID = ''
+    AWS_SECRET_ACCESS_KEY = ''
     STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
     S3_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
     STATIC_URL = S3_URL

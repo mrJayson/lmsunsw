@@ -70,8 +70,8 @@ class QuizChoice(models.Model):
     #times_chosen = models.PositiveSmallIntegerField()
     @property
     def times_chosen(self):
-        return len(QuizChoiceSelected.objects.filter(quiz_choice=self.id))
+        return len(QuizChoiceSelected.objects.filter(QuizChoice=self.id))
 
 class QuizChoiceSelected(models.Model):
-    user = models.ForeignKey(User)
-    quiz_choice = models.ForeignKey(QuizChoice)
+    User = models.ForeignKey(User)
+    QuizChoice = models.ForeignKey(QuizChoice)

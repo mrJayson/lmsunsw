@@ -65,6 +65,8 @@ ROOT_URLCONF = 'lmsunsw.urls'
 
 WSGI_APPLICATION = 'lmsunsw.wsgi.application'
 
+# Specify the default test runner.
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases

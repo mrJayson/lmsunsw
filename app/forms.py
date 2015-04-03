@@ -38,41 +38,136 @@ class CreateUserForm(UserCreationForm):
 
 class QuizSelectionForm(forms.Form):
 
-    def __init__(self, user, quiz_id, *args, **kwargs):
+    def __init__(self, user, quiz, *args, **kwargs):
+
+        ################ data initialise ###################
+
         super(QuizSelectionForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.layout = Layout()
-        #get the question title
-        quiz_question = Quiz.objects.get(pk=quiz_id).question
-        queryset = QuizChoice.objects.filter(Quiz=quiz_id)
+
+        queryset = QuizChoice.objects.filter(Quiz=quiz.id)
         #iterate through list  to create field for each choice
         quiz_choice_list = []
         for quiz_choice in queryset:
             #place in tuples for radio buttons to display
             quiz_choice_list.append((quiz_choice.id, quiz_choice.choice))
 
-        try:
-            #if quiz has been answered already, display result of answer
-            quiz_choice_selected = QuizChoiceSelected.objects.get(User=user,QuizChoice__Quiz=quiz_id) #get is faster than filter so must use this exception
-            initial_value = quiz_choice_selected.QuizChoice.id
-            self.fields['choices'] = forms.ChoiceField(choices = quiz_choice_list, required=True, initial=initial_value, widget=forms.RadioSelect)
-            self.helper.layout.append(Fieldset(quiz_question, Field('choices', disabled="true")))
-            # display a 'correct' or wrong 'button' depending on answer
-            if quiz_choice_selected.QuizChoice.correct:
-                self.helper.add_input(Button(name = "", value="CORRECT", css_class='btn-success'))
+        # switch on quiz_type
+        
+
+        ################### SINGLEMCQ ###################
+        # forms are radio buttons, have only one correct answer
+        # response is either correct or wrong
+
+        if quiz.quiz_type == QuizType.SINGLEMCQ:
+
+            # if quiz not answered yet, filter will return an empty list
+            quiz_choice_selected = QuizChoiceSelected.objects.filter(User=user, QuizChoice__Quiz=quiz.id)
+            if len(quiz_choice_selected) == 0:
+                # Quiz not answered yet, prepare form to collect
+                self.fields['choices'] = forms.ChoiceField(
+                    choices = quiz_choice_list,
+                    required=True,
+                    widget=forms.RadioSelect
+                    )
+                # add hidden values into form
+                self.fields['user'] = forms.CharField(widget=forms.HiddenInput())
+                self.fields['quiz_id'] = forms.CharField(widget=forms.HiddenInput())
+                self.helper.layout.append(
+                    Fieldset(
+                        quiz.question,
+                        Field('choices'),
+                        Field('user', value=user, type="hidden"),
+                        Field('quiz_id', value=quiz.id, type="hidden")
+                        )
+                    )
+                # form is to have a submit button since it needs to collect data
+                self.helper.add_input(Submit('submit', 'Submit'))
             else:
-                self.helper.add_input(Button(name = "", value="WRONG", css_class='btn-danger'))
+                # Quiz answered, prepare form to display result
+                # SINGLEMCQ only allows one choice to be selected
+                initial_value = quiz_choice_selected.first().QuizChoice.id
+                self.fields['choices'] = forms.ChoiceField(
+                    choices = quiz_choice_list,
+                    required=True,
+                    initial=initial_value,
+                    widget=forms.RadioSelect
+                    )
+                self.helper.layout.append(
+                    Fieldset(
+                        quiz.question,
+                        Field('choices', disabled="true")
+                        )
+                    )
+                # depending on the chosen choice, display the result in place of the submit button
+                if quiz_choice_selected.first().QuizChoice.correct:
+                    self.helper.add_input(Button(name = "", value="CORRECT", css_class='btn-success'))
+                else:
+                    self.helper.add_input(Button(name = "", value="WRONG", css_class='btn-danger'))
 
-        except QuizChoiceSelected.DoesNotExist: #if quiz has not been answered yet, display proper format for submission 
-            self.fields['choices'] = forms.ChoiceField(choices = quiz_choice_list, required=True, widget=forms.RadioSelect)
+        ################### MULTIMCQ ###################
+        # forms are checkboxes, can have multiple correct answers, but at least one correct
+        # response can be correct, partially correct or wrong
 
-            #add hidden values into form
-            self.fields['user'] = forms.CharField(widget=forms.HiddenInput())
-            self.fields['quiz_id'] = forms.CharField(widget=forms.HiddenInput())
+        if quiz.quiz_type == QuizType.MULTIMCQ:
 
-            self.helper.layout.append(Fieldset(quiz_question, Field('choices'), Field('user', value=user, type="hidden"), Field('quiz_id', value=quiz_id, type="hidden")))
-            # submit button only needed if quiz has not been previously answered
-            self.helper.add_input(Submit('submit', 'Submit'))
+            # if quiz not answered yet, filter will return an empty list
+            quiz_choice_selected = QuizChoiceSelected.objects.filter(User=user, QuizChoice__Quiz=quiz.id)
+            if len(quiz_choice_selected) == 0:
+                # Quiz not answered yet, prepare form to collect
+                self.fields['choices'] = forms.MultipleChoiceField(
+                    choices = quiz_choice_list,
+                    required=True,
+                    widget=forms.CheckboxSelectMultiple,
+                    help_text="Select all that apply"
+                    )
+                # add hidden values into form
+                self.fields['user'] = forms.CharField(widget=forms.HiddenInput())
+                self.fields['quiz_id'] = forms.CharField(widget=forms.HiddenInput())
+                self.helper.layout.append(
+                    Fieldset(
+                        quiz.question,
+                        Field('choices'),
+                        Field('user', value=user, type="hidden"),
+                        Field('quiz_id', value=quiz.id, type="hidden")
+                        )
+                    )
+                # form is to have a submit button since it needs to collect data
+                self.helper.add_input(Submit('submit', 'Submit'))
+            else:
+                # Quiz answered, prepare form to display result
+                # MULTIMCQ will have many choices selected
+                initial_value = [qcs.QuizChoice.id for qcs in quiz_choice_selected]
+                self.fields['choices'] = forms.MultipleChoiceField(
+                    choices = quiz_choice_list,
+                    required=True,
+                    initial=initial_value,
+                    widget=forms.CheckboxSelectMultiple
+                    )
+                self.helper.layout.append(
+                    Fieldset(
+                        quiz.question,
+                        Field('choices', disabled="true")
+                        )
+                    )
+                # depending on the chosen choice, display the result in place of the submit button
+                list_of_corrects = QuizChoice.objects.filter(Quiz=quiz, correct=True)
+                overlapping_choices = set([qcs.QuizChoice for qcs in quiz_choice_selected]) & set(list_of_corrects)
+                print overlapping_choices
+                print set(quiz_choice_selected)
+                print set(list_of_corrects)
+                if len(overlapping_choices) == 0:
+                    # completely wrong
+                    self.helper.add_input(Button(name = "", value="WRONG", css_class='btn-danger'))
+                elif len(overlapping_choices) == len(list_of_corrects):
+                    # all correct
+                    self.helper.add_input(Button(name = "", value="CORRECT", css_class='btn-success'))
+                else:
+                    # somewhere in between, partially correct
+                    self.helper.add_input(Button(name = "", value="PARTIALLY CORRECT", css_class='btn-warning'))
+                
+        
 
         # to prevent default form messages from being displayed, answer selection can never be wrong
         self.helper.form_show_errors = False
@@ -89,11 +184,11 @@ class QuizSelectionForm(forms.Form):
     def save(self, *args, **kwargs):
         data = self.cleaned_data
         # need user and choices to create object
-        if data.get('user') and data.get('choices'):
-            user_object = User.objects.get(username=data.get('user'))
-            quiz_choice_object = QuizChoice.objects.get(id=data.get('choices'))
-        new_quiz_choice_selected = QuizChoiceSelected.objects.create(User=user_object, QuizChoice=quiz_choice_object)
-        return new_quiz_choice_selected
+        user_object = User.objects.get(username=data.get('user'))
+        return [QuizChoiceSelected.objects.create(User=user_object, QuizChoice=selection)
+        for selection in QuizChoice.objects.filter(id__in=data.get('choices'))]
+        #    new_quiz_choice_selected = QuizChoiceSelected.objects.create(User=user_object, QuizChoice=quiz_choice_object)
+        #return new_quiz_choice_selected
 
     class Meta:
         fields = ()

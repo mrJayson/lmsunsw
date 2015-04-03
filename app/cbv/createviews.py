@@ -22,12 +22,12 @@ class QuizView(FormView):
 
     def get_form(self, data=None, files=None, **kwargs):
         user = self.request.user
-        quiz_id = self.kwargs.get('quiz_id')
+        quiz = Quiz.objects.get(id=self.kwargs.get('quiz_id'))
 
         if self.request.method == "POST":
-            form = QuizSelectionForm(user, quiz_id, data=self.request.POST)
+            form = QuizSelectionForm(user, quiz, data=self.request.POST)
         else: # mainly for GET requests
-            form = QuizSelectionForm(user, quiz_id)
+            form = QuizSelectionForm(user, quiz)
 
         return form
 

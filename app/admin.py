@@ -33,7 +33,7 @@ class QuizChoiceResultsInLine(admin.StackedInline):
     # inline models of quiz results
     model = QuizChoice
     extra = 0
-    fields = ('choice', 'times_chosen',)
+    fields = ('choice', 'times_chosen')
     readonly_fields = fields
 
     def has_add_permission(self, request, obj=None):

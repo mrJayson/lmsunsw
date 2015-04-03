@@ -53,6 +53,14 @@ class Lecture(models.Model):
             self.collab_doc = self.get_unused_gdoc()
         return super(Lecture, self).save(*args, **kwargs)
 
+class QuizType():
+    # represents an enum
+    # one right answer
+    SINGLEMCQ = 1
+    # multiple right answers
+    MULTIMCQ = 2
+    # zero right answers
+    ZEROMCQ = 3
 
 class Quiz(models.Model):
     question = models.TextField()
@@ -62,12 +70,25 @@ class Quiz(models.Model):
     def __unicode__(self):
         return unicode(self.Lecture.lecture_name + " " + self.question)
 
+    @property
+    def quiz_type(self):
+    # must return an enum of QuizType
+        quiz_choice_list = QuizChoice.objects.filter(Quiz=self.id)
+        # acan ssume that for each quiz, there must always be at least 2 choice associated
+        num_correct = len(QuizChoice.objects.filter(Quiz=self.id, correct=True))
+        if num_correct == 0:
+            return QuizType.ZEROMCQ
+        elif num_correct == 1:
+            return QuizType.SINGLEMCQ
+        else:
+            # for all else it is multimcq
+            return QuizType.MULTIMCQ
 
 class QuizChoice(models.Model):
     choice = models.TextField()
     Quiz = models.ForeignKey(Quiz)
     correct = models.BooleanField(default=False)
-    #times_chosen = models.PositiveSmallIntegerField()
+
     @property
     def times_chosen(self):
         return len(QuizChoiceSelected.objects.filter(QuizChoice=self.id))
@@ -75,3 +96,6 @@ class QuizChoice(models.Model):
 class QuizChoiceSelected(models.Model):
     User = models.ForeignKey(User)
     QuizChoice = models.ForeignKey(QuizChoice)
+
+    class Meta:
+        unique_together = ('User', 'QuizChoice') 

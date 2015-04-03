@@ -44,8 +44,6 @@ def populate():
     create_quiz_choice("Left", quiz3, True)
     create_quiz_choice("Right", quiz3, False)
 
-
-
     quiz4 = create_quiz("Which one of these translates a high level language to machine code?", True, lecture3)
     create_quiz_choice("Assembler", quiz4, False)
     create_quiz_choice("Modem", quiz4, False)
@@ -57,6 +55,19 @@ def populate():
     create_quiz_choice("Transport", quiz5, True)
     create_quiz_choice("Data Link", quiz5, False)
     create_quiz_choice("Physical", quiz5, False)
+
+    quiz6 = create_quiz("Where is America Located?", True, lecture2)
+    create_quiz_choice("Northern Hemisphere", quiz6, True)
+    create_quiz_choice("Southern Hemisphere", quiz6, False)
+    create_quiz_choice("Western Hemisphere", quiz6, True)
+    create_quiz_choice("Eastern Hemisphere", quiz6, False)
+
+    quiz6 = create_quiz("What is your favourite colour?", True, lecture3)
+    create_quiz_choice("Orange", quiz6, False)
+    create_quiz_choice("Red", quiz6, False)
+    create_quiz_choice("Green", quiz6, False)
+    create_quiz_choice("None of the above", quiz6, False)
+
 
 
 def create_user(username, first_name, last_name, email, password, is_superuser):

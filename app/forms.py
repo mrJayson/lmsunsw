@@ -166,8 +166,7 @@ class QuizSelectionForm(forms.Form):
                 else:
                     # somewhere in between, partially correct
                     self.helper.add_input(Button(name = "", value="PARTIALLY CORRECT", css_class='btn-warning'))
-                
-        
+
 
         # to prevent default form messages from being displayed, answer selection can never be wrong
         self.helper.form_show_errors = False

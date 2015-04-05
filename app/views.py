@@ -38,6 +38,11 @@ def logout(request, next_page=None,
     ret_val = views.logout(request, next_page, template_name, redirect_field_name, current_app, extra_context)
     #remove session entry from db to maintain correct number of session entries since django only clears the contents not the entry
     Session.objects.all().get(session_key=request.session.session_key).delete()
+    for session in Session.objects.all():
+        if session.get_decoded().get('_auth_user_id') == request.user.id:
+            # sometimes there are multiple sessions for the same user, delete those sessions as well
+            session.delete()
+            
     return ret_val
 
 def vote(request):

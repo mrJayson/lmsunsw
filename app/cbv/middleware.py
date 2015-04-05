@@ -9,9 +9,13 @@ from django.contrib.auth import logout
 
 def django_sessions(request):
 	#context processor to add num of users on the site
-	num_sessions = len(Session.objects.all())
+	sessions_decoded_data = [i.get_decoded() for i in Session.objects.all()]
+	users = []
+	for data in sessions_decoded_data:
+		if data.has_key('_auth_user_id'):
+			users += [data.get('_auth_user_id')]
+	num_sessions = len(set(users))
 	ret_val = {'num_sessions':num_sessions}
-	print num_sessions
 	return ret_val
 
 class SessionSecurityMiddleware(middleware.SessionSecurityMiddleware):
@@ -29,6 +33,10 @@ class SessionSecurityMiddleware(middleware.SessionSecurityMiddleware):
 		if delta >= timedelta(seconds=EXPIRE_AFTER):
 		    logout(request)
 		    Session.objects.all().get(session_key=request.session.session_key).delete()
+		    for session in Session.objects.all():
+        		if session.get_decoded().get('_auth_user_id') == request.user.id:
+            	# sometimes there are multiple sessions for the same user, delete those sessions as well
+            	session.delete()
 		elif request.path not in PASSIVE_URLS:
 		    set_last_activity(request.session, now)
 

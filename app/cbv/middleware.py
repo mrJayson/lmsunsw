@@ -31,12 +31,12 @@ class SessionSecurityMiddleware(middleware.SessionSecurityMiddleware):
 
 		delta = now - get_last_activity(request.session)
 		if delta >= timedelta(seconds=EXPIRE_AFTER):
-		    logout(request)
-		    Session.objects.all().get(session_key=request.session.session_key).delete()
-		    for session in Session.objects.all():
-        		if session.get_decoded().get('_auth_user_id') == request.user.id:
-            	# sometimes there are multiple sessions for the same user, delete those sessions as well
-            	session.delete()
+			logout(request)
+			Session.objects.all().get(session_key=request.session.session_key).delete()
+			for session in Session.objects.all():
+				if session.get_decoded().get('_auth_user_id') == request.user.id:
+					# sometimes there are multiple sessions for the same user, delete those sessions as well
+					session.delete()
 		elif request.path not in PASSIVE_URLS:
 		    set_last_activity(request.session, now)
 

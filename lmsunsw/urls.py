@@ -26,6 +26,8 @@ from app.cbv.createviews import *
 urlpatterns = patterns('',
     # Examples:
 
+    url(r'^vote/$', vote, name='vote'),    
+
     # index page
     url(r'^$', login_required(IndexView.as_view()), name='index'),
     # user registration page

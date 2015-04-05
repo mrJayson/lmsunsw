@@ -99,3 +99,7 @@ class QuizChoiceSelected(models.Model):
 
     class Meta:
         unique_together = ('User', 'QuizChoice') 
+
+class ConfidenceMeter(models.Model):
+    User = models.ForeignKey(User)
+    confidence = models.BooleanField(default=True)

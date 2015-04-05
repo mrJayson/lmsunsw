@@ -53,6 +53,18 @@
     margin-right: -250px;
 }
 
+.navbar-fixed-bottom {
+
+    position: absolute;
+    padding: 15px;
+
+}
+
+#wrapper.toggled .navbar-fixed-bottom {
+    position: absolute;
+    margin-right: -250px;
+}
+
 /* Sidebar Styles */
 
 .sidebar-nav {

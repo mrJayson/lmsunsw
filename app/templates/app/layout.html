@@ -69,21 +69,43 @@
                     {% endif %}
                     {% block content %}{% endblock %}
                     {% if user.is_authenticated %}
+                    <div class="navbar navbar-fixed-bottom">
+                        <hr/>
+                        <footer>
+                            test
+                        </footer>
+                    </div>
                 </div>
+                
         </div>
         {% endif %}
-    <hr/>
-    <footer>
-    </footer>
+
+
+
     <script src="{% static 'app/scripts/jquery-1.10.2.js' %}"></script>
     <script src="{% static 'app/scripts/bootstrap.js' %}"></script>
     <script src="{% static 'app/scripts/respond.js' %}"></script>
+    <!--for toggling the menu during mobile view-->
     <script>
         $("#menu-toggle").click(function(e) {
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
             $("#toggle-arrow").toggleClass("glyphicon glyphicon-chevron-right white glyphicon glyphicon-chevron-left white");
         });
+    </script>
+
+    <!--to trigger ajax request for confidence meter-->
+    <script type="text/javascript">
+        function vote(direction) {
+          $.get("{% url 'vote' %}", {vote: direction}, function(json){
+            alert("Was successful?: " + json['confidence']);
+          });
+        }
+        function addClickHandlers() {
+            $("#understand").click( function() { vote("up") });
+            $("#dontunderstand").click( function() { vote("down") });
+        }
+        $(document).ready(addClickHandlers);
     </script>
 
 {% block scripts %}{% endblock %}

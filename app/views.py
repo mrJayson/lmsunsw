@@ -6,11 +6,14 @@ from django.shortcuts import render
 from django.http import HttpRequest, HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 from datetime import datetime
-from django.http import Http404  
+from django.http import Http404 
+from django.contrib.auth import views
 
 from django.views.generic import TemplateView, View
 import json
 from app.models import ConfidenceMeter
+from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.contrib.sessions.models import Session
 
 
 '''generic view for displaying single messages to the user'''
@@ -26,6 +29,16 @@ class AlertView(TemplateView):
         else:
             raise Http404
         return context
+
+def logout(request, next_page=None,
+           template_name='registration/logged_out.html',
+           redirect_field_name=REDIRECT_FIELD_NAME,
+           current_app=None, extra_context=None):
+    # perform normal logout operation
+    ret_val = views.logout(request, next_page, template_name, redirect_field_name, current_app, extra_context)
+    #remove session entry from db to maintain correct number of session entries since django only clears the contents not the entry
+    Session.objects.all().get(session_key=request.session.session_key).delete()
+    return ret_val
 
 def vote(request):
     # voting for the confusion meter

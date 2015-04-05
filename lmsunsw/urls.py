@@ -51,7 +51,7 @@ urlpatterns = patterns('',
         name='login'),
     #generic logout page
     url(r'^logout$',
-        'django.contrib.auth.views.logout',
+        logout,
         {
             'next_page': '/',
         },
@@ -63,4 +63,6 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^settings/', include(user_admin_site.urls), name='settings'),
+
+    url(r'session_security/', include('session_security.urls')),
 )

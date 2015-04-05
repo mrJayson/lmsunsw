@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     'app',
     'crispy_forms',
     'storages',
+    'session_security',
 
 )
 
@@ -59,6 +60,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'app.cbv.middleware.SessionSecurityMiddleware',
 )
 
 ROOT_URLCONF = 'lmsunsw.urls'
@@ -172,4 +174,14 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
-TEMPLATE_CONTEXT_PROCESSORS += ('django.core.context_processors.request',)
+TEMPLATE_CONTEXT_PROCESSORS += (
+    'django.core.context_processors.request',
+    'app.cbv.middleware.django_sessions',
+    )
+
+# Session security
+
+SESSION_SECURITY_WARN_AFTER = 60
+SESSION_SECURITY_EXPIRE_AFTER = 120
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+

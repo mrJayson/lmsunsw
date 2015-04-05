@@ -72,19 +72,17 @@
                     <div class="navbar navbar-fixed-bottom">
                         <hr/>
                         <footer>
-                            test
+                            Number of users online: {{ num_sessions }}
                         </footer>
                     </div>
                 </div>
-                
         </div>
         {% endif %}
-
-
 
     <script src="{% static 'app/scripts/jquery-1.10.2.js' %}"></script>
     <script src="{% static 'app/scripts/bootstrap.js' %}"></script>
     <script src="{% static 'app/scripts/respond.js' %}"></script>
+    {% include 'session_security/all.html' %}
     <!--for toggling the menu during mobile view-->
     <script>
         $("#menu-toggle").click(function(e) {

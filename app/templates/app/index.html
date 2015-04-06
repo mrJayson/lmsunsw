@@ -3,22 +3,18 @@
 
 {% block content %}
 
-<button id="understand" type="button">understand</button>
-<button id="dontunderstand" type="button">don't understand</button>
+
 
 {% endblock %}
 
 {% block sidebar %}
-    <ul class="sidebar-nav">
+
+    {% for lecture in lecture_list %}
         <li>
-            <a href="{% url 'index' %}"> Index </a>
+            <a href="{% url 'lecture' lecture.id lecture.get_slug_field %}">{{ lecture.lecture_name }}</a>
         </li>
-        {% for lecture in lecture_list %}
-            <li>
-                <a href="{% url 'lecture' lecture.id lecture.get_slug_field %}">{{ lecture.lecture_name }}</a>
-            </li>
-        {% endfor %}
-    </ul>
+    {% endfor %}
+
 {% endblock %}
 
 

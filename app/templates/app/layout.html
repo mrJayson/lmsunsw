@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }} - My Django Application</title>
+    <title>LMSUNSW</title>
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/sidebar.css' %}" />
@@ -63,14 +63,34 @@
         {% if user.is_authenticated %}
         <div id="wrapper">
                 <div id="sidebar-wrapper">
-                    {% block sidebar %}{% endblock %}
+                        <ul class="sidebar-nav">
+                            <li>
+                                <div class="progress">
+                                  <div class="progress-bar progress-bar-success" style="width: 33%">
+                                    <span class="sr-only">35% Complete (success)</span>
+                                  </div>
+                                  <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 33%">
+                                    <span class="sr-only">20% Complete (warning)</span>
+                                  </div>
+                                  <div class="progress-bar progress-bar-danger" style="width: 34%">
+                                    <span class="sr-only">10% Complete (danger)</span>
+                                  </div>
+                                </div>
+                                <button id="understand" type="button" class="btn btn-success btn-xs">understand</button>
+                                <button id="dontunderstand" type="button" class="btn btn-danger btn-xs">don't understand</button>
+                            </li>
+                            <li>
+                                <a href="{% url 'index' %}"> Index </a>
+                            </li>
+                                {% block sidebar %}{% endblock %}
+                        </ul>
                 </div>
                 <div id="page-content-wrapper">
                     {% endif %}
                     {% block content %}{% endblock %}
                     {% if user.is_authenticated %}
                     <div class="navbar navbar-fixed-bottom">
-                        <hr/>
+                        
                         <footer>
                             Number of users online: {{ num_sessions }}
                         </footer>

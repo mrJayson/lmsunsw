@@ -8,6 +8,7 @@ from app.forms import QuizSelectionForm
 from django.core.urlresolvers import reverse
 from app.models import Lecture, Quiz
 
+
 class CreateUser(CreateView):
     template_name = 'app/create_user.html'
     form_class = CreateUserForm

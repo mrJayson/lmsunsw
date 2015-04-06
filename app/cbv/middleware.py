@@ -21,7 +21,6 @@ def django_sessions(request):
 
 def get_confidence_meter_values(request):
 	# context processor for retreiving data for confidence meter
-	print "context_processor"
 	good = 0
 	neutral = 0
 	bad = 0
@@ -35,8 +34,15 @@ def get_confidence_meter_values(request):
 	good = good * 100 / len(ConfidenceMeter.objects.all())
 	neutral = neutral * 100 / len(ConfidenceMeter.objects.all())
 	bad = bad * 100 / len(ConfidenceMeter.objects.all())
+	if request.user.is_authenticated():
+		try:
+			current = ConfidenceMeter.objects.get(User=request.user).confidence
+		except ConfidenceMeter.DoesNotExist:
+			current = None
+	else:
+		current = None
 
-	ret_val = {'good': good, 'neutral': neutral, 'bad': bad}
+	ret_val = {'good': good, 'neutral': neutral, 'bad': bad, 'current': current}
 	return ret_val
 
 
@@ -44,7 +50,6 @@ class SessionSecurityMiddleware(middleware.SessionSecurityMiddleware):
 
 	def process_request(self, request):
 
-		print "Middleware"
 		#need to add session db delete line to maintain correct session entries in db
 		""" Update last activity time or logout. """
 		if not request.user.is_authenticated():

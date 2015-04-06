@@ -101,5 +101,5 @@ class QuizChoiceSelected(models.Model):
         unique_together = ('User', 'QuizChoice') 
 
 class ConfidenceMeter(models.Model):
-    User = models.ForeignKey(User)
+    User = models.OneToOneField(User)
     confidence = models.SmallIntegerField(default=0)

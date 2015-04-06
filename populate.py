@@ -63,7 +63,12 @@ class Rand():
     def confidence(user=None, confidence=None):
         user = (Rand.user() if (len(User.objects.all())==0) else choice(User.objects.all())) if user==None else user
         confidence = choice([1,0,-1])
-        return ConfidenceMeter.objects.create(User=user, confidence=confidence)
+        obj, created = ConfidenceMeter.objects.get_or_create(User=user)
+        if not created:
+            obj.user = user
+            obj.confidence = confidence
+            obj.save()
+        return obj
 
 
 VERBOSE = True
@@ -76,10 +81,33 @@ def clear():
     Quiz.objects.all().delete()
     QuizChoice.objects.all().delete()
     QuizChoiceSelected.objects.all().delete()
+    ConfidenceMeter.objects.all().delete()
 
 
     # remove all user sessions
-    #django.contrib.sessions.models.Session.objects.all().delete()
+    # django.contrib.sessions.models.Session.objects.all().delete()
+
+def revote():
+    Rand.confidence(user=User.objects.all()[0])
+    Rand.confidence(user=User.objects.all()[1])
+    Rand.confidence(user=User.objects.all()[2])
+    Rand.confidence(user=User.objects.all()[3])
+    Rand.confidence(user=User.objects.all()[4])
+    Rand.confidence(user=User.objects.all()[5])
+    Rand.confidence(user=User.objects.all()[6])
+    Rand.confidence(user=User.objects.all()[7])
+    Rand.confidence(user=User.objects.all()[8])
+    Rand.confidence(user=User.objects.all()[9])
+    Rand.confidence(user=User.objects.all()[10])
+    Rand.confidence(user=User.objects.all()[11])
+    Rand.confidence(user=User.objects.all()[12])
+    Rand.confidence(user=User.objects.all()[13])
+    Rand.confidence(user=User.objects.all()[14])
+    Rand.confidence(user=User.objects.all()[15])
+    Rand.confidence(user=User.objects.all()[16])
+    Rand.confidence(user=User.objects.all()[17])
+    Rand.confidence(user=User.objects.all()[18])
+    Rand.confidence(user=User.objects.all()[19])
 
 
 def populate():
@@ -108,27 +136,8 @@ def populate():
     Rand.user()
     Rand.user()
     Rand.user()
-
-    Rand.confidence(user=User.objects.all()[0])
-    Rand.confidence(user=User.objects.all()[1])
-    Rand.confidence(user=User.objects.all()[2])
-    Rand.confidence(user=User.objects.all()[3])
-    Rand.confidence(user=User.objects.all()[4])
-    Rand.confidence(user=User.objects.all()[5])
-    Rand.confidence(user=User.objects.all()[6])
-    Rand.confidence(user=User.objects.all()[7])
-    Rand.confidence(user=User.objects.all()[8])
-    Rand.confidence(user=User.objects.all()[9])
-    Rand.confidence(user=User.objects.all()[10])
-    Rand.confidence(user=User.objects.all()[11])
-    Rand.confidence(user=User.objects.all()[12])
-    Rand.confidence(user=User.objects.all()[13])
-    Rand.confidence(user=User.objects.all()[14])
-    Rand.confidence(user=User.objects.all()[15])
-    Rand.confidence(user=User.objects.all()[16])
-    Rand.confidence(user=User.objects.all()[17])
-    Rand.confidence(user=User.objects.all()[18])
-    Rand.confidence(user=User.objects.all()[19])
+    revote()
+    
     lecture1 = create_lecture("Lecture 1")
     lecture2 = create_lecture("Lecture 2")
     lecture3 = create_lecture("Lecture 3")

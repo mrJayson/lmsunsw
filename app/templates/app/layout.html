@@ -71,15 +71,29 @@
                                     <div id="progress-bar-neutral" class="progress-bar progress-bar-warning" style='width: {{ neutral }}%'></div>
                                     <div id="progress-bar-bad" class="progress-bar progress-bar-danger" style='width: {{ bad }}%'></div>
                                 </div>
-                                
                                 <div id="confidence-btn" class="col-md-4 col-sm-4">
-                                    <button id="good" type="button" class="btn btn-success btn-block">good<span class="glyphicon glyphicon-ok"></span></button>
+                                    <button id="good-btn" type="button" class="btn btn-success btn-block">
+                                        good
+                                        {% if current == 1 %}
+                                            <span class="glyphicon glyphicon-ok"></span>
+                                        {% endif %}
+                                    </button>
                                 </div>
                                 <div id="confidence-btn" class="col-md-4 col-sm-4">
-                                    <button id="neutral" type="button" class="btn btn-warning btn-block">neutral</button>
+                                    <button id="neutral-btn" type="button" class="btn btn-warning btn-block">
+                                        neutral
+                                        {% if current == 0 %}
+                                            <span class="glyphicon glyphicon-ok"></span>
+                                        {% endif %}
+                                    </button>
                                 </div>
                                 <div id="confidence-btn" class="col-md-4 col-sm-4">
-                                    <button id="bad" type="button" class="btn btn-danger btn-block">bad</button>
+                                    <button id="bad-btn" type="button" class="btn btn-danger btn-block">
+                                        bad
+                                        {% if current == -1 %}
+                                            <span class="glyphicon glyphicon-ok"></span>
+                                        {% endif %}
+                                    </button>
                                 </div>
                             </li>
                             <li>
@@ -126,11 +140,25 @@
                     vote: vote,
                 },
                 success: function(data){
-
+                    console.log(data)
                     $("#progress-bar-good").attr("style", "width: "+ data.good +"%");
                     $("#progress-bar-neutral").attr("style", "width: "+ data.neutral +"%");
                     $("#progress-bar-bad").attr("style", "width: "+ data.bad +"%");
-
+                    if (data.current == 1) {
+                        $("#good-btn").html("good<span class='glyphicon glyphicon-ok'></span>")
+                    } else {
+                        $("#good-btn").html("good")
+                    }
+                    if (data.current == 0) {
+                        $("#neutral-btn").html("neutral<span class='glyphicon glyphicon-ok'></span>")
+                    } else {
+                        $("#neutral-btn").html("neutral")
+                    }
+                    if (data.current == -1) {
+                        $("#bad-btn").html("bad<span class='glyphicon glyphicon-ok'></span>")
+                    } else {
+                        $("#bad-btn").html("bad")
+                    }
                 },
                 error: function(response){
 
@@ -138,9 +166,9 @@
             });
         }
         function addClickHandlers() {
-            $("#good").click( function() { vote(1) });
-            $("#neutral").click( function() { vote(0) });
-            $("#bad").click( function() { vote(-1) });
+            $("#good-btn").click( function() { vote(1) });
+            $("#neutral-btn").click( function() { vote(0) });
+            $("#bad-btn").click( function() { vote(-1) });
         }
         $(document).ready(addClickHandlers);
     </script>

@@ -17,6 +17,7 @@ from django.contrib.sessions.models import Session
 
 
 
+
 '''generic view for displaying single messages to the user'''
 class AlertView(TemplateView):
     template_name = "app/alert.html"
@@ -47,14 +48,11 @@ def logout(request, next_page=None,
             session.delete()
     return ret_val
 
-def get_confidence_meter_values():
-    # context processor for retreiving data for confidence meter
-    print "context_processor"
-    
-    return ret_val
+
 
 def vote(request):
     # voting for the confusion meter
+
     if request.is_ajax():
         user = request.user
         vote = request.GET.get("vote")
@@ -69,28 +67,12 @@ def vote(request):
             confidence = 0
 
         confidence_object.confidence = confidence
-
         confidence_object.save()
-
-        print "context_processor"
-        good = 0
-        neutral = 0
-        bad = 0
-        for vote in ConfidenceMeter.objects.all():
-            if vote.confidence == 1:
-                good += 1
-            elif vote.confidence == -1:
-                bad += 1
-            else:
-                neutral += 1
-        good = good * 100 / len(ConfidenceMeter.objects.all())
-        neutral = neutral * 100 / len(ConfidenceMeter.objects.all())
-        bad = bad * 100 / len(ConfidenceMeter.objects.all())
-
-        ret_val = {'good': good, 'neutral': neutral, 'bad': bad}
-
-        #once updated, return results back for html update
-        results = ret_val
+        
+        # once updated, return results back for html update
+        # need to import in here to prevent circular imports
+        from app.cbv.middleware import get_confidence_meter_values
+        results = get_confidence_meter_values(request)
         
         return HttpResponse(json.dumps(results), content_type='application/json')
 

@@ -102,4 +102,4 @@ class QuizChoiceSelected(models.Model):
 
 class ConfidenceMeter(models.Model):
     User = models.ForeignKey(User)
-    confidence = models.BooleanField(default=True)
+    confidence = models.SmallIntegerField(default=0)

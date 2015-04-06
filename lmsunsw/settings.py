@@ -177,6 +177,7 @@ TEMPLATE_LOADERS = (
 TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
     'app.cbv.middleware.django_sessions',
+    'app.cbv.middleware.get_confidence_meter_values',
     )
 
 # Session security

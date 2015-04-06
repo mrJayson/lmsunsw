@@ -12,6 +12,10 @@ body {
   height: 100%;
 }
 
+.progress {
+  margin-bottom: 0;
+}
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -88,4 +92,11 @@ input[type="checkbox"].input-validation-error {
 iframe {
   height: 100%;
   width: 100%;
+}
+
+/* button in the sidebar */
+
+#confidence-btn {
+  padding-left: 0;
+  padding-right: 0;
 }

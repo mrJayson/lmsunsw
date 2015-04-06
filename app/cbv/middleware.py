@@ -6,9 +6,10 @@ from datetime import datetime, timedelta
 from session_security.utils import get_last_activity, set_last_activity
 from session_security.settings import EXPIRE_AFTER, PASSIVE_URLS
 from django.contrib.auth import logout
+from app.models import ConfidenceMeter
 
 def django_sessions(request):
-	#context processor to add num of users on the site
+	# context processor to add num of users on the site
 	sessions_decoded_data = [i.get_decoded() for i in Session.objects.all()]
 	users = []
 	for data in sessions_decoded_data:
@@ -18,9 +19,32 @@ def django_sessions(request):
 	ret_val = {'num_sessions':num_sessions}
 	return ret_val
 
+def get_confidence_meter_values(request):
+	# context processor for retreiving data for confidence meter
+	print "context_processor"
+	good = 0
+	neutral = 0
+	bad = 0
+	for vote in ConfidenceMeter.objects.all():
+		if vote.confidence == 1:
+			good += 1
+		elif vote.confidence == -1:
+			bad += 1
+		else:
+			neutral += 1
+	good = good * 100 / len(ConfidenceMeter.objects.all())
+	neutral = neutral * 100 / len(ConfidenceMeter.objects.all())
+	bad = bad * 100 / len(ConfidenceMeter.objects.all())
+
+	ret_val = {'good': good, 'neutral': neutral, 'bad': bad}
+	return ret_val
+
+
 class SessionSecurityMiddleware(middleware.SessionSecurityMiddleware):
 
 	def process_request(self, request):
+
+		print "Middleware"
 		#need to add session db delete line to maintain correct session entries in db
 		""" Update last activity time or logout. """
 		if not request.user.is_authenticated():

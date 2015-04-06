@@ -65,19 +65,22 @@
                 <div id="sidebar-wrapper">
                         <ul class="sidebar-nav">
                             <li>
-                                <div class="progress">
-                                  <div class="progress-bar progress-bar-success" style="width: 33%">
-                                    <span class="sr-only">35% Complete (success)</span>
-                                  </div>
-                                  <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 33%">
-                                    <span class="sr-only">20% Complete (warning)</span>
-                                  </div>
-                                  <div class="progress-bar progress-bar-danger" style="width: 34%">
-                                    <span class="sr-only">10% Complete (danger)</span>
-                                  </div>
+                                <div id="progress-bar" class="progress">
+
+                                    <div id="progress-bar-good" class="progress-bar progress-bar-success" style='width: {{ good }}%'></div>
+                                    <div id="progress-bar-neutral" class="progress-bar progress-bar-warning" style='width: {{ neutral }}%'></div>
+                                    <div id="progress-bar-bad" class="progress-bar progress-bar-danger" style='width: {{ bad }}%'></div>
                                 </div>
-                                <button id="understand" type="button" class="btn btn-success btn-xs">understand</button>
-                                <button id="dontunderstand" type="button" class="btn btn-danger btn-xs">don't understand</button>
+                                
+                                <div id="confidence-btn" class="col-md-4 col-sm-4">
+                                    <button id="good" type="button" class="btn btn-success btn-block">good<span class="glyphicon glyphicon-ok"></span></button>
+                                </div>
+                                <div id="confidence-btn" class="col-md-4 col-sm-4">
+                                    <button id="neutral" type="button" class="btn btn-warning btn-block">neutral</button>
+                                </div>
+                                <div id="confidence-btn" class="col-md-4 col-sm-4">
+                                    <button id="bad" type="button" class="btn btn-danger btn-block">bad</button>
+                                </div>
                             </li>
                             <li>
                                 <a href="{% url 'index' %}"> Index </a>
@@ -114,14 +117,30 @@
 
     <!--to trigger ajax request for confidence meter-->
     <script type="text/javascript">
-        function vote(direction) {
-          $.get("{% url 'vote' %}", {vote: direction}, function(json){
-            alert("Was successful?: " + json['confidence']);
-          });
+        function vote(vote) {
+            $.ajax({
+                type: "GET",
+                url:  "{% url 'vote' %}",
+                dataType: 'json',
+                data: {
+                    vote: vote,
+                },
+                success: function(data){
+
+                    $("#progress-bar-good").attr("style", "width: "+ data.good +"%");
+                    $("#progress-bar-neutral").attr("style", "width: "+ data.neutral +"%");
+                    $("#progress-bar-bad").attr("style", "width: "+ data.bad +"%");
+
+                },
+                error: function(response){
+
+                },
+            });
         }
         function addClickHandlers() {
-            $("#understand").click( function() { vote("up") });
-            $("#dontunderstand").click( function() { vote("down") });
+            $("#good").click( function() { vote(1) });
+            $("#neutral").click( function() { vote(0) });
+            $("#bad").click( function() { vote(-1) });
         }
         $(document).ready(addClickHandlers);
     </script>

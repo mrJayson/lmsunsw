@@ -16,6 +16,7 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.sessions.models import Session
 
 
+
 '''generic view for displaying single messages to the user'''
 class AlertView(TemplateView):
     template_name = "app/alert.html"
@@ -46,6 +47,12 @@ def logout(request, next_page=None,
             session.delete()
     return ret_val
 
+def get_confidence_meter_values():
+    # context processor for retreiving data for confidence meter
+    print "context_processor"
+    
+    return ret_val
+
 def vote(request):
     # voting for the confusion meter
     if request.is_ajax():
@@ -53,15 +60,38 @@ def vote(request):
         vote = request.GET.get("vote")
         # update model
         confidence_object, created = ConfidenceMeter.objects.get_or_create(User=user)
-        if vote == "up":
-            confidence = True
+        if vote == u'1':
+            confidence = 1
+        elif vote == u'-1':
+            confidence = -1
         else:
-            confidence = False
-        ConfidenceMeter.confidence = confidence
+            #all else is neutral
+            confidence = 0
+
+        confidence_object.confidence = confidence
+
+        confidence_object.save()
+
+        print "context_processor"
+        good = 0
+        neutral = 0
+        bad = 0
+        for vote in ConfidenceMeter.objects.all():
+            if vote.confidence == 1:
+                good += 1
+            elif vote.confidence == -1:
+                bad += 1
+            else:
+                neutral += 1
+        good = good * 100 / len(ConfidenceMeter.objects.all())
+        neutral = neutral * 100 / len(ConfidenceMeter.objects.all())
+        bad = bad * 100 / len(ConfidenceMeter.objects.all())
+
+        ret_val = {'good': good, 'neutral': neutral, 'bad': bad}
 
         #once updated, return results back for html update
-        results = {'confidence': confidence}
-        confidence_object.save()
+        results = ret_val
+        
         return HttpResponse(json.dumps(results), content_type='application/json')
 
     else:

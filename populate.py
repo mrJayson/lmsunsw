@@ -1,6 +1,70 @@
 import sys
 import os
 
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "lmsunsw.settings")
+
+from app.models import *
+from docsURL import glist
+from random import choice
+from string import ascii_lowercase
+
+class Rand():
+
+    @staticmethod
+    def randomString(n):
+        return ''.join(choice(list(ascii_lowercase)) for _ in xrange(n))
+
+    @staticmethod
+    def randomBool():
+        return choice([True,False])
+
+    @staticmethod
+    def randomInt(n):
+        return choice(xrange(n))
+
+
+    @staticmethod
+    def lecture(lecture_name=None, lecture_slide=None, collab_doc=None):
+        lecture_name = Rand.randomString(10) if lecture_name==None else lecture_name
+        lecture_slide = Rand.randomString(10) if lecture_slide==None else lecture_slide
+        collab_doc = Rand.randomString(10) if collab_doc==None else collab_doc
+        return Lecture.objects.create(lecture_name=lecture_name, lecture_slide=lecture_slide, collab_doc=collab_doc)
+
+    @staticmethod
+    def quiz(question=None, visible=None, lecture=None):
+        question = Rand.randomString(10) if question==None else question
+        visible = Rand.randomBool() if visible==None else visible
+        lecture = (Rand.lecture() if (len(Lecture.objects.all())==0) else choice(Lecture.objects.all())) if lecture==None else lecture
+        return Quiz.objects.create(question=question, visible=visible, Lecture=lecture) 
+
+    @staticmethod
+    def quizchoice(quiz_choice=None, quiz=None, correct=None):
+        quiz_choice = Rand.randomString(10) if quiz_choice==None else quiz_choice
+        quiz = (Rand.quiz() if (len(Quiz.objects.all())==0) else choice(Quiz.objects.all())) if quiz==None else quiz
+        correct = Rand.randomBool() if correct==None else correct
+        return QuizChoice.objects.create(choice=quiz_choice, Quiz=quiz, correct=correct)
+
+    @staticmethod
+    def user(username=None, first_name=None, last_name=None, email=None, password=None):
+        username = Rand.randomString(10) if username==None else username
+        first_name = Rand.randomString(10) if first_name==None else first_name
+        last_name = Rand.randomString(10) if last_name==None else last_name
+        email = Rand.randomString(10)+"@"+Rand.randomString(5)+"."+Rand.randomString(3) if email==None else email
+        password = Rand.randomString(10) if password==None else password
+        return User.objects.create(username=username, first_name=first_name, last_name=last_name, email=email, password=password)
+
+    @staticmethod
+    def quizchoiceselected(user=None, quizchoice=None):
+        user = (Rand.user() if (len(User.objects.all())==0) else choice(User.objects.all())) if user==None else user
+        quizchoice = (Rand.quizchoice() if (len(QuizChoice.objects.all())==0) else choice(QuizChoice.objects.all())) if quizchoice==None else quizchoice
+        return QuizChoiceSelected.objects.create(User=user, QuizChoice=quizchoice)
+
+    @staticmethod
+    def confidence(user=None, confidence=None):
+        user = (Rand.user() if (len(User.objects.all())==0) else choice(User.objects.all())) if user==None else user
+        confidence = choice([1,0,-1])
+        return ConfidenceMeter.objects.create(User=user, confidence=confidence)
+
 
 VERBOSE = True
 
@@ -23,6 +87,48 @@ def populate():
 
     create_superuser("admin", "administration", "account", "admin@admin.com", "admin")
     create_student("Jack", "Jack", "James", "Jack@James.com", "password")
+    Rand.user()
+    Rand.user()
+    Rand.user()
+    Rand.user()
+    Rand.user()
+    Rand.user()
+    Rand.user()
+    Rand.user()
+    Rand.user()
+    Rand.user()
+
+    Rand.user()
+    Rand.user()
+    Rand.user()
+    Rand.user()
+    Rand.user()
+    Rand.user()
+    Rand.user()
+    Rand.user()
+    Rand.user()
+    Rand.user()
+
+    Rand.confidence(user=User.objects.all()[0])
+    Rand.confidence(user=User.objects.all()[1])
+    Rand.confidence(user=User.objects.all()[2])
+    Rand.confidence(user=User.objects.all()[3])
+    Rand.confidence(user=User.objects.all()[4])
+    Rand.confidence(user=User.objects.all()[5])
+    Rand.confidence(user=User.objects.all()[6])
+    Rand.confidence(user=User.objects.all()[7])
+    Rand.confidence(user=User.objects.all()[8])
+    Rand.confidence(user=User.objects.all()[9])
+    Rand.confidence(user=User.objects.all()[10])
+    Rand.confidence(user=User.objects.all()[11])
+    Rand.confidence(user=User.objects.all()[12])
+    Rand.confidence(user=User.objects.all()[13])
+    Rand.confidence(user=User.objects.all()[14])
+    Rand.confidence(user=User.objects.all()[15])
+    Rand.confidence(user=User.objects.all()[16])
+    Rand.confidence(user=User.objects.all()[17])
+    Rand.confidence(user=User.objects.all()[18])
+    Rand.confidence(user=User.objects.all()[19])
     lecture1 = create_lecture("Lecture 1")
     lecture2 = create_lecture("Lecture 2")
     lecture3 = create_lecture("Lecture 3")

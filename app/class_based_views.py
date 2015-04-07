@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView, View, CreateView, FormView
+from django.views.generic import TemplateView, View, CreateView, FormView, ListView
 from django.shortcuts import render
 from django.template import RequestContext
 from app.models import *
@@ -60,21 +60,37 @@ class QuizView(FormView, SidebarContextMixin):
         quiz = Quiz.objects.get(id=self.kwargs.get('quiz_id'))
 
         
-        return reverse('quiz', kwargs={'lect_id':lecture.id, 'url_slug':lecture.get_slug_field, 'quiz_id':quiz.id, 'quiz_slug':quiz.question})
+        return reverse('quiz', kwargs={'lect_id':lecture.id, 'url_slug':lecture.slug, 'quiz_id':quiz.id, 'quiz_slug':quiz.question})
 
 class LectureSlideView(TemplateView, SidebarContextMixin):
     template_name = 'app/lecture_slide.html'
 
 
-
-class ThreadView(TemplateView):
+class ThreadView(ListView):
     # view for all threads in a lecture
     template_name = 'app/thread.html'
+    model = Thread
 
     def get_context_data(self, **kwargs):
         context = super(ThreadView, self).get_context_data(**kwargs)
         context['lecture_list'] = Lecture.objects.all()
-        context['threads'] = Thread.objects.all()
         return context
+
+    def get_queryset(self, *args, **kwargs):
+        return Thread.objects.all()
+
+class PostView(ListView):
+    template_name = 'app/post.html'
+    model = Post
+
+    def get_context_data(self, **kwargs):
+        context = super(PostView, self).get_context_data(**kwargs)
+        context['lecture_list'] = Lecture.objects.all()
+        return context
+
+    def get_queryset(self, *args, **kwargs):
+        thread_id = self.kwargs.get('thread_id')
+        return Post.objects.filter(Thread = thread_id)
+
 
 

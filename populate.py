@@ -26,8 +26,7 @@ class Rand():
     @staticmethod
     def lecture(lecture_name=None, lecture_slide=None, collab_doc=None):
         lecture_name = Rand.randomString(10) if lecture_name==None else lecture_name
-        lecture_slide = Rand.randomString(10) if lecture_slide==None else lecture_slide
-        collab_doc = Rand.randomString(10) if collab_doc==None else collab_doc
+        collab_doc = Lecture.get_unused_gdoc() if collab_doc==None else collab_doc
         return Lecture.objects.create(lecture_name=lecture_name, lecture_slide=lecture_slide, collab_doc=collab_doc)
 
     @staticmethod

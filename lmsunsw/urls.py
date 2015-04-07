@@ -41,6 +41,8 @@ urlpatterns = patterns('',
     url(r'^course/(?P<lect_id>[0-9]+)/(?P<url_slug>[^/]+)/lecture_slide/?$', login_required(LectureSlideView.as_view()), name='lecture_slide'),
     # thread index page
     url(r'^course/threads/?$', login_required(ThreadView.as_view()), name='thread'),
+    # posts page
+    url(r'^course/threads/(?P<thread_id>[0-9]+)/(?P<thread_slug>[^/]+)$', login_required(PostView.as_view()), name='post'),
     # generic login page
     url(r'^login/?$', login_forbidden(login), 
         {'template_name':'app/login.html',

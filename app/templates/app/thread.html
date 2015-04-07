@@ -13,10 +13,10 @@
 				<th>Last Post</th>
 			</tr>
 		</thead>
-		{% for thread in threads %}
+		{% for thread in object_list %}
 		<tbody>
 			<tr>
-				<td><a href="#" style="display:block;">{{ thread.title|truncatechars:28 }}</a></td>
+				<td><a href="{% url 'post' thread.id thread.slug %}" style="display:block;">{{ thread.title|truncatechars:28 }}</a></td>
 				<td>{{ thread.replies }}</td>
 				<td>{{ thread.views }}</td>
 				<td>{{ thread.Creator }}</td>

@@ -6,6 +6,7 @@ from django.db import models
 from django.contrib.auth.models import User
 import string
 from app.docsURL import glist
+from autoslug import AutoSlugField
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='user_profile')
@@ -17,6 +18,7 @@ class Lecture(models.Model):
     lecture_name = models.CharField(max_length=30, unique=True)
     lecture_slide = models.URLField(blank=True, null=True, help_text="Optional, Provide a URL link to the lecture slides to be displayed")
     collab_doc = models.URLField(blank=True, null=True, help_text="Optional, Provide a URL Link to a specific google docs, a blank default will be used if empty")
+    slug = AutoSlugField(populate_from='lecture_name')
 
     @property
     def get_slug_field(self):
@@ -24,18 +26,20 @@ class Lecture(models.Model):
 
     @property
     def get_absolute_url(self):
-        return self.id + "/" + get_slug_field()
+        return self.id + "/" + self.slug
 
     def __unicode__(self):
         return unicode(self.lecture_name)
 
-    def gdoc_used(self, gdoc):
+    @staticmethod
+    def gdoc_used(gdoc):
         for lecture in Lecture.objects.all():
             if lecture.collab_doc == gdoc:
                 return True
         return False
 
-    def get_unused_gdoc(self):
+    @staticmethod
+    def get_unused_gdoc():
         for gdoc in glist:
             used = False
             for lecture in Lecture.objects.all():
@@ -50,7 +54,7 @@ class Lecture(models.Model):
     def save(self, *args, **kwargs):
         if self.collab_doc == None:
             # no collab docs has been specified, need to link it with an ununsed gdoc
-            self.collab_doc = self.get_unused_gdoc()
+            self.collab_doc = Lecture.get_unused_gdoc()
         return super(Lecture, self).save(*args, **kwargs)
 
 class QuizType():
@@ -111,6 +115,7 @@ class Thread(models.Model):
     Creator = models.ForeignKey(User)
     created_on = models.DateTimeField(auto_now_add=True)
     views = models.SmallIntegerField(default=0)
+    slug = AutoSlugField(populate_from='title')
 
     @property
     def replies(self):
@@ -123,3 +128,5 @@ class Post(models.Model):
     Creator = models.ForeignKey(User)
     last_touch = models.DateTimeField(auto_now=True)
     rank = models.SmallIntegerField() # for ordering of posts
+
+

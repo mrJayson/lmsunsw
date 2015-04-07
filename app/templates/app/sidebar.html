@@ -4,12 +4,12 @@
     </li>
 {% for lecture in lecture_list %}
     <li>
-        <a href="{% url 'lecture' lecture.id lecture.get_slug_field %}">{{ lecture.lecture_name }}</a>
+        <a href="{% url 'lecture' lecture.id lecture.slug %}">{{ lecture.lecture_name }}</a>
         {% if lecture.id == current_lecture.id %}
             <ul>
                 {% if current_lecture.lecture_slide %}
                 <li>
-                    <a href="{% url 'lecture_slide' lecture.id lecture.get_slug_field %}">Lecture Slides</a>
+                    <a href="{% url 'lecture_slide' lecture.id lecture.slug %}">Lecture Slides</a>
                 </li>
                 {% endif %}
                 
@@ -21,7 +21,7 @@
                 {% endif %}
                 {% for quiz in quiz_list %}
                 <li>
-                    <a href="{% url 'quiz' lecture.id lecture.get_slug_field quiz.id quiz.question %}"> {{ quiz.question }} </a>
+                    <a href="{% url 'quiz' lecture.id lecture.slug quiz.id quiz.question %}"> {{ quiz.question }} </a>
                 </li>
                 {% endfor %}
             </ul>

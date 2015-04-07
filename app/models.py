@@ -109,8 +109,15 @@ class Thread(models.Model):
     title = models.TextField()
     Creator = models.ForeignKey(User)
     created_on = models.DateTimeField(auto_now_add=True)
+    views = models.SmallIntegerField(default=0)
+
+    @property
+    def replies(self):
+        replies = len(Post.objects.filter(Thread=self.id))
+        return replies
 
 class Post(models.Model):
+    Thread = models.ForeignKey(Thread)
     content = models.TextField()
     Creator = models.ForeignKey(User)
     last_touch = models.DateTimeField(auto_now=True)

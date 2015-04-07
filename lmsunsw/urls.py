@@ -40,7 +40,7 @@ urlpatterns = patterns('',
     # lecture slide page
     url(r'^course/(?P<lect_id>[0-9]+)/(?P<url_slug>[^/]+)/lecture_slide/?$', login_required(LectureSlideView.as_view()), name='lecture_slide'),
     # thread index page
-    url(r'^course/(?P<lect_id>[0-9]+)/(?P<url_slug>[^/]+)/threads/?$', login_required(ThreadView.as_view()), name='thread'),
+    url(r'^course/threads/?$', login_required(ThreadView.as_view()), name='thread'),
     # generic login page
     url(r'^login/?$', login_forbidden(login), 
         {'template_name':'app/login.html',

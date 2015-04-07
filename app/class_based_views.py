@@ -68,8 +68,14 @@ class LectureSlideView(TemplateView, SidebarContextMixin):
 
 
 
-class ThreadView(TemplateView, SidebarContextMixin):
+class ThreadView(TemplateView):
     # view for all threads in a lecture
     template_name = 'app/thread.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ThreadView, self).get_context_data(**kwargs)
+        context['lecture_list'] = Lecture.objects.all()
+        context['threads'] = Thread.objects.all()
+        return context
 
 

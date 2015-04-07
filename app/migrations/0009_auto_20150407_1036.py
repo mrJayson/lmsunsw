@@ -32,10 +32,17 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('title', models.TextField()),
                 ('created_on', models.DateTimeField(auto_now_add=True)),
+                ('views', models.SmallIntegerField(default=0)),
                 ('Creator', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
             options={
             },
             bases=(models.Model,),
+        ),
+        migrations.AddField(
+            model_name='post',
+            name='Thread',
+            field=models.ForeignKey(to='app.Thread'),
+            preserve_default=True,
         ),
     ]

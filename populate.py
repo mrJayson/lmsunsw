@@ -147,6 +147,12 @@ def populate():
     create_quiz_choice("Green", quiz6, False)
     create_quiz_choice("None of the above", quiz6, False)
 
+    quiz7 = create_quiz("Which was created first?", True, lecture3)
+    create_quiz_choice("Google", quiz6, False)
+    create_quiz_choice("TV", quiz6, False)
+    create_quiz_choice("Iphone", quiz6, False)
+    create_quiz_choice("Radio", quiz6, True)
+
 
 
 def create_user(username, first_name, last_name, email, password, is_superuser):

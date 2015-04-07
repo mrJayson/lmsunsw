@@ -1,3 +1,7 @@
+
+    <li>
+        <a href="{% url 'thread' %}">Posts</a>
+    </li>
 {% for lecture in lecture_list %}
     <li>
         <a href="{% url 'lecture' lecture.id lecture.get_slug_field %}">{{ lecture.lecture_name }}</a>
@@ -8,9 +12,7 @@
                     <a href="{% url 'lecture_slide' lecture.id lecture.get_slug_field %}">Lecture Slides</a>
                 </li>
                 {% endif %}
-                <li>
-                    <a href="{% url 'thread' lecture.id lecture.get_slug_field %}">Posts</a>
-                </li>
+                
                 <!--Quiz sub-list-->
                 {% if quiz_list %}
                 <li>

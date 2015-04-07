@@ -32,7 +32,7 @@ function vote(vote) {
     vote = typeof vote !== 'undefined' ? {vote:vote} : {};
     $.ajax({
         type: "GET",
-        url:  "vote/",
+        url:  "/vote/",
         dataType: 'json',
         data: vote,
         success: function (data) {

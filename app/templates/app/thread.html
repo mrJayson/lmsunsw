@@ -2,6 +2,29 @@
 
 {% block content %}
 
+<div class="panel panel-default">
+	<table class="table">
+		<tr>
+			<th>Topic</th>
+			<th>Replies</th>
+			<th>Views</th>
+			<th>Last Post</th>
+		</tr>
+		{% for thread in threads %}
+		<tr>
+		<td>{{ thread.title }}</td>
+		<td>{{ thread.replies }}</td>
+		<td>{{ thread.Creator }}</td>
+		<td></td>
+		</tr>
+		{% endfor %}
+		<td>New Topic</td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</table>
+</div>
+
 {% endblock %}
 
 {% block sidebar %}

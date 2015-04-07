@@ -19,6 +19,9 @@
                         <a href="{% url 'lecture_slide' lecture.id lecture.get_slug_field %}">Lecture Slides</a>
                     </li>
                     {% endif %}
+                    <li>
+                        <a href="{% url 'thread' lecture.id lecture.get_slug_field %}">Posts</a>
+                    </li>
                     <!--Quiz sub-list-->
                     {% if quiz_list %}
                     <li>

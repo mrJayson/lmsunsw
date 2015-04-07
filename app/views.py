@@ -72,7 +72,7 @@ def vote(request):
         
         # once updated, return results back for html update
         # need to import in here to prevent circular imports
-        from app.cbv.middleware import get_confidence_meter_values
+        from app.context_processors import get_confidence_meter_values
         results = get_confidence_meter_values(request)
         
         return HttpResponse(json.dumps(results), content_type='application/json')

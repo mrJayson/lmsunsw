@@ -34,19 +34,23 @@ class LectureView(TemplateView):
         
         return context
 
-class LectureSlideView(TemplateView):
+class LectureSlideView(LectureView):
     template_name = 'app/lecture_slide.html'
 
     def get_context_data(self, **kwargs):
         context = super(LectureSlideView, self).get_context_data(**kwargs)
-        context['slug'] = self.kwargs['url_slug']
+        # inherit all the same contexts used in LectureView
 
-        #need to pass identity of current lecture into template
-        context['current_lecture'] = Lecture.objects.get(id=self.kwargs['lect_id'])
-
-        #used on the sidebar to display tabs
-
-        context['lecture_list'] = Lecture.objects.all()
-        context['quiz_list'] = Quiz.objects.filter(Lecture = self.kwargs['lect_id'], visible = True)
         return context
+
+class ThreadView(LectureView):
+    # view for all threads in a lecture
+    template_name = 'app/thread.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ThreadView, self).get_context_data(**kwargs)
+        # inherit all the same contexts used in LectureView
+
+        return context
+
 

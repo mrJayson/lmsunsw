@@ -60,7 +60,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'app.cbv.middleware.SessionSecurityMiddleware',
+    'app.middleware.SessionSecurityMiddleware',
 )
 
 ROOT_URLCONF = 'lmsunsw.urls'
@@ -176,8 +176,8 @@ TEMPLATE_LOADERS = (
 
 TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
-    'app.cbv.middleware.django_sessions',
-    'app.cbv.middleware.get_confidence_meter_values',
+    'app.context_processors.django_sessions',
+    'app.context_processors.get_confidence_meter_values',
     )
 
 # Session security

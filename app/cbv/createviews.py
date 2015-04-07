@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from app.forms import QuizSelectionForm
 from django.core.urlresolvers import reverse
 from app.models import Lecture, Quiz
+from app.cbv.indexviews import LectureView
 
 
 class CreateUser(CreateView):

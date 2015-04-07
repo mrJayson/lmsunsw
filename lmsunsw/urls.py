@@ -19,8 +19,7 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 login_forbidden =  user_passes_test(lambda u: u.is_anonymous(), '/', None)
 
 from app.views import *
-from app.cbv.indexviews import *
-from app.cbv.createviews import *
+from app.class_based_views import *
 
 
 urlpatterns = patterns('',
@@ -40,7 +39,8 @@ urlpatterns = patterns('',
     url(r'^course/(?P<lect_id>[0-9]+)/(?P<url_slug>[^/]+)/quiz/(?P<quiz_id>[0-9]+)/(?P<quiz_slug>[^/]+)$', login_required(QuizView.as_view()), name='quiz'),
     # lecture slide page
     url(r'^course/(?P<lect_id>[0-9]+)/(?P<url_slug>[^/]+)/lecture_slide/?$', login_required(LectureSlideView.as_view()), name='lecture_slide'),
-
+    # thread index page
+    url(r'^course/(?P<lect_id>[0-9]+)/(?P<url_slug>[^/]+)/threads/?$', login_required(ThreadView.as_view()), name='thread'),
     # generic login page
     url(r'^login/?$', login_forbidden(login), 
         {'template_name':'app/login.html',

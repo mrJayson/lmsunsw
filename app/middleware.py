@@ -1,12 +1,10 @@
 # custom middleware to apply to all views and requests
-from django.contrib.sessions.models import Session
 
 from session_security import middleware
 from datetime import datetime, timedelta
 from session_security.utils import get_last_activity, set_last_activity
 from session_security.settings import EXPIRE_AFTER, PASSIVE_URLS
 from django.contrib.auth import logout
-from app.models import ConfidenceMeter
 
 def django_sessions(request):
 	# context processor to add num of users on the site

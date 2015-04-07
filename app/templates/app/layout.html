@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/sidebar.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
-    <script src="{% static 'scripts/modernizr-2.6.2.js' %}"></script>
+    <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
 </head>
 
 <body>
@@ -131,15 +131,8 @@
 
     <!--to trigger ajax request for confidence meter-->
     <script type="text/javascript">
-        function vote(vote) {
-            $.ajax({
-                type: "GET",
-                url:  "{% url 'vote' %}",
-                dataType: 'json',
-                data: {
-                    vote: vote,
-                },
-                success: function(data){
+
+                function refresh_confidence(data) {
                     console.log(data)
                     $("#progress-bar-good").attr("style", "width: "+ data.good +"%");
                     $("#progress-bar-neutral").attr("style", "width: "+ data.neutral +"%");
@@ -159,6 +152,17 @@
                     } else {
                         $("#bad-btn").html("bad")
                     }
+                }
+
+        function vote(vote) {
+            vote = typeof vote !== 'undefined' ? {vote:vote} : {};
+            $.ajax({
+                type: "GET",
+                url:  "{% url 'vote' %}",
+                dataType: 'json',
+                data: vote,
+                success: function (data) {
+                    refresh_confidence(data)
                 },
                 error: function(response){
 
@@ -171,6 +175,14 @@
             $("#bad-btn").click( function() { vote(-1) });
         }
         $(document).ready(addClickHandlers);
+    </script>
+    <script>
+        /* updates the confidence meter periodically */
+        var ping_interval = 1000*5
+        setInterval(function() {
+            vote()
+            }, ping_interval
+        )
     </script>
 
 {% block scripts %}{% endblock %}

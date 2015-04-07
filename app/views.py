@@ -55,19 +55,20 @@ def vote(request):
 
     if request.is_ajax():
         user = request.user
-        vote = request.GET.get("vote")
-        # update model
-        confidence_object, created = ConfidenceMeter.objects.get_or_create(User=user)
-        if vote == u'1':
-            confidence = 1
-        elif vote == u'-1':
-            confidence = -1
-        else:
-            #all else is neutral
-            confidence = 0
+        if request.GET.has_key("vote"):
+            vote = request.GET.get("vote")
+            # update model
+            confidence_object, created = ConfidenceMeter.objects.get_or_create(User=user)
+            if vote == u'1':
+                confidence = 1
+            elif vote == u'-1':
+                confidence = -1
+            else:
+                #all else is neutral
+                confidence = 0
 
-        confidence_object.confidence = confidence
-        confidence_object.save()
+            confidence_object.confidence = confidence
+            confidence_object.save()
         
         # once updated, return results back for html update
         # need to import in here to prevent circular imports

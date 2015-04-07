@@ -154,9 +154,7 @@ class QuizSelectionForm(forms.Form):
                 # depending on the chosen choice, display the result in place of the submit button
                 list_of_corrects = QuizChoice.objects.filter(Quiz=quiz, correct=True)
                 overlapping_choices = set([qcs.QuizChoice for qcs in quiz_choice_selected]) & set(list_of_corrects)
-                print overlapping_choices
-                print set(quiz_choice_selected)
-                print set(list_of_corrects)
+
                 if len(overlapping_choices) == 0:
                     # completely wrong
                     self.helper.add_input(Button(name = "", value="WRONG", css_class='btn-danger'))
@@ -182,12 +180,13 @@ class QuizSelectionForm(forms.Form):
 
     def save(self, *args, **kwargs):
         data = self.cleaned_data
+        # change a single choice into an array of single choice so that it will work in the query
+        selected_choices = data.get('choices') if type(data.get('choices'))==type([]) else [data.get('choices')]
         # need user and choices to create object
         user_object = User.objects.get(username=data.get('user'))
         return [QuizChoiceSelected.objects.create(User=user_object, QuizChoice=selection)
-        for selection in QuizChoice.objects.filter(id__in=data.get('choices'))]
-        #    new_quiz_choice_selected = QuizChoiceSelected.objects.create(User=user_object, QuizChoice=quiz_choice_object)
-        #return new_quiz_choice_selected
+        for selection in QuizChoice.objects.filter(id__in=selected_choices)]
+
 
     class Meta:
         fields = ()

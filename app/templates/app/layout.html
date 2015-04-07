@@ -78,8 +78,9 @@
                     {% block content %}{% endblock %}
                     {% if user.is_authenticated %}
                     <div class="navbar navbar-fixed-bottom">
-                        
+                        <hr>
                         <footer>
+
                             Number of users online: {{ num_sessions }}
                         </footer>
                     </div>

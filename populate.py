@@ -39,19 +39,20 @@ class Rand():
 
     @staticmethod
     def quizchoice(quiz_choice=None, quiz=None, correct=None):
+
         quiz_choice = Rand.randomString(10) if quiz_choice==None else quiz_choice
         quiz = (Rand.quiz() if (len(Quiz.objects.all())==0) else choice(Quiz.objects.all())) if quiz==None else quiz
         correct = Rand.randomBool() if correct==None else correct
         return QuizChoice.objects.create(choice=quiz_choice, Quiz=quiz, correct=correct)
 
     @staticmethod
-    def user(username=None, first_name=None, last_name=None, email=None, password=None):
+    def user(username=None, first_name=None, last_name=None, email=None, password=None, is_superuser=False):
         username = Rand.randomString(10) if username==None else username
         first_name = Rand.randomString(10) if first_name==None else first_name
         last_name = Rand.randomString(10) if last_name==None else last_name
         email = Rand.randomString(10)+"@"+Rand.randomString(5)+"."+Rand.randomString(3) if email==None else email
         password = Rand.randomString(10) if password==None else password
-        return User.objects.create(username=username, first_name=first_name, last_name=last_name, email=email, password=password)
+        return User.objects.create_user(username=username, first_name=first_name, last_name=last_name, email=email, password=password)
 
     @staticmethod
     def quizchoiceselected(user=None, quizchoice=None):
@@ -70,8 +71,52 @@ class Rand():
             obj.save()
         return obj
 
+    @staticmethod
+    def thread(title=None, Creator=None, views=None):
+        title = Rand.randomString(40) if title==None else title
+        Creator = (Rand.user() if (len(User.objects.all())==0) else choice(User.objects.all())) if Creator==None else Creator
+        views = Rand.randomInt(100) if views==None else views
+        return Thread.objects.create(title=title, Creator=Creator, views=views)
 
-VERBOSE = True
+def create_user(username=None, first_name=None, last_name=None, email=None, password=None, is_superuser=None):
+    """
+    Set all users' is_staff to True to be able to access all of the django admin features
+    """
+    print "creating user... "
+    new_user = Rand.user(username=username, first_name=first_name, last_name=last_name, email=email,  password=password, is_superuser=is_superuser)
+    if is_superuser == False:
+        new_user.user_permissions.add(Permission.objects.get(name='Can change user'), Permission.objects.get(name='Can change user profile')) 
+    new_user.save()
+    # create accompanying entry for additional user data
+    new_user_profile, created = UserProfile.objects.get_or_create(user=new_user)
+    return new_user
+
+def create_student(username=None, first_name=None, last_name=None, email=None, password=None):
+    return create_user(username, first_name, last_name, email, password, False)
+
+def create_superuser(username=None, first_name=None, last_name=None, email=None, password=None):
+    return create_user(username, first_name, last_name, email, password, True)
+
+def create_lecture(lecture_name=None):
+    print "creating lecture... "
+    new_lecture = Rand.lecture(lecture_name=lecture_name)
+    return new_lecture
+
+def create_quiz(question=None, visible=None, Lecture=None):
+    print "creating quiz... "
+    new_quiz = Rand.quiz(question, visible, Lecture)
+    return new_quiz
+
+def create_quiz_choice(choice=None, Quiz=None, correct=None):
+    print "creating quiz_choice... "
+    new_quiz_choice = Rand.quizchoice(quiz_choice=choice, quiz=Quiz, correct=correct)
+    return new_quiz_choice
+
+def create_thread(title=None, Creator=None, views=None):
+    print "creating thread... "
+    new_thread = Rand.thread(title, Creator, views)
+    return new_thread
+
 
 def clear():
     print "Clearing database"
@@ -82,13 +127,11 @@ def clear():
     QuizChoice.objects.all().delete()
     QuizChoiceSelected.objects.all().delete()
     ConfidenceMeter.objects.all().delete()
-
-
     # remove all user sessions
-    # django.contrib.sessions.models.Session.objects.all().delete()
+    django.contrib.sessions.models.Session.objects.all().delete()
 
-def revote():
-    for i in xrange(100):
+def vote(n):
+    for i in xrange(n):
         Rand.confidence(user=User.objects.all()[i])
 
 
@@ -96,11 +139,11 @@ def revote():
 def populate():
     print "Populating database"
 
-    create_superuser("admin", "administration", "account", "admin@admin.com", "admin")
-    create_student("Jack", "Jack", "James", "Jack@James.com", "password")
-    for i in xrange(100):
-        Rand.user()
-    revote()
+    create_superuser(username="admin", first_name="administration", last_name="account", email="admin@admin.com", password="admin")
+    create_student(username="Jack", first_name="Jack", last_name="James", email="Jack@James.com", password="password")
+    #for i in xrange(100):
+    #    create_user()
+    #vote(100)
     
     lecture1 = create_lecture("Lecture 1")
     lecture2 = create_lecture("Lecture 2")
@@ -153,56 +196,13 @@ def populate():
     create_quiz_choice("Iphone", quiz6, False)
     create_quiz_choice("Radio", quiz6, True)
 
+    thread1 = create_thread()
+    thread2 = create_thread()
+    thread3 = create_thread()
 
 
-def create_user(username, first_name, last_name, email, password, is_superuser):
-    """
-    Set all users' is_staff to True to be able to access all of the django admin features
-    """
 
-    sys.stdout.write("creating user... ")
-    new_user = User.objects.create_user(username=username, email=email,  password=password)
-    new_user.first_name = first_name
-    new_user.last_name = last_name
-    new_user.is_staff = True
-    new_user.is_superuser = is_superuser
-    if is_superuser == False:
-        new_user.user_permissions.add(Permission.objects.get(name='Can change user'), Permission.objects.get(name='Can change user profile')) 
-    new_user.save()
-    # create accompanying entry for additional user data
-    new_user_profile, created = UserProfile.objects.get_or_create(user=new_user)
-    print "success" if created else "failed"
-    assert created
 
-    return new_user
-
-def create_student(username, first_name, last_name, email, password):
-    return create_user(username, first_name, last_name, email, password, False)
-
-def create_superuser(username, first_name, last_name, email, password):
-    return create_user(username, first_name, last_name, email, password, True)
-
-def create_lecture(lecture_name):
-    sys.stdout.write("creating lecture... ")
-    new_lecture, created = Lecture.objects.get_or_create(lecture_name=lecture_name)
-    #new_lecture.save()
-    print "success" if created else "failed"
-    assert created
-    return new_lecture
-
-def create_quiz(question, visible, Lecture):
-    sys.stdout.write("creating quiz... ")
-    new_quiz, created = Quiz.objects.get_or_create(question=question, visible=visible, Lecture=Lecture)
-    print "success" if created else "failed"
-    assert created
-    return new_quiz
-
-def create_quiz_choice(choice, Quiz, correct):
-    sys.stdout.write("creating quiz_choice... ")
-    new_quiz_choice, created = QuizChoice.objects.get_or_create(choice=choice, Quiz=Quiz, correct=correct)
-    print "success" if created else "failed"
-    assert created
-    return new_quiz_choice
 
 def run():
     clear()

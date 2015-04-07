@@ -49,7 +49,6 @@ class QuizView(FormView, SidebarContextMixin):
         return form
 
     def form_valid(self, form):
-        print "FORM_VALID"
         if form.is_valid():
             form.save()
         return super(QuizView, self).form_valid(form)

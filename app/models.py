@@ -107,6 +107,7 @@ class ConfidenceMeter(models.Model):
 class Thread(models.Model):
     # to be thread head for posts to attach onto
     title = models.TextField()
+    content = models.TextField()
     Creator = models.ForeignKey(User)
     created_on = models.DateTimeField(auto_now_add=True)
     views = models.SmallIntegerField(default=0)

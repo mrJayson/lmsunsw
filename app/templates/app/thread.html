@@ -4,24 +4,40 @@
 
 <div class="panel panel-default">
 	<table class="table">
-		<tr>
-			<th>Topic</th>
-			<th>Replies</th>
-			<th>Views</th>
-			<th>Last Post</th>
-		</tr>
+		<thead>
+			<tr>
+				<th>Topic</th>
+				<th>Replies</th>
+				<th>Views</th>
+				<th>Creator</th>
+				<th>Last Post</th>
+			</tr>
+		</thead>
 		{% for thread in threads %}
-		<tr>
-		<td>{{ thread.title }}</td>
-		<td>{{ thread.replies }}</td>
-		<td>{{ thread.Creator }}</td>
-		<td></td>
-		</tr>
+		<tbody>
+			<tr>
+				<td><a href="#" style="display:block;">{{ thread.title|truncatechars:28 }}</a></td>
+				<td>{{ thread.replies }}</td>
+				<td>{{ thread.views }}</td>
+				<td>{{ thread.Creator }}</td>
+				<td>{{ thread.last_post }}</td>
+			</tr>
+		</tbody>
 		{% endfor %}
-		<td>New Topic</td>
-		<td></td>
-		<td></td>
-		<td></td>
+		
+		<tfoot>
+			<tr>
+				<td>
+					<button type="button" class="btn btn-default">
+						New Topic
+					</button>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</tfoot>
 	</table>
 </div>
 

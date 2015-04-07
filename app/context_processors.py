@@ -24,9 +24,11 @@ def get_confidence_meter_values(request):
 			bad += 1
 		else:
 			neutral += 1
-	good = good * 100 / len(ConfidenceMeter.objects.all())
-	neutral = neutral * 100 / len(ConfidenceMeter.objects.all())
+
 	bad = bad * 100 / len(ConfidenceMeter.objects.all())
+	neutral = neutral * 100 / len(ConfidenceMeter.objects.all())
+	# so ensure that the total sums to 100, make good 100 - bad and neutral
+	good = 100 - neutral - bad
 	if request.user.is_authenticated():
 		try:
 			current = ConfidenceMeter.objects.get(User=request.user).confidence

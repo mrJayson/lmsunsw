@@ -88,26 +88,9 @@ def clear():
     # django.contrib.sessions.models.Session.objects.all().delete()
 
 def revote():
-    Rand.confidence(user=User.objects.all()[0])
-    Rand.confidence(user=User.objects.all()[1])
-    Rand.confidence(user=User.objects.all()[2])
-    Rand.confidence(user=User.objects.all()[3])
-    Rand.confidence(user=User.objects.all()[4])
-    Rand.confidence(user=User.objects.all()[5])
-    Rand.confidence(user=User.objects.all()[6])
-    Rand.confidence(user=User.objects.all()[7])
-    Rand.confidence(user=User.objects.all()[8])
-    Rand.confidence(user=User.objects.all()[9])
-    Rand.confidence(user=User.objects.all()[10])
-    Rand.confidence(user=User.objects.all()[11])
-    Rand.confidence(user=User.objects.all()[12])
-    Rand.confidence(user=User.objects.all()[13])
-    Rand.confidence(user=User.objects.all()[14])
-    Rand.confidence(user=User.objects.all()[15])
-    Rand.confidence(user=User.objects.all()[16])
-    Rand.confidence(user=User.objects.all()[17])
-    Rand.confidence(user=User.objects.all()[18])
-    Rand.confidence(user=User.objects.all()[19])
+    for i in xrange(100):
+        Rand.confidence(user=User.objects.all()[i])
+
 
 
 def populate():
@@ -115,27 +98,8 @@ def populate():
 
     create_superuser("admin", "administration", "account", "admin@admin.com", "admin")
     create_student("Jack", "Jack", "James", "Jack@James.com", "password")
-    Rand.user()
-    Rand.user()
-    Rand.user()
-    Rand.user()
-    Rand.user()
-    Rand.user()
-    Rand.user()
-    Rand.user()
-    Rand.user()
-    Rand.user()
-
-    Rand.user()
-    Rand.user()
-    Rand.user()
-    Rand.user()
-    Rand.user()
-    Rand.user()
-    Rand.user()
-    Rand.user()
-    Rand.user()
-    Rand.user()
+    for i in xrange(100):
+        Rand.user()
     revote()
     
     lecture1 = create_lecture("Lecture 1")

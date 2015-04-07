@@ -1,10 +1,11 @@
-﻿<!DOCTYPE html>
+﻿{% load staticfiles %}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LMSUNSW</title>
-    {% load staticfiles %}
+    
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/sidebar.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
@@ -65,36 +66,7 @@
                 <div id="sidebar-wrapper">
                         <ul class="sidebar-nav">
                             <li>
-                                <div id="progress-bar" class="progress">
-
-                                    <div id="progress-bar-good" class="progress-bar progress-bar-success" style='width: {{ good }}%'></div>
-                                    <div id="progress-bar-neutral" class="progress-bar progress-bar-warning" style='width: {{ neutral }}%'></div>
-                                    <div id="progress-bar-bad" class="progress-bar progress-bar-danger" style='width: {{ bad }}%'></div>
-                                </div>
-                                <div id="confidence-btn" class="col-md-4 col-sm-4">
-                                    <button id="good-btn" type="button" class="btn btn-success btn-block">
-                                        good
-                                        {% if current == 1 %}
-                                            <span class="glyphicon glyphicon-ok"></span>
-                                        {% endif %}
-                                    </button>
-                                </div>
-                                <div id="confidence-btn" class="col-md-4 col-sm-4">
-                                    <button id="neutral-btn" type="button" class="btn btn-warning btn-block">
-                                        neutral
-                                        {% if current == 0 %}
-                                            <span class="glyphicon glyphicon-ok"></span>
-                                        {% endif %}
-                                    </button>
-                                </div>
-                                <div id="confidence-btn" class="col-md-4 col-sm-4">
-                                    <button id="bad-btn" type="button" class="btn btn-danger btn-block">
-                                        bad
-                                        {% if current == -1 %}
-                                            <span class="glyphicon glyphicon-ok"></span>
-                                        {% endif %}
-                                    </button>
-                                </div>
+                                {% include "app/confidence_meter.html" %}
                             </li>
                             <li>
                                 <a href="{% url 'index' %}"> Index </a>
@@ -119,64 +91,11 @@
     <script src="{% static 'app/scripts/jquery-1.10.2.js' %}"></script>
     <script src="{% static 'app/scripts/bootstrap.js' %}"></script>
     <script src="{% static 'app/scripts/respond.js' %}"></script>
+    <script src="{% static 'app/scripts/site.js' %}"></script>
     {% include 'session_security/all.html' %}
-    <!--for toggling the menu during mobile view-->
-    <script>
-        $("#menu-toggle").click(function(e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
-            $("#toggle-arrow").toggleClass("glyphicon glyphicon-chevron-right white glyphicon glyphicon-chevron-left white");
-        });
-    </script>
 
-    <!--to trigger ajax request for confidence meter-->
-    <script type="text/javascript">
-
-                function refresh_confidence(data) {
-                    console.log(data)
-                    $("#progress-bar-good").attr("style", "width: "+ data.good +"%");
-                    $("#progress-bar-neutral").attr("style", "width: "+ data.neutral +"%");
-                    $("#progress-bar-bad").attr("style", "width: "+ data.bad +"%");
-                    if (data.current == 1) {
-                        $("#good-btn").html("good<span class='glyphicon glyphicon-ok'></span>")
-                    } else {
-                        $("#good-btn").html("good")
-                    }
-                    if (data.current == 0) {
-                        $("#neutral-btn").html("neutral<span class='glyphicon glyphicon-ok'></span>")
-                    } else {
-                        $("#neutral-btn").html("neutral")
-                    }
-                    if (data.current == -1) {
-                        $("#bad-btn").html("bad<span class='glyphicon glyphicon-ok'></span>")
-                    } else {
-                        $("#bad-btn").html("bad")
-                    }
-                }
-
-        function vote(vote) {
-            vote = typeof vote !== 'undefined' ? {vote:vote} : {};
-            $.ajax({
-                type: "GET",
-                url:  "{% url 'vote' %}",
-                dataType: 'json',
-                data: vote,
-                success: function (data) {
-                    refresh_confidence(data)
-                },
-                error: function(response){
-
-                },
-            });
-        }
-        function addClickHandlers() {
-            $("#good-btn").click( function() { vote(1) });
-            $("#neutral-btn").click( function() { vote(0) });
-            $("#bad-btn").click( function() { vote(-1) });
-        }
-        $(document).ready(addClickHandlers);
-    </script>
     {% if user.is_authenticated %}
+    <!-- ensure refreshes only occur when logged in -->
         <script>
             /* updates the confidence meter periodically */
             var ping_interval = 1000*15

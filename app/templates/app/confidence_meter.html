@@ -1,0 +1,33 @@
+<div id="progress-bar" class="progress">
+    <div id="progress-bar-good" class="progress-bar progress-bar-success" style='width: {{ good }}%'></div>
+    <div id="progress-bar-neutral" class="progress-bar progress-bar-warning" style='width: {{ neutral }}%'></div>
+    <div id="progress-bar-bad" class="progress-bar progress-bar-danger" style='width: {{ bad }}%'></div>
+</div>
+<div id="confidence-btn" class="col-md-4 col-sm-4">
+    <button id="good-btn" type="button" class="btn btn-success btn-block">
+        good
+        {% if current == 1 %}
+            <span class="glyphicon glyphicon-ok"></span>
+        {% endif %}
+    </button>
+</div>
+<div id="confidence-btn" class="col-md-4 col-sm-4">
+    <button id="neutral-btn" type="button" class="btn btn-warning btn-block">
+        neutral
+        {% if current == 0 %}
+            <span class="glyphicon glyphicon-ok"></span>
+        {% endif %}
+    </button>
+</div>
+<div id="confidence-btn" class="col-md-4 col-sm-4">
+    <button id="bad-btn" type="button" class="btn btn-danger btn-block">
+        bad
+        {% if current == -1 %}
+            <span class="glyphicon glyphicon-ok"></span>
+        {% endif %}
+    </button>
+</div>
+
+{% block scripts %}
+
+{% endblock %}

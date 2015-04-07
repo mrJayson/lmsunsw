@@ -6,6 +6,7 @@ from app.forms import CreateUserForm
 from django.contrib.auth.models import User
 from app.forms import QuizSelectionForm
 from django.core.urlresolvers import reverse
+from app.mixins import SidebarContextMixin
 
 
 class IndexView(TemplateView):
@@ -19,22 +20,10 @@ class IndexView(TemplateView):
         return context
 
 
-class LectureView(TemplateView):
+class LectureView(TemplateView, SidebarContextMixin):
     template_name = 'app/lecture.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(LectureView, self).get_context_data(**kwargs)
-        context['slug'] = self.kwargs['url_slug']
 
-        #need to pass identity of current lecture into template
-        context['current_lecture'] = Lecture.objects.get(id=self.kwargs['lect_id'])
-
-        #used on the sidebar to display tabs
-
-        context['lecture_list'] = Lecture.objects.all()
-        context['quiz_list'] = Quiz.objects.filter(Lecture = self.kwargs['lect_id'], visible = True)
-        
-        return context
 
 class CreateUser(CreateView):
     template_name = 'app/create_user.html'
@@ -43,7 +32,7 @@ class CreateUser(CreateView):
     def get_success_url(self):
         return reverse('alert', kwargs={'tag':'create_user_success'})
 
-class QuizView(FormView):
+class QuizView(FormView, SidebarContextMixin):
     template_name = 'app/quiz.html'
     #form_class = QuizSelectionForm
     #queryset = QuizChoice.objects.filter(Quiz = self.kwargs(quiz_id))
@@ -58,12 +47,6 @@ class QuizView(FormView):
             form = QuizSelectionForm(user, quiz)
 
         return form
-
-    def get_context_data(self, **kwargs):
-        context = super(QuizView, self).get_context_data(**kwargs)
-        context['lecture_list'] = Lecture.objects.all()
-        context['quiz_list'] = Quiz.objects.filter(Lecture = self.kwargs['lect_id'], visible = True)
-        return context
 
     def form_valid(self, form):
         print "FORM_VALID"
@@ -80,21 +63,13 @@ class QuizView(FormView):
         
         return reverse('quiz', kwargs={'lect_id':lecture.id, 'url_slug':lecture.get_slug_field, 'quiz_id':quiz.id, 'quiz_slug':quiz.question})
 
-class LectureSlideView(LectureView):
+class LectureSlideView(TemplateView, SidebarContextMixin):
     template_name = 'app/lecture_slide.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(LectureSlideView, self).get_context_data(**kwargs)
-        # inherit all the same contexts used in LectureView
 
-        return context
 
-class ThreadView(LectureView):
+class ThreadView(TemplateView, SidebarContextMixin):
     # view for all threads in a lecture
     template_name = 'app/thread.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(ThreadView, self).get_context_data(**kwargs)
-        # inherit all the same contexts used in LectureView
 
-        return context

@@ -8,19 +8,5 @@
 {% endblock %}
 
 {% block sidebar %}
-    {% for lecture in lecture_list %}
-        <li>
-            <a href="{% url 'lecture' lecture.id lecture.get_slug_field %}">{{ lecture.lecture_name }}</a>
-            <ul>
-                {% for quiz in quiz_list %}
-                    {% if lecture.id == quiz.Lecture.id %}
-                        <li>
-                            <a href="{% url 'quiz' lecture.id lecture.get_slug_field quiz.id quiz.question %}"> {{ quiz.question }} </a>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            
-        </li>
-    {% endfor %}
+    {% include "app/sidebar.html" %}
 {% endblock %}

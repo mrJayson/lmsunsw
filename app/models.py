@@ -5,7 +5,7 @@ Definition of models.
 from django.db import models
 from django.contrib.auth.models import User
 import string
-from docsURL import glist
+from app.docsURL import glist
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='user_profile')
@@ -102,4 +102,16 @@ class QuizChoiceSelected(models.Model):
 
 class ConfidenceMeter(models.Model):
     User = models.OneToOneField(User)
-    confidence = models.SmallIntegerField(default=0)
+    confidence = models.SmallIntegerField(default=0) # value of 0 means neutral
+
+class Thread(models.Model):
+    # to be thread head for posts to attach onto
+    title = models.TextField()
+    Creator = models.ForeignKey(User)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+class Post(models.Model):
+    content = models.TextField()
+    Creator = models.ForeignKey(User)
+    last_touch = models.DateTimeField(auto_now=True)
+    rank = models.SmallIntegerField() # for ordering of posts

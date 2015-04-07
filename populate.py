@@ -4,7 +4,7 @@ import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "lmsunsw.settings")
 
 from app.models import *
-from docsURL import glist
+from app.docsURL import glist
 from random import choice
 from string import ascii_lowercase
 

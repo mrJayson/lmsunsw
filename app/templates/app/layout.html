@@ -176,14 +176,16 @@
         }
         $(document).ready(addClickHandlers);
     </script>
-    <script>
-        /* updates the confidence meter periodically */
-        var ping_interval = 1000*5
-        setInterval(function() {
-            vote()
-            }, ping_interval
-        )
-    </script>
+    {% if user.is_authenticated %}
+        <script>
+            /* updates the confidence meter periodically */
+            var ping_interval = 1000*15
+            setInterval(function() {
+                vote()
+                }, ping_interval
+            )
+        </script>
+    {% endif %}
 
 {% block scripts %}{% endblock %}
 

@@ -1,6 +1,18 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		{{ thread.title }}
+	</div>
+	<div class="panel-body">
+		{% for object in object_list %}
+			<div class="well well-lg">
+				{{ object.content }}
+			</div>
+		{% endfor %}
+	</div>
+</div>
 
 {% endblock %}
 

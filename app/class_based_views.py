@@ -86,6 +86,7 @@ class PostView(ListView):
     def get_context_data(self, **kwargs):
         context = super(PostView, self).get_context_data(**kwargs)
         context['lecture_list'] = Lecture.objects.all()
+        context['thread'] = Thread.objects.get(id=self.kwargs.get('thread_id'))
         return context
 
     def get_queryset(self, *args, **kwargs):

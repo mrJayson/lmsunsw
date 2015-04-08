@@ -12,7 +12,7 @@ class Rand():
 
     @staticmethod
     def randomString(n):
-        return ''.join(choice(list(ascii_lowercase)) for _ in xrange(n))
+        return ''.join(choice(list(ascii_lowercase+" ")) for _ in xrange(n))
 
     @staticmethod
     def randomBool():
@@ -76,6 +76,14 @@ class Rand():
         Creator = (Rand.user() if (len(User.objects.all())==0) else choice(User.objects.all())) if Creator==None else Creator
         views = Rand.randomInt(100) if views==None else views
         return Thread.objects.create(title=title, Creator=Creator, views=views)
+
+    @staticmethod
+    def post(thread=None, content=None, Creator=None):
+        thread = (Rand.thread() if (len(Thread.objects.all())==0) else choice(Thread.objects.all())) if thread==None else thread
+        content = Rand.randomString(40) if content==None else content
+        Creator = (Rand.user() if (len(User.objects.all())==0) else choice(User.objects.all())) if Creator==None else Creator
+        rank = thread.replies
+        return Post.objects.create(Thread=thread, content=content, Creator=Creator, rank=rank)
 
 def create_user(username=None, first_name=None, last_name=None, email=None, password=None, is_superuser=None):
     """
@@ -198,6 +206,8 @@ def populate():
     thread1 = create_thread()
     thread2 = create_thread()
     thread3 = create_thread()
+    for i in xrange(15):
+        Rand.post()
 
 
 

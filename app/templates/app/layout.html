@@ -74,15 +74,17 @@
                         </ul>
                 </div>
                 <div id="page-content-wrapper">
-                    {% endif %}
-                    {% block content %}{% endblock %}
-                    {% if user.is_authenticated %}
-                    <div class="navbar navbar-fixed-bottom">
-                        <hr>
-                        <footer>
-
-                            Number of users online: {{ num_sessions }}
-                        </footer>
+                    <div class="footer-push-wrapper">
+                        {% endif %}
+                        {% block content %}{% endblock %}
+                        {% if user.is_authenticated %}
+                        <div class="push"></div>
+                    </div>
+                    <div class="footer">
+                            <hr>
+                            <footer>
+                                Number of users online: {{ num_sessions }}
+                            </footer>
                     </div>
                 </div>
         </div>

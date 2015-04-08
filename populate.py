@@ -51,7 +51,11 @@ class Rand():
         last_name = Rand.randomString(10) if last_name==None else last_name
         email = Rand.randomString(10)+"@"+Rand.randomString(5)+"."+Rand.randomString(3) if email==None else email
         password = Rand.randomString(10) if password==None else password
-        return User.objects.create_user(username=username, first_name=first_name, last_name=last_name, email=email, password=password)
+        user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, email=email, password=password)
+        user.is_staff = True
+        user.is_superuser = is_superuser
+        user.save()
+        return user
 
     @staticmethod
     def quizchoiceselected(user=None, quizchoice=None):

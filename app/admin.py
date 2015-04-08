@@ -91,6 +91,7 @@ admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(Quiz, QuizAdmin)
 admin.site.register(QuizProxy, QuizResultsAdmin)
 admin.site.register(Lecture, LectureAdmin)
+admin.site.register(Wordcloud)
 
 #######################################################################
 

@@ -129,4 +129,9 @@ class Post(models.Model):
     last_touch = models.DateTimeField(auto_now=True)
     rank = models.SmallIntegerField() # for ordering of posts
 
+class Wordcloud(models.Model):
+    title = models.CharField(max_length=30, unique=True)
+    words = models.TextField(blank=True, null=True)
+    image = models.ImageField(upload_to='wordcloud')
+
 

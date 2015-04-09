@@ -93,6 +93,10 @@ class QuizChoice(models.Model):
     Quiz = models.ForeignKey(Quiz)
     correct = models.BooleanField(default=False)
 
+    def __unicode__(self):
+        return unicode(self.choice)
+
+
     @property
     def times_chosen(self):
         return len(QuizChoiceSelected.objects.filter(QuizChoice=self.id))
@@ -117,6 +121,9 @@ class Thread(models.Model):
     views = models.SmallIntegerField(default=0)
     slug = AutoSlugField(populate_from='title')
 
+    def __unicode__(self):
+        return unicode(self.title)
+
     @property
     def replies(self):
         replies = len(Post.objects.filter(Thread=self.id))
@@ -129,9 +136,15 @@ class Post(models.Model):
     last_touch = models.DateTimeField(auto_now=True)
     rank = models.SmallIntegerField() # for ordering of posts
 
+    def __unicode__(self):
+        return unicode(self.content)
+
 class Wordcloud(models.Model):
     title = models.CharField(max_length=30, unique=True)
     words = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to='wordcloud')
+
+    def __unicode__(self):
+        return unicode(self.title)
 
 

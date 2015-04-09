@@ -5,7 +5,7 @@ Definition of urls for lmsunsw.
 # Uncomment the next lines to enable the admin:
 from django.conf.urls import include
 from django.contrib import admin
-from app.admin import user_admin_site
+from app.admin import user_admin_site, default_admin_site
 
 
 from datetime import datetime
@@ -63,7 +63,7 @@ urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(default_admin_site.urls)),
     url(r'^settings/', include(user_admin_site.urls), name='settings'),
 
     url(r'session_security/', include('session_security.urls')),

@@ -1,0 +1,18 @@
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <li>
+            <a href="{% url 'index' %}"> Index </a>
+        </li>
+    	{% if app_list %}
+		    {% for app in app_list %}
+		        {% for model in app.models %}
+		            {% if model.admin_url %}
+		                <li>
+		                	<a href="{{ model.admin_url }}">{{ model.name }}</a>
+		                </li>
+		            {% endif %}
+		        {% endfor %}
+		    {% endfor %}
+    	{% endif %}
+    </ul>
+</div>

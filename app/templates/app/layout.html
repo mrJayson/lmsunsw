@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/sidebar.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
     <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
+    {% block extrahead %}{% endblock %}
 </head>
 
 <body>
@@ -61,18 +62,8 @@
         {% endif %}
     </div>
         {% if user.is_authenticated %}
-        <div id="wrapper">
-                <div id="sidebar-wrapper">
-                        <ul class="sidebar-nav">
-                            <li>
-                                {% include "app/confidence_meter.html" %}
-                            </li>
-                            <li>
-                                <a href="{% url 'index' %}"> Index </a>
-                            </li>
-                                {% block sidebar %}{% endblock %}
-                        </ul>
-                </div>
+        <div id="wrapper"> 
+                {% block sidebar %}{% endblock %}
                 <div id="page-content-wrapper">
                     <div class="footer-push-wrapper">
                         {% endif %}

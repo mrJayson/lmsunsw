@@ -1,0 +1,64 @@
+{% extends "app/layout.html" %}
+{% load i18n admin_urls admin_static admin_list app_admin_list %}
+
+{% block extrahead %}
+  {% if cl.formset or action_form %}
+    <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+  {% endif %}
+    {{ media.css }}
+	{{ block.super }}
+	{{ media.js }}
+	{% if action_form %}
+		{% if actions_on_top or actions_on_bottom %}
+			<script type="text/javascript">
+			(function($) {
+			    $(document).ready(function($) {
+			        $("tr input.action-select").actions();
+			    });
+			})(django.jQuery);
+			</script>
+		{% endif %}
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+
+
+
+
+<form id="changelist-form" action="" method="post"{% if cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>{% csrf_token %}
+	{% if cl.formset %}
+		<div>{{ cl.formset.management_form }}</div>
+	{% endif %}
+
+	{% block result_list %}
+		{% if action_form and actions_on_top and cl.full_result_count %}{% admin_actions %}{% endif %}
+			{% result_list cl %}
+		{% if action_form and actions_on_bottom and cl.full_result_count %}{% admin_actions %}{% endif %}
+	{% endblock %}
+
+	</form>
+	<div class="row">
+		<div class="col-xs-6">
+			{% url cl.opts|admin_urlname:'add' as add_url %}
+			<button type="button" class="btn btn-default btn-sm">
+				<a href="{% add_preserved_filters add_url is_popup to_field %}" class="addlink">
+					{% blocktrans with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktrans %}
+				</a>	
+			</button>
+		</div>
+		<div <div class="col-xs-6">
+			<div id="float-right">
+				{% block pagination %}
+					{% pagination cl %}
+				{% endblock %}
+			</div>
+		</div>
+		
+	</div>
+
+{% endblock %}
+
+{% block sidebar %}
+	{% include "admin/sidebar.html" %}
+{% endblock %}

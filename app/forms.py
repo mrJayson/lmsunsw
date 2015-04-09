@@ -11,6 +11,8 @@ from app.models import *
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit, Field, Button
+#from app.widgets import AdminTextInputWidget, AdminURLFieldWidget
+from django.contrib.admin import widgets
 
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
@@ -187,7 +189,39 @@ class QuizSelectionForm(forms.Form):
         return [QuizChoiceSelected.objects.create(User=user_object, QuizChoice=selection)
         for selection in QuizChoice.objects.filter(id__in=selected_choices)]
 
-
     class Meta:
         fields = ()
-        
+
+###################################################################################################
+# Custom Admin forms
+
+class DefaultUserAdminForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(DefaultUserAdminForm, self).__init__(*args, **kwargs)
+
+class QuizAdminForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(QuizAdminForm, self).__init__(*args, **kwargs)
+        self.fields['question'].widget = widgets.AdminTextareaWidget({'id': 'admin-form-control', 'class': 'form-control'})
+        #self.fields['visible'].widget = widgets.AdminTextareaWidget({'id': 'admin-form-control', 'class': 'form-control'})
+        #self.fields['Lecture'].widget = widgets.AdminTextareaWidget({'id': 'admin-form-control', 'class': 'form-control'})
+
+class LectureAdminForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(LectureAdminForm, self).__init__(*args, **kwargs)
+        self.fields['lecture_name'].widget = widgets.AdminTextInputWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'Title of the Lecture'})
+        self.fields['lecture_slide'].widget = widgets.AdminURLFieldWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'Lecture Slide URL'})
+        self.fields['collab_doc'].widget = widgets.AdminURLFieldWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'A generic Document will be provided if left empty'})
+
+class WordcloudAdminForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(WordcloudAdminForm, self).__init__(*args, **kwargs)
+        self.fields['title'].widget = widgets.AdminTextInputWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'Title of the wordcloud'})
+        self.fields['words'].widget = widgets.AdminTextareaWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'The words to be placed into the word cloud as a String'})
+
+class QuizChoiceInLineForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(WordcloudAdminForm, self).__init__(*args, **kwargs)
+        self.fields['choice'].widget = widgets.AdminTextareaWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'One of the quiz choices'})
+        self.fields['Quiz'].widget = widgets.AdminURLFieldWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'Lecture Slide URL'})
+        self.fields['correct'].widget = widgets.AdminURLFieldWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'A generic Document will be provided if left empty'})

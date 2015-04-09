@@ -200,4 +200,4 @@ class NewPostForm(forms.Form):
 
 	class Meta:
 		model = User
-		fields = ("title", "Comment")
+		fields = ("reply")

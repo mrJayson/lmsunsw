@@ -1,17 +1,36 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
-<div class="panel panel-default">
+<div class="panel panel-primary">
 	<div class="panel-heading">
 		{{ thread.title }}
 	</div>
 	<div class="panel-body">
-		{% for object in object_list %}
-			<div class="well well-lg">
-				{{ object.content }}
+		{% if thread.content %}
+			<div class="well">
+				{{ thread.content }}
 			</div>
-		{% endfor %}
+		{% endif %}
 	</div>
+
+		{% for post in object_list %}
+		<div class="panel {% cycle 'panel-info' 'panel-success' 'panel-warning' 'panel-danger'%}">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-md-6">
+						{{ post.Creator }}
+					</div>
+					<div id="float-text-right" class="col-md-6">
+						{{ post.last_touch }}
+					</div>
+				</div>
+			</div>
+		<div class="panel-body">			
+			{{ post.content }}
+		</div>
+	</div>
+		{% endfor %}
+	
 </div>
 
 {% endblock %}

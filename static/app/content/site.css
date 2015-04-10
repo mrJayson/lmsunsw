@@ -121,7 +121,10 @@ iframe {
 /* sizing and alignment of the change_list_add_button in admin */
 
 #float-right {
-  float: right
+  float: right;
+}
+#float-text-right {
+  text-align: right;
 }
 
 /* admin detail view header */
@@ -140,4 +143,9 @@ iframe {
 
 #admin-form-control {
   max-width: none;
+}
+
+/* style button like a submit */
+#submit-styled-button {
+  width: 100%;
 }

@@ -180,7 +180,7 @@ if not DEBUG:
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
-    #os.path.join(BASE_DIR, 'app/templates'),
+    os.path.join(BASE_DIR, 'app/templates'),
 )
 
 # List of callables that know how to import templates from various sources.

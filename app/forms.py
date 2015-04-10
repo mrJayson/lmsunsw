@@ -57,7 +57,6 @@ class CreateUserForm(UserCreationForm):
         )
         return new_user
 
-
 class QuizSelectionForm(forms.Form):
 
     def __init__(self, user, quiz, *args, **kwargs):
@@ -290,6 +289,13 @@ class LectureAdminForm(forms.ModelForm):
         self.fields['lecture_name'].widget = widgets.AdminTextInputWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'Title of the Lecture'})
         self.fields['lecture_slide'].widget = widgets.AdminURLFieldWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'Lecture Slide URL'})
         self.fields['collab_doc'].widget = widgets.AdminURLFieldWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'A generic Document will be provided if left empty'})
+
+    def clean_collab_doc(self):
+        collab_doc = self.cleaned_data.get('collab_doc')
+        # if field is empty, retrieve an unused gdoc
+        if collab_doc == "":
+            collab_doc = Lecture.get_unused_gdoc()
+        return collab_doc
 
 class WordcloudAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):

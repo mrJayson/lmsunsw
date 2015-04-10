@@ -257,3 +257,4 @@ class QuizChoiceInLineForm(forms.ModelForm):
         self.fields['choice'].widget = widgets.AdminTextareaWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'One of the quiz choices'})
         self.fields['Quiz'].widget = widgets.AdminURLFieldWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'Lecture Slide URL'})
         self.fields['correct'].widget = widgets.AdminURLFieldWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'A generic Document will be provided if left empty'})
+

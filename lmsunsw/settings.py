@@ -50,6 +50,7 @@ INSTALLED_APPS = (
     'storages',
     'session_security',
     'autoslug',
+    'password_reset',
 
 )
 
@@ -179,7 +180,7 @@ if not DEBUG:
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
-    os.path.join(BASE_DIR, 'app/templates'),
+    #os.path.join(BASE_DIR, 'app/templates'),
 )
 
 # List of callables that know how to import templates from various sources.
@@ -200,4 +201,14 @@ TEMPLATE_CONTEXT_PROCESSORS += (
 SESSION_SECURITY_WARN_AFTER = 3300
 SESSION_SECURITY_EXPIRE_AFTER = 3600
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+#Email settings
+
+EMAIL_HOST = 'smtp-mail.outlook.com'
+EMAIL_HOST_USER = 'jasonhuang.2014@outlook.com'
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = '587'
+EMAIL_USE_TLS = True
+
+DEFAULT_FROM_EMAIL = 'jasonhuang.2014@outlook.com'
 

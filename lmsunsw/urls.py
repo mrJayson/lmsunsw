@@ -69,4 +69,6 @@ urlpatterns = patterns('',
     url(r'^settings/', include(user_admin_site.urls), name='settings'),
 
     url(r'session_security/', include('session_security.urls')),
+
+    url(r'password_reset/', include('password_reset.urls')),
 )

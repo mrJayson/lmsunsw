@@ -13,6 +13,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit, Field, Button
 #from app.widgets import AdminTextInputWidget, AdminURLFieldWidget
 from django.contrib.admin import widgets
+from django.contrib.auth.models import Permission
 
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
@@ -30,12 +31,31 @@ class CreateUserForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super(CreateUserForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
+        self.fields['username'].widget = forms.TextInput(attrs={'placeholder': 'User name', 'id': 'admin-form-control', 'class': 'form-control'})
+        self.fields['password1'].widget = forms.PasswordInput(attrs={'placeholder': 'Password', 'id': 'admin-form-control', 'class': 'form-control'})
+        self.fields['password2'].widget = forms.PasswordInput(attrs={'placeholder': 'Type in your password again', 'id': 'admin-form-control', 'class': 'form-control'})
+        self.fields['first_name'].widget = forms.TextInput(attrs={'placeholder': 'First Name', 'id': 'admin-form-control', 'class': 'form-control'})
+        self.fields['last_name'].widget = forms.TextInput(attrs={'placeholder': 'Last Name', 'id': 'admin-form-control', 'class': 'form-control'})
+        self.fields['email'].widget = forms.TextInput(attrs={'placeholder': 'Email Address', 'id': 'admin-form-control', 'class': 'form-control'})
         self.helper.add_input(Submit('submit', 'Submit'))
 
     class Meta:
         # Provide an assoication between the ModelForm and a model
         model = User
         fields = ("username", "password1", "password2", "first_name", "last_name", "email")
+
+    def save(self, *args, **kwargs):
+        new_user = super(CreateUserForm, self).save(*args, **kwargs)
+        # add permissions user upon creation
+        new_user.user_permissions.add(
+            Permission.objects.get(name='Can change user'),
+            Permission.objects.get(name='Can change user profile'),
+            Permission.objects.get(name='Can add thread'),
+            Permission.objects.get(name='Can change thread'),
+            Permission.objects.get(name='Can add post'),
+            Permission.objects.get(name='Can change post'),
+        )
+        return new_user
 
 
 class QuizSelectionForm(forms.Form):

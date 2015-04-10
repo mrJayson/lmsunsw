@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.template import RequestContext
 from app.models import *
 from django.contrib.auth.models import User
-from app.forms import QuizSelectionForm, CreateThreadForm, CreateUserForm
+from app.forms import QuizSelectionForm, CreateThreadForm, CreateUserForm, PostReplyForm
 from django.core.urlresolvers import reverse
 from app.mixins import SidebarContextMixin
 
@@ -98,7 +98,8 @@ class CreateThreadView(CreateView):
     def get_success_url(self):
         return reverse('thread')
 
-class PostView(ListView):
+class PostView(CreateView):
+    # create view since priority is the posts reply form
     template_name = 'app/post.html'
     model = Post
 
@@ -106,11 +107,17 @@ class PostView(ListView):
         context = super(PostView, self).get_context_data(**kwargs)
         context['lecture_list'] = Lecture.objects.all()
         context['thread'] = Thread.objects.get(id=self.kwargs.get('thread_id'))
+        context['posts'] = Post.objects.filter(Thread = self.kwargs.get('thread_id'))
         return context
 
-    def get_queryset(self, *args, **kwargs):
-        thread_id = self.kwargs.get('thread_id')
-        return Post.objects.filter(Thread = thread_id)
+    def get_form(self, data=None, files=None, **kwargs):
+        user = self.request.user
+        thread = Thread.objects.get(id=self.kwargs.get('thread_id'))
+        if self.request.method == "POST":
+            form = PostReplyForm(user=user, thread=thread, data=self.request.POST)
+        else: # mainly for GET requests
+            form = PostReplyForm(user=user, thread=thread)
+        return form
 
-
-
+    def get_success_url(self):
+        return reverse('post', kwargs={'thread_id':self.kwargs.get('thread_id'), 'thread_slug':self.kwargs.get('thread_slug')})

@@ -191,15 +191,12 @@ class QuizSelectionForm(forms.Form):
 
     class Meta:
         fields = ()
-
 class CreateThreadForm(forms.ModelForm):
     def __init__(self, user, *args, **kwargs):
         super(CreateThreadForm, self).__init__(*args, **kwargs)
-        # need to set creator to request.user
         self.helper = FormHelper(self)
         self.helper.layout = Layout()
 
-        #self.fields['creator'] = forms.CharField(widget=forms.HiddenInput(attrs={'value':'value'}))
         self.fields['title'] = forms.CharField(widget=forms.TextInput(attrs={'id': 'admin-form-control', 'class': 'form-control'}))
         self.fields['content'] = forms.CharField(widget=forms.Textarea(attrs={'id': 'admin-form-control', 'class': 'form-control'}))
         self.fields['Creator'] = forms.CharField(widget=forms.HiddenInput(attrs={'value':user.id}))
@@ -220,9 +217,41 @@ class CreateThreadForm(forms.ModelForm):
         return user_object
 
     class Meta:
-        pass
         model = Thread
         #fields = ('title', 'content')
+
+class PostReplyForm(forms.ModelForm):
+
+
+    def __init__(self, user, thread, *args, **kwargs):
+        super(PostReplyForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout()
+        self.thread = thread
+
+        self.fields['Thread'] = forms.CharField(widget=forms.HiddenInput(attrs={'value':thread.id}))
+        self.fields['content'] = forms.CharField(label="Reply", widget=forms.Textarea(attrs={'id': 'admin-form-control', 'class': 'form-control'}))
+        self.fields['Creator'] = forms.CharField(widget=forms.HiddenInput(attrs={'value':user.id}))
+        self.helper.add_input(Submit('submit', 'Submit'))
+
+    class Meta:
+        model = Post
+        fields = ('content',)
+
+    def clean_rank(self):
+        rank = self.thread.replies
+        print "RANK"
+        return rank
+
+    def save(self, *args, **kwargs):
+        data = self.cleaned_data
+        thread_object = Thread.objects.get(id=data.get('Thread'))
+        content = data.get('content')
+        Creator = user_object = User.objects.get(id=self.cleaned_data.get('Creator'))
+        rank = thread_object.replies
+        post_object = Post.objects.create(Thread=thread_object, content=content, Creator=Creator, rank=rank)
+        return post_object
+
 
 ###################################################################################################
 # Custom Admin forms

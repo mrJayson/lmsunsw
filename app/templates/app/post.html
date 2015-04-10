@@ -1,4 +1,5 @@
 {% extends "app/layout.html" %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <div class="panel panel-primary">
@@ -13,14 +14,15 @@
 		{% endif %}
 	</div>
 
-		{% for post in object_list %}
+		{% for post in posts %}
 		<div class="panel {% cycle 'panel-info' 'panel-success' 'panel-warning' 'panel-danger'%}">
 			<div class="panel-heading">
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-xs-6">
+						#{{ post.rank }}
 						{{ post.Creator }}
 					</div>
-					<div id="float-text-right" class="col-md-6">
+					<div id="float-text-right" class="col-xs-6">
 						{{ post.last_touch }}
 					</div>
 				</div>
@@ -31,7 +33,7 @@
 	</div>
 		{% endfor %}
 	<div class="panel-footer">
-		FOOTER
+		{% crispy form %}
 	</div>
 </div>
 

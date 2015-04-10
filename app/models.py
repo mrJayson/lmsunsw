@@ -120,6 +120,7 @@ class Thread(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     views = models.SmallIntegerField(default=0)
     slug = AutoSlugField(populate_from='title')
+    last_post = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
         return unicode(self.title)

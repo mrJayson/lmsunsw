@@ -2,9 +2,8 @@ from django.views.generic import TemplateView, View, CreateView, FormView, ListV
 from django.shortcuts import render
 from django.template import RequestContext
 from app.models import *
-from app.forms import CreateUserForm
 from django.contrib.auth.models import User
-from app.forms import QuizSelectionForm
+from app.forms import QuizSelectionForm, CreateThreadForm, CreateUserForm
 from django.core.urlresolvers import reverse
 from app.mixins import SidebarContextMixin
 
@@ -78,6 +77,26 @@ class ThreadView(ListView):
 
     def get_queryset(self, *args, **kwargs):
         return Thread.objects.all()
+
+class CreateThreadView(CreateView):
+    template_name = 'app/create_thread.html'
+    model = Thread
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateThreadView, self).get_context_data(**kwargs)
+        context['lecture_list'] = Lecture.objects.all()
+        return context
+
+    def get_form(self, data=None, files=None, **kwargs):
+        user = self.request.user
+        if self.request.method == "POST":
+            form = CreateThreadForm(user=user, data=self.request.POST)
+        else: # mainly for GET requests
+            form = CreateThreadForm(user=user)
+        return form
+
+    def get_success_url(self):
+        return reverse('thread')
 
 class PostView(ListView):
     template_name = 'app/post.html'

@@ -20,7 +20,33 @@ class SidebarContextMixin(ContextMixin):
 
 ###################################################################################################
 
-# Mixin for admin site
+# Mixin for limited admin site
+
+class LimitedModelAdminMixin(admin.ModelAdmin):
+
+	def add_view(self, request, form_url='', extra_context=None):
+		extra_context = extra_context or {}
+		extra_context['lecture_list'] = Lecture.objects.all()
+		return super(LimitedModelAdminMixin, self).add_view(request, form_url, extra_context)
+
+	def change_view(self, request, object_id, form_url='', extra_context=None):
+		extra_context = extra_context or {}
+		extra_context['lecture_list'] = Lecture.objects.all()
+		return super(LimitedModelAdminMixin, self).change_view(request, object_id, form_url, extra_context)
+
+	def delete_view(self, request, object_id, extra_context=None):
+		extra_context = extra_context or {}
+		extra_context['lecture_list'] = Lecture.objects.all()
+		return super(LimitedModelAdminMixin, self).delete_view(request, object_id, extra_context)
+
+	def changelist_view(self, request, extra_context=None):
+		extra_context = extra_context or {}
+		extra_context['lecture_list'] = Lecture.objects.all()
+		return super(LimitedModelAdminMixin, self).changelist_view(request=request, extra_context=extra_context)
+
+###################################################################################################
+
+# Mixin for default admin site
 
 class ModelAdminMixin(admin.ModelAdmin):
 

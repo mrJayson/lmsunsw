@@ -192,6 +192,38 @@ class QuizSelectionForm(forms.Form):
     class Meta:
         fields = ()
 
+class CreateThreadForm(forms.ModelForm):
+    def __init__(self, user, *args, **kwargs):
+        super(CreateThreadForm, self).__init__(*args, **kwargs)
+        # need to set creator to request.user
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout()
+
+        #self.fields['creator'] = forms.CharField(widget=forms.HiddenInput(attrs={'value':'value'}))
+        self.fields['title'] = forms.CharField(widget=forms.TextInput(attrs={'id': 'admin-form-control', 'class': 'form-control'}))
+        self.fields['content'] = forms.CharField(widget=forms.Textarea(attrs={'id': 'admin-form-control', 'class': 'form-control'}))
+        self.fields['Creator'] = forms.CharField(widget=forms.HiddenInput(attrs={'value':user.id}))
+        self.fields['views'] = forms.IntegerField(widget=forms.HiddenInput(attrs={'value': 0}))
+        self.helper.layout.append(
+            Fieldset(
+                "New Topic",
+                Field('title'),
+                Field('content'),
+                Field('Creator'),
+                Field('views'),
+                )
+            )
+        self.helper.add_input(Submit('submit', 'Submit'))
+
+    def clean_Creator(self):
+        user_object = User.objects.get(id=self.cleaned_data.get('Creator'))
+        return user_object
+
+    class Meta:
+        pass
+        model = Thread
+        #fields = ('title', 'content')
+
 ###################################################################################################
 # Custom Admin forms
 

@@ -96,7 +96,14 @@ def create_user(username=None, first_name=None, last_name=None, email=None, pass
     print "creating user... "
     new_user = Rand.user(username=username, first_name=first_name, last_name=last_name, email=email,  password=password, is_superuser=is_superuser)
     if is_superuser == False:
-        new_user.user_permissions.add(Permission.objects.get(name='Can change user'), Permission.objects.get(name='Can change user profile')) 
+        new_user.user_permissions.add(
+            Permission.objects.get(name='Can change user'),
+            Permission.objects.get(name='Can change user profile'),
+            Permission.objects.get(name='Can add thread'),
+            Permission.objects.get(name='Can change thread'),
+            Permission.objects.get(name='Can add post'),
+            Permission.objects.get(name='Can change post'),
+        ) 
     new_user.save()
     # create accompanying entry for additional user data
     new_user_profile, created = UserProfile.objects.get_or_create(user=new_user)

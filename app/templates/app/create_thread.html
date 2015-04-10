@@ -1,0 +1,12 @@
+{% extends "app/layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="well">
+{% crispy form %}
+</div>
+{% endblock %}
+
+{% block sidebar %}
+    {% include "app/sidebar.html" %}
+{% endblock %}

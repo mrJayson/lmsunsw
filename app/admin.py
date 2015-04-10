@@ -11,7 +11,7 @@ from django.core.urlresolvers import reverse, NoReverseMatch
 from django.utils import six
 from django.apps import apps
 from app.forms import LectureAdminForm, QuizAdminForm, WordcloudAdminForm, QuizChoiceInLineForm
-from app.mixins import ModelAdminMixin
+from app.mixins import ModelAdminMixin, LimitedModelAdminMixin
 from django.contrib.admin import widgets
 
 ###################################################################################################
@@ -250,18 +250,21 @@ class UserProfileAdminLimited(admin.ModelAdmin):
     # once user profile has been made, you should not be able to change the FK
     def change_view(self, request, object_id, form_url='', extra_context=None):
         self.exclude = ('user',)
-        return super(UserProfileAdmin, self).change_view(request, object_id, form_url, extra_context)
+        return super(UserProfileAdminLimited, self).change_view(request, object_id, form_url, extra_context)
 
     def get_queryset(self, request):
         """all standard users are staff, and superuser is admin, if staff user"""
         
-        qs = super(UserProfileAdmin, self).get_queryset(request)
+        qs = super(UserProfileAdminLimited, self).get_queryset(request)
         """Limit object instances shown to only those owned by the current user"""
         return qs.filter(user=request.user.id)
+
 
 
 user_admin_site = UserAdminSite(name='useradmin')
 
 user_admin_site.register(User, UserAdminLimited)
 user_admin_site.register(UserProfile, UserProfileAdminLimited)
+
+
 

@@ -232,24 +232,21 @@ class PostReplyForm(forms.ModelForm):
         self.fields['Thread'] = forms.CharField(widget=forms.HiddenInput(attrs={'value':thread.id}))
         self.fields['content'] = forms.CharField(label="Reply", widget=forms.Textarea(attrs={'id': 'admin-form-control', 'class': 'form-control'}))
         self.fields['Creator'] = forms.CharField(widget=forms.HiddenInput(attrs={'value':user.id}))
+        self.fields['anonymous'] = forms.BooleanField(initial=True, required=False)
         self.helper.add_input(Submit('submit', 'Submit'))
 
     class Meta:
         model = Post
         fields = ('content',)
 
-    def clean_rank(self):
-        rank = self.thread.replies
-        print "RANK"
-        return rank
-
     def save(self, *args, **kwargs):
         data = self.cleaned_data
         thread_object = Thread.objects.get(id=data.get('Thread'))
         content = data.get('content')
-        Creator = user_object = User.objects.get(id=self.cleaned_data.get('Creator'))
+        Creator = user_object = User.objects.get(id=data.get('Creator'))
         rank = thread_object.replies
-        post_object = Post.objects.create(Thread=thread_object, content=content, Creator=Creator, rank=rank)
+        anonymous = data.get('anonymous')
+        post_object = Post.objects.create(Thread=thread_object, content=content, Creator=Creator, rank=rank, anonymous=anonymous)
         return post_object
 
 

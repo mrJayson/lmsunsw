@@ -103,6 +103,11 @@ class PostView(CreateView):
     template_name = 'app/post.html'
     model = Post
 
+    def dispatch(self, request, *args, **kwargs):
+        thread = Thread.objects.get(id=kwargs.get('thread_id'))
+        thread.inc_views()
+        return super(PostView, self).dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super(PostView, self).get_context_data(**kwargs)
         context['lecture_list'] = Lecture.objects.all()

@@ -129,15 +129,24 @@ class Thread(models.Model):
         replies = len(Post.objects.filter(Thread=self.id))
         return replies
 
+    def inc_views(self):
+        self.views = self.views + 1
+        self.save()
+
 class Post(models.Model):
     Thread = models.ForeignKey(Thread)
     content = models.TextField()
     Creator = models.ForeignKey(User)
     last_touch = models.DateTimeField(auto_now=True)
     rank = models.SmallIntegerField() # for ordering of posts
+    anonymous = models.BooleanField(default=True)
 
     def __unicode__(self):
         return unicode(self.content)
+
+    @property
+    def Creator_name(self):
+        return "anonymous" if self.anonymous else self.Creator
 
 class Wordcloud(models.Model):
     title = models.CharField(max_length=30, unique=True)

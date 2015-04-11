@@ -145,6 +145,9 @@ def clear():
     QuizChoice.objects.all().delete()
     QuizChoiceSelected.objects.all().delete()
     ConfidenceMeter.objects.all().delete()
+    Thread.objects.all().delete()
+    Post.objects.all().delete()
+    Wordcloud.objects.all().delete()
     # remove all user sessions
     django.contrib.sessions.models.Session.objects.all().delete()
 
@@ -209,10 +212,10 @@ def populate():
     create_quiz_choice("None of the above", quiz6, False)
 
     quiz7 = create_quiz("Which was created first?", True, lecture3)
-    create_quiz_choice("Google", quiz6, False)
-    create_quiz_choice("TV", quiz6, False)
-    create_quiz_choice("Iphone", quiz6, False)
-    create_quiz_choice("Radio", quiz6, True)
+    create_quiz_choice("Google", quiz7, False)
+    create_quiz_choice("TV", quiz7, False)
+    create_quiz_choice("Iphone", quiz7, False)
+    create_quiz_choice("Radio", quiz7, True)
 
     thread1 = create_thread()
     thread2 = create_thread()

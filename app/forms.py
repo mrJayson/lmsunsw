@@ -237,7 +237,7 @@ class CreateThreadForm(forms.ModelForm):
 
     class Meta:
         model = Thread
-        #fields = ('title', 'content')
+        fields = ('title', 'content')
 
 class PostReplyForm(forms.ModelForm):
 

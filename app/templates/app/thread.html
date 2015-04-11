@@ -2,43 +2,44 @@
 
 {% block content %}
 
-<div class="panel panel-default">
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Topic</th>
-				<th>Replies</th>
-				<th>Views</th>
-				<th>Creator</th>
-				<th>Last Post</th>
-			</tr>
-		</thead>
-		{% for thread in object_list %}
-		<tbody>
-			<tr>
-				<td><a href="{% url 'post' thread.id thread.slug %}" style="display:block;">{{ thread.title|truncatechars:28 }}</a></td>
-				<td>{{ thread.replies }}</td>
-				<td>{{ thread.views }}</td>
-				<td>{{ thread.Creator }}</td>
-				<td>{{ thread.last_post }}</td>
-			</tr>
-		</tbody>
-		{% endfor %}
-		
-		<tfoot>
-			<tr>
-				<td>
-					<button type="button" class="btn btn-default">
-						<a href="{% url 'create_thread' %}">New Topic</a>
-					</button>
-				</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-		</tfoot>
-	</table>
+<div class="panel panel-primary">
+	<div class="panel-body">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Topic</th>
+					<th>Replies</th>
+					<th>Views</th>
+					<th>Creator</th>
+					<th>Last Post</th>
+				</tr>
+			</thead>
+			{% for thread in object_list %}
+			<tbody>
+				<tr>
+					<td><a href="{% url 'post' thread.id thread.slug %}" style="display:block;">{{ thread.title|truncatechars:28 }}</a></td>
+					<td>{{ thread.replies }}</td>
+					<td>{{ thread.views }}</td>
+					<td>{{ thread.Creator }}</td>
+					<td>{{ thread.last_post }}</td>
+				</tr>
+			</tbody>
+			{% endfor %}
+			<tfoot>
+				<tr>
+					<td>
+						<button type="button" class="btn btn-default">
+							<a href="{% url 'create_thread' %}">New Topic</a>
+						</button>
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
 </div>
 
 {% endblock %}

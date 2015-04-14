@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView, View, CreateView, FormView, ListView
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.template import RequestContext
 from app.models import *
 from django.contrib.auth.models import User
@@ -10,6 +10,13 @@ from app.mixins import SidebarContextMixin
 
 class IndexView(TemplateView):
     template_name = 'app/index.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_superuser:
+            return redirect('admin:index')
+        else:
+            return super(IndexView, self).dispatch(request, *args, **kwargs)
+
         
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)

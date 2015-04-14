@@ -21,7 +21,7 @@ class BootstrapAuthenticationForm(AuthenticationForm):
     username = forms.CharField(max_length=254,
                                widget=forms.TextInput({
                                    'class': 'form-control',
-                                   'placeholder': 'User name'}))
+                                   'placeholder': 'User name, Capital Case Sensitive'}))
     password = forms.CharField(label=_("Password"),
                                widget=forms.PasswordInput({
                                    'class': 'form-control',
@@ -32,7 +32,7 @@ class CreateUserForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super(CreateUserForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-        self.fields['username'].widget = forms.TextInput(attrs={'placeholder': 'User name', 'id': 'admin-form-control', 'class': 'form-control'})
+        self.fields['username'].widget = forms.TextInput(attrs={'placeholder': 'User name, Capital Case Sensitive', 'id': 'admin-form-control', 'class': 'form-control'})
         self.fields['password1'].widget = forms.PasswordInput(attrs={'placeholder': 'Password', 'id': 'admin-form-control', 'class': 'form-control'})
         self.fields['password2'].widget = forms.PasswordInput(attrs={'placeholder': 'Type in your password again', 'id': 'admin-form-control', 'class': 'form-control'})
         self.fields['first_name'].widget = forms.TextInput(attrs={'placeholder': 'First Name', 'id': 'admin-form-control', 'class': 'form-control'})

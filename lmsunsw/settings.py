@@ -202,7 +202,7 @@ SESSION_SECURITY_WARN_AFTER = 3300
 SESSION_SECURITY_EXPIRE_AFTER = 3600
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-#Email settings
+# Email settings
 
 EMAIL_HOST = 'smtp-mail.outlook.com'
 EMAIL_HOST_USER = 'jasonhuang.2014@outlook.com'
@@ -212,3 +212,28 @@ EMAIL_USE_TLS = True
 
 DEFAULT_FROM_EMAIL = 'jasonhuang.2014@outlook.com'
 
+# Code Snippet settings
+
+LANGUAGE_CHOICES = (
+    ('as3','as3'),
+    ('bash','bash'),
+    ('c','c'),
+    ('cpp','cpp'),
+    ('csharp','csharp'),
+    ('css','css'),
+    ('html','html'),
+    ('java','java'),
+    ('js','js'),
+    ('make','make'),
+    ('objective-c','objective-c'),
+    ('perl','perl'),
+    ('php','php'),
+    ('python','python'),
+    ('sql','sql'),
+    ('ruby','ruby'),
+    ('vb.net','vb.net'),
+    ('xml','xml'),
+    ('xslt','xslt'),
+)
+DEFAULT_LINE_NUMBERS = False
+DEFAULT_LANGUAGE = 'html'

@@ -15,6 +15,7 @@ class IndexView(TemplateView):
         context = super(IndexView, self).get_context_data(**kwargs)
         context['lecture_list'] = Lecture.objects.all()
         context['session_key'] = self.request.session.session_key
+        context['code'] = CodeSnippet.objects.first()
 
         return context
 

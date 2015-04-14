@@ -2,11 +2,24 @@
 Definition of models.
 """
 
+import string
+
+
+
 from django.db import models
 from django.contrib.auth.models import User
-import string
+from django.utils.text import Truncator
+from django.utils.translation import ugettext_lazy as _
+
 from app.docsURL import glist
+from lmsunsw import settings
+
 from autoslug import AutoSlugField
+
+from pygments import highlight, styles
+from pygments.formatters.html import HtmlFormatter
+from pygments.lexers import get_lexer_by_name
+from pygments.styles import get_all_styles
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='user_profile')
@@ -147,7 +160,7 @@ class Post(models.Model):
 
     @property
     def Creator_name(self):
-        return "anonymous" if self.anonymous else self.Creator
+        return _("anonymous") if self.anonymous else self.Creator
 
 class Wordcloud(models.Model):
     title = models.CharField(max_length=30, unique=True)
@@ -156,5 +169,27 @@ class Wordcloud(models.Model):
 
     def __unicode__(self):
         return unicode(self.title)
+
+class CodeSnippet(models.Model):
+    syntax = models.CharField(max_length=30, choices=settings.LANGUAGE_CHOICES, default=settings.DEFAULT_LANGUAGE)
+    code = models.TextField()
+    linenumbers = models.BooleanField(default=settings.DEFAULT_LINE_NUMBERS)
+
+    class Meta:
+        verbose_name = _('Code snippet')
+        verbose_name_plural = _('Code snippets')
+
+    def __str__(self):
+        return Truncator(self.code).words(20)
+
+    @property
+    def render_code(self):
+        style = styles.get_style_by_name('default')
+        formatter = HtmlFormatter(linenos=self.linenumbers, style=style, nowrap=True, classprefix='code%s-' % self.pk)
+        html = highlight(self.code, get_lexer_by_name(self.syntax), formatter)
+        css = formatter.get_style_defs()
+
+        # Included in a DIV, so the next item will be displayed below.
+        return '<div class="code"><style type="text/css">' + css + '</style>\n<pre>' + html + '</pre></div>\n'
 
 

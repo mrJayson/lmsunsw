@@ -10,7 +10,7 @@ from django.utils.text import capfirst
 from django.core.urlresolvers import reverse, NoReverseMatch
 from django.utils import six
 from django.apps import apps
-from app.forms import LectureAdminForm, QuizAdminForm, WordcloudAdminForm, QuizChoiceInLineForm
+from app.forms import LectureAdminForm, QuizAdminForm, WordcloudAdminForm, QuizChoiceInLineForm, CodeSnippetAdminForm
 from app.mixins import ModelAdminMixin, LimitedModelAdminMixin
 from django.contrib.admin import widgets
 
@@ -165,6 +165,22 @@ class WordcloudAdmin(ModelAdminMixin, admin.ModelAdmin):
     def changelist_view(self, request, extra_context=None):
         return super(WordcloudAdmin, self).changelist_view(request=request, extra_context=extra_context, admin_site=default_admin_site)
 
+class CodeSnippetAdmin(ModelAdminMixin, admin.ModelAdmin):
+    form = CodeSnippetAdminForm
+
+    def add_view(self, request, form_url='', extra_context=None):
+        return super(CodeSnippetAdmin, self).add_view(request, form_url, extra_context, default_admin_site)
+
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        return super(CodeSnippetAdmin, self).change_view(request, object_id, form_url, extra_context, default_admin_site)
+
+    def delete_view(self, request, object_id, extra_context=None):
+        return super(CodeSnippetAdmin, self).delete_view(request, object_id, extra_context, default_admin_site)
+
+    def changelist_view(self, request, extra_context=None):
+        return super(CodeSnippetAdmin, self).changelist_view(request=request, extra_context=extra_context, admin_site=default_admin_site)
+
+
 class DefaultAdminSite(AdminSite):
 
     def app_list(self, request):
@@ -220,6 +236,7 @@ default_admin_site.register(Quiz, QuizAdmin)
 default_admin_site.register(QuizProxy, QuizResultsAdmin)
 default_admin_site.register(Lecture, LectureAdmin)
 default_admin_site.register(Wordcloud, WordcloudAdmin)
+default_admin_site.register(CodeSnippet, CodeSnippetAdmin)
 
 
 

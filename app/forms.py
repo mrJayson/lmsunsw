@@ -14,6 +14,7 @@ from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit, Field, B
 #from app.widgets import AdminTextInputWidget, AdminURLFieldWidget
 from django.contrib.admin import widgets
 from django.contrib.auth.models import Permission
+from lmsunsw import settings
 
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
@@ -310,3 +311,7 @@ class QuizChoiceInLineForm(forms.ModelForm):
         self.fields['Quiz'].widget = widgets.AdminURLFieldWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'Lecture Slide URL'})
         self.fields['correct'].widget = widgets.AdminURLFieldWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'A generic Document will be provided if left empty'})
 
+class CodeSnippetAdminForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(CodeSnippetAdminForm, self).__init__(*args, **kwargs)
+        self.fields['code'].widget = widgets.AdminTextareaWidget({'id': 'admin-form-control', 'class': 'form-control'})

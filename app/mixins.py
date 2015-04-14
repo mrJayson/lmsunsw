@@ -1,7 +1,7 @@
 from django.views.generic.base import ContextMixin
 from django.contrib import admin
 
-from app.models import Lecture, Quiz
+from app.models import Lecture, Quiz, QuizChoiceSelected
 
 class SidebarContextMixin(ContextMixin):
 
@@ -15,7 +15,8 @@ class SidebarContextMixin(ContextMixin):
 		#used on the sidebar to display tabs
 
 		context['lecture_list'] = Lecture.objects.all()
-		context['quiz_list'] = Quiz.objects.filter(Lecture = self.kwargs['lect_id'], visible = True)
+		context['quiz_list'] = Quiz.objects.filter(Lecture = self.kwargs['lect_id'], visible = False).filter(
+			Lecture__in=list(set([k.Lecture for k in [j.Quiz for j in [i.QuizChoice for i in QuizChoiceSelected.objects.select_related().all()]]])))
 		return context
 
 ###################################################################################################

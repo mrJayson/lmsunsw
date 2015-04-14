@@ -1,4 +1,4 @@
-from app.models import ConfidenceMeter
+from app.models import ConfidenceMeter, Quiz, Lecture, QuizChoice, QuizChoiceSelected
 from django.contrib.sessions.models import Session
 
 def django_sessions(request):
@@ -41,3 +41,6 @@ def get_confidence_meter_values(request):
 
 	ret_val = {'good': good, 'neutral': neutral, 'bad': bad, 'current': current}
 	return ret_val
+
+def current_quiz_list(request):
+	return {'current_quiz_list':Quiz.objects.filter(visible = True)}

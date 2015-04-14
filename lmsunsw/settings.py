@@ -194,6 +194,7 @@ TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
     'app.context_processors.django_sessions',
     'app.context_processors.get_confidence_meter_values',
+    'app.context_processors.current_quiz_list',
     )
 
 # Session security

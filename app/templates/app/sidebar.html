@@ -9,31 +9,44 @@
         <li>
             <a href="{% url 'thread' %}">Posts</a>
         </li>
-    {% for lecture in lecture_list %}
+        {% if current_quiz_list %}<!--current quiz list-->
         <li>
-            <a href="{% url 'lecture' lecture.id lecture.slug %}">{{ lecture.lecture_name }}</a>
-            {% if lecture.id == current_lecture.id %}
-                <ul>
-                    {% if current_lecture.lecture_slide %}
-                    <li>
-                        <a href="{% url 'lecture_slide' lecture.id lecture.slug %}">Lecture Slides</a>
-                    </li>
-                    {% endif %}
-                    
-                    <!--Quiz sub-list-->
-                    {% if quiz_list %}
-                    <li>
-                        Quizzes
-                    </li>
-                    {% endif %}
-                    {% for quiz in quiz_list %}
-                    <li>
-                        <a href="{% url 'quiz' lecture.id lecture.slug quiz.id quiz.question %}"> {{ quiz.question }} </a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
+            New Quizzes
         </li>
-    {% endfor %}
+        <li>
+            <ul>
+                {% for quiz in current_quiz_list %}
+                    <li>
+                        <a href="{% url 'quiz' quiz.Lecture.id quiz.Lecture.slug quiz.id quiz.question %}"> {{ quiz.question }} </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endif %} <!-- endif current quiz list-->
+        {% for lecture in lecture_list %}
+            <li>
+                <a href="{% url 'lecture' lecture.id lecture.slug %}">{{ lecture.lecture_name }}</a>
+                {% if lecture.id == current_lecture.id %}
+                    <ul>
+                        {% if current_lecture.lecture_slide %}<!--if lecture slides are available-->
+                            <li>
+                                <a href="{% url 'lecture_slide' lecture.id lecture.slug %}">Lecture Slides</a>
+                            </li>
+                        {% endif %}
+                        {% if quiz_list %}<!--Quiz sub-list-->
+                            <li>
+                                Quiz History
+                            </li>
+                        
+                            {% for quiz in quiz_list %}
+                                <li>
+                                    <a href="{% url 'quiz' lecture.id lecture.slug quiz.id quiz.question %}"> {{ quiz.question }} </a>
+                                </li>
+                            {% endfor %}<!--end for quiz_list-->
+                        {% endif %}<!--end if quiz_list-->
+                    </ul>
+                {% endif %}<!--end if current_lecture-->
+            </li>
+        {% endfor %}<!--end for lecture_list-->
     </ul>
 </div>

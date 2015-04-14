@@ -20,6 +20,7 @@ from pygments import highlight, styles
 from pygments.formatters.html import HtmlFormatter
 from pygments.lexers import get_lexer_by_name
 from pygments.styles import get_all_styles
+from pygments.styles import STYLE_MAP
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='user_profile')
@@ -174,6 +175,7 @@ class CodeSnippet(models.Model):
     syntax = models.CharField(max_length=30, choices=settings.LANGUAGE_CHOICES, default=settings.DEFAULT_LANGUAGE)
     code = models.TextField()
     linenumbers = models.BooleanField(default=settings.DEFAULT_LINE_NUMBERS)
+    style = models.CharField(max_length=30, choices=tuple(STYLE_MAP.items()), default='default')
 
     class Meta:
         verbose_name = _('Code snippet')
@@ -184,7 +186,7 @@ class CodeSnippet(models.Model):
 
     @property
     def render_code(self):
-        style = styles.get_style_by_name('default')
+        style = styles.get_style_by_name(self.style)
         formatter = HtmlFormatter(linenos=self.linenumbers, style=style, nowrap=True, classprefix='code%s-' % self.pk)
         html = highlight(self.code, get_lexer_by_name(self.syntax), formatter)
         css = formatter.get_style_defs()

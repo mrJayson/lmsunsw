@@ -7,7 +7,6 @@ $("#menu-toggle").click(function(e) {
 });
 
 function refresh_confidence(data) {
-    console.log(data)
     $("#progress-bar-good").attr("style", "width: "+ data.good +"%");
     $("#progress-bar-neutral").attr("style", "width: "+ data.neutral +"%");
     $("#progress-bar-bad").attr("style", "width: "+ data.bad +"%");

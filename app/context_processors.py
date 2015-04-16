@@ -1,4 +1,4 @@
-from app.models import ConfidenceMeter, Quiz, Lecture, QuizChoice, QuizChoiceSelected
+from app.models import ConfidenceMeter, Quiz, Lecture, QuizChoice, QuizChoiceSelected, Wordcloud
 from django.contrib.sessions.models import Session
 
 def django_sessions(request):
@@ -25,7 +25,7 @@ def get_confidence_meter_values(request):
 		else:
 			neutral += 1
 
-	sum = len(ConfidenceMeter.objects.all())
+	sum = good+bad+neutral
 	sum = 1 if sum==0 else sum
 	bad = bad * 100 / sum
 	neutral = neutral * 100 / sum
@@ -42,5 +42,8 @@ def get_confidence_meter_values(request):
 	ret_val = {'good': good, 'neutral': neutral, 'bad': bad, 'current': current}
 	return ret_val
 
-def current_quiz_list(request):
-	return {'current_quiz_list':Quiz.objects.filter(visible = True)}
+def currents(request):
+
+	return {'current_quiz_list': Quiz.objects.filter(visible = True),
+	'current_wordcloud_list': Wordcloud.objects.filter(visible = True)
+	}

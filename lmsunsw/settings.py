@@ -34,7 +34,7 @@ LOGIN_URL = '/login'
 LOGIN_REDIRECT_URL = '/'
 
 # Crispy Forms
-CRISPY_TEMPLATE_PACK = 'bootstrap'
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 # Application definition
 
@@ -194,7 +194,7 @@ TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
     'app.context_processors.django_sessions',
     'app.context_processors.get_confidence_meter_values',
-    'app.context_processors.current_quiz_list',
+    'app.context_processors.currents',
     )
 
 # Session security

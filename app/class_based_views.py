@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.template import RequestContext
 from app.models import *
 from django.contrib.auth.models import User
-from app.forms import QuizSelectionForm, CreateThreadForm, CreateUserForm, PostReplyForm
+from app.forms import QuizSelectionForm, CreateThreadForm, CreateUserForm, PostReplyForm, WordcloudSubmissionForm
 from django.core.urlresolvers import reverse
 from app.mixins import SidebarContextMixin
 
@@ -128,9 +128,31 @@ class PostView(CreateView):
         thread = Thread.objects.get(id=self.kwargs.get('thread_id'))
         if self.request.method == "POST":
             form = PostReplyForm(user=user, thread=thread, data=self.request.POST)
-        else: # mainly for GET requests
+        else: # for GET requests
             form = PostReplyForm(user=user, thread=thread)
         return form
 
     def get_success_url(self):
         return reverse('post', kwargs={'thread_id':self.kwargs.get('thread_id'), 'thread_slug':self.kwargs.get('thread_slug')})
+
+class WordcloudSubmissionView(CreateView):
+    template_name = 'app/wordcloud_submission.html'
+    model = WordcloudSubmission
+
+    def get_context_data(self, **kwargs):
+        context = super(WordcloudSubmissionView, self).get_context_data(**kwargs)
+        context['lecture_list'] = Lecture.objects.all()
+        return context
+
+    def get_form(self, data=None, files=None, **kwargs):
+        user = self.request.user
+        wordcloud = Wordcloud.objects.get(id=self.kwargs.get('wordcloud_id'))
+        if self.request.method == "POST":
+            print "POST"
+            form = WordcloudSubmissionForm(user=user, wordcloud=wordcloud, data=self.request.POST)
+        else: # mainly for GET requests
+            form = WordcloudSubmissionForm(user=user, wordcloud=wordcloud)
+        return form
+
+    def get_success_url(self):
+        return reverse('wordcloud', kwargs={'lect_id':self.kwargs.get('lect_id'), 'url_slug':self.kwargs.get('url_slug'), 'wordcloud_id':self.kwargs.get('wordcloud_id'), 'wordcloud_slug':self.kwargs.get('wordcloud_slug')})

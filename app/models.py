@@ -30,8 +30,8 @@ class UserProfile(models.Model):
 
 class Lecture(models.Model):
     lecture_name = models.CharField(max_length=30, unique=True)
-    lecture_slide = models.URLField(blank=True, null=True, help_text="Optional, Provide a URL link to the lecture slides to be displayed")
-    collab_doc = models.URLField(blank=True, null=True, help_text="Optional, Provide a URL Link to a specific google docs, a blank default will be used if empty")
+    lecture_slide = models.URLField(blank=True, null=True, help_text=_("Optional, Provide a URL link to the lecture slides to be displayed"))
+    collab_doc = models.URLField(blank=True, null=True, help_text=_("Optional, Provide a URL Link to a specific google docs, a blank default will be used if empty"))
     slug = AutoSlugField(populate_from='lecture_name')
 
     @property
@@ -165,11 +165,20 @@ class Post(models.Model):
 
 class Wordcloud(models.Model):
     title = models.CharField(max_length=30, unique=True)
-    words = models.TextField(blank=True, null=True)
-    image = models.ImageField(upload_to='wordcloud')
+    image = models.ImageField(upload_to="wordcloud", blank=True, null=True)
+    Lecture = models.ForeignKey(Lecture)
+    visible = models.BooleanField(default=False)
 
     def __unicode__(self):
         return unicode(self.title)
+
+class WordcloudSubmission(models.Model):
+    User = models.ForeignKey(User)
+    Wordcloud = models.ForeignKey(Wordcloud)
+    word = models.CharField(max_length=30)
+
+    class Meta:
+        unique_together = ('User', 'Wordcloud') 
 
 class CodeSnippet(models.Model):
     syntax = models.CharField(max_length=30, choices=settings.LANGUAGE_CHOICES, default=settings.DEFAULT_LANGUAGE)

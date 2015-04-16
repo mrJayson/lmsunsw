@@ -7,7 +7,7 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0012_wordcloud'),
+        ('app', '0011_auto_20150407_2258'),
     ]
 
     operations = [

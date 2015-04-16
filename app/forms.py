@@ -242,7 +242,6 @@ class CreateThreadForm(forms.ModelForm):
 
 class PostReplyForm(forms.ModelForm):
 
-
     def __init__(self, user, thread, *args, **kwargs):
         super(PostReplyForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
@@ -268,6 +267,55 @@ class PostReplyForm(forms.ModelForm):
         anonymous = data.get('anonymous')
         post_object = Post.objects.create(Thread=thread_object, content=content, Creator=Creator, rank=rank, anonymous=anonymous)
         return post_object
+
+class WordcloudSubmissionForm(forms.ModelForm):
+
+    class Meta:
+        model = WordcloudSubmission
+        fields = ('User', 'Wordcloud', 'word')
+
+    def __init__(self, user, wordcloud, *args, **kwargs):
+        super(WordcloudSubmissionForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout()
+        
+        previous_entries = WordcloudSubmission.objects.filter(User=user, Wordcloud=wordcloud)
+        if previous_entries.exists():
+            # if submission has already been made
+            self.fields['word'] = forms.CharField(label="You have submitted the word:", initial=previous_entries.first().word, widget=forms.TextInput(attrs={'id': 'admin-form-control', 'class': 'form-control', 'placeholder':'Enter one word only'}))
+            self.fields['User'] = forms.CharField(widget=forms.HiddenInput())
+            self.fields['Wordcloud'] = forms.CharField(widget=forms.HiddenInput())
+            self.helper.layout.append(
+            Fieldset(
+                    wordcloud.title,
+                    Field('word', disabled=True),
+                    Field('User'),
+                    Field('Wordcloud'),
+                )
+            )
+            self.helper.add_input(Button(name = "", value="Submitted", css_class='btn-primary'))
+            
+
+        else:
+            self.fields['word'] = forms.CharField(label="Enter your word into the wordcloud!", widget=forms.TextInput(attrs={'id': 'admin-form-control', 'class': 'form-control', 'placeholder':'Enter one word only'}))
+            self.fields['User'] = forms.CharField(widget=forms.HiddenInput(attrs={'value':user.id}))
+            self.fields['Wordcloud'] = forms.CharField(widget=forms.HiddenInput(attrs={'value':wordcloud.id}))
+            self.helper.layout.append(
+            Fieldset(
+                    wordcloud.title,
+                    Field('word'),
+                    Field('User'),
+                    Field('Wordcloud'),
+                )
+            )
+            self.helper.add_input(Submit('submit', 'Submit'))
+            
+
+    def clean_User(self):
+        return User.objects.get(id=self.cleaned_data.get('User'))
+
+    def clean_Wordcloud(self):
+        return Wordcloud.objects.get(id=self.cleaned_data.get('Wordcloud'))
 
 
 ###################################################################################################
@@ -302,7 +350,6 @@ class WordcloudAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(WordcloudAdminForm, self).__init__(*args, **kwargs)
         self.fields['title'].widget = widgets.AdminTextInputWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'Title of the wordcloud'})
-        self.fields['words'].widget = widgets.AdminTextareaWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'The words to be placed into the word cloud as a String'})
 
 class QuizChoiceInLineForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):

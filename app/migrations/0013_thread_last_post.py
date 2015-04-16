@@ -8,7 +8,7 @@ import datetime
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0013_auto_20150410_1140'),
+        ('app', '0012_auto_20150410_1140'),
     ]
 
     operations = [

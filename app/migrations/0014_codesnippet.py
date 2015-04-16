@@ -7,19 +7,21 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0011_auto_20150407_2258'),
+        ('app', '0013_thread_last_post'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Wordcloud',
+            name='CodeSnippet',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('title', models.CharField(unique=True, max_length=30)),
-                ('words', models.TextField(null=True, blank=True)),
-                ('image', models.ImageField(upload_to=b'wordcloud')),
+                ('syntax', models.CharField(max_length=30)),
+                ('code', models.TextField()),
+                ('linenumbers', models.BooleanField(default=False)),
             ],
             options={
+                'verbose_name': 'Code snippet',
+                'verbose_name_plural': 'Code snippets',
             },
             bases=(models.Model,),
         ),

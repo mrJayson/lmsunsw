@@ -154,6 +154,7 @@ class WordcloudAdmin(ModelAdminMixin, admin.ModelAdmin):
     form = WordcloudAdminForm
 
     def add_view(self, request, form_url='', extra_context=None):
+        self.exclude = ('image',)
         return super(WordcloudAdmin, self).add_view(request, form_url, extra_context, default_admin_site)
 
     def change_view(self, request, object_id, form_url='', extra_context=None):

@@ -28,9 +28,9 @@
                 </button>
             {% endif %}
             {% if user.is_authenticated %}
-            <a href="{% url 'index' %}" class="navbar-brand">Welcome {{ user.first_name }} {{ user.last_name }} </a>
+            <a href="{% url 'root' %}" class="navbar-brand">Welcome {{ user.first_name }} {{ user.last_name }} </a>
             {% else %}
-            <a href="{% url 'index' %}" class="navbar-brand">Welcome to LMSUNSW</a>
+            <a href="{% url 'root' %}" class="navbar-brand">Welcome to LMSUNSW</a>
             {% endif %}
         </div>
         {% if user.is_authenticated %}

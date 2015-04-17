@@ -30,9 +30,10 @@ urlpatterns = patterns('',
     url(r'^vote/$', login_required(vote), name='vote'),
 
     # index page
-    url(r'^$', login_required(IndexView.as_view()), name='index'),
+    url(r'^$', login_required(IndexView.as_view()), name='root'),
+    url(r'^index/?$', login_required(IndexView.as_view()), name='index'),
     # user registration page
-    url(r'^createuser/$',login_forbidden(CreateUser.as_view()), name='createuser'),
+    url(r'^createuser/?$',login_forbidden(CreateUser.as_view()), name='createuser'),
     # generic alert message page
     url(r'^alert/(?P<tag>.*)$', AlertView.as_view(), name='alert'),
     # lecture index page

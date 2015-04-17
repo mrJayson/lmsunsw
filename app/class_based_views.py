@@ -12,7 +12,10 @@ class IndexView(TemplateView):
     template_name = 'app/index.html'
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_superuser:
+        print type(request.path)
+        print request.path == u'/'
+        if request.user.is_superuser and request.path == u'/':
+            print request.path
             return redirect('admin:index')
         else:
             return super(IndexView, self).dispatch(request, *args, **kwargs)

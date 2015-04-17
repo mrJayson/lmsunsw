@@ -1,7 +1,11 @@
 import sys
 import os
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "lmsunsw.settings")
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lmsunsw.settings')
+import django
+django.setup()
+from django.contrib.auth.models import Permission
+from app.models import *
 
 from app.models import *
 from app.docsURL import glist
@@ -89,6 +93,23 @@ class Rand():
         rank = thread.replies
         return Post.objects.create(Thread=thread, content=content, Creator=Creator, rank=rank)
 
+    @staticmethod
+    def wordcloud(title=None, image=None, lecture=None, visible=None):
+        title = Rand.randomString(5) if title==None else title
+        # cannot generate rand image
+        image = None if image==None else image
+        lecture = (Rand.lecture() if (len(Lecture.objects.all())==0) else choice(Lecture.objects.all())) if lecture==None else lecture
+        visible = Rand.randomBool() if visible==None else visible
+        return Wordcloud.objects.create(title=title, image=image, Lecture=lecture, visible=visible)
+
+    @staticmethod
+    def wordcloudsubmission(user=None, wordcloud=None, word=None):
+        user = (Rand.user() if (len(User.objects.all())==0) else choice(User.objects.all())) if user==None else user
+        wordcloud = (Rand.wordcloud() if (len(Wordcloud.objects.all())==0) else choice(Wordcloud.objects.all())) if wordcloud==None else wordcloud
+        word = Rand.randomString(1) if word==None else word
+
+        return WordcloudSubmission.objects.create(User=user, Wordcloud=wordcloud, word=word)
+
 def create_user(username=None, first_name=None, last_name=None, email=None, password=None, is_superuser=None):
     """
     Set all users' is_staff to True to be able to access all of the django admin features
@@ -117,24 +138,31 @@ def create_superuser(username=None, first_name=None, last_name=None, email=None,
 
 def create_lecture(lecture_name=None):
     print "creating lecture... "
-    new_lecture = Rand.lecture(lecture_name=lecture_name)
-    return new_lecture
+    return Rand.lecture(lecture_name=lecture_name)
 
 def create_quiz(question=None, visible=None, Lecture=None):
     print "creating quiz... "
-    new_quiz = Rand.quiz(question, visible, Lecture)
-    return new_quiz
+    return Rand.quiz(question, visible, Lecture)
 
 def create_quiz_choice(choice=None, Quiz=None, correct=None):
     print "creating quiz_choice... "
-    new_quiz_choice = Rand.quizchoice(quiz_choice=choice, quiz=Quiz, correct=correct)
-    return new_quiz_choice
+    return Rand.quizchoice(quiz_choice=choice, quiz=Quiz, correct=correct)
 
 def create_thread(title=None, Creator=None, views=None):
     print "creating thread... "
-    new_thread = Rand.thread(title, Creator, views)
-    return new_thread
+    return Rand.thread(title, Creator, views)
 
+def create_post(Thread=None, content=None, Creator=None):
+    print "creating post... "
+    return Rand.post(Thread, content, Creator)
+
+def create_wordcloud(title=None, image=None, Lecture=None, visible=None):
+    print "creating wordcloud..."
+    return Rand.wordcloud(title, image, Lecture, visible)
+
+def create_wordcloudsubmission(User=None, Wordcloud=None, word=None):
+    print "creating wordcloud submission..."
+    return Rand.wordcloudsubmission(user=User, wordcloud=Wordcloud, word=word)
 
 def clear():
     print "Clearing database"
@@ -148,6 +176,7 @@ def clear():
     Thread.objects.all().delete()
     Post.objects.all().delete()
     Wordcloud.objects.all().delete()
+    WordcloudSubmission.objects.all().delete()
     # remove all user sessions
     django.contrib.sessions.models.Session.objects.all().delete()
 
@@ -220,8 +249,16 @@ def populate():
     thread1 = create_thread()
     thread2 = create_thread()
     thread3 = create_thread()
+    for i in xrange(5):
+        create_thread()
     for i in xrange(50):
-        Rand.post()
+        create_post()
+
+    for i in xrange(50):
+        create_student()
+    wc = create_wordcloud()
+    for i in xrange(50):
+        create_wordcloudsubmission(Wordcloud=wc)
 
 
 

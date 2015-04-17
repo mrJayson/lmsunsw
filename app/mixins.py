@@ -1,7 +1,7 @@
 from django.views.generic.base import ContextMixin
 from django.contrib import admin
 
-from app.models import Lecture, Quiz, QuizChoiceSelected
+from app.models import Lecture, Quiz, QuizChoiceSelected, Wordcloud, WordcloudSubmission
 
 class SidebarContextMixin(ContextMixin):
 
@@ -17,6 +17,8 @@ class SidebarContextMixin(ContextMixin):
 		context['lecture_list'] = Lecture.objects.all()
 		context['quiz_list'] = Quiz.objects.filter(Lecture = self.kwargs['lect_id'], visible = False).filter(
 			Lecture__in=list(set([k.Lecture for k in [j.Quiz for j in [i.QuizChoice for i in QuizChoiceSelected.objects.select_related().all()]]])))
+		context['wordcloud_list'] = Wordcloud.objects.filter(Lecture=self.kwargs['lect_id'], visible=False).filter(
+			id__in=list(set([i.Wordcloud.id for i in WordcloudSubmission.objects.all()])))
 		return context
 
 ###################################################################################################

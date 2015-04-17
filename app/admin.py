@@ -13,6 +13,8 @@ from django.apps import apps
 from app.forms import LectureAdminForm, QuizAdminForm, WordcloudAdminForm, QuizChoiceInLineForm, CodeSnippetAdminForm
 from app.mixins import ModelAdminMixin, LimitedModelAdminMixin
 from django.contrib.admin import widgets
+from wordcloud import WordCloud
+from lmsunsw.settings import MEDIA_ROOT
 
 ###################################################################################################
 
@@ -152,12 +154,22 @@ class UserProfileAdmin(ModelAdminMixin, admin.ModelAdmin):
 
 class WordcloudAdmin(ModelAdminMixin, admin.ModelAdmin):
     form = WordcloudAdminForm
+    
 
     def add_view(self, request, form_url='', extra_context=None):
-        self.exclude = ('image',)
+        self.exclude = ('words',)
         return super(WordcloudAdmin, self).add_view(request, form_url, extra_context, default_admin_site)
 
     def change_view(self, request, object_id, form_url='', extra_context=None):
+        self.readonly_fields = ('words',)
+        fieldsets = (
+            ('Attributes', {
+                'fields': ('title', 'Lecture', 'visible',)
+            }),
+            ('Input', {
+                'readonly_fields': ('words',)
+            }),
+        )
         return super(WordcloudAdmin, self).change_view(request, object_id, form_url, extra_context, default_admin_site)
 
     def delete_view(self, request, object_id, extra_context=None):
@@ -165,6 +177,25 @@ class WordcloudAdmin(ModelAdminMixin, admin.ModelAdmin):
 
     def changelist_view(self, request, extra_context=None):
         return super(WordcloudAdmin, self).changelist_view(request=request, extra_context=extra_context, admin_site=default_admin_site)
+
+    def save_model(self, request, obj, form, change):
+        # change parameter is flag for new object created or changing object, not if field has changed
+        # if visible is flagged as False and there are words available, a wordcloud can be generated
+        # need to gather all the words and generate the image
+        # need to generate a new image if title also changes
+
+        before_save_obj = Wordcloud.objects.get(id=obj.id)
+        if (before_save_obj.visible == True and obj.visible == False) and obj.words:
+            # if wordcloud changes from visible to not visible
+            # and if there are words to process
+            text = obj.words
+            wc = WordCloud(font_path="static/app/fonts/Microsoft Sans Serif.ttf", width=800, height=400).generate(text)
+            filepath = "wordcloud/"+ obj.title +".png"
+            img = wc.to_image()
+            img.save(MEDIA_ROOT + "/" + filepath, 'PNG') # create the image file on filesystem
+            obj.image = filepath # add the image to the model
+
+        return super(WordcloudAdmin, self).save_model(request, obj, form, change)
 
 class CodeSnippetAdmin(ModelAdminMixin, admin.ModelAdmin):
     form = CodeSnippetAdminForm

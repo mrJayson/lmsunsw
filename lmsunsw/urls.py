@@ -21,6 +21,8 @@ login_forbidden =  user_passes_test(lambda u: u.is_anonymous(), '/', None)
 from app.views import *
 from app.class_based_views import *
 
+from django.conf import settings
+
 
 urlpatterns = patterns('',
     # Examples:
@@ -74,3 +76,10 @@ urlpatterns = patterns('',
 
     url(r'password_reset/', include('password_reset.urls')),
 )
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        url(r'media/(?P<path>.*)$','django.views.static.serve', {
+        'document_root': settings.MEDIA_ROOT
+        })
+    )

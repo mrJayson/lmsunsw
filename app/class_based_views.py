@@ -136,12 +136,14 @@ class PostView(CreateView):
         return reverse('post', kwargs={'thread_id':self.kwargs.get('thread_id'), 'thread_slug':self.kwargs.get('thread_slug')})
 
 class WordcloudSubmissionView(CreateView):
+    # view for students to submit word to wordcloud
     template_name = 'app/wordcloud_submission.html'
     model = WordcloudSubmission
 
     def get_context_data(self, **kwargs):
         context = super(WordcloudSubmissionView, self).get_context_data(**kwargs)
         context['lecture_list'] = Lecture.objects.all()
+        context['wordcloud'] = Wordcloud.objects.get(id=self.kwargs.get('wordcloud_id'))
         return context
 
     def get_form(self, data=None, files=None, **kwargs):

@@ -172,6 +172,11 @@ class Wordcloud(models.Model):
     def __unicode__(self):
         return unicode(self.title)
 
+    @property
+    def words(self):
+        # joins all the words into one string with space as separator
+        return " ".join([word.word for word in WordcloudSubmission.objects.filter(Wordcloud=self)])
+
 class WordcloudSubmission(models.Model):
     User = models.ForeignKey(User)
     Wordcloud = models.ForeignKey(Wordcloud)

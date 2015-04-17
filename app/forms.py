@@ -294,7 +294,6 @@ class WordcloudSubmissionForm(forms.ModelForm):
                 )
             )
             self.helper.add_input(Button(name = "", value="Submitted", css_class='btn-primary'))
-            
 
         else:
             self.fields['word'] = forms.CharField(label="Enter your word into the wordcloud!", widget=forms.TextInput(attrs={'id': 'admin-form-control', 'class': 'form-control', 'placeholder':'Enter one word only'}))

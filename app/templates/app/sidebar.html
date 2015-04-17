@@ -58,6 +58,17 @@
                                 </li>
                             {% endfor %}<!--end for quiz_list-->
                         {% endif %}<!--end if quiz_list-->
+                        {% if wordcloud_list %}<!--Quiz sub-list-->
+                            <li>
+                                WordClouds History
+                            </li>
+                        
+                            {% for wordcloud in wordcloud_list %}
+                                <li>
+                                    <a href="{% url 'wordcloud' wordcloud.Lecture.id wordcloud.Lecture.slug wordcloud.id wordcloud.title %}"> {{ wordcloud.title }} </a>
+                                </li>
+                            {% endfor %}<!--end for wordcloud_list-->
+                        {% endif %}<!--end if wordcloud_list-->
                     </ul>
                 {% endif %}<!--end if current_lecture-->
             </li>

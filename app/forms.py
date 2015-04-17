@@ -16,6 +16,8 @@ from django.contrib.admin import widgets
 from django.contrib.auth.models import Permission
 from lmsunsw import settings
 
+import re
+
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
     username = forms.CharField(max_length=254,
@@ -309,12 +311,26 @@ class WordcloudSubmissionForm(forms.ModelForm):
             )
             self.helper.add_input(Submit('submit', 'Submit'))
             
+    def is_valid(self):
+        valid = super(WordcloudSubmissionForm, self).is_valid()
+        if not valid:
+            # no need to check if already invalid
+            return valid
+        if re.search('[^a-zA-Z]', self.cleaned_data.get('word')):
+            self._errors['word'] = ['Input must be only one word']
+            return False
+            
+        # passed all tests
+        return True
 
     def clean_User(self):
         return User.objects.get(id=self.cleaned_data.get('User'))
 
     def clean_Wordcloud(self):
         return Wordcloud.objects.get(id=self.cleaned_data.get('Wordcloud'))
+
+    def clean_word(self):
+        return self.cleaned_data.get('word').lstrip().rstrip()
 
 
 ###################################################################################################

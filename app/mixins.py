@@ -3,7 +3,13 @@ from django.contrib import admin
 
 from app.models import Lecture, Quiz, QuizChoiceSelected, Wordcloud, WordcloudSubmission
 
-class SidebarContextMixin(ContextMixin):
+class BaseSidebarContextMixin(ContextMixin):
+	def get_context_data(self, **kwargs):
+		context = super(BaseSidebarContextMixin, self).get_context_data(**kwargs)
+		context['lecture_list'] = Lecture.objects.all()
+		return context
+
+class SidebarContextMixin(BaseSidebarContextMixin):
 
 	def get_context_data(self, **kwargs):
 		context = super(SidebarContextMixin, self).get_context_data(**kwargs)
@@ -14,7 +20,6 @@ class SidebarContextMixin(ContextMixin):
 
 		#used on the sidebar to display tabs
 
-		context['lecture_list'] = Lecture.objects.all()
 		context['quiz_list'] = Quiz.objects.filter(Lecture = self.kwargs['lect_id'], visible = False).filter(
 			Lecture__in=list(set([k.Lecture for k in [j.Quiz for j in [i.QuizChoice for i in QuizChoiceSelected.objects.select_related().all()]]])))
 		context['wordcloud_list'] = Wordcloud.objects.filter(Lecture=self.kwargs['lect_id'], visible=False).filter(

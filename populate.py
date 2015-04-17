@@ -256,9 +256,9 @@ def populate():
 
     for i in xrange(50):
         create_student()
-    wc = create_wordcloud()
-    for i in xrange(50):
-        create_wordcloudsubmission(Wordcloud=wc)
+    wc = create_wordcloud(visible=True)
+    #for i in xrange(50):
+    #    create_wordcloudsubmission(Wordcloud=wc)
 
 
 

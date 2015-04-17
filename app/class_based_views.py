@@ -5,10 +5,10 @@ from app.models import *
 from django.contrib.auth.models import User
 from app.forms import QuizSelectionForm, CreateThreadForm, CreateUserForm, PostReplyForm, WordcloudSubmissionForm
 from django.core.urlresolvers import reverse
-from app.mixins import SidebarContextMixin
+from app.mixins import BaseSidebarContextMixin, SidebarContextMixin
 
 
-class IndexView(TemplateView):
+class IndexView(TemplateView, BaseSidebarContextMixin):
     template_name = 'app/index.html'
 
     def dispatch(self, request, *args, **kwargs):
@@ -25,7 +25,6 @@ class IndexView(TemplateView):
         context = super(IndexView, self).get_context_data(**kwargs)
         context['lecture_list'] = Lecture.objects.all()
         context['session_key'] = self.request.session.session_key
-        context['code'] = CodeSnippet.objects.first()
 
         return context
 
@@ -76,7 +75,7 @@ class LectureSlideView(TemplateView, SidebarContextMixin):
     template_name = 'app/lecture_slide.html'
 
 
-class ThreadView(ListView):
+class ThreadView(ListView, BaseSidebarContextMixin):
     # view for all threads in a lecture
     template_name = 'app/thread.html'
     model = Thread
@@ -89,7 +88,7 @@ class ThreadView(ListView):
     def get_queryset(self, *args, **kwargs):
         return Thread.objects.all()
 
-class CreateThreadView(CreateView):
+class CreateThreadView(CreateView, BaseSidebarContextMixin):
     template_name = 'app/create_thread.html'
     model = Thread
 
@@ -109,7 +108,7 @@ class CreateThreadView(CreateView):
     def get_success_url(self):
         return reverse('thread')
 
-class PostView(CreateView):
+class PostView(CreateView, BaseSidebarContextMixin):
     # create view since priority is the posts reply form
     template_name = 'app/post.html'
     model = Post
@@ -138,7 +137,7 @@ class PostView(CreateView):
     def get_success_url(self):
         return reverse('post', kwargs={'thread_id':self.kwargs.get('thread_id'), 'thread_slug':self.kwargs.get('thread_slug')})
 
-class WordcloudSubmissionView(CreateView):
+class WordcloudSubmissionView(CreateView, SidebarContextMixin):
     # view for students to submit word to wordcloud
     template_name = 'app/wordcloud_submission.html'
     model = WordcloudSubmission

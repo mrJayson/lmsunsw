@@ -63,7 +63,7 @@ class Rand():
         while True:
             first_name = choice(first_names) if first_name==None else first_name
             last_name = choice(last_names) if last_name==None else last_name
-            username = first_name+last_name if username==None else username
+            username = (first_name+last_name).lower() if username==None else username
             if User.objects.filter(username=username).exists():
                 first_name = None
                 last_name = None
@@ -90,26 +90,26 @@ class Rand():
         user = (Rand.user() if (len(User.objects.all())==0) else choice(User.objects.all())) if user==None else user
         confidence = choice([1,0,-1])
         obj, created = ConfidenceMeter.objects.get_or_create(User=user)
-        if not created:
-            obj.user = user
-            obj.confidence = confidence
-            obj.save()
+        obj.confidence = confidence
+        obj.save()
         return obj
 
     @staticmethod
-    def thread(title=None, Creator=None, views=None):
+    def thread(title=None, Creator=None, views=None, anonymous=None):
         title = Rand.randomString(40) if title==None else title
         Creator = (Rand.user() if (len(User.objects.all())==0) else choice(User.objects.all())) if Creator==None else Creator
         views = Rand.randomInt(100) if views==None else views
-        return Thread.objects.create(title=title, Creator=Creator, views=views)
+        anonymous = Rand.randomBool() if anonymous==None else anonymous
+        return Thread.objects.create(title=title, Creator=Creator, views=views, anonymous=anonymous)
 
     @staticmethod
-    def post(thread=None, content=None, Creator=None):
+    def post(thread=None, content=None, Creator=None, anonymous=None):
         thread = (Rand.thread() if (len(Thread.objects.all())==0) else choice(Thread.objects.all())) if thread==None else thread
         content = Rand.randomString(40) if content==None else content
         Creator = (Rand.user() if (len(User.objects.all())==0) else choice(User.objects.all())) if Creator==None else Creator
         rank = thread.replies
-        return Post.objects.create(Thread=thread, content=content, Creator=Creator, rank=rank)
+        anonymous = Rand.randomBool() if anonymous==None else anonymous
+        return Post.objects.create(Thread=thread, content=content, Creator=Creator, rank=rank, anonymous=anonymous)
 
     @staticmethod
     def wordcloud(title=None, image=None, lecture=None, visible=None):
@@ -140,7 +140,7 @@ def create_user(username=None, first_name=None, last_name=None, email=None, pass
     """
     Set all users' is_staff to True to be able to access all of the django admin features
     """
-    print "creating user... "
+    
     new_user = Rand.user(username=username, first_name=first_name, last_name=last_name, email=email,  password=password, is_superuser=is_superuser)
     if is_superuser == False:
         new_user.user_permissions.add(
@@ -154,6 +154,7 @@ def create_user(username=None, first_name=None, last_name=None, email=None, pass
     new_user.save()
     # create accompanying entry for additional user data
     new_user_profile, created = UserProfile.objects.get_or_create(user=new_user)
+    print "created user: " + new_user.username
     return new_user
 
 def create_student(username=None, first_name=None, last_name=None, email=None, password=None):
@@ -163,32 +164,46 @@ def create_superuser(username=None, first_name=None, last_name=None, email=None,
     return create_user(username, first_name, last_name, email, password, True)
 
 def create_lecture(lecture_name=None):
-    print "creating lecture... "
-    return Rand.lecture(lecture_name=lecture_name)
+    
+    new_lecture = Rand.lecture(lecture_name=lecture_name)
+    print "created lecture: " + new_lecture.lecture_name
+    return new_lecture
 
 def create_quiz(question=None, visible=None, Lecture=None):
-    print "creating quiz... "
-    return Rand.quiz(question, visible, Lecture)
+    
+    new_quiz = Rand.quiz(question, visible, Lecture)
+    print "created quiz: " + new_quiz.question
+    return new_quiz
 
 def create_quiz_choice(choice=None, Quiz=None, correct=None):
-    print "creating quiz_choice... "
-    return Rand.quizchoice(quiz_choice=choice, quiz=Quiz, correct=correct)
+    
+    new_quiz = Rand.quizchoice(quiz_choice=choice, quiz=Quiz, correct=correct)
+    print "created quiz_choice: " + new_quiz.choice
+    return new_quiz
 
-def create_thread(title=None, Creator=None, views=None):
-    print "creating thread... "
-    return Rand.thread(title, Creator, views)
+def create_thread(title=None, Creator=None, views=None, anonymous=None):
+    
+    new_thread = Rand.thread(title, Creator, views)
+    print "created thread: " + new_thread.title
+    return new_thread
 
-def create_post(Thread=None, content=None, Creator=None):
-    print "creating post... "
-    return Rand.post(Thread, content, Creator)
+def create_post(Thread=None, content=None, Creator=None, anonymous=None):
+    
+    new_post = Rand.post(Thread, content, Creator)
+    print "created post: " + new_post.content
+    return new_post
 
 def create_wordcloud(title=None, image=None, Lecture=None, visible=None):
-    print "creating wordcloud..."
-    return Rand.wordcloud(title, image, Lecture, visible)
+    
+    new_wordcloud = Rand.wordcloud(title, image, Lecture, visible)
+    print "created wordcloud: " + new_wordcloud.title
+    return new_wordcloud
 
 def create_wordcloudsubmission(User=None, Wordcloud=None, word=None):
-    print "creating wordcloud submission..."
-    return Rand.wordcloudsubmission(user=User, wordcloud=Wordcloud, word=word)
+    
+    new_wordcloud_submission = Rand.wordcloudsubmission(user=User, wordcloud=Wordcloud, word=word)
+    print "created wordcloud submission: " + new_wordcloud_submission.word
+    return new_wordcloud_submission
 
 def clear():
     print "Clearing database"
@@ -206,23 +221,22 @@ def clear():
     # remove all user sessions
     django.contrib.sessions.models.Session.objects.all().delete()
 
-def vote(n):
-    for i in xrange(n):
-        Rand.confidence(user=User.objects.all()[i])
+def vote():
+    for user in User.objects.all():
+        Rand.confidence(user=user)
+        
 
 def populate():
     print "Populating database"
 
     create_superuser(username="admin", first_name="administration", last_name="account", email="admin@admin.com", password="admin")
     create_student(username="Jack", first_name="Jack", last_name="James", email="Jack@James.com", password="password")
-    num_students = 50
-
-    
+    num_students = 10
 
     for i in xrange(num_students):
         create_student()
 
-    vote(num_students)
+    vote()
     
     lecture1 = create_lecture("Lecture 1")
     lecture2 = create_lecture("Lecture 2")
@@ -275,16 +289,12 @@ def populate():
     create_quiz_choice("Iphone", quiz7, False)
     create_quiz_choice("Radio", quiz7, True)
 
-    thread1 = create_thread()
-    thread2 = create_thread()
-    thread3 = create_thread()
     for i in xrange(5):
-        create_thread()
+        create_thread(anonymous=False)
     for i in xrange(num_students):
-        create_post()
+        create_post(anonymous=False)
     
     wc = create_wordcloud(title="What is your favourite Colour?", visible=True)
-
     words = ['Red', 'Blue', 'Green', 'Orange', 'Yellow', 'Purple', 'Cyan', 'Magenta', 'Crimson']
     for i in xrange(num_students):
         create_wordcloudsubmission(Wordcloud=wc, word=choice(words))

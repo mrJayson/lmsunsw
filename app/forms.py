@@ -2,39 +2,42 @@
 Definition of forms.
 """
 
+import re
+
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django.forms import ModelForm
 from django.utils.translation import ugettext_lazy as _
-
-from app.models import *
+from django.contrib.admin import widgets
+from django.contrib.auth.models import Permission
+from django.conf import settings
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit, Field, Button
-#from app.widgets import AdminTextInputWidget, AdminURLFieldWidget
-from django.contrib.admin import widgets
-from django.contrib.auth.models import Permission
-from lmsunsw import settings
 
-import re
+from app.models import *
 
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
     username = forms.CharField(max_length=254,
                                widget=forms.TextInput({
                                    'class': 'form-control',
-                                   'placeholder': 'User name, Capital Case Sensitive'}))
+                                   'placeholder': 'User name'}))
     password = forms.CharField(label=_("Password"),
                                widget=forms.PasswordInput({
                                    'class': 'form-control',
                                    'placeholder':'Password'}))
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        return username.lower()
 
 class CreateUserForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super(CreateUserForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-        self.fields['username'].widget = forms.TextInput(attrs={'placeholder': 'User name, Capital Case Sensitive', 'id': 'admin-form-control', 'class': 'form-control'})
+        self.fields['username'].widget = forms.TextInput(attrs={'placeholder': 'User name', 'id': 'admin-form-control', 'class': 'form-control'})
         self.fields['password1'].widget = forms.PasswordInput(attrs={'placeholder': 'Password', 'id': 'admin-form-control', 'class': 'form-control'})
         self.fields['password2'].widget = forms.PasswordInput(attrs={'placeholder': 'Type in your password again', 'id': 'admin-form-control', 'class': 'form-control'})
         self.fields['first_name'].widget = forms.TextInput(attrs={'placeholder': 'First Name', 'id': 'admin-form-control', 'class': 'form-control'})
@@ -59,6 +62,10 @@ class CreateUserForm(UserCreationForm):
             Permission.objects.get(name='Can change post'),
         )
         return new_user
+
+    def clean_username(self):
+        username = self.cleaned_data["username"]
+        return username.lower()
 
 class QuizSelectionForm(forms.Form):
 

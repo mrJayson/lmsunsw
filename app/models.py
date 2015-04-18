@@ -12,7 +12,7 @@ from django.utils.text import Truncator
 from django.utils.translation import ugettext_lazy as _
 
 from app.docsURL import glist
-from lmsunsw import settings
+from django.conf import settings
 
 from autoslug import AutoSlugField
 
@@ -135,6 +135,7 @@ class Thread(models.Model):
     views = models.SmallIntegerField(default=0)
     slug = AutoSlugField(populate_from='title')
     last_post = models.DateTimeField(auto_now=True)
+    anonymous = models.BooleanField(default=True)
 
     def __unicode__(self):
         return unicode(self.title)
@@ -147,6 +148,10 @@ class Thread(models.Model):
     def inc_views(self):
         self.views = self.views + 1
         self.save()
+
+    @property
+    def Creator_name(self):
+        return _("anonymous") if self.anonymous else self.Creator
 
 class Post(models.Model):
     Thread = models.ForeignKey(Thread)

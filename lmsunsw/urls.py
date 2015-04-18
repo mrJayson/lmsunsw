@@ -2,17 +2,13 @@
 Definition of urls for lmsunsw.
 """
 
-# Uncomment the next lines to enable the admin:
+from datetime import datetime
+
+from django.conf import settings
 from django.conf.urls import include
 from django.contrib import admin
-from app.admin import user_admin_site, default_admin_site
-
-
-from datetime import datetime
 from django.conf.urls import patterns, url
 from django.contrib.auth.views import login, logout
-from django.contrib.auth.forms import AuthenticationForm
-
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.contrib.auth.decorators import user_passes_test, login_required
 # check for pages that require the user to not be logged in
@@ -20,9 +16,9 @@ login_forbidden =  user_passes_test(lambda u: u.is_anonymous(), '/', None)
 
 from app.views import *
 from app.class_based_views import *
+from app.forms import BootstrapAuthenticationForm
 
-from django.conf import settings
-
+from app.admin import user_admin_site, default_admin_site
 
 urlpatterns = patterns('',
     # Examples:
@@ -54,7 +50,7 @@ urlpatterns = patterns('',
     url(r'^login/?$', login_forbidden(login), 
         {'template_name':'app/login.html',
             #'redirect_field_name':'/',
-            'authentication_form':AuthenticationForm,
+            'authentication_form':BootstrapAuthenticationForm,
             'extra_context':
                 {'title':'LMSUNSW'}},
         name='login'),

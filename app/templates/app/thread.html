@@ -20,7 +20,7 @@
 					<td><a href="{% url 'post' thread.id thread.slug %}" style="display:block;">{{ thread.title|truncatechars:28 }}</a></td>
 					<td>{{ thread.replies }}</td>
 					<td>{{ thread.views }}</td>
-					<td>{{ thread.Creator }}</td>
+					<td>{{ thread.Creator_name }}</td>
 					<td>{{ thread.last_post }}</td>
 				</tr>
 			</tbody>

@@ -36,11 +36,11 @@ def logout(request, next_page=None,
            template_name='registration/logged_out.html',
            redirect_field_name=REDIRECT_FIELD_NAME,
            current_app=None, extra_context=None):
-    #record user id before logout wipes it
+    # get user id before logout wipes it
     user_id = request.user.id
     # perform normal logout operation
     ret_val = views.logout(request, next_page, template_name, redirect_field_name, current_app, extra_context)
-    #remove session entry from db to maintain correct number of session entries since django only clears the contents not the entry
+    # remove session entry from db to maintain correct number of session entries since django only clears the contents not the entry
     Session.objects.all().get(session_key=request.session.session_key).delete()
     for session in Session.objects.all():
         if session.get_decoded().get('_auth_user_id') == user_id:

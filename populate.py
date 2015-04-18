@@ -63,7 +63,7 @@ class Rand():
         while True:
             first_name = choice(first_names) if first_name==None else first_name
             last_name = choice(last_names) if last_name==None else last_name
-            username = (first_name+last_name).lower() if username==None else username
+            username = (first_name+last_name).lower() if username==None else username.lower()
             if User.objects.filter(username=username).exists():
                 first_name = None
                 last_name = None
@@ -81,8 +81,14 @@ class Rand():
 
     @staticmethod
     def quizchoiceselected(user=None, quizchoice=None):
-        user = (Rand.user() if (len(User.objects.all())==0) else choice(User.objects.all())) if user==None else user
-        quizchoice = (Rand.quizchoice() if (len(QuizChoice.objects.all())==0) else choice(QuizChoice.objects.all())) if quizchoice==None else quizchoice
+        while True:
+            user = (Rand.user() if (len(User.objects.all())==0) else choice(User.objects.all())) if user==None else user
+            quizchoice = (Rand.quizchoice() if (len(QuizChoice.objects.all())==0) else choice(QuizChoice.objects.all())) if quizchoice==None else quizchoice
+            if QuizChoiceSelected.objects.filter(User=user, QuizChoice=quizchoice).exists():
+                user = None
+                quizchoice = None
+            else:
+                break
         return QuizChoiceSelected.objects.create(User=user, QuizChoice=quizchoice)
 
     @staticmethod
@@ -95,12 +101,13 @@ class Rand():
         return obj
 
     @staticmethod
-    def thread(title=None, Creator=None, views=None, anonymous=None):
-        title = Rand.randomString(40) if title==None else title
+    def thread(title=None, content=None, Creator=None, views=None, anonymous=None):
+        title = Rand.randomString(20) if title==None else title
+        content = Rand.randomString(100) if content==None else content
         Creator = (Rand.user() if (len(User.objects.all())==0) else choice(User.objects.all())) if Creator==None else Creator
         views = Rand.randomInt(100) if views==None else views
         anonymous = Rand.randomBool() if anonymous==None else anonymous
-        return Thread.objects.create(title=title, Creator=Creator, views=views, anonymous=anonymous)
+        return Thread.objects.create(title=title, content=content, Creator=Creator, views=views, anonymous=anonymous)
 
     @staticmethod
     def post(thread=None, content=None, Creator=None, anonymous=None):
@@ -177,13 +184,18 @@ def create_quiz(question=None, visible=None, Lecture=None):
 
 def create_quiz_choice(choice=None, Quiz=None, correct=None):
     
-    new_quiz = Rand.quizchoice(quiz_choice=choice, quiz=Quiz, correct=correct)
-    print "created quiz_choice: " + new_quiz.choice
-    return new_quiz
+    new_quiz_choice = Rand.quizchoice(quiz_choice=choice, quiz=Quiz, correct=correct)
+    print "created quiz_choice: " + new_quiz_choice.choice
+    return new_quiz_choice
 
-def create_thread(title=None, Creator=None, views=None, anonymous=None):
+def create_quiz_choice_selection(User=None, QuizChoice=None):
+    new_quiz_choice_selection = Rand.quizchoiceselected(user=User, quizchoice=QuizChoice)
+    print "create quiz_choice_selection: User '"+ new_quiz_choice_selection.User.username + "' voted '" + new_quiz_choice_selection.QuizChoice.choice + "' for " + new_quiz_choice_selection.QuizChoice.Quiz.question
+    return new_quiz_choice_selection
+
+def create_thread(title=None, content=None, Creator=None, views=None, anonymous=None):
     
-    new_thread = Rand.thread(title, Creator, views)
+    new_thread = Rand.thread(title, content, Creator, views)
     print "created thread: " + new_thread.title
     return new_thread
 
@@ -199,7 +211,7 @@ def create_wordcloud(title=None, image=None, Lecture=None, visible=None):
     print "created wordcloud: " + new_wordcloud.title
     return new_wordcloud
 
-def create_wordcloudsubmission(User=None, Wordcloud=None, word=None):
+def create_wordcloud_submission(User=None, Wordcloud=None, word=None):
     
     new_wordcloud_submission = Rand.wordcloudsubmission(user=User, wordcloud=Wordcloud, word=word)
     print "created wordcloud submission: " + new_wordcloud_submission.word
@@ -289,6 +301,9 @@ def populate():
     create_quiz_choice("Iphone", quiz7, False)
     create_quiz_choice("Radio", quiz7, True)
 
+    for i in xrange(num_students * 3):
+        create_quiz_choice_selection()
+
     for i in xrange(5):
         create_thread(anonymous=False)
     for i in xrange(num_students):
@@ -297,7 +312,7 @@ def populate():
     wc = create_wordcloud(title="What is your favourite Colour?", visible=True)
     words = ['Red', 'Blue', 'Green', 'Orange', 'Yellow', 'Purple', 'Cyan', 'Magenta', 'Crimson']
     for i in xrange(num_students):
-        create_wordcloudsubmission(Wordcloud=wc, word=choice(words))
+        create_wordcloud_submission(Wordcloud=wc, word=choice(words))
 
 def run():
     clear()

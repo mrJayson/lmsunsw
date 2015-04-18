@@ -119,10 +119,18 @@ iframe {
 }
 
 /* sizing and alignment of the change_list_add_button in admin */
+#float-left {
+  float: left;
+}
 
 #float-right {
   float: right;
 }
+
+#float-text-left {
+  text-align: left;
+}
+
 #float-text-right {
   text-align: right;
 }
@@ -148,4 +156,8 @@ iframe {
 /* style button like a submit */
 #submit-styled-button {
   width: 100%;
+}
+
+.page-header {
+  margin-top: 0;
 }

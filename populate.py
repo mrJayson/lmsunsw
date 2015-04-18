@@ -12,6 +12,16 @@ from app.docsURL import glist
 from random import choice
 from string import ascii_lowercase
 
+first_names = ['Annie', 'Adam', 'Becky', 'Bert', 'Chris', 'Christina', 'David', 'Danielle', 'Edison', 'Ellie', 
+    'Frank', 'Faye', 'Graham', 'Gwen', 'Harvey', 'Haley', 'Isaac', 'Isabella', 'Jason', 'Jessica', 
+    'Keith', 'Katelyn', 'Luke', 'Lynette', 'Morgan', 'Mandy', 'Neil', 'Natalie', 'Oliver', 'Olivia', 
+    'Peter', 'Penny', 'Quentin', 'Quinzel', 'Robert', 'Rachel', 'Simon', 'Sheryl', 'Todd', 'Tanya', 
+    'Ulysses', 'Una', 'Victor', 'Vivian', 'Wilson', 'Wendy', 'Xaiver', 'Xana', 'Young', 'Yvonne', 'Zach', 'Zoe']
+
+last_names = ['Anderson', 'Baker', 'Caffrey', 'Denistone', 'Ervine', 'Freeman', 'Gray', 'Haynes', 'Irwin', 
+    'Jefferson', 'Kendrick', 'Lance', 'Macklin', 'Noble', 'Owen', 'Palmer', 'Queen', 'Reynolds', 'Smith', 
+    'Tanner', 'Underwood', 'Valentine', 'West', 'Xander', 'York', 'Zimmer']
+
 class Rand():
 
     @staticmethod
@@ -50,11 +60,19 @@ class Rand():
 
     @staticmethod
     def user(username=None, first_name=None, last_name=None, email=None, password=None, is_superuser=False):
-        username = Rand.randomString(10) if username==None else username
-        first_name = Rand.randomString(10) if first_name==None else first_name
-        last_name = Rand.randomString(10) if last_name==None else last_name
-        email = Rand.randomString(10)+"@"+Rand.randomString(5)+"."+Rand.randomString(3) if email==None else email
-        password = Rand.randomString(10) if password==None else password
+        while True:
+            first_name = choice(first_names) if first_name==None else first_name
+            last_name = choice(last_names) if last_name==None else last_name
+            username = first_name+last_name if username==None else username
+            if User.objects.filter(username=username).exists():
+                first_name = None
+                last_name = None
+                username = None
+            else:
+                break
+        
+        email = first_name+"@"+last_name+".com" if email==None else email
+        password = "password" if password==None else password
         user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, email=email, password=password)
         user.is_staff = True
         user.is_superuser = is_superuser
@@ -105,15 +123,14 @@ class Rand():
     @staticmethod
     def wordcloudsubmission(user=None, wordcloud=None, word=None):
 
-        user = (Rand.user() if (len(User.objects.all())==0) else choice(User.objects.all())) if user==None else user
-        wordcloud = (Rand.wordcloud() if (len(Wordcloud.objects.all())==0) else choice(Wordcloud.objects.all())) if wordcloud==None else wordcloud
-        while WordcloudSubmission.objects.filter(User=user, Wordcloud=wordcloud).exists():
-            # reset both vars so forced to choose another random combination
-            user=None
-            wordcloud=None
-
+        while True:
             user = (Rand.user() if (len(User.objects.all())==0) else choice(User.objects.all())) if user==None else user
             wordcloud = (Rand.wordcloud() if (len(Wordcloud.objects.all())==0) else choice(Wordcloud.objects.all())) if wordcloud==None else wordcloud
+            if WordcloudSubmission.objects.filter(User=user, Wordcloud=wordcloud).exists():
+                user=None
+                wordcloud=None
+            else:
+                break
 
         word = Rand.randomString(1) if word==None else word
 
@@ -199,6 +216,9 @@ def populate():
     create_superuser(username="admin", first_name="administration", last_name="account", email="admin@admin.com", password="admin")
     create_student(username="Jack", first_name="Jack", last_name="James", email="Jack@James.com", password="password")
     num_students = 50
+
+    
+
     for i in xrange(num_students):
         create_student()
 

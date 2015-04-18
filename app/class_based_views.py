@@ -18,8 +18,8 @@ class IndexView(TemplateView, BaseSidebarContextMixin):
             return super(IndexView, self).dispatch(request, *args, **kwargs)
 
         
-    def get_context_data(self, **kwargs):
-        context = super(IndexView, self).get_context_data(**kwargs)
+    def get_context_data(self, *args, **kwargs):
+        context = super(IndexView, self).get_context_data(*args, **kwargs)
         context['lecture_list'] = Lecture.objects.all()
         context['session_key'] = self.request.session.session_key
         return context
@@ -42,7 +42,7 @@ class QuizView(FormView, SidebarContextMixin):
     #form_class = QuizSelectionForm
     #queryset = QuizChoice.objects.filter(Quiz = self.kwargs(quiz_id))
 
-    def get_form(self, data=None, files=None, **kwargs):
+    def get_form(self, data=None, files=None, *args, **kwargs):
         user = self.request.user
         quiz = Quiz.objects.get(id=self.kwargs.get('quiz_id'))
 
@@ -76,8 +76,8 @@ class ThreadView(ListView, BaseSidebarContextMixin):
     template_name = 'app/thread.html'
     model = Thread
 
-    def get_context_data(self, **kwargs):
-        context = super(ThreadView, self).get_context_data(**kwargs)
+    def get_context_data(self, *args, **kwargs):
+        context = super(ThreadView, self).get_context_data(*args, **kwargs)
         context['lecture_list'] = Lecture.objects.all()
         return context
 
@@ -88,12 +88,12 @@ class CreateThreadView(CreateView, BaseSidebarContextMixin):
     template_name = 'app/create_thread.html'
     model = Thread
 
-    def get_context_data(self, **kwargs):
-        context = super(CreateThreadView, self).get_context_data(**kwargs)
+    def get_context_data(self, *args, **kwargs):
+        context = super(CreateThreadView, self).get_context_data(*args, **kwargs)
         context['lecture_list'] = Lecture.objects.all()
         return context
 
-    def get_form(self, data=None, files=None, **kwargs):
+    def get_form(self, data=None, files=None, *args, **kwargs):
         user = self.request.user
         if self.request.method == "POST":
             form = CreateThreadForm(user=user, data=self.request.POST)
@@ -114,14 +114,14 @@ class PostView(CreateView, BaseSidebarContextMixin):
         thread.inc_views()
         return super(PostView, self).dispatch(request, *args, **kwargs)
 
-    def get_context_data(self, **kwargs):
-        context = super(PostView, self).get_context_data(**kwargs)
+    def get_context_data(self, *args, **kwargs):
+        context = super(PostView, self).get_context_data(*args, **kwargs)
         context['lecture_list'] = Lecture.objects.all()
         context['thread'] = Thread.objects.get(id=self.kwargs.get('thread_id'))
         context['posts'] = Post.objects.filter(Thread = self.kwargs.get('thread_id'))
         return context
 
-    def get_form(self, data=None, files=None, **kwargs):
+    def get_form(self, data=None, files=None, *args, **kwargs):
         user = self.request.user
         thread = Thread.objects.get(id=self.kwargs.get('thread_id'))
         if self.request.method == "POST":
@@ -138,13 +138,13 @@ class WordcloudSubmissionView(CreateView, SidebarContextMixin):
     template_name = 'app/wordcloud_submission.html'
     model = WordcloudSubmission
 
-    def get_context_data(self, **kwargs):
-        context = super(WordcloudSubmissionView, self).get_context_data(**kwargs)
+    def get_context_data(self, *args, **kwargs):
+        context = super(WordcloudSubmissionView, self).get_context_data(*args, **kwargs)
         context['lecture_list'] = Lecture.objects.all()
         context['wordcloud'] = Wordcloud.objects.get(id=self.kwargs.get('wordcloud_id'))
         return context
 
-    def get_form(self, data=None, files=None, **kwargs):
+    def get_form(self, data=None, files=None, *args, **kwargs):
         user = self.request.user
         wordcloud = Wordcloud.objects.get(id=self.kwargs.get('wordcloud_id'))
         if self.request.method == "POST":

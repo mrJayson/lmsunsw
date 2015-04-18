@@ -4,15 +4,15 @@ from django.contrib import admin
 from app.models import Lecture, Quiz, QuizChoiceSelected, Wordcloud, WordcloudSubmission
 
 class BaseSidebarContextMixin(ContextMixin):
-	def get_context_data(self, **kwargs):
-		context = super(BaseSidebarContextMixin, self).get_context_data(**kwargs)
+	def get_context_data(self, *args, **kwargs):
+		context = super(BaseSidebarContextMixin, self).get_context_data(*args, **kwargs)
 		context['lecture_list'] = Lecture.objects.all()
 		return context
 
 class SidebarContextMixin(BaseSidebarContextMixin):
 
-	def get_context_data(self, **kwargs):
-		context = super(SidebarContextMixin, self).get_context_data(**kwargs)
+	def get_context_data(self, *args, **kwargs):
+		context = super(SidebarContextMixin, self).get_context_data(*args, **kwargs)
 		context['slug'] = self.kwargs['url_slug']
 
 		#need to pass identity of current lecture into template

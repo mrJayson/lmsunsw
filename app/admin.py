@@ -42,10 +42,10 @@ class QuizChoiceInLine(admin.StackedInline):
     # display two more quiz choices forms by default, giving 4 choices as standard
     extra = 2-1
     # override admin css styling for inputs
-    def formfield_for_dbfield(self, db_field, **kwargs):
+    def formfield_for_dbfield(self, db_field, *args, **kwargs):
         if db_field.name == 'choice':
             kwargs['widget'] = widgets.AdminTextInputWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'One of the quiz choices'})
-        return super(QuizChoiceInLine, self).formfield_for_dbfield(db_field, **kwargs)
+        return super(QuizChoiceInLine, self).formfield_for_dbfield(db_field, *args, **kwargs)
 
 class QuizAdmin(ModelAdminMixin, admin.ModelAdmin):
     """

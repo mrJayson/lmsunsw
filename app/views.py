@@ -22,8 +22,8 @@ from django.contrib.sessions.models import Session
 class AlertView(TemplateView):
     template_name = "app/alert.html"
 
-    def get_context_data(self, **kwargs):
-        context = super(AlertView, self).get_context_data(**kwargs)
+    def get_context_data(self, *args, **kwargs):
+        context = super(AlertView, self).get_context_data(*args, **kwargs)
         tag = self.kwargs['tag']
         '''message to display is based on the url slug'''
         if tag == "create_user_success":

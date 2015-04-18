@@ -7,7 +7,6 @@ from app.forms import QuizSelectionForm, CreateThreadForm, CreateUserForm, PostR
 from django.core.urlresolvers import reverse
 from app.mixins import BaseSidebarContextMixin, SidebarContextMixin
 
-
 class IndexView(TemplateView, BaseSidebarContextMixin):
     template_name = 'app/index.html'
 
@@ -25,7 +24,6 @@ class IndexView(TemplateView, BaseSidebarContextMixin):
         context = super(IndexView, self).get_context_data(**kwargs)
         context['lecture_list'] = Lecture.objects.all()
         context['session_key'] = self.request.session.session_key
-
         return context
 
 

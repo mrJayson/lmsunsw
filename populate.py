@@ -104,8 +104,17 @@ class Rand():
 
     @staticmethod
     def wordcloudsubmission(user=None, wordcloud=None, word=None):
+
         user = (Rand.user() if (len(User.objects.all())==0) else choice(User.objects.all())) if user==None else user
         wordcloud = (Rand.wordcloud() if (len(Wordcloud.objects.all())==0) else choice(Wordcloud.objects.all())) if wordcloud==None else wordcloud
+        while WordcloudSubmission.objects.filter(User=user, Wordcloud=wordcloud).exists():
+            # reset both vars so forced to choose another random combination
+            user=None
+            wordcloud=None
+
+            user = (Rand.user() if (len(User.objects.all())==0) else choice(User.objects.all())) if user==None else user
+            wordcloud = (Rand.wordcloud() if (len(Wordcloud.objects.all())==0) else choice(Wordcloud.objects.all())) if wordcloud==None else wordcloud
+
         word = Rand.randomString(1) if word==None else word
 
         return WordcloudSubmission.objects.create(User=user, Wordcloud=wordcloud, word=word)
@@ -184,16 +193,16 @@ def vote(n):
     for i in xrange(n):
         Rand.confidence(user=User.objects.all()[i])
 
-
-
 def populate():
     print "Populating database"
 
     create_superuser(username="admin", first_name="administration", last_name="account", email="admin@admin.com", password="admin")
     create_student(username="Jack", first_name="Jack", last_name="James", email="Jack@James.com", password="password")
-    #for i in xrange(100):
-    #    create_user()
-    #vote(100)
+    num_students = 50
+    for i in xrange(num_students):
+        create_student()
+
+    vote(num_students)
     
     lecture1 = create_lecture("Lecture 1")
     lecture2 = create_lecture("Lecture 2")
@@ -251,18 +260,14 @@ def populate():
     thread3 = create_thread()
     for i in xrange(5):
         create_thread()
-    for i in xrange(50):
+    for i in xrange(num_students):
         create_post()
+    
+    wc = create_wordcloud(title="What is your favourite Colour?", visible=True)
 
-    for i in xrange(50):
-        create_student()
-    wc = create_wordcloud(visible=True)
-    #for i in xrange(50):
-    #    create_wordcloudsubmission(Wordcloud=wc)
-
-
-
-
+    words = ['Red', 'Blue', 'Green', 'Orange', 'Yellow', 'Purple', 'Cyan', 'Magenta', 'Crimson']
+    for i in xrange(num_students):
+        create_wordcloudsubmission(Wordcloud=wc, word=choice(words))
 
 def run():
     clear()

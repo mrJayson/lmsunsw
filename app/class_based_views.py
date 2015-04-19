@@ -1,14 +1,20 @@
+"""
+Definition of class-based-views.
+"""
+
 from django.views.generic import TemplateView, View, CreateView, FormView, ListView
 from django.shortcuts import render, redirect
 from django.template import RequestContext
-from app.models import *
 from django.contrib.auth.models import User
-from app.forms import QuizSelectionForm, CreateThreadForm, CreateUserForm, PostReplyForm, WordcloudSubmissionForm
 from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext_lazy as _
+
 from app.mixins import BaseSidebarContextMixin, SidebarContextMixin
+from app.forms import QuizSelectionForm, CreateThreadForm, CreateUserForm, PostReplyForm, WordcloudSubmissionForm
+from app.models import *
 
 class IndexView(TemplateView, BaseSidebarContextMixin):
-    template_name = 'app/index.html'
+    template_name = _('app/index.html')
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_superuser and request.path == u'/':
@@ -26,19 +32,19 @@ class IndexView(TemplateView, BaseSidebarContextMixin):
 
 
 class LectureView(TemplateView, SidebarContextMixin):
-    template_name = 'app/lecture.html'
+    template_name = _('app/lecture.html')
 
 
 
 class CreateUser(CreateView):
-    template_name = 'app/create_user.html'
+    template_name = _('app/create_user.html')
     form_class = CreateUserForm
 
     def get_success_url(self):
         return reverse('alert', kwargs={'tag':'create_user_success'})
 
 class QuizView(FormView, SidebarContextMixin):
-    template_name = 'app/quiz.html'
+    template_name = _('app/quiz.html')
     #form_class = QuizSelectionForm
     #queryset = QuizChoice.objects.filter(Quiz = self.kwargs(quiz_id))
 
@@ -68,12 +74,12 @@ class QuizView(FormView, SidebarContextMixin):
         return reverse('quiz', kwargs={'lect_id':lecture.id, 'url_slug':lecture.slug, 'quiz_id':quiz.id, 'quiz_slug':quiz.question})
 
 class LectureSlideView(TemplateView, SidebarContextMixin):
-    template_name = 'app/lecture_slide.html'
+    template_name = _('app/lecture_slide.html')
 
 
 class ThreadView(ListView, BaseSidebarContextMixin):
     # view for all threads in a lecture
-    template_name = 'app/thread.html'
+    template_name = _('app/thread.html')
     model = Thread
 
     def get_context_data(self, *args, **kwargs):
@@ -85,7 +91,7 @@ class ThreadView(ListView, BaseSidebarContextMixin):
         return Thread.objects.all()
 
 class CreateThreadView(CreateView, BaseSidebarContextMixin):
-    template_name = 'app/create_thread.html'
+    template_name = _('app/create_thread.html')
     model = Thread
 
     def get_context_data(self, *args, **kwargs):
@@ -106,7 +112,7 @@ class CreateThreadView(CreateView, BaseSidebarContextMixin):
 
 class PostView(CreateView, BaseSidebarContextMixin):
     # create view since priority is the posts reply form
-    template_name = 'app/post.html'
+    template_name = _('app/post.html')
     model = Post
 
     def dispatch(self, request, *args, **kwargs):
@@ -135,7 +141,7 @@ class PostView(CreateView, BaseSidebarContextMixin):
 
 class WordcloudSubmissionView(CreateView, SidebarContextMixin):
     # view for students to submit word to wordcloud
-    template_name = 'app/wordcloud_submission.html'
+    template_name = _('app/wordcloud_submission.html')
     model = WordcloudSubmission
 
     def get_context_data(self, *args, **kwargs):

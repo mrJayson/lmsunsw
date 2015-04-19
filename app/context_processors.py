@@ -1,5 +1,11 @@
-from app.models import ConfidenceMeter, Quiz, Lecture, QuizChoice, QuizChoiceSelected, Wordcloud
+"""
+Definition of custom context processors.
+"""
+
 from django.contrib.sessions.models import Session
+from django.utils.translation import ugettext_lazy as _
+
+from app.models import ConfidenceMeter, Quiz, Lecture, QuizChoice, QuizChoiceSelected, Wordcloud
 
 def django_sessions(request):
 	# context processor to add num of users on the site
@@ -39,11 +45,11 @@ def get_confidence_meter_values(request):
 	else:
 		current = None
 
-	ret_val = {'good': good, 'neutral': neutral, 'bad': bad, 'current': current}
+	ret_val = {_('good'): good, _('neutral'): neutral, _('bad'): bad, _('current'): current}
 	return ret_val
 
 def currents(request):
 
-	return {'current_quiz_list': Quiz.objects.filter(visible = True),
-	'current_wordcloud_list': Wordcloud.objects.filter(visible = True)
+	return {_('current_quiz_list'): Quiz.objects.filter(visible = True),
+	_('current_wordcloud_list'): Wordcloud.objects.filter(visible = True)
 	}

@@ -3,18 +3,20 @@ Customizations for the Django administration interface
 """
 from django.contrib import admin
 from django.contrib.admin.sites import AdminSite
-from app.models import *
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import capfirst
 from django.core.urlresolvers import reverse, NoReverseMatch
 from django.utils import six
 from django.apps import apps
+from django.contrib.admin import widgets
+from django.conf import settings
+
+from wordcloud import WordCloud
+
+from app.models import *
 from app.forms import LectureAdminForm, QuizAdminForm, WordcloudAdminForm, QuizChoiceInLineForm, CodeSnippetAdminForm
 from app.mixins import ModelAdminMixin, LimitedModelAdminMixin
-from django.contrib.admin import widgets
-from wordcloud import WordCloud
-from lmsunsw.settings import MEDIA_ROOT
 
 ###################################################################################################
 
@@ -193,7 +195,7 @@ class WordcloudAdmin(ModelAdminMixin, admin.ModelAdmin):
             wc = WordCloud(font_path="static/app/fonts/Microsoft Sans Serif.ttf", width=800, height=400).generate(text)
             filepath = "wordcloud/"+ obj.title +".png"
             img = wc.to_image()
-            img.save(MEDIA_ROOT + "/" + filepath, 'PNG') # create the image file on filesystem
+            img.save(settings.MEDIA_ROOT + "/" + filepath, 'PNG') # create the image file on filesystem
             obj.image = filepath # add the image to the model
 
         return super(WordcloudAdmin, self).save_model(request, obj, form, change)

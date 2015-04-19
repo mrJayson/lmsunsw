@@ -4,14 +4,10 @@ Definition of models.
 
 import string
 
-
-
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import Truncator
 from django.utils.translation import ugettext_lazy as _
-
-from app.docsURL import glist
 from django.conf import settings
 
 from autoslug import AutoSlugField
@@ -21,6 +17,8 @@ from pygments.formatters.html import HtmlFormatter
 from pygments.lexers import get_lexer_by_name
 from pygments.styles import get_all_styles
 from pygments.styles import STYLE_MAP
+
+from app.docsURL import glist
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='user_profile')
@@ -35,12 +33,8 @@ class Lecture(models.Model):
     slug = AutoSlugField(populate_from='lecture_name')
 
     @property
-    def get_slug_field(self):
-        return self.lecture_name.replace(' ','_')
-
-    @property
     def get_absolute_url(self):
-        return self.id + "/" + self.slug
+        return _("%(id)s/%(slug)s") % {'id':self.id, 'slug':self.slug}
 
     def __unicode__(self):
         return unicode(self.lecture_name)
@@ -63,7 +57,7 @@ class Lecture(models.Model):
                 # no lectures are using this gdoc
                 return gdoc
         # no unused gdocs
-        return ""
+        return _("")
 
     def save(self, *args, **kwargs):
         if self.collab_doc == None:
@@ -86,7 +80,7 @@ class Quiz(models.Model):
     Lecture = models.ForeignKey(Lecture)
 
     def __unicode__(self):
-        return unicode(self.Lecture.lecture_name + " " + self.question)
+        return unicode(self.Lecture.lecture_name + _(" ") + self.question)
 
     @property
     def quiz_type(self):
@@ -211,6 +205,6 @@ class CodeSnippet(models.Model):
         css = formatter.get_style_defs()
 
         # Included in a DIV, so the next item will be displayed below.
-        return '<div class="code"><style type="text/css">' + css + '</style>\n<pre>' + html + '</pre></div>\n'
+        return _('<div class="code"><style type="text/css">%(css)s</style>\n<pre>%(html)s</pre></div>\n') % {'css':css, 'html':html}
 
 

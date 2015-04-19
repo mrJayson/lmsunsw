@@ -21,12 +21,12 @@ class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
     username = forms.CharField(max_length=254,
                                widget=forms.TextInput({
-                                   'class': 'form-control',
-                                   'placeholder': 'User name'}))
+                                   _('class'): _('form-control'),
+                                   _('placeholder'): _('User name')}))
     password = forms.CharField(label=_("Password"),
                                widget=forms.PasswordInput({
-                                   'class': 'form-control',
-                                   'placeholder':'Password'}))
+                                   _('class'): _('form-control'),
+                                   _('placeholder'):_('Password')}))
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
@@ -37,13 +37,13 @@ class CreateUserForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super(CreateUserForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-        self.fields['username'].widget = forms.TextInput(attrs={'placeholder': 'User name', 'id': 'admin-form-control', 'class': 'form-control'})
-        self.fields['password1'].widget = forms.PasswordInput(attrs={'placeholder': 'Password', 'id': 'admin-form-control', 'class': 'form-control'})
-        self.fields['password2'].widget = forms.PasswordInput(attrs={'placeholder': 'Type in your password again', 'id': 'admin-form-control', 'class': 'form-control'})
-        self.fields['first_name'].widget = forms.TextInput(attrs={'placeholder': 'First Name', 'id': 'admin-form-control', 'class': 'form-control'})
-        self.fields['last_name'].widget = forms.TextInput(attrs={'placeholder': 'Last Name', 'id': 'admin-form-control', 'class': 'form-control'})
-        self.fields['email'].widget = forms.TextInput(attrs={'placeholder': 'Email Address', 'id': 'admin-form-control', 'class': 'form-control'})
-        self.helper.add_input(Submit('submit', 'Submit'))
+        self.fields['username'].widget = forms.TextInput(attrs={_('placeholder'): _('User name'), ('id'): _('admin-form-control'), _('class'): _('form-control')})
+        self.fields['password1'].widget = forms.PasswordInput(attrs={_('placeholder'): _('Password'), ('id'): _('admin-form-control'), _('class'): _('form-control')})
+        self.fields['password2'].widget = forms.PasswordInput(attrs={_('placeholder'): _('Type in your password again'), ('id'): _('admin-form-control'), _('class'): _('form-control')})
+        self.fields['first_name'].widget = forms.TextInput(attrs={_('placeholder'): _('First Name'), ('id'): _('admin-form-control'), _('class'): _('form-control')})
+        self.fields['last_name'].widget = forms.TextInput(attrs={_('placeholder'): _('Last Name'), ('id'): _('admin-form-control'), _('class'): _('form-control')})
+        self.fields['email'].widget = forms.TextInput(attrs={_('placeholder'): _('Email Address'), ('id'): _('admin-form-control'), _('class'): _('form-control')})
+        self.helper.add_input(Submit(_('submit'), _('Submit')))
 
     class Meta:
         # Provide an assoication between the ModelForm and a model
@@ -54,17 +54,17 @@ class CreateUserForm(UserCreationForm):
         new_user = super(CreateUserForm, self).save(*args, **kwargs)
         # add permissions user upon creation
         new_user.user_permissions.add(
-            Permission.objects.get(name='Can change user'),
-            Permission.objects.get(name='Can change user profile'),
-            Permission.objects.get(name='Can add thread'),
-            Permission.objects.get(name='Can change thread'),
-            Permission.objects.get(name='Can add post'),
-            Permission.objects.get(name='Can change post'),
+            Permission.objects.get(name=_('Can change user')),
+            Permission.objects.get(name=_('Can change user profile')),
+            Permission.objects.get(name=_('Can add thread')),
+            Permission.objects.get(name=_('Can change thread')),
+            Permission.objects.get(name=_('Can add post')),
+            Permission.objects.get(name=_('Can change post')),
         )
         return new_user
 
     def clean_username(self):
-        username = self.cleaned_data["username"]
+        username = self.cleaned_dat.get('username')
         return username.lower()
 
 class QuizSelectionForm(forms.Form):
@@ -103,18 +103,16 @@ class QuizSelectionForm(forms.Form):
                     widget=forms.RadioSelect
                     )
                 # add hidden values into form
-                self.fields['user'] = forms.CharField(widget=forms.HiddenInput())
-                self.fields['quiz_id'] = forms.CharField(widget=forms.HiddenInput())
+                self.fields['user'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):user.id}))
                 self.helper.layout.append(
                     Fieldset(
                         quiz.question,
                         Field('choices'),
-                        Field('user', value=user, type="hidden"),
-                        Field('quiz_id', value=quiz.id, type="hidden")
+                        Field('user')
                         )
                     )
                 # form is to have a submit button since it needs to collect data
-                self.helper.add_input(Submit('submit', 'Submit'))
+                self.helper.add_input(Submit(_('submit'), _('Submit')))
             else:
                 # Quiz answered, prepare form to display result
                 # SINGLEMCQ only allows one choice to be selected
@@ -128,14 +126,14 @@ class QuizSelectionForm(forms.Form):
                 self.helper.layout.append(
                     Fieldset(
                         quiz.question,
-                        Field('choices', disabled="true")
+                        Field('choices', disabled=_('true'))
                         )
                     )
                 # depending on the chosen choice, display the result in place of the submit button
                 if quiz_choice_selected.first().QuizChoice.correct:
-                    self.helper.add_input(Button(name = "", value="CORRECT", css_class='btn-success'))
+                    self.helper.add_input(Button(name = _(""), value=_("CORRECT"), css_class=_('btn-success')))
                 else:
-                    self.helper.add_input(Button(name = "", value="WRONG", css_class='btn-danger'))
+                    self.helper.add_input(Button(name = _(""), value=_("WRONG"), css_class=_('btn-danger')))
 
         ################### MULTIMCQ ###################
         # forms are checkboxes, can have multiple correct answers, but at least one correct
@@ -151,21 +149,19 @@ class QuizSelectionForm(forms.Form):
                     choices = quiz_choice_list,
                     required=True,
                     widget=forms.CheckboxSelectMultiple,
-                    help_text="Select all that apply"
+                    help_text=_("Select all that apply")
                     )
                 # add hidden values into form
-                self.fields['user'] = forms.CharField(widget=forms.HiddenInput())
-                self.fields['quiz_id'] = forms.CharField(widget=forms.HiddenInput())
+                self.fields['user'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):user.id}))
                 self.helper.layout.append(
                     Fieldset(
                         quiz.question,
                         Field('choices'),
-                        Field('user', value=user, type="hidden"),
-                        Field('quiz_id', value=quiz.id, type="hidden")
+                        Field('user')
                         )
                     )
                 # form is to have a submit button since it needs to collect data
-                self.helper.add_input(Submit('submit', 'Submit'))
+                self.helper.add_input(Submit(_('submit'), _('Submit')))
             else:
                 # Quiz answered, prepare form to display result
                 # MULTIMCQ will have many choices selected
@@ -179,7 +175,7 @@ class QuizSelectionForm(forms.Form):
                 self.helper.layout.append(
                     Fieldset(
                         quiz.question,
-                        Field('choices', disabled="true")
+                        Field('choices', disabled=_('true'))
                         )
                     )
                 # depending on the chosen choice, display the result in place of the submit button
@@ -188,13 +184,13 @@ class QuizSelectionForm(forms.Form):
 
                 if len(overlapping_choices) == 0:
                     # completely wrong
-                    self.helper.add_input(Button(name = "", value="WRONG", css_class='btn-danger'))
+                    self.helper.add_input(Button(name = _(""), value=_("WRONG"), css_class=_('btn-danger')))
                 elif len(overlapping_choices) == len(list_of_corrects):
                     # all correct
-                    self.helper.add_input(Button(name = "", value="CORRECT", css_class='btn-success'))
+                    self.helper.add_input(Button(name = _(""), value=_("CORRECT"), css_class=_('btn-success')))
                 else:
                     # somewhere in between, partially correct
-                    self.helper.add_input(Button(name = "", value="PARTIALLY CORRECT", css_class='btn-warning'))
+                    self.helper.add_input(Button(name = _(""), value=_("PARTIALLY CORRECT"), css_class=_('btn-warning')))
 
 
         # to prevent default form messages from being displayed, answer selection can never be wrong
@@ -205,9 +201,9 @@ class QuizSelectionForm(forms.Form):
         # this func is needed because is_valid would not run without defining it for some reason
         return super(QuizSelectionForm, self).is_valid()
 
-    def clean_choices(self):
-        choices = self.cleaned_data["choices"]
-        return choices
+    def clean_user(self):
+        user = self.cleaned_data.get('user')
+        return User.objects.get(id=user)
 
     def save(self, *args, **kwargs):
         data = self.cleaned_data
@@ -226,10 +222,10 @@ class CreateThreadForm(forms.ModelForm):
         self.helper = FormHelper(self)
         self.helper.layout = Layout()
 
-        self.fields['title'] = forms.CharField(widget=forms.TextInput(attrs={'id': 'admin-form-control', 'class': 'form-control'}))
-        self.fields['content'] = forms.CharField(widget=forms.Textarea(attrs={'id': 'admin-form-control', 'class': 'form-control'}))
-        self.fields['Creator'] = forms.CharField(widget=forms.HiddenInput(attrs={'value':user.id}))
-        self.fields['views'] = forms.IntegerField(widget=forms.HiddenInput(attrs={'value': 0}))
+        self.fields['title'] = forms.CharField(widget=forms.TextInput(attrs={_('id'): _('admin-form-control'), _('class'): _('form-control')}))
+        self.fields['content'] = forms.CharField(widget=forms.Textarea(attrs={_('id'): _('admin-form-control'), _('class'): _('form-control')}))
+        self.fields['Creator'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):user.id}))
+        self.fields['views'] = forms.IntegerField(widget=forms.HiddenInput(attrs={_('value'): 0}))
         self.helper.layout.append(
             Fieldset(
                 "New Topic",
@@ -239,7 +235,7 @@ class CreateThreadForm(forms.ModelForm):
                 Field('views'),
                 )
             )
-        self.helper.add_input(Submit('submit', 'Submit'))
+        self.helper.add_input(Submit(_('submit'), _('Submit')))
 
     def clean_Creator(self):
         user_object = User.objects.get(id=self.cleaned_data.get('Creator'))
@@ -257,11 +253,11 @@ class PostReplyForm(forms.ModelForm):
         self.helper.layout = Layout()
         self.thread = thread
 
-        self.fields['Thread'] = forms.CharField(widget=forms.HiddenInput(attrs={'value':thread.id}))
-        self.fields['content'] = forms.CharField(label="Reply", widget=forms.Textarea(attrs={'id': 'admin-form-control', 'class': 'form-control'}))
-        self.fields['Creator'] = forms.CharField(widget=forms.HiddenInput(attrs={'value':user.id}))
+        self.fields['Thread'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):thread.id}))
+        self.fields['content'] = forms.CharField(label=_("Reply"), widget=forms.Textarea(attrs={_('id'): _('admin-form-control'), _('class'): _('form-control')}))
+        self.fields['Creator'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):user.id}))
         self.fields['anonymous'] = forms.BooleanField(initial=True, required=False)
-        self.helper.add_input(Submit('submit', 'Submit'))
+        self.helper.add_input(Submit(_('submit'), _('Submit')))
 
     class Meta:
         model = Post
@@ -291,7 +287,7 @@ class WordcloudSubmissionForm(forms.ModelForm):
         previous_entries = WordcloudSubmission.objects.filter(User=user, Wordcloud=wordcloud)
         if previous_entries.exists():
             # if submission has already been made
-            self.fields['word'] = forms.CharField(label="You have submitted the word:", initial=previous_entries.first().word, widget=forms.TextInput(attrs={'id': 'admin-form-control', 'class': 'form-control', 'placeholder':'Enter one word only'}))
+            self.fields['word'] = forms.CharField(label=_("You have submitted the word:"), initial=previous_entries.first().word, widget=forms.TextInput(attrs={_('id'): _('admin-form-control'), _('class'): _('form-control'), _('placeholder'):_('Enter one word only')}))
             self.fields['User'] = forms.CharField(widget=forms.HiddenInput())
             self.fields['Wordcloud'] = forms.CharField(widget=forms.HiddenInput())
             self.helper.layout.append(
@@ -302,12 +298,12 @@ class WordcloudSubmissionForm(forms.ModelForm):
                     Field('Wordcloud'),
                 )
             )
-            self.helper.add_input(Button(name = "", value="Submitted", css_class='btn-primary'))
+            self.helper.add_input(Button(name = _(""), value=_("Submitted"), css_class=_('btn-primary')))
 
         else:
-            self.fields['word'] = forms.CharField(label="Enter your word into the wordcloud!", widget=forms.TextInput(attrs={'id': 'admin-form-control', 'class': 'form-control', 'placeholder':'Enter one word only'}))
-            self.fields['User'] = forms.CharField(widget=forms.HiddenInput(attrs={'value':user.id}))
-            self.fields['Wordcloud'] = forms.CharField(widget=forms.HiddenInput(attrs={'value':wordcloud.id}))
+            self.fields['word'] = forms.CharField(label=_("Enter your word into the wordcloud!"), widget=forms.TextInput(attrs={_('id'): _('admin-form-control'), _('class'): _('form-control'), _('placeholder'):_('Enter one word only')}))
+            self.fields['User'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):user.id}))
+            self.fields['Wordcloud'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):wordcloud.id}))
             self.helper.layout.append(
             Fieldset(
                     wordcloud.title,
@@ -316,7 +312,7 @@ class WordcloudSubmissionForm(forms.ModelForm):
                     Field('Wordcloud'),
                 )
             )
-            self.helper.add_input(Submit('submit', 'Submit'))
+            self.helper.add_input(Submit(_('submit'), _('Submit')))
             
     def is_valid(self):
         valid = super(WordcloudSubmissionForm, self).is_valid()
@@ -324,7 +320,7 @@ class WordcloudSubmissionForm(forms.ModelForm):
             # no need to check if already invalid
             return valid
         if re.search('[^a-zA-Z]', self.cleaned_data.get('word')):
-            self._errors['word'] = ['Input must be only one word']
+            self._errors['word'] = [_('Input must be only one word')]
             return False
             
         # passed all tests
@@ -350,16 +346,14 @@ class DefaultUserAdminForm(forms.ModelForm):
 class QuizAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(QuizAdminForm, self).__init__(*args, **kwargs)
-        self.fields['question'].widget = widgets.AdminTextareaWidget({'id': 'admin-form-control', 'class': 'form-control'})
-        #self.fields['visible'].widget = widgets.AdminTextareaWidget({'id': 'admin-form-control', 'class': 'form-control'})
-        #self.fields['Lecture'].widget = widgets.AdminTextareaWidget({'id': 'admin-form-control', 'class': 'form-control'})
+        self.fields['question'].widget = widgets.AdminTextareaWidget({_('id'): _('admin-form-control'), _('class'): _('form-control')})
 
 class LectureAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(LectureAdminForm, self).__init__(*args, **kwargs)
-        self.fields['lecture_name'].widget = widgets.AdminTextInputWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'Title of the Lecture'})
-        self.fields['lecture_slide'].widget = widgets.AdminURLFieldWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'Lecture Slide URL'})
-        self.fields['collab_doc'].widget = widgets.AdminURLFieldWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'A generic Document will be provided if left empty'})
+        self.fields['lecture_name'].widget = widgets.AdminTextInputWidget({_('id'): _('admin-form-control'), _('class'): _('form-control'), _('placeholder'): _('Title of the Lecture')})
+        self.fields['lecture_slide'].widget = widgets.AdminURLFieldWidget({_('id'): _('admin-form-control'), _('class'): _('form-control'), _('placeholder'): _('Lecture Slide URL')})
+        self.fields['collab_doc'].widget = widgets.AdminURLFieldWidget({_('id'): _('admin-form-control'), _('class'): _('form-control'), _('placeholder'): _('A generic Document will be provided if left empty')})
 
     def clean_collab_doc(self):
         collab_doc = self.cleaned_data.get('collab_doc')
@@ -371,16 +365,16 @@ class LectureAdminForm(forms.ModelForm):
 class WordcloudAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(WordcloudAdminForm, self).__init__(*args, **kwargs)
-        self.fields['title'].widget = widgets.AdminTextInputWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'Title of the wordcloud'})
+        self.fields['title'].widget = widgets.AdminTextInputWidget({_('id'): _('admin-form-control'), _('class'): _('form-control'), _('placeholder'): _('Title of the wordcloud')})
 
 class QuizChoiceInLineForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(WordcloudAdminForm, self).__init__(*args, **kwargs)
-        self.fields['choice'].widget = widgets.AdminTextareaWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'One of the quiz choices'})
-        self.fields['Quiz'].widget = widgets.AdminURLFieldWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'Lecture Slide URL'})
-        self.fields['correct'].widget = widgets.AdminURLFieldWidget({'id': 'admin-form-control', 'class': 'form-control', 'placeholder': 'A generic Document will be provided if left empty'})
+        self.fields['choice'].widget = widgets.AdminTextareaWidget({_('id'): _('admin-form-control'), _('class'): _('form-control'), _('placeholder'): _('One of the quiz choices')})
+        self.fields['Quiz'].widget = widgets.AdminURLFieldWidget({_('id'): _('admin-form-control'), _('class'): _('form-control'), _('placeholder'): _('Lecture Slide URL')})
+        self.fields['correct'].widget = widgets.AdminURLFieldWidget({_('id'): _('admin-form-control'), _('class'): _('form-control'), _('placeholder'): _('A generic Document will be provided if left empty')})
 
 class CodeSnippetAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CodeSnippetAdminForm, self).__init__(*args, **kwargs)
-        self.fields['code'].widget = widgets.AdminTextareaWidget({'id': 'admin-form-control', 'class': 'form-control'})
+        self.fields['code'].widget = widgets.AdminTextareaWidget({_('id'): _('admin-form-control'), _('class'): _('form-control')})

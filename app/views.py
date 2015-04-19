@@ -2,38 +2,37 @@
 Definition of views.
 """
 
+from datetime import datetime
+import json
+
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
-from datetime import datetime
 from django.http import Http404 
 from django.contrib.auth import views
-
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView, View
-import json
-from app.models import ConfidenceMeter
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.sessions.models import Session
 
-
-
+from app.models import ConfidenceMeter
 
 '''generic view for displaying single messages to the user'''
 class AlertView(TemplateView):
-    template_name = "app/alert.html"
+    template_name = _("app/alert.html")
 
     def get_context_data(self, *args, **kwargs):
         context = super(AlertView, self).get_context_data(*args, **kwargs)
         tag = self.kwargs['tag']
         '''message to display is based on the url slug'''
         if tag == "create_user_success":
-            context['msg'] = "Account successfully created!\nPlease log in now"
+            context['msg'] = _("Account successfully created!\nPlease log in now")
         else:
             raise Http404
         return context
 
 def logout(request, next_page=None,
-           template_name='registration/logged_out.html',
+           template_name=_('registration/logged_out.html'),
            redirect_field_name=REDIRECT_FIELD_NAME,
            current_app=None, extra_context=None):
     # get user id before logout wipes it
@@ -75,7 +74,7 @@ def vote(request):
         from app.context_processors import get_confidence_meter_values
         results = get_confidence_meter_values(request)
         
-        return HttpResponse(json.dumps(results), content_type='application/json')
+        return HttpResponse(json.dumps(results), content_type=_('application/json'))
 
     else:
         #if not ajax request, render index page as they are not supposed to request via non ajax

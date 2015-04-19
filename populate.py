@@ -254,13 +254,13 @@ def populate():
     lecture2 = create_lecture("Lecture 2")
     lecture3 = create_lecture("Lecture 3")
 
-    quiz1 = create_quiz("What colour is the sky?", False, lecture1)
+    quiz1 = create_quiz("What colour is the sky?", True, lecture1)
     create_quiz_choice("Red", quiz1, False)
     create_quiz_choice("Blue", quiz1, True)
     create_quiz_choice("Green", quiz1, False)
     create_quiz_choice("Purple", quiz1, False)
 
-    quiz2 = create_quiz("What is the Capital of Australia?", False, lecture2)
+    quiz2 = create_quiz("What is the Capital of Australia?", True, lecture2)
     create_quiz_choice("London", quiz2, False)
     create_quiz_choice("Beijing", quiz2, False)
     create_quiz_choice("Sydney", quiz2, False)
@@ -283,13 +283,13 @@ def populate():
     create_quiz_choice("Data Link", quiz5, False)
     create_quiz_choice("Physical", quiz5, False)
 
-    quiz6 = create_quiz("Where is America Located?", False, lecture2)
+    quiz6 = create_quiz("Where is America Located?", True, lecture2)
     create_quiz_choice("Northern Hemisphere", quiz6, True)
     create_quiz_choice("Southern Hemisphere", quiz6, False)
     create_quiz_choice("Western Hemisphere", quiz6, True)
     create_quiz_choice("Eastern Hemisphere", quiz6, False)
 
-    quiz6 = create_quiz("What is your favourite colour?", False, lecture3)
+    quiz6 = create_quiz("What is your favourite colour?", True, lecture3)
     create_quiz_choice("Orange", quiz6, False)
     create_quiz_choice("Red", quiz6, False)
     create_quiz_choice("Green", quiz6, False)
@@ -301,8 +301,8 @@ def populate():
     create_quiz_choice("Iphone", quiz7, False)
     create_quiz_choice("Radio", quiz7, True)
 
-    for i in xrange(num_students * 3):
-        create_quiz_choice_selection()
+    #for i in xrange(num_students * 3):
+    #    create_quiz_choice_selection()
 
     for i in xrange(5):
         create_thread(anonymous=False)

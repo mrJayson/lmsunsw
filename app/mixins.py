@@ -1,3 +1,7 @@
+"""
+Definition of custom mixins.
+"""
+
 from django.views.generic.base import ContextMixin
 from django.contrib import admin
 

@@ -72,6 +72,15 @@ WSGI_APPLICATION = 'lmsunsw.wsgi.application'
 # Specify the default test runner.
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
+# Caching for performance boost
+
+CACHE = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'cache_table',
+    }
+}
+
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
@@ -168,7 +177,7 @@ STATICFILE_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriedFinder',
 )
 
-if not DEBUG:
+if not DEBUG and 'AWS_ACCESS_KEY_ID' in os.environ and 'AWS_SECRET_ACCESS_KEY' in os.environ:
     AWS_STORAGE_BUCKET_NAME = 'elasticbeanstalk-ap-southeast-2-374339935604'
     AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
     AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']

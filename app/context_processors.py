@@ -45,11 +45,11 @@ def get_confidence_meter_values(request):
 	else:
 		current = None
 
-	ret_val = {_('good'): good, _('neutral'): neutral, _('bad'): bad, _('current'): current}
+	ret_val = {'good': good, 'neutral': neutral, 'bad': bad, 'current': current}
 	return ret_val
 
 def currents(request):
 
-	return {_('current_quiz_list'): Quiz.objects.filter(visible = True),
-	_('current_wordcloud_list'): Wordcloud.objects.filter(visible = True)
+	return {'current_quiz_list': Quiz.objects.filter(visible = True),
+	'current_wordcloud_list': Wordcloud.objects.filter(visible = True)
 	}

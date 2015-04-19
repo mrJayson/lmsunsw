@@ -24,6 +24,7 @@ urlpatterns = patterns('',
     # Examples:
 
     url(r'^vote/$', login_required(vote), name='vote'),
+    url(r'^poll/$', login_required(long_poll), name='poll'),
 
     # index page
     url(r'^$', login_required(IndexView.as_view()), name='root'),

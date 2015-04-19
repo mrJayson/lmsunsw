@@ -14,6 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView, View
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.sessions.models import Session
+from django.views.decorators.cache import cache_page
 
 from app.models import ConfidenceMeter
 
@@ -48,6 +49,20 @@ def logout(request, next_page=None,
     return ret_val
 
 
+@cache_page(5)
+
+def long_poll(request):
+    # gets all the polling data for all needs
+    if request.is_ajax():
+        user = request.user
+        # need to import in here to prevent circular imports
+        from app.context_processors import get_confidence_meter_values
+        results = get_confidence_meter_values(request)
+        return HttpResponse(json.dumps(results), content_type=_('application/json'))
+    else:
+        #if not ajax request, render index page as they are not supposed to request via non ajax
+        raise Http404
+        pass
 
 def vote(request):
     # voting for the confusion meter
@@ -73,9 +88,7 @@ def vote(request):
         # need to import in here to prevent circular imports
         from app.context_processors import get_confidence_meter_values
         results = get_confidence_meter_values(request)
-        
         return HttpResponse(json.dumps(results), content_type=_('application/json'))
-
     else:
         #if not ajax request, render index page as they are not supposed to request via non ajax
         raise Http404

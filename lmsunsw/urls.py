@@ -17,8 +17,7 @@ login_forbidden =  user_passes_test(lambda u: u.is_anonymous(), '/', None)
 from app.views import *
 from app.class_based_views import *
 from app.forms import BootstrapAuthenticationForm
-
-from app.admin import user_admin_site, default_admin_site
+from app.admin import adminsite
 
 urlpatterns = patterns('',
     # Examples:
@@ -67,13 +66,14 @@ urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    url(r'^admin/', include(default_admin_site.urls)),
-    url(r'^settings/', include(user_admin_site.urls), name='settings'),
+    url(r'^admin/', include(adminsite.urls)),
+    url(r'^settings/', include(adminsite.urls)),
 
     url(r'session_security/', include('session_security.urls')),
 
     url(r'password_reset/', include('password_reset.urls')),
 )
+print admin.site.urls
 
 if settings.DEBUG:
     urlpatterns += patterns('',

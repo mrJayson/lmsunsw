@@ -21,7 +21,7 @@ from pygments.styles import STYLE_MAP
 from app.docsURL import glist
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, related_name='user_profile')
+    user = models.OneToOneField(User, related_name='UserProfile')
     # like a toString
     def __unicode__(self):
         return unicode(self.user)

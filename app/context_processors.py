@@ -75,9 +75,15 @@ IGNORE_APPS = (
 	"QuizChoice",
 	"QuizChoiceSelected",
 	"WordcloudSubmission",
+	"Post",
 	"Permission",
 	"Group",
 )
+
+# apps to ignore for students
+IGNORE_APPS_FOR_STUDENTS = (
+	"Thread",
+	)
 
 def app_list(request):
     '''
@@ -96,6 +102,10 @@ def app_list(request):
         if model.__name__ in IGNORE_APPS:
         	# skip rest of loop, start with next iteration
             continue
+        if not user.is_superuser:
+            if model.__name__ in IGNORE_APPS_FOR_STUDENTS:
+        		# skip rest of loop, start with next iteration
+                continue
         has_module_perms = user.has_module_perms(app_label)
         if has_module_perms:
             perms = model_admin.get_model_perms(request)
@@ -104,7 +114,7 @@ def app_list(request):
             if True in perms.values():
                 model_dict = {
                     'name': capfirst(model._meta.verbose_name_plural),
-                    'admin_url': mark_safe('%s/%s/' % (app_label, model.__name__.lower())),
+                    'admin_url': mark_safe('/admin/%s/%s/' % (app_label, model.__name__.lower())),
                 }
                 if app_label in app_dict:
                     app_dict[app_label]['models'].append(model_dict)
@@ -119,4 +129,4 @@ def app_list(request):
     app_list.sort(key=lambda x: x['name'])
     for app in app_list:
         app['models'].sort(key=lambda x: x['name'])
-    return {'apps': app_list}
+    return {'apps_list': app_list}

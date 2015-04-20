@@ -378,3 +378,9 @@ class CodeSnippetAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CodeSnippetAdminForm, self).__init__(*args, **kwargs)
         self.fields['code'].widget = widgets.AdminTextareaWidget({_('id'): _('admin-form-control'), _('class'): _('form-control')})
+class ThreadAdminForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ThreadAdminForm, self).__init__(*args, **kwargs)
+        self.fields['title'].widget = widgets.AdminTextInputWidget({_('id'): _('admin-form-control'), _('class'): _('form-control')})
+        self.fields['content'].widget = widgets.AdminTextareaWidget({_('id'): _('admin-form-control'), _('class'): _('form-control')})
+        self.fields['views'].widget = widgets.AdminTextInputWidget({_('id'): _('admin-form-control'), _('class'): _('form-control')})

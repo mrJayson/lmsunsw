@@ -1,6 +1,7 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
+{% if user.is_superuser %}
 <h1 class="page-header">
 	Dashboard
 </h1>
@@ -104,6 +105,8 @@
 	</div>
 
 </div>
+
+{% endif %}
 
 {% endblock %}
 

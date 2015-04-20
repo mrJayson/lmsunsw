@@ -18,7 +18,6 @@ class IndexView(TemplateView, BaseSidebarContextMixin):
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_superuser and request.path == u'/':
-            print request.path
             return redirect('admin:index')
         else:
             return super(IndexView, self).dispatch(request, *args, **kwargs)

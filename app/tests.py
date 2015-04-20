@@ -5,6 +5,96 @@ from populate import Rand
 
 # Create your tests here.
 
+class User_Case(TestCase):
+
+	def setUp(self):
+		User.objects.create(username="AAA", first_name="A", last_name="A", email="A@test.com", password="A", is_superuser=True)
+		User.objects.create(username="BBB", first_name="B", last_name="B", email="B@test.com", password="B", is_superuser=True)
+		User.objects.create(username="CCC", first_name="C", last_name="C", email="C@test.com", password="C", is_superuser=False)
+		User.objects.create(username="DDD", first_name="D", last_name="D", email="D@test.com", password="D", is_superuser=False)
+		User.objects.create(username="EEE", first_name="E", last_name="E", email="E@test.com", password="E", is_superuser=True)
+		User.objects.create(username="FFF", first_name="F", last_name="F", email="F@test.com", password="F", is_superuser=False)
+		User.objects.create(username="GGG", first_name="G", last_name="G", email="G@test.com", password="G", is_superuser=False)
+		User.objects.create(username="HHH", first_name="H", last_name="H", email="H@test.com", password="H", is_superuser=True)
+		User.objects.create(username="III", first_name="I", last_name="I", email="I@test.com", password="I", is_superuser=False)
+		User.objects.create(username="JJJ", first_name="J", last_name="J", email="J@test.com", password="J", is_superuser=False)
+		User.objects.create(username="KKK", first_name="K", last_name="K", email="K@test.com", password="K", is_superuser=False)
+
+	def test_correct_attr(self):
+		self.assertEquals(User.objects.get(id=1).username, "A")
+		self.assertEquals(User.objects.get(id=2).username, "B")
+		self.assertEquals(User.objects.get(id=3).username, "C")
+		self.assertEquals(User.objects.get(id=4).username, "D")
+		self.assertEquals(User.objects.get(id=5).username, "E")
+		self.assertEquals(User.objects.get(id=6).username, "F")
+		self.assertEquals(User.objects.get(id=7).username, "G")
+		self.assertEquals(User.objects.get(id=8).username, "H")
+		self.assertEquals(User.objects.get(id=9).username, "I")
+		self.assertEquals(User.objects.get(id=10).username, "J")
+		self.assertEquals(User.objects.get(id=11).username, "K")
+
+		self.assertEquals(User.objects.get(id=1).first_name, "A")
+		self.assertEquals(User.objects.get(id=2).first_name, "B")
+		self.assertEquals(User.objects.get(id=3).first_name, "C")
+		self.assertEquals(User.objects.get(id=4).first_name, "D")
+		self.assertEquals(User.objects.get(id=5).first_name, "E")
+		self.assertEquals(User.objects.get(id=6).first_name, "F")
+		self.assertEquals(User.objects.get(id=7).first_name, "G")
+		self.assertEquals(User.objects.get(id=8).first_name, "H")
+		self.assertEquals(User.objects.get(id=9).first_name, "I")
+		self.assertEquals(User.objects.get(id=10).first_name, "J")
+		self.assertEquals(User.objects.get(id=11).first_name, "K")
+
+		self.assertEquals(User.objects.get(id=1).last_name, "A")
+		self.assertEquals(User.objects.get(id=2).last_name, "B")
+		self.assertEquals(User.objects.get(id=3).last_name, "C")
+		self.assertEquals(User.objects.get(id=4).last_name, "D")
+		self.assertEquals(User.objects.get(id=5).last_name, "E")
+		self.assertEquals(User.objects.get(id=6).last_name, "F")
+		self.assertEquals(User.objects.get(id=7).last_name, "G")
+		self.assertEquals(User.objects.get(id=8).last_name, "H")
+		self.assertEquals(User.objects.get(id=9).last_name, "I")
+		self.assertEquals(User.objects.get(id=10).last_name, "J")
+		self.assertEquals(User.objects.get(id=11).last_name, "K")
+
+		self.assertEquals(User.objects.get(id=1).email, "A@test.com")
+		self.assertEquals(User.objects.get(id=2).email, "B@test.com")
+		self.assertEquals(User.objects.get(id=3).email, "C@test.com")
+		self.assertEquals(User.objects.get(id=4).email, "D@test.com")
+		self.assertEquals(User.objects.get(id=5).email, "E@test.com")
+		self.assertEquals(User.objects.get(id=6).email, "F@test.com")
+		self.assertEquals(User.objects.get(id=7).email, "G@test.com")
+		self.assertEquals(User.objects.get(id=8).email, "H@test.com")
+		self.assertEquals(User.objects.get(id=9).email, "I@test.com")
+		self.assertEquals(User.objects.get(id=10).email, "J@test.com")
+		self.assertEquals(User.objects.get(id=11).email, "K@test.com")
+
+		self.assertEquals(User.objects.get(id=1).password, "A")
+		self.assertEquals(User.objects.get(id=2).password, "B")
+		self.assertEquals(User.objects.get(id=3).password, "C")
+		self.assertEquals(User.objects.get(id=4).password, "D")
+		self.assertEquals(User.objects.get(id=5).password, "E")
+		self.assertEquals(User.objects.get(id=6).password, "F")
+		self.assertEquals(User.objects.get(id=7).password, "G")
+		self.assertEquals(User.objects.get(id=8).password, "H")
+		self.assertEquals(User.objects.get(id=9).password, "I")
+		self.assertEquals(User.objects.get(id=10).password, "J")
+		self.assertEquals(User.objects.get(id=11).password, "K")
+
+		self.assertEquals(User.objects.get(id=1).is_superuser, True)
+		self.assertEquals(User.objects.get(id=2).is_superuser, True)
+		self.assertEquals(User.objects.get(id=3).is_superuser, False)
+		self.assertEquals(User.objects.get(id=4).is_superuser, False)
+		self.assertEquals(User.objects.get(id=5).is_superuser, True)
+		self.assertEquals(User.objects.get(id=6).is_superuser, False)
+		self.assertEquals(User.objects.get(id=7).is_superuser, False)
+		self.assertEquals(User.objects.get(id=8).is_superuser, True)
+		self.assertEquals(User.objects.get(id=9).is_superuser, False)
+		self.assertEquals(User.objects.get(id=10).is_superuser, False)
+		self.assertEquals(User.objects.get(id=11).is_superuser, False)
+
+
+
 class Lecture_Model(TestCase):
 	
 	def setUp(self):

@@ -21,7 +21,7 @@ from pygments.styles import STYLE_MAP
 from app.docsURL import glist
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, related_name='user_profile')
+    user = models.OneToOneField(User, related_name='UserProfile')
     # like a toString
     def __unicode__(self):
         return unicode(self.user)
@@ -80,7 +80,7 @@ class Quiz(models.Model):
     Lecture = models.ForeignKey(Lecture)
 
     def __unicode__(self):
-        return unicode(self.Lecture.lecture_name + _(" ") + self.question)
+        return unicode(self.Lecture.lecture_name + " " + self.question)
 
     @property
     def quiz_type(self):

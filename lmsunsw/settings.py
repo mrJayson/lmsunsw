@@ -204,6 +204,7 @@ TEMPLATE_CONTEXT_PROCESSORS += (
     'app.context_processors.django_sessions',
     'app.context_processors.get_confidence_meter_values',
     'app.context_processors.currents',
+    'app.context_processors.app_list',
     )
 
 # Session security

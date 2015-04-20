@@ -1,10 +1,11 @@
 <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
-    	{% if app_list %}
-        	<li>
-            	<a href="{% url 'index' %}"> Student View </a>
-        	</li>
-		    {% for app in app_list %}
+    	
+    	<li>
+        	<a href="{% url 'index' %}">{% if user.is_superuser %}Student View{% else %}Index{% endif %}</a>
+    	</li>
+        {% if apps_list %}
+		    {% for app in apps_list %}
 		        {% for model in app.models %}
 		            {% if model.admin_url %}
 		                <li>

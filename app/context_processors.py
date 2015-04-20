@@ -5,6 +5,12 @@ Definition of custom context processors.
 from django.contrib.sessions.models import Session
 from django.utils.translation import ugettext_lazy as _
 
+from django.utils.text import capfirst
+from django.db.models import get_models
+from django.utils.safestring import mark_safe
+from django.contrib.admin import ModelAdmin
+from django.contrib.admin.validation import BaseValidator
+
 from app.models import ConfidenceMeter, Quiz, Lecture, QuizChoice, QuizChoiceSelected, Wordcloud
 
 def django_sessions(request):
@@ -53,3 +59,74 @@ def currents(request):
 	return {'current_quiz_list': Quiz.objects.filter(visible = True),
 	'current_wordcloud_list': Wordcloud.objects.filter(visible = True)
 	}
+
+# get_models returns all the models, but there are 
+# some which we would like to ignore
+IGNORE_MODELS = (
+    "sites",
+    "sessions",
+    "admin",
+    "contenttypes",
+    "confidencemeter",
+
+)
+IGNORE_APPS = (
+	"ConfidenceMeter",
+	"QuizChoice",
+	"QuizChoiceSelected",
+	"WordcloudSubmission",
+	"Post",
+	"Permission",
+	"Group",
+)
+
+# apps to ignore for students
+IGNORE_APPS_FOR_STUDENTS = (
+	"Thread",
+	)
+
+def app_list(request):
+    '''
+    Get all models and add them to the context apps variable.
+    '''
+    user = request.user
+    app_dict = {}
+    admin_class = ModelAdmin
+    for model in get_models():
+        BaseValidator().validate(admin_class, model)
+        model_admin = admin_class(model, None)
+        app_label = model._meta.app_label
+        if app_label in IGNORE_MODELS:
+        	# skip rest of loop, start with next iteration
+            continue
+        if model.__name__ in IGNORE_APPS:
+        	# skip rest of loop, start with next iteration
+            continue
+        if not user.is_superuser:
+            if model.__name__ in IGNORE_APPS_FOR_STUDENTS:
+        		# skip rest of loop, start with next iteration
+                continue
+        has_module_perms = user.has_module_perms(app_label)
+        if has_module_perms:
+            perms = model_admin.get_model_perms(request)
+            # Check whether user has any perm for this module.
+            # If so, add the module to the model_list.
+            if True in perms.values():
+                model_dict = {
+                    'name': capfirst(model._meta.verbose_name_plural),
+                    'admin_url': mark_safe('/admin/%s/%s/' % (app_label, model.__name__.lower())),
+                }
+                if app_label in app_dict:
+                    app_dict[app_label]['models'].append(model_dict)
+                else:
+                    app_dict[app_label] = {
+                        'name': app_label.title(),
+                        'app_url': app_label + '/',
+                        'has_module_perms': has_module_perms,
+                        'models': [model_dict],
+                    }
+    app_list = app_dict.values()
+    app_list.sort(key=lambda x: x['name'])
+    for app in app_list:
+        app['models'].sort(key=lambda x: x['name'])
+    return {'apps_list': app_list}

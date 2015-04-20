@@ -62,26 +62,22 @@ class LimitedModelAdminMixin(admin.ModelAdmin):
 
 class ModelAdminMixin(admin.ModelAdmin):
 
-	def add_view(self, request, form_url='', extra_context=None, admin_site=None):
+	def add_view(self, request, form_url='', extra_context=None):
 		extra_context = extra_context or {}
-		if admin_site:
-		    extra_context['app_list'] = admin_site.app_list(request)
+		
 		return super(ModelAdminMixin, self).add_view(request, form_url, extra_context)
 
-	def change_view(self, request, object_id, form_url='', extra_context=None, admin_site=None):
+	def change_view(self, request, object_id, form_url='', extra_context=None):
 		extra_context = extra_context or {}
-		if admin_site:
-		    extra_context['app_list'] = admin_site.app_list(request)
+		
 		return super(ModelAdminMixin, self).change_view(request, object_id, form_url, extra_context)
 
-	def delete_view(self, request, object_id, extra_context=None, admin_site=None):
+	def delete_view(self, request, object_id, extra_context=None):
 		extra_context = extra_context or {}
-		if admin_site:
-		    extra_context['app_list'] = admin_site.app_list(request)
+		
 		return super(ModelAdminMixin, self).delete_view(request, object_id, extra_context)
 
-	def changelist_view(self, request, extra_context=None, admin_site=None):
+	def changelist_view(self, request, extra_context=None):
 		extra_context = extra_context or {}
-		if admin_site:
-		    extra_context['app_list'] = admin_site.app_list(request)
+		
 		return super(ModelAdminMixin, self).changelist_view(request=request, extra_context=extra_context)

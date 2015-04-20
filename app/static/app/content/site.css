@@ -158,6 +158,6 @@ iframe {
   width: 100%;
 }
 
-.page-header {
-  margin-top: 0;
+.panel .panel-heading {
+  margin-bottom: 0;
 }

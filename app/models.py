@@ -80,7 +80,7 @@ class Quiz(models.Model):
     Lecture = models.ForeignKey(Lecture)
 
     def __unicode__(self):
-        return unicode(self.Lecture.lecture_name + _(" ") + self.question)
+        return unicode(self.Lecture.lecture_name + " " + self.question)
 
     @property
     def quiz_type(self):

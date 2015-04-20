@@ -4,7 +4,7 @@
         	<li>
             	<a href="{% url 'index' %}"> Student View </a>
         	</li>
-		    {% for app in app_list %}
+		    {% for app in apps %}
 		        {% for model in app.models %}
 		            {% if model.admin_url %}
 		                <li>

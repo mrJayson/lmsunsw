@@ -286,6 +286,16 @@ Class Forum_Post_New(TestCase):
 		self.assertEquals(Thread.objects.get(id=4).anonymous, True)
 		self.assertEquals(Thread.objects.get(id=5).anonymous, False)
 
+	def test_correct_views(self):
+		for i in xrange(1,5):
+			Thread.objects.increment(Thread.objects.get(id=i).views)
+			Thread.objects.increment(Thread.objects.get(id=i).views)
+			Thread.objects.increment(Thread.objects.get(id=i).views)
+
+		for x in xrange(1,5):
+			self.assertEquals(Thread.objects.get(id=x).views, 3)
+			
+
 Class Forum_Thread_New(TestCase):
 	
 	def setUp(self):

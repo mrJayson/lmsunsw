@@ -90,6 +90,18 @@ def vote(request):
         results = get_confidence_meter_values(request)
         return HttpResponse(json.dumps(results), content_type=_('application/json'))
     else:
-        #if not ajax request, render index page as they are not supposed to request via non ajax
+        #if not ajax request, render 404 as they are not supposed to request via non ajax
+        raise Http404
+        pass
+
+def quick_update(request):
+    # for admin quick settings
+    if request.is_ajax():
+        user = request.user
+        if request.POST.has_key('lecture'):
+            request.session['quick_lecture'] = request.POST.get('lecture')
+        return HttpResponse(json.dumps({'quick_lecture': request.POST.get('lecture')}), content_type=_('application/json'))
+    else:
+         #if not ajax request, render 404 as they are not supposed to request via non ajax
         raise Http404
         pass

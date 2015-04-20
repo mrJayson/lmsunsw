@@ -1,4 +1,5 @@
 {% extends "app/layout.html" %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 {% if user.is_superuser %}
@@ -34,7 +35,7 @@
 			</div>
 		</div>
 		<div class="panel panel-body" id="quick-quiz-panel">
-			<div id="placeholder" style="width:100%;height:300px"></div>
+			{% crispy quick_quiz_form %}
 		</div>
 	</div>
 
@@ -50,7 +51,7 @@
 			</div>
 		</div>
 		<div class="panel panel-body" id="quick-wordcloud-panel">
-			<div id="placeholder" style="width:100%;height:300px"></div>
+			{% crispy quick_wordcloud_form %}
 		</div>
 	</div>
 
@@ -68,7 +69,7 @@
 			</div>
 		</div>
 		<div class="panel panel-body" id="quick-settings-panel">
-			
+			{% crispy quick_settings_form %}
 		</div>
 	</div>
 
@@ -84,7 +85,7 @@
 			</div>
 		</div>
 		<div class="panel panel-body" id="quiz-results-panel">
-			<div id="placeholder" style="width:100%;height:300px"></div>
+			
 		</div>
 	</div>
 
@@ -100,7 +101,7 @@
 			</div>
 		</div>
 		<div class="panel panel-body" id="quick-code-panel">
-			<div id="placeholder" style="width:100%;height:300px"></div>
+			{% crispy quick_codesnippet_form %}
 		</div>
 	</div>
 
@@ -112,9 +113,10 @@
 
 {% block scripts %}
 
-
-
 <script type="text/javascript">
+
+
+
 
 	function plot_confidence(data) {
 	    flot_data = []
@@ -158,6 +160,29 @@
     	});
         }, ping_interval
     )
+
+    function addQuickSelectHandlers() {
+		$("#quick_lecture_select").change(function(data) {
+			$.ajax({
+		        type: "POST",
+		        url:  "/quick_update/",
+		        dataType: 'json',
+		        data: {
+		        	'csrfmiddlewaretoken': '{{csrf_token}}',
+		        	'lecture': this.options[this.selectedIndex].value,
+		        	'quick_settings': 'Submit'
+		        },
+		        success: function (data) {
+		        	$("#id_Lecture").attr("value", data.quick_lecture);
+		        },
+		        error: function(response){
+		        },
+    		});
+			
+		})
+	}
+
+	$(document).ready(addQuickSelectHandlers);
 </script>
 {% endblock %}
 

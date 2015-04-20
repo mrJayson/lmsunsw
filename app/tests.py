@@ -248,7 +248,7 @@ class Quiz_Usage(TestCase):
 		self.assertEquals(Quiz.objects.first().quiz_type, QuizType.MULTIMCQ)
 
 
-Class Forum_Post_New(TestCase):
+class Forum_Post_New(TestCase):
 
 	def setUp(self):
 		Thread.objects.create(title="Apple", content="Types of Fruit", Creator=1, views=0, anonymous=False)
@@ -296,7 +296,7 @@ Class Forum_Post_New(TestCase):
 			self.assertEquals(Thread.objects.get(id=x).views, 3)
 			
 
-Class Forum_Thread_New(TestCase):
+class Forum_Thread_New(TestCase):
 	
 	def setUp(self):
 		Post.objects.create(Thread=1, content="Apple", Creator=4, anonymous=False)

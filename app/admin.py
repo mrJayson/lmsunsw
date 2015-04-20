@@ -13,10 +13,12 @@ from django.contrib.admin import widgets
 from django.conf import settings
 from django.shortcuts import render, redirect
 
+
 from wordcloud import WordCloud
 
 from app.models import *
-from app.forms import LectureAdminForm, QuizAdminForm, WordcloudAdminForm, QuizChoiceInLineForm, CodeSnippetAdminForm, ThreadAdminForm
+from app.forms import (LectureAdminForm, QuizAdminForm, WordcloudAdminForm, QuizChoiceInLineForm, 
+CodeSnippetAdminForm, ThreadAdminForm, QuickSettingsForm, QuickQuizForm, QuickQuizInlines, QuickWordcloudForm, QuickCodeSnippetForm)
 
 ###################################################################################################
 
@@ -179,13 +181,66 @@ class ThreadAdmin(admin.ModelAdmin):
 
 class Admin_Site(AdminSite):
 
+    def get(self, request, extra_context=None):
+        
+        extra_context['quick_quiz_form'] = QuickQuizForm(session=request.session)
+        extra_context['quick_wordcloud_form'] = QuickWordcloudForm(session=request.session)
+        extra_context['quick_codesnippet_form'] = QuickCodeSnippetForm()
+        extra_context['quick_settings_form'] = QuickSettingsForm(session=request.session)
+
+
+    def post(self, request, extra_context=None):
+        if 'quick_settings' in request.POST:
+            form = QuickSettingsForm(data=request.POST)
+            extra_context['quick_settings_form'] = form
+            if form.is_valid():
+                form.save()
+        else:
+            extra_context['quick_settings_form'] = QuickSettingsForm()
+
+        if 'quiz' in request.POST:
+            form = QuickQuizForm(data=request.POST)
+            extra_context['quick_quiz_form'] = form
+            if form.is_valid():
+                form.save()
+        else:
+            extra_context['quick_quiz_form'] = QuickQuizForm()
+
+        if 'wordcloud' in request.POST:
+            form = QuickWordcloudForm(data=request.POST) 
+            extra_context['quick_wordcloud_form'] = form
+            if form.is_valid():
+                form.save()
+        else:
+            extra_context['quick_wordcloud_form'] = QuickWordcloudForm()
+
+        if 'codesnippet' in request.POST:
+            form = QuickCodeSnippetForm(data=request.POST)
+            extra_context['quick_codesnippet_form'] = form
+            if form.is_valid():
+                form.save()
+        else:
+            extra_context['quick_codesnippet_form'] = QuickCodeSnippetForm()
+
+
     def index(self, request, extra_context=None):
         if not request.user.is_superuser:
+            # students should not see the dashboard page
             return redirect('index')
         else:
+            extra_context = {} if extra_context==None else extra_context
+            # do forms stuff
+            if request.method == 'POST':
+                self.post(request, extra_context)
+            else:
+                self.get(request, extra_context)
+
             return super(Admin_Site, self).index(request, extra_context)
 
+    
+
     def app_index(self, request, app_label,extra_context=None):
+        # another uneccesary page for students
         if not request.user.is_superuser:
             return redirect('index')
         else:

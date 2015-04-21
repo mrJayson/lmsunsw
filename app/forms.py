@@ -198,7 +198,6 @@ class QuizSelectionForm(forms.Form):
         self.helper.form_show_labels = False
 
     def is_valid(self):
-        # this func is needed because is_valid would not run without defining it for some reason
         return super(QuizSelectionForm, self).is_valid()
 
     def clean_user(self):

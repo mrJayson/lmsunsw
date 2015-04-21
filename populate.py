@@ -230,6 +230,7 @@ def clear():
     Post.objects.all().delete()
     Wordcloud.objects.all().delete()
     WordcloudSubmission.objects.all().delete()
+    CodeSnippet.objects.all().delete()
     # remove all user sessions
     django.contrib.sessions.models.Session.objects.all().delete()
 

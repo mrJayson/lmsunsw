@@ -20,8 +20,13 @@ class IndexView(TemplateView, BaseSidebarContextMixin):
         if request.user.is_superuser and request.path == u'/':
             return redirect('admin:index')
         else:
-            return super(IndexView, self).dispatch(request, *args, **kwargs)
-
+            # student index is empty, redirect to latest lecture page 
+            lecture = Lecture.objects.last()
+            if lecture == None:
+                # only display index page if in the event there are no lectures to display
+                return super(IndexView, self).dispatch(request, *args, **kwargs)
+            else:
+                return redirect(reverse('lecture', kwargs={'lect_id': lecture.id, 'url_slug': lecture.slug}))
         
     def get_context_data(self, *args, **kwargs):
         context = super(IndexView, self).get_context_data(*args, **kwargs)

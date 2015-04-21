@@ -2,6 +2,7 @@ from django.test import TestCase
 from app.models import *
 from django.db import IntegrityError
 from populate import Rand
+from app.docsURL import glist
 
 # Create your tests here.
 
@@ -205,8 +206,9 @@ class Forum_Thread_New(TestCase):
 			self.assertEquals(Post.objects.get(id=m).anonymous, True)
 
 class Lecture_Model(TestCase):
-	
-	def setUp(self):
+		
+
+	def test_correct_attr(self):
 		Lecture.objects.create(lecture_name="Lecture 1")
 		Lecture.objects.create(lecture_name="Lecture 2")
 		Lecture.objects.create(lecture_name="Lecture 3", lecture_slide="A")
@@ -217,8 +219,6 @@ class Lecture_Model(TestCase):
 		Lecture.objects.create(lecture_name="Lecture 8")
 		Lecture.objects.create(lecture_name="Lecture 9")
 		Lecture.objects.create(lecture_name="Lecture 10")
-
-	def test_correct_attr(self):
 		#check name is inserted correctly
 		self.assertEquals(Lecture.objects.get(id=1).lecture_name, "Lecture 1")
 		self.assertEquals(Lecture.objects.get(id=2).lecture_name, "Lecture 2")
@@ -244,6 +244,11 @@ class Lecture_Model(TestCase):
 
 		for i, item in enumerate(min(glist, Lecture.objects.all())):
 			self.assertEquals(glist[i], Lecture.objects.get(id=i+1).collab_doc)
+
+	def test_glist(self):
+		for g in glist:
+			l = Rand.lecture()
+			self.assertEquals(l.collab_doc, g)
 
 class Quiz_Model(TestCase):
 

@@ -176,6 +176,7 @@ class Admin_Site(AdminSite):
     def get(self, request, extra_context=None):
         
         extra_context['quick_quiz_form'] = QuickQuizForm(session=request.session)
+        #extra_context['quick_quiz_inline_form'] = QuickQuizForm()
         extra_context['quick_wordcloud_form'] = QuickWordcloudForm(session=request.session)
         extra_context['quick_codesnippet_form'] = QuickCodeSnippetForm()
         extra_context['quick_settings_form'] = QuickSettingsForm(session=request.session)

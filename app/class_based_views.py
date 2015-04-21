@@ -31,7 +31,8 @@ class IndexView(TemplateView, BaseSidebarContextMixin):
     def get_context_data(self, *args, **kwargs):
         context = super(IndexView, self).get_context_data(*args, **kwargs)
         context['lecture_list'] = Lecture.objects.all()
-        context['session_key'] = self.request.session.session_key
+        if context.has_key('session_key'):
+            context['session_key'] = self.request.session.session_key
         return context
 
 

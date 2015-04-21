@@ -1,7 +1,9 @@
-from django.test import TestCase
+from django.test import TestCase, RequestFactory
 from app.models import *
 from django.db import IntegrityError
 from populate import Rand
+from app.views import *
+from app.class_based_views import *
 
 # Create your tests here.
 
@@ -339,7 +341,7 @@ class Quiz_Usage(TestCase):
 		for i in xrange(4):
 			Rand.quizchoice(correct=correct[i])
 		self.assertEquals(Quiz.objects.first().quiz_type, QuizType.MULTIMCQ)
-'''
+
 class SimpleRequestTest(TestCase):
 
 	def setUp(self):
@@ -347,7 +349,8 @@ class SimpleRequestTest(TestCase):
 		self.user = User.objects.create(username="AAA", first_name="A", last_name="A", email="A@test.com", password="A", is_superuser=True)
 
 	def test_details(self):
-		request = self.factory.get('')
+		request = self.factory.get('/app/index')
 
 		request.user = self.user
-'''
+		response = IndexView(request)
+		self.assertEquals(response.status_code, 200)

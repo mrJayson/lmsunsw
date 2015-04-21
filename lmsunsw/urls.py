@@ -24,6 +24,7 @@ urlpatterns = patterns('',
 
     url(r'^vote/$', login_required(vote), name='vote'),
     url(r'^poll/$', login_required(long_poll), name='poll'),
+    url(r'^quick_update/$', login_required(quick_update), name='quick_update'),
 
     # index page
     url(r'^$', login_required(IndexView.as_view()), name='root'),
@@ -73,7 +74,6 @@ urlpatterns = patterns('',
 
     url(r'password_reset/', include('password_reset.urls')),
 )
-print admin.site.urls
 
 if settings.DEBUG:
     urlpatterns += patterns('',

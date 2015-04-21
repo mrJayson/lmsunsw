@@ -267,17 +267,17 @@ def populate():
     create_quiz_choice("New York", quiz2, False)
     create_quiz_choice("Canberra", quiz2, True)
 
-    quiz3 = create_quiz("Which side of the road do Australians drive on?", False, lecture2)
+    quiz3 = create_quiz("Which side of the road do Australians drive on?", True, lecture2)
     create_quiz_choice("Left", quiz3, True)
     create_quiz_choice("Right", quiz3, False)
 
-    quiz4 = create_quiz("Which one of these translates a high level language to machine code?", False, lecture3)
+    quiz4 = create_quiz("Which one of these translates a high level language to machine code?", True, lecture3)
     create_quiz_choice("Assembler", quiz4, False)
     create_quiz_choice("Modem", quiz4, False)
     create_quiz_choice("Compiler", quiz4, True)
     create_quiz_choice("Computer", quiz4, False)
 
-    quiz5 = create_quiz("What is the fourth layer of the OSI model?", False, lecture3)
+    quiz5 = create_quiz("What is the fourth layer of the OSI model?", True, lecture3)
     create_quiz_choice("Network", quiz5, False)
     create_quiz_choice("Transport", quiz5, True)
     create_quiz_choice("Data Link", quiz5, False)
@@ -295,7 +295,7 @@ def populate():
     create_quiz_choice("Green", quiz6, False)
     create_quiz_choice("None of the above", quiz6, False)
 
-    quiz7 = create_quiz("Which was created first?", False, lecture3)
+    quiz7 = create_quiz("Which was created first?", True, lecture3)
     create_quiz_choice("Google", quiz7, False)
     create_quiz_choice("TV", quiz7, False)
     create_quiz_choice("Iphone", quiz7, False)

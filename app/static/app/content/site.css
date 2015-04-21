@@ -149,7 +149,7 @@ iframe {
   border-bottom: 1px solid #e5e5e5;
 }
 
-#admin-form-control {
+.form-control {
   max-width: none;
 }
 

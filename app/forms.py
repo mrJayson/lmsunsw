@@ -37,12 +37,12 @@ class CreateUserForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super(CreateUserForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-        self.fields['username'].widget = forms.TextInput(attrs={_('placeholder'): _('User name'), ('id'): _('admin-form-control'), _('class'): _('form-control')})
-        self.fields['password1'].widget = forms.PasswordInput(attrs={_('placeholder'): _('Password'), ('id'): _('admin-form-control'), _('class'): _('form-control')})
-        self.fields['password2'].widget = forms.PasswordInput(attrs={_('placeholder'): _('Type in your password again'), ('id'): _('admin-form-control'), _('class'): _('form-control')})
-        self.fields['first_name'].widget = forms.TextInput(attrs={_('placeholder'): _('First Name'), ('id'): _('admin-form-control'), _('class'): _('form-control')})
-        self.fields['last_name'].widget = forms.TextInput(attrs={_('placeholder'): _('Last Name'), ('id'): _('admin-form-control'), _('class'): _('form-control')})
-        self.fields['email'].widget = forms.TextInput(attrs={_('placeholder'): _('Email Address'), ('id'): _('admin-form-control'), _('class'): _('form-control')})
+        self.fields['username'].widget = forms.TextInput(attrs={_('placeholder'): _('User name'), _('class'): _('form-control')})
+        self.fields['password1'].widget = forms.PasswordInput(attrs={_('placeholder'): _('Password'), _('class'): _('form-control')})
+        self.fields['password2'].widget = forms.PasswordInput(attrs={_('placeholder'): _('Type in your password again'), _('class'): _('form-control')})
+        self.fields['first_name'].widget = forms.TextInput(attrs={_('placeholder'): _('First Name'), _('class'): _('form-control')})
+        self.fields['last_name'].widget = forms.TextInput(attrs={_('placeholder'): _('Last Name'), _('class'): _('form-control')})
+        self.fields['email'].widget = forms.TextInput(attrs={_('placeholder'): _('Email Address'), _('class'): _('form-control')})
         self.helper.add_input(Submit(_('submit'), _('Submit')))
 
     class Meta:
@@ -222,8 +222,8 @@ class CreateThreadForm(forms.ModelForm):
         self.helper = FormHelper(self)
         self.helper.layout = Layout()
 
-        self.fields['title'] = forms.CharField(widget=forms.TextInput(attrs={_('id'): _('admin-form-control'), _('class'): _('form-control')}))
-        self.fields['content'] = forms.CharField(widget=forms.Textarea(attrs={_('id'): _('admin-form-control'), _('class'): _('form-control')}))
+        self.fields['title'] = forms.CharField(widget=forms.TextInput(attrs={_('class'): _('form-control')}))
+        self.fields['content'] = forms.CharField(widget=forms.Textarea(attrs={_('class'): _('form-control')}))
         self.fields['Creator'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):user.id}))
         self.fields['views'] = forms.IntegerField(widget=forms.HiddenInput(attrs={_('value'): 0}))
         self.helper.layout.append(
@@ -254,7 +254,7 @@ class PostReplyForm(forms.ModelForm):
         self.thread = thread
 
         self.fields['Thread'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):thread.id}))
-        self.fields['content'] = forms.CharField(label=_("Reply"), widget=forms.Textarea(attrs={_('id'): _('admin-form-control'), _('class'): _('form-control')}))
+        self.fields['content'] = forms.CharField(label=_("Reply"), widget=forms.Textarea(attrs={_('class'): _('form-control')}))
         self.fields['Creator'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):user.id}))
         self.fields['anonymous'] = forms.BooleanField(initial=True, required=False)
         self.helper.add_input(Submit(_('submit'), _('Submit')))
@@ -287,7 +287,7 @@ class WordcloudSubmissionForm(forms.ModelForm):
         previous_entries = WordcloudSubmission.objects.filter(User=user, Wordcloud=wordcloud)
         if previous_entries.exists():
             # if submission has already been made
-            self.fields['word'] = forms.CharField(label=_("You have submitted the word:"), initial=previous_entries.first().word, widget=forms.TextInput(attrs={_('id'): _('admin-form-control'), _('class'): _('form-control'), _('placeholder'):_('Enter one word only')}))
+            self.fields['word'] = forms.CharField(label=_("You have submitted the word:"), initial=previous_entries.first().word, widget=forms.TextInput(attrs={_('class'): _('form-control'), _('placeholder'):_('Enter one word only')}))
             self.fields['User'] = forms.CharField(widget=forms.HiddenInput())
             self.fields['Wordcloud'] = forms.CharField(widget=forms.HiddenInput())
             self.helper.layout.append(
@@ -301,7 +301,7 @@ class WordcloudSubmissionForm(forms.ModelForm):
             self.helper.add_input(Button(name = _(""), value=_("Submitted"), css_class=_('btn-primary')))
 
         else:
-            self.fields['word'] = forms.CharField(label=_("Enter your word into the wordcloud!"), widget=forms.TextInput(attrs={_('id'): _('admin-form-control'), _('class'): _('form-control'), _('placeholder'):_('Enter one word only')}))
+            self.fields['word'] = forms.CharField(label=_("Enter your word into the wordcloud!"), widget=forms.TextInput(attrs={_('class'): _('form-control'), _('placeholder'):_('Enter one word only')}))
             self.fields['User'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):user.id}))
             self.fields['Wordcloud'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):wordcloud.id}))
             self.helper.layout.append(
@@ -335,6 +335,108 @@ class WordcloudSubmissionForm(forms.ModelForm):
     def clean_word(self):
         return self.cleaned_data.get('word').lstrip().rstrip()
 
+###################################################################################################
+# Admin Dashboard forms
+
+class QuickSettingsForm(forms.Form):
+
+    def __init__(self, session=None, *args, **kwargs):
+        super(QuickSettingsForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_id = 'quick_settings_form'
+        self.helper.layout = Layout()
+        # assign current lecture from session
+        if session!=None and session.has_key('quick_lecture'):
+            quick_lecture = session.get('quick_lecture')
+        else:
+            quick_lecture = Lecture.objects.last().id
+
+        visible_quizzes = [(i.id, i.question) for i in Quiz.objects.filter(visible=True)]
+        visible_wordclouds = [(i.id, i.title) for i in Wordcloud.objects.filter(visible=True)]
+        self.fields['Lecture'] = forms.ChoiceField(
+            label = _("Current Lecture"),
+            initial = quick_lecture,
+            choices = [(i.id,i.lecture_name) for i in Lecture.objects.all()],
+            widget = forms.Select(attrs={_('id'):('quick_lecture_select'), _('class'): _('form-control')}),
+            )
+        self.fields['visible_quizzes'] = forms.ChoiceField(
+            label = _("Currently visible Quizzes, click to finish"),
+            choices = visible_quizzes,
+            widget=forms.SelectMultiple(attrs={_('id'):('quick_quiz_select'), _('class'): _('form-control')}),
+            )
+        self.fields['visible_wordclouds'] = forms.ChoiceField(
+            label = _("Currently visible Wordclouds, click to finish"),
+            choices = visible_wordclouds,
+            widget=forms.SelectMultiple(attrs={_('id'):('quick_wordcloud_select'), _('class'): _('form-control')}),
+            )
+
+class QuickQuizForm(forms.ModelForm):
+    class Meta:
+        model = Quiz
+        fields = ('question', 'Lecture', 'visible')
+
+    def __init__(self, session=None, *args, **kwargs):
+        super(QuickQuizForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout()
+
+        self.fields['question'] = forms.CharField(label=_("Question"), widget=forms.TextInput(attrs={_('class'): _('form-control')}))
+        self.fields['visible'] = forms.BooleanField(initial=True, required=False)
+        # assign current lecture from session
+        if session!=None and session.has_key('quick_lecture'):
+            quick_lecture = session.get('quick_lecture')
+        else:
+            quick_lecture = Lecture.objects.last().id
+        self.fields['Lecture'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):quick_lecture}))
+
+        self.helper.add_input(Submit(_('quiz'), _('Submit')))
+
+    def clean_Lecture(self):
+        lecture = Lecture.objects.get(id=self.cleaned_data.get('Lecture'))
+        return lecture
+
+class QuickQuizInlines(forms.ModelForm):
+    class Meta:
+        model = QuizChoice
+        exclude = ()
+
+class QuickWordcloudForm(forms.ModelForm):
+    class Meta:
+        model = Wordcloud
+        fields = ('title', 'visible', 'Lecture')
+
+    def __init__(self, session=None, *args, **kwargs):
+        super(QuickWordcloudForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout()
+        self.fields['title'] = forms.CharField(label=_("Title"), widget=forms.TextInput(attrs={_('class'): _('form-control')}))
+        self.fields['visible'] = forms.BooleanField(initial=True, required=False)
+        # assign current lecture from session
+        if session!=None and session.has_key('quick_lecture'):
+            quick_lecture = session.get('quick_lecture')
+        else:
+            quick_lecture = Lecture.objects.last().id
+        self.fields['Lecture'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):quick_lecture}))
+        self.helper.add_input(Submit(_('wordcloud'), _('Submit')))
+
+    def clean_Lecture(self):
+        lecture = Lecture.objects.get(id=self.cleaned_data.get('Lecture'))
+        return lecture
+
+
+class QuickCodeSnippetForm(forms.ModelForm):
+    class Meta:
+        model = CodeSnippet
+        fields = ('syntax', 'code', 'linenumbers', 'style')
+
+    def __init__(self, *args, **kwargs):
+        super(QuickCodeSnippetForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout()
+
+        self.fields['code'] = forms.CharField(label=_("Code"), widget=forms.Textarea(attrs={_('class'): _('form-control')}))
+
+        self.helper.add_input(Submit(_('codesnippet'), _('Submit')))
 
 ###################################################################################################
 # Custom Admin forms
@@ -346,14 +448,14 @@ class DefaultUserAdminForm(forms.ModelForm):
 class QuizAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(QuizAdminForm, self).__init__(*args, **kwargs)
-        self.fields['question'].widget = widgets.AdminTextareaWidget({_('id'): _('admin-form-control'), _('class'): _('form-control')})
+        self.fields['question'].widget = widgets.AdminTextareaWidget({_('class'): _('form-control')})
 
 class LectureAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(LectureAdminForm, self).__init__(*args, **kwargs)
-        self.fields['lecture_name'].widget = widgets.AdminTextInputWidget({_('id'): _('admin-form-control'), _('class'): _('form-control'), _('placeholder'): _('Title of the Lecture')})
-        self.fields['lecture_slide'].widget = widgets.AdminURLFieldWidget({_('id'): _('admin-form-control'), _('class'): _('form-control'), _('placeholder'): _('Lecture Slide URL')})
-        self.fields['collab_doc'].widget = widgets.AdminURLFieldWidget({_('id'): _('admin-form-control'), _('class'): _('form-control'), _('placeholder'): _('A generic Document will be provided if left empty')})
+        self.fields['lecture_name'].widget = widgets.AdminTextInputWidget({_('class'): _('form-control'), _('placeholder'): _('Title of the Lecture')})
+        self.fields['lecture_slide'].widget = widgets.AdminURLFieldWidget({_('class'): _('form-control'), _('placeholder'): _('Lecture Slide URL')})
+        self.fields['collab_doc'].widget = widgets.AdminURLFieldWidget({_('class'): _('form-control'), _('placeholder'): _('A generic Document will be provided if left empty')})
 
     def clean_collab_doc(self):
         collab_doc = self.cleaned_data.get('collab_doc')
@@ -365,22 +467,22 @@ class LectureAdminForm(forms.ModelForm):
 class WordcloudAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(WordcloudAdminForm, self).__init__(*args, **kwargs)
-        self.fields['title'].widget = widgets.AdminTextInputWidget({_('id'): _('admin-form-control'), _('class'): _('form-control'), _('placeholder'): _('Title of the wordcloud')})
+        self.fields['title'].widget = widgets.AdminTextInputWidget({_('class'): _('form-control'), _('placeholder'): _('Title of the wordcloud')})
 
 class QuizChoiceInLineForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(WordcloudAdminForm, self).__init__(*args, **kwargs)
-        self.fields['choice'].widget = widgets.AdminTextareaWidget({_('id'): _('admin-form-control'), _('class'): _('form-control'), _('placeholder'): _('One of the quiz choices')})
-        self.fields['Quiz'].widget = widgets.AdminURLFieldWidget({_('id'): _('admin-form-control'), _('class'): _('form-control'), _('placeholder'): _('Lecture Slide URL')})
-        self.fields['correct'].widget = widgets.AdminURLFieldWidget({_('id'): _('admin-form-control'), _('class'): _('form-control'), _('placeholder'): _('A generic Document will be provided if left empty')})
+        self.fields['choice'].widget = widgets.AdminTextareaWidget({_('class'): _('form-control'), _('placeholder'): _('One of the quiz choices')})
+        self.fields['Quiz'].widget = widgets.AdminURLFieldWidget({_('class'): _('form-control'), _('placeholder'): _('Lecture Slide URL')})
+        self.fields['correct'].widget = widgets.AdminURLFieldWidget({_('class'): _('form-control'), _('placeholder'): _('A generic Document will be provided if left empty')})
 
 class CodeSnippetAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CodeSnippetAdminForm, self).__init__(*args, **kwargs)
-        self.fields['code'].widget = widgets.AdminTextareaWidget({_('id'): _('admin-form-control'), _('class'): _('form-control')})
+        self.fields['code'].widget = widgets.AdminTextareaWidget({_('class'): _('form-control')})
 class ThreadAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ThreadAdminForm, self).__init__(*args, **kwargs)
-        self.fields['title'].widget = widgets.AdminTextInputWidget({_('id'): _('admin-form-control'), _('class'): _('form-control')})
-        self.fields['content'].widget = widgets.AdminTextareaWidget({_('id'): _('admin-form-control'), _('class'): _('form-control')})
-        self.fields['views'].widget = widgets.AdminTextInputWidget({_('id'): _('admin-form-control'), _('class'): _('form-control')})
+        self.fields['title'].widget = widgets.AdminTextInputWidget({_('class'): _('form-control')})
+        self.fields['content'].widget = widgets.AdminTextareaWidget({_('class'): _('form-control')})
+        self.fields['views'].widget = widgets.AdminTextInputWidget({_('class'): _('form-control')})

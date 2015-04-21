@@ -289,22 +289,6 @@ class Quiz_Model(TestCase):
 		self.assertEquals(len(QuizChoice.objects.filter(Quiz=3)), 4)
 		self.assertEquals(len(QuizChoice.objects.filter(Quiz=4)), 5)
 
-	def test_multimcq_integrity(self):
-		choices = ['a','b','c','d']
-		for i in xrange(len(choices)):
-			Rand.quizchoice(quiz_choice=choices[i])
-
-		u = Rand.user()
-		for i in xrange(len(choices)):
-			
-			error_occured = False
-			try:
-				Rand.quizchoiceselected(quizchoice=QuizChoice.objects.get(id=i+1))
-				Rand.quizchoiceselected(quizchoice=QuizChoice.objects.get(id=i+1))
-			except Exception:
-				error_occured = True
-			self.assertTrue(error_occured)
-
 
 class Quiz_Usage(TestCase):
 

@@ -13,9 +13,6 @@ from django.contrib.admin import widgets
 from django.conf import settings
 from django.shortcuts import render, redirect
 
-
-from wordcloud import WordCloud
-
 from app.models import *
 from app.forms import (LectureAdminForm, QuizAdminForm, WordcloudAdminForm, QuizChoiceInLineForm, 
 CodeSnippetAdminForm, ThreadAdminForm, QuickSettingsForm, QuickQuizForm, QuickQuizInlines, QuickWordcloudForm, QuickCodeSnippetForm)
@@ -152,12 +149,7 @@ class WordcloudAdmin(admin.ModelAdmin):
         if (before_save_obj.visible == True and obj.visible == False) and obj.words:
             # if wordcloud changes from visible to not visible
             # and if there are words to process
-            text = obj.words
-            wc = WordCloud(font_path="static/app/fonts/Microsoft Sans Serif.ttf", width=800, height=400).generate(text)
-            filepath = "wordcloud/"+ obj.title +".png"
-            img = wc.to_image()
-            img.save(settings.MEDIA_ROOT + "/" + filepath, 'PNG') # create the image file on filesystem
-            obj.image = filepath # add the image to the model
+            obj.generate_image()
 
         return super(WordcloudAdmin, self).save_model(request, obj, form, change)
 
@@ -191,32 +183,47 @@ class Admin_Site(AdminSite):
 
     def post(self, request, extra_context=None):
 
-        # quick_settings_form is never processed, just used as a placeholder for ajax submissions
-        extra_context['quick_settings_form'] = QuickSettingsForm(session=request.session)
-
         if 'quiz' in request.POST:
             form = QuickQuizForm(data=request.POST)
-            extra_context['quick_quiz_form'] = form
             if form.is_valid():
                 form.save()
+                # successful, give new form for next submission
+                extra_context['quick_quiz_form'] = QuickQuizForm()
+            else:
+                # errors present, give back form with error messages
+                extra_context['quick_quiz_form'] = form
         else:
+            # if not Post, give new form
             extra_context['quick_quiz_form'] = QuickQuizForm()
 
         if 'wordcloud' in request.POST:
             form = QuickWordcloudForm(data=request.POST) 
-            extra_context['quick_wordcloud_form'] = form
             if form.is_valid():
                 form.save()
+                # successful, give new form for next submission
+                extra_context['quick_wordcloud_form'] = QuickWordcloudForm()
+            else:
+                # errors present, give back form with error messages
+                extra_context['quick_wordcloud_form'] = form
         else:
+            # if not Post, give new form
             extra_context['quick_wordcloud_form'] = QuickWordcloudForm()
 
         if 'codesnippet' in request.POST:
             form = QuickCodeSnippetForm(data=request.POST)
-            extra_context['quick_codesnippet_form'] = form
             if form.is_valid():
                 form.save()
+                # successful, give new form for next submission
+                extra_context['quick_codesnippet_form'] = QuickCodeSnippetForm()
+            else:
+                # errors present, give back form with error messages
+                extra_context['quick_codesnippet_form'] = form
         else:
+            # if not Post, give new form
             extra_context['quick_codesnippet_form'] = QuickCodeSnippetForm()
+
+        # quick_settings_form is never processed, just used as a placeholder for ajax submissions
+        extra_context['quick_settings_form'] = QuickSettingsForm(session=request.session)
 
 
     def index(self, request, extra_context=None):

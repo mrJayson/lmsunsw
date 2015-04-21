@@ -12,6 +12,9 @@ from django.conf import settings
 
 from autoslug import AutoSlugField
 
+from wordcloud import WordCloud
+
+
 from pygments import highlight, styles
 from pygments.formatters.html import HtmlFormatter
 from pygments.lexers import get_lexer_by_name
@@ -175,6 +178,14 @@ class Wordcloud(models.Model):
     def words(self):
         # joins all the words into one string with space as separator
         return " ".join([word.word for word in WordcloudSubmission.objects.filter(Wordcloud=self)])
+
+    def generate_image(self):
+        wc = WordCloud(font_path="static/app/fonts/Microsoft Sans Serif.ttf", width=800, height=400).generate(self.words)
+        filepath = "wordcloud/"+ self.title +".png"
+        img = wc.to_image()
+        img.save(settings.MEDIA_ROOT + "/" + filepath, 'PNG') # create the image file on filesystem
+        self.image = filepath # add the image to the model
+        self.save()
 
 class WordcloudSubmission(models.Model):
     User = models.ForeignKey(User)

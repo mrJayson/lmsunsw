@@ -118,6 +118,8 @@ def quick_update(request):
             wordcloud = Wordcloud.objects.get(id=request.POST.get('wordcloud'))
             wordcloud.visible = False
             wordcloud.save()
+            # can only reach this area by turning wordcloud's visible to not visible, therefore, always generate image
+            wordcloud.generate_image()
             response['return_type'] = 'wordcloud'
             response['return_value'] = request.POST.get('wordcloud')
             response['notice'] = "Turned off Wordcloud %(wordcloud)s" % {'wordcloud':request.POST.get('wordcloud')}

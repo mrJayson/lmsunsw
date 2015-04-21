@@ -359,16 +359,18 @@ class QuickSettingsForm(forms.Form):
             choices = [(i.id,i.lecture_name) for i in Lecture.objects.all()],
             widget = forms.Select(attrs={_('id'):('quick_lecture_select'), _('class'): _('form-control')}),
             )
-        self.fields['visible_quizzes'] = forms.ChoiceField(
-            label = _("Currently visible Quizzes, click to finish"),
-            choices = visible_quizzes,
-            widget=forms.SelectMultiple(attrs={_('id'):('quick_quiz_select'), _('class'): _('form-control')}),
-            )
-        self.fields['visible_wordclouds'] = forms.ChoiceField(
-            label = _("Currently visible Wordclouds, click to finish"),
-            choices = visible_wordclouds,
-            widget=forms.SelectMultiple(attrs={_('id'):('quick_wordcloud_select'), _('class'): _('form-control')}),
-            )
+        if visible_quizzes:
+            self.fields['visible_quizzes'] = forms.ChoiceField(
+                label = _("Currently visible Quizzes, click to finish"),
+                choices = visible_quizzes,
+                widget=forms.SelectMultiple(attrs={_('id'):('quick_quiz_select'), _('class'): _('form-control')}),
+                )
+        if visible_wordclouds:
+            self.fields['visible_wordclouds'] = forms.ChoiceField(
+                label = _("Currently visible Wordclouds, click to finish"),
+                choices = visible_wordclouds,
+                widget=forms.SelectMultiple(attrs={_('id'):('quick_wordcloud_select'), _('class'): _('form-control')}),
+                )
 
 class QuickQuizForm(forms.ModelForm):
     class Meta:

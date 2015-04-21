@@ -102,9 +102,10 @@ def quick_update(request):
         if request.POST.has_key('lecture'):
             # store current lecture in session
             request.session['quick_lecture'] = request.POST.get('lecture')
+            lecture = Lecture.objects.get(id=request.POST.get('lecture'))
             response['return_type'] = 'lecture'
             response['return_value'] = request.POST.get('lecture')
-            response['notice'] = "Updated Current Lecture to %(lecture)s" % {'lecture':Lecture.objects.get(id=request.POST.get('lecture')).lecture_name}
+            response['notice'] = "Updated Current Lecture to %(lecture)s" % {'lecture':lecture.lecture_name}
         if request.POST.has_key('quiz'):
             # mark selected quiz as not visible
             quiz = Quiz.objects.get(id=request.POST.get('quiz'))
@@ -112,7 +113,7 @@ def quick_update(request):
             quiz.save()
             response['return_type'] = 'quiz'
             response['return_value'] = request.POST.get('quiz')
-            response['notice'] = "Turned off Quiz %(quiz)s" % {'quiz':request.POST.get('quiz')}
+            response['notice'] = "Turned off Quiz %(quiz)s" % {'quiz':quiz.question}
         if request.POST.has_key('wordcloud'):
             # mark selected wordcloud as not visible
             wordcloud = Wordcloud.objects.get(id=request.POST.get('wordcloud'))
@@ -122,7 +123,7 @@ def quick_update(request):
             created = wordcloud.generate_image()
             response['return_type'] = 'wordcloud'
             response['return_value'] = request.POST.get('wordcloud')
-            response['notice'] = "Turned off Wordcloud %(wordcloud)s" % {'wordcloud':request.POST.get('wordcloud')}
+            response['notice'] = "Turned off Wordcloud %(wordcloud)s" % {'wordcloud':wordcloud.title}
             if created:
                 response['notice'] += ", Generating an image from inputs"
             else:

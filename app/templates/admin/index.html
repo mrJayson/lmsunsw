@@ -6,6 +6,15 @@
 <h1 class="page-header">
 	Dashboard
 </h1>
+<div id="admin_alerts">
+
+</div>
+	<!--<div class="alert alert-warning alert-dismissable" role="alert">
+		test
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>-->
 <div class="col-md-6 col-xs-12">
 	<div class="panel panel-primary">
 		<div class="panel panel-heading">
@@ -181,6 +190,12 @@
 		        	}
 		        	if (data.return_type == 'wordcloud') {
 		        		$("#quick_wordcloud_select option[value='" + data.return_value + "']").remove();
+		        	}
+		        	if (typeof data.notice !== 'undefined') {
+		        		close_button = 	'<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+										'<span aria-hidden="true">&times;</span>' +
+										'</button>'
+		        		$("#admin_alerts").html('<div class="alert alert-success alert-dismissable" role="alert">' + data.notice + close_button + '</div>')
 		        	}
 		        },
 		        error: function(response){

@@ -16,7 +16,7 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.sessions.models import Session
 from django.views.decorators.cache import cache_page
 
-from app.models import ConfidenceMeter, Quiz, Wordcloud
+from app.models import ConfidenceMeter, Quiz, Wordcloud, Lecture
 
 '''generic view for displaying single messages to the user'''
 class AlertView(TemplateView):
@@ -104,7 +104,7 @@ def quick_update(request):
             request.session['quick_lecture'] = request.POST.get('lecture')
             response['return_type'] = 'lecture'
             response['return_value'] = request.POST.get('lecture')
-            response['notice'] = "Updated Current Lecture to %(lecture)s" % {'lecture':request.POST.get('lecture')}
+            response['notice'] = "Updated Current Lecture to %(lecture)s" % {'lecture':Lecture.objects.get(id=request.POST.get('lecture')).lecture_name}
         if request.POST.has_key('quiz'):
             # mark selected quiz as not visible
             quiz = Quiz.objects.get(id=request.POST.get('quiz'))
@@ -119,10 +119,14 @@ def quick_update(request):
             wordcloud.visible = False
             wordcloud.save()
             # can only reach this area by turning wordcloud's visible to not visible, therefore, always generate image
-            wordcloud.generate_image()
+            created = wordcloud.generate_image()
             response['return_type'] = 'wordcloud'
             response['return_value'] = request.POST.get('wordcloud')
             response['notice'] = "Turned off Wordcloud %(wordcloud)s" % {'wordcloud':request.POST.get('wordcloud')}
+            if created:
+                response['notice'] += ", Generating an image from inputs"
+            else:
+                response['notice'] += ", No words were submitted, no image created"
 
         return HttpResponse(json.dumps(response), content_type=_('application/json'))
     else:

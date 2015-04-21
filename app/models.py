@@ -180,12 +180,16 @@ class Wordcloud(models.Model):
         return " ".join([word.word for word in WordcloudSubmission.objects.filter(Wordcloud=self)])
 
     def generate_image(self):
-        wc = WordCloud(font_path="static/app/fonts/Microsoft Sans Serif.ttf", width=800, height=400).generate(self.words)
-        filepath = "wordcloud/"+ self.title +".png"
-        img = wc.to_image()
-        img.save(settings.MEDIA_ROOT + "/" + filepath, 'PNG') # create the image file on filesystem
-        self.image = filepath # add the image to the model
-        self.save()
+        # returns whether or not it generated an image
+        if self.words != '':
+            wc = WordCloud(font_path="static/app/fonts/Microsoft Sans Serif.ttf", width=800, height=400).generate(self.words)
+            filepath = "wordcloud/"+ self.title +".png"
+            img = wc.to_image()
+            img.save(settings.MEDIA_ROOT + "/" + filepath, 'PNG') # create the image file on filesystem
+            self.image = filepath # add the image to the model
+            self.save()
+            return True
+        return False
 
 class WordcloudSubmission(models.Model):
     User = models.ForeignKey(User)

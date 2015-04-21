@@ -24,4 +24,4 @@ python-dateutil==2.4.1
 pytz==2015.2
 PyYAML==3.11
 six==1.9.0
-wordcloud==1.0.0
+git+git://github.com/amueller/word_cloud.git

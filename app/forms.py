@@ -398,6 +398,7 @@ class QuickQuizForm(forms.ModelForm):
 class QuickQuizInlines(forms.ModelForm):
     class Meta:
         model = QuizChoice
+        exclude = ()
 
 class QuickWordcloudForm(forms.ModelForm):
     class Meta:

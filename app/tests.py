@@ -8,30 +8,30 @@ from populate import Rand
 class User_Case(TestCase):
 
 	def setUp(self):
-		User.objects.create(username="BBB", first_name="B", last_name="B", email="B@test.com", password="B", is_superuser=True)
 		User.objects.create(username="AAA", first_name="A", last_name="A", email="A@test.com", password="A", is_superuser=True)
-		User.objects.create(username="CCC", first_name="C", last_name="C", email="C@test.com", password="C", is_superuser=False)
-		User.objects.create(username="DDD", first_name="D", last_name="D", email="D@test.com", password="D", is_superuser=False)
+		User.objects.create(username="BBB", first_name="B", last_name="B", email="B@test.com", password="B", is_superuser=True)
+		User.objects.create(username="CCC", first_name="C", last_name="C", email="C@test.com", password="C", is_superuser=True)
+		User.objects.create(username="DDD", first_name="D", last_name="D", email="D@test.com", password="D", is_superuser=True)
 		User.objects.create(username="EEE", first_name="E", last_name="E", email="E@test.com", password="E", is_superuser=True)
 		User.objects.create(username="FFF", first_name="F", last_name="F", email="F@test.com", password="F", is_superuser=False)
 		User.objects.create(username="GGG", first_name="G", last_name="G", email="G@test.com", password="G", is_superuser=False)
-		User.objects.create(username="HHH", first_name="H", last_name="H", email="H@test.com", password="H", is_superuser=True)
+		User.objects.create(username="HHH", first_name="H", last_name="H", email="H@test.com", password="H", is_superuser=False)
 		User.objects.create(username="III", first_name="I", last_name="I", email="I@test.com", password="I", is_superuser=False)
 		User.objects.create(username="JJJ", first_name="J", last_name="J", email="J@test.com", password="J", is_superuser=False)
 		User.objects.create(username="KKK", first_name="K", last_name="K", email="K@test.com", password="K", is_superuser=False)
 
 	def test_correct_attr(self):
-		self.assertEquals(User.objects.get(id=1).username, "A")
-		self.assertEquals(User.objects.get(id=2).username, "B")
-		self.assertEquals(User.objects.get(id=3).username, "C")
-		self.assertEquals(User.objects.get(id=4).username, "D")
-		self.assertEquals(User.objects.get(id=5).username, "E")
-		self.assertEquals(User.objects.get(id=6).username, "F")
-		self.assertEquals(User.objects.get(id=7).username, "G")
-		self.assertEquals(User.objects.get(id=8).username, "H")
-		self.assertEquals(User.objects.get(id=9).username, "I")
-		self.assertEquals(User.objects.get(id=10).username, "J")
-		self.assertEquals(User.objects.get(id=11).username, "K")
+		self.assertEquals(User.objects.get(id=1).username, "AAA")
+		self.assertEquals(User.objects.get(id=2).username, "BBB")
+		self.assertEquals(User.objects.get(id=3).username, "CCC")
+		self.assertEquals(User.objects.get(id=4).username, "DDD")
+		self.assertEquals(User.objects.get(id=5).username, "EEE")
+		self.assertEquals(User.objects.get(id=6).username, "FFF")
+		self.assertEquals(User.objects.get(id=7).username, "GGG")
+		self.assertEquals(User.objects.get(id=8).username, "HHH")
+		self.assertEquals(User.objects.get(id=9).username, "III")
+		self.assertEquals(User.objects.get(id=10).username, "JJJ")
+		self.assertEquals(User.objects.get(id=11).username, "KKK")
 
 		self.assertEquals(User.objects.get(id=1).first_name, "A")
 		self.assertEquals(User.objects.get(id=2).first_name, "B")
@@ -81,17 +81,66 @@ class User_Case(TestCase):
 		self.assertEquals(User.objects.get(id=10).password, "J")
 		self.assertEquals(User.objects.get(id=11).password, "K")
 
-		self.assertEquals(User.objects.get(id=1).is_superuser, True)
-		self.assertEquals(User.objects.get(id=2).is_superuser, True)
-		self.assertEquals(User.objects.get(id=3).is_superuser, False)
-		self.assertEquals(User.objects.get(id=4).is_superuser, False)
-		self.assertEquals(User.objects.get(id=5).is_superuser, True)
-		self.assertEquals(User.objects.get(id=6).is_superuser, False)
-		self.assertEquals(User.objects.get(id=7).is_superuser, False)
-		self.assertEquals(User.objects.get(id=8).is_superuser, True)
-		self.assertEquals(User.objects.get(id=9).is_superuser, False)
-		self.assertEquals(User.objects.get(id=10).is_superuser, False)
-		self.assertEquals(User.objects.get(id=11).is_superuser, False)
+		for i in xrange(1,5):
+			self.assertEquals(User.objects.get(id=i).is_superuser, True)
+		for n in xrange(6,11):
+			self.assertEquals(User.objects.get(id=n).is_superuser, False)
+
+class Forum_Post_New(TestCase):
+
+	def setUp(self):
+		u1 = User.objects.create(username="AAA", first_name="A", last_name="A", email="A@test.com", password="A", is_superuser=False)
+		Thread.objects.create(title="Apple", content="Types of Fruit", Creator=u1, views=0, anonymous=False)
+
+		u2 = User.objects.create(username="BBB", first_name="B", last_name="B", email="B@test.com", password="B", is_superuser=False)
+		Thread.objects.create(title="Cars", content="Types of Cars", Creator=u2, views=0, anonymous=True)
+
+		u3 = User.objects.create(username="CCC", first_name="C", last_name="C", email="C@test.com", password="C", is_superuser=False)
+		Thread.objects.create(title="Class", content="Types of Class", Creator=u3, views=0, anonymous=False)
+
+		u4 = User.objects.create(username="DDD", first_name="D", last_name="D", email="D@test.com", password="D", is_superuser=False)
+		Thread.objects.create(title="Colour", content="Types of Colour", Creator=u4, views=0, anonymous=True)
+
+		u5 = User.objects.create(username="EEE", first_name="E", last_name="E", email="E@test.com", password="E", is_superuser=True)
+		Thread.objects.create(title="Books", content="Types of Books", Creator=u5, views=0, anonymous=False)
+
+
+	def test_correct_attr(self):
+		self.assertEquals(Thread.objects.get(id=1).title, "Apple")		
+		self.assertEquals(Thread.objects.get(id=2).title, "Cars")		
+		self.assertEquals(Thread.objects.get(id=3).title, "Class")		
+		self.assertEquals(Thread.objects.get(id=4).title, "Colour")		
+		self.assertEquals(Thread.objects.get(id=5).title, "Books")
+
+		self.assertEquals(Thread.objects.get(id=1).content, "Types of Fruit")
+		self.assertEquals(Thread.objects.get(id=2).content, "Types of Cars")		
+		self.assertEquals(Thread.objects.get(id=3).content, "Types of Class")
+		self.assertEquals(Thread.objects.get(id=4).content, "Types of Colour")
+		self.assertEquals(Thread.objects.get(id=5).content, "Types of Books")
+
+		for i in xrange(1,5):
+			self.assertEquals(Thread.objects.get(id=i).Creator, User.objects.get(id=i))
+		
+		for x in xrange(1,5):
+			self.assertEquals(Thread.objects.get(id=x).views, 0)
+
+		self.assertEquals(Thread.objects.get(id=1).anonymous, False)		
+		self.assertEquals(Thread.objects.get(id=2).anonymous, True)
+		self.assertEquals(Thread.objects.get(id=3).anonymous, False)
+		self.assertEquals(Thread.objects.get(id=4).anonymous, True)
+		self.assertEquals(Thread.objects.get(id=5).anonymous, False)
+
+		def test_correct_views(self):
+		
+			for i in xrange(1,5):
+				Thread.objects.increment(Thread.objects.get(id=i).views)
+				Thread.objects.increment(Thread.objects.get(id=i).views)
+				Thread.objects.increment(Thread.objects.get(id=i).views)
+				Thread.objects.increment(Thread.objects.get(id=i).views)
+
+			for x in xrange(1,5):
+				self.assertEquals(Thread.objects.get(id=x).views, 4)
+
 
 
 
@@ -180,22 +229,6 @@ class Quiz_Model(TestCase):
 		self.assertEquals(len(QuizChoice.objects.filter(Quiz=3)), 4)
 		self.assertEquals(len(QuizChoice.objects.filter(Quiz=4)), 5)
 
-	def test_multimcq_integrity(self):
-		choices = ['a','b','c','d']
-		for i in xrange(len(choices)):
-			Rand.quizchoice(quiz_choice=choices[i])
-
-		u = Rand.user()
-		for i in xrange(len(choices)):
-			
-			error_occured = False
-			try:
-				Rand.quizchoiceselected(quizchoice=QuizChoice.objects.get(id=i+1))
-				Rand.quizchoiceselected(quizchoice=QuizChoice.objects.get(id=i+1))
-			except Exception:
-				error_occured = True
-			self.assertTrue(error_occured)
-
 
 class Quiz_Usage(TestCase):
 
@@ -246,56 +279,28 @@ class Quiz_Usage(TestCase):
 		for i in xrange(4):
 			Rand.quizchoice(correct=correct[i])
 		self.assertEquals(Quiz.objects.first().quiz_type, QuizType.MULTIMCQ)
-
-
-class Forum_Post_New(TestCase):
-
+	
+"""
+class Forum_Thread_New(TestCase):
+	
+>>>>>>> ce10fda4584751e4b4f3a17e88a3c4238ea2b02f
 	def setUp(self):
-		Thread.objects.create(title="Apple", content="Types of Fruit", Creator=1, views=0, anonymous=False)
-		Thread.objects.create(title="Cars", content="Types of Cars", Creator=3, views=0, anonymous=True)
-		Thread.objects.create(title="Class", content="Types of Class", Creator=4, views=0, anonymous=False)
-		Thread.objects.create(title="Colour", content="Types of Colour", Creator=8, views=0, anonymous=True)
-		Thread.objects.create(title="Books", content="Types of Books", Creator=11, views=0, anonymous=False)
 
+		u1 = User.objects.create(username="AAA", first_name="A", last_name="A", email="A@test.com", password="A", is_superuser=True)
+		u2 = User.objects.create(username="BBB", first_name="B", last_name="B", email="B@test.com", password="B", is_superuser=False)
+		u3 = User.objects.create(username="CCC", first_name="C", last_name="C", email="C@test.com", password="C", is_superuser=False)
+		u4 = User.objects.create(username="DDD", first_name="D", last_name="D", email="D@test.com", password="D", is_superuser=False)
 
-	def test_correct_attr(self):
-		self.assertEquals(Thread.objects.get(id=1).title, "Apple")		
-		self.assertEquals(Thread.objects.get(id=2).title, "Cars")		
-		self.assertEquals(Thread.objects.get(id=3).title, "Class")		
-		self.assertEquals(Thread.objects.get(id=4).title, "Colour")		
-		self.assertEquals(Thread.objects.get(id=5).title, "Books")
+		t1 = Thread.objects.create(title="Apple", content="Types of Fruit", Creator=u1, views=0, anonymous=False)
+		Post.objects.create(Thread=t1, content="Apple", Creator=u2, anonymous=False)
+		Post.objects.create(Thread=t1, content="banana", Creator=u3, anonymous=False)
+		Post.objects.create(Thread=t1, content="orange", Creator=u4, anonymous=False)
 
-		self.assertEquals(Thread.objects.get(id=1).content, "Types of Fruit")
-		self.assertEquals(Thread.objects.get(id=2).content, "Types of Cars")		
-		self.assertEquals(Thread.objects.get(id=3).content, "Types of Class")
-		self.assertEquals(Thread.objects.get(id=4).content, "Types of Colour")
-		self.assertEquals(Thread.objects.get(id=5).content, "Types of Books")
+		t2 = Thread.objects.create(title="Chocolate", content="chocolate", Creator=u1, views=0, anonymous=False)
+		Post.objects.create(Thread=t2, content="Volvo is a car brand", Creator=u2, anonymous=True)
+		Post.objects.create(Thread=t2, content="The question was types of Cars", Creator=u3, anonymous=True)
 
-		self.assertEquals(Thread.objects.get(id=1).Creator, 1)
-		self.assertEquals(Thread.objects.get(id=2).Creator, 3)
-		self.assertEquals(Thread.objects.get(id=3).Creator, 4)
-		self.assertEquals(Thread.objects.get(id=4).Creator, 8)
-		self.assertEquals(Thread.objects.get(id=5).Creator, 11)
-
-		for i in xrange(1,5):
-			self.assertEquals(Thread.objects.get(id=i).views, 0)
-
-		self.assertEquals(Thread.objects.get(id=1).anonymous, False)		
-		self.assertEquals(Thread.objects.get(id=2).anonymous, True)
-		self.assertEquals(Thread.objects.get(id=3).anonymous, False)
-		self.assertEquals(Thread.objects.get(id=4).anonymous, True)
-		self.assertEquals(Thread.objects.get(id=5).anonymous, False)
-
-	def test_correct_views(self):
-		for i in xrange(1,5):
-			Thread.objects.increment(Thread.objects.get(id=i).views)
-			Thread.objects.increment(Thread.objects.get(id=i).views)
-			Thread.objects.increment(Thread.objects.get(id=i).views)
-
-		for x in xrange(1,5):
-			self.assertEquals(Thread.objects.get(id=x).views, 3)
-			
-
+<<<<<<< HEAD
 class Forum_Thread_New(TestCase):
 	
 	def setUp(self):
@@ -308,38 +313,27 @@ class Forum_Thread_New(TestCase):
 		Post.objects.create(Thread=5, content="Harry Potter", Creator=2, anonymous=True)
 		Post.objects.create(Thread=5, content="Oceans", Creator=3, anonymous=True)
 		Post.objects.create(Thread=5, content="Owls", Creator=10, anonymous=True)
+=======
+		t3 = Thread.objects.create(title="Fruit", content="Banana", Creator=u2, views=0, anonymous=False)
+		Post.objects.create(Thread=t3, content="Blue", Creator=u1, anonymous=True)
+		Post.objects.create(Thread=t3, content="Harry Potter", Creator=u2, anonymous=True)
+		Post.objects.create(Thread=t3, content="Oceans", Creator=u3, anonymous=True)
+		Post.objects.create(Thread=t3, content="Owls", Creator=u4, anonymous=True)
+>>>>>>> ce10fda4584751e4b4f3a17e88a3c4238ea2b02f
 
 	def test_correct_attr(self):
 
 		for i in xrange(1,3):
-			self.assertEquals(Post.objects.get(id=i).Thread, 1)
-		self.assertEquals(Post.objects.get(id=4).Thread, 2)
-		self.assertEquals(Post.objects.get(id=5).Thread, 2)
-		self.assertEquals(Post.objects.get(id=6).Thread, 4)
-		for x in xrange(7,9):
-			self.assertEquals(Post.objects.get(id=x).Thread, 5)
-
-		self.assertEquals(Post.objects.get(id=1).content, "Apple")
-		self.assertEquals(Post.objects.get(id=2).content, "banana")
-		self.assertEquals(Post.objects.get(id=3).content, "orange")
-		self.assertEquals(Post.objects.get(id=4).content, "Volvo is a car brand")
-		self.assertEquals(Post.objects.get(id=5).content, "The questionwas types of Cars")
-		self.assertEquals(Post.objects.get(id=6).content, "Blue")
-		self.assertEquals(Post.objects.get(id=7).content, "Harry Potter")
-		self.assertEquals(Post.objects.get(id=8).content, "Oceans")
-		self.assertEquals(Post.objects.get(id=9).content, "Owls")
-
-		self.assertEquals(Post.objects.get(id=1).Creator, 4)
-		self.assertEquals(Post.objects.get(id=2).Creator, 2)
-		self.assertEquals(Post.objects.get(id=3).Creator, 8)
-		self.assertEquals(Post.objects.get(id=4).Creator, 9)
-		self.assertEquals(Post.objects.get(id=5).Creator, 11)
-		self.assertEquals(Post.objects.get(id=6).Creator, 1)
-		self.assertEquals(Post.objects.get(id=7).Creator, 2)
-		self.assertEquals(Post.objects.get(id=8).Creator, 3)
-		self.assertEquals(Post.objects.get(id=9).Creator, 10)
+			self.assertEquals(Post.objects.get(id=i).Thread, Thread.objects.get(id=1))
+		
+		self.assertEquals(Post.objects.get(id=4).Thread, Thread.objects.get(id=2))
+		self.assertEquals(Post.objects.get(id=5).Thread, Thread.objects.get(id=2))
+		
+		for x in xrange(6,9):
+			self.assertEquals(Post.objects.get(id=x).Thread, Thread.objects.get(id=3))
 
 		for n in xrange (1,3):
 			self.assertEquals(Post.objects.get(id=n).anonymous, False)
 		for m in xrange(4,9):
 			self.assertEquals(Post.objects.get(id=m).anonymous, True)
+"""

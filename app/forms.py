@@ -11,9 +11,11 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.admin import widgets
 from django.contrib.auth.models import Permission
 from django.conf import settings
+from django.forms.models import inlineformset_factory, BaseInlineFormSet
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit, Field, Button
+from crispy_forms.bootstrap import InlineField
 
 from app.models import *
 
@@ -389,17 +391,30 @@ class QuickQuizForm(forms.ModelForm):
         else:
             quick_lecture = Lecture.objects.last().id
         self.fields['Lecture'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):quick_lecture}))
-
         self.helper.add_input(Submit(_('quiz'), _('Submit')))
 
     def clean_Lecture(self):
         lecture = Lecture.objects.get(id=self.cleaned_data.get('Lecture'))
         return lecture
 
-class QuickQuizInlines(forms.ModelForm):
+class QuickQuizInlineForm(forms.ModelForm):
+    # forms for inlines
     class Meta:
         model = QuizChoice
         exclude = ()
+
+    def __init__(self, *args, **kwargs):
+        super(QuickQuizInlineForm, self).__init__(*args, **kwargs)
+        self.fields['choice'] = forms.CharField(label='', widget=forms.TextInput( attrs={_('class'): _('form-control'), _('placeholder'): _('Quiz Choice')}))
+
+# inlineForm factory to generate multiple forms
+QuickQuizInlineFormSet = inlineformset_factory(
+    Quiz,
+    QuizChoice,
+    form=QuickQuizInlineForm,
+    can_delete=False,
+    extra=4,
+    )
 
 class QuickWordcloudForm(forms.ModelForm):
     class Meta:

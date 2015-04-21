@@ -161,25 +161,44 @@
         }, ping_interval
     )
 
-    function addQuickSelectHandlers() {
-		$("#quick_lecture_select").change(function(data) {
-			$.ajax({
+    function quick_update(data_id, value) {
+    	data = {
+    		'csrfmiddlewaretoken': '{{csrf_token}}',
+    		'quick_settings': 'Submit',
+    	}
+    	data[data_id] = value
+    	$.ajax({
 		        type: "POST",
 		        url:  "/quick_update/",
 		        dataType: 'json',
-		        data: {
-		        	'csrfmiddlewaretoken': '{{csrf_token}}',
-		        	'lecture': this.options[this.selectedIndex].value,
-		        	'quick_settings': 'Submit'
-		        },
+		        data: data,
 		        success: function (data) {
-		        	$("#id_Lecture").attr("value", data.quick_lecture);
+		        	if (data.return_type == 'lecture') {
+		        		$('#id_Lecture').attr("value", data.return_value);	
+		        	}
+		        	if (data.return_type == 'quiz') {
+		        		$("#quick_quiz_select option[value='" + data.return_value + "']").remove();
+		        	}
+		        	if (data.return_type == 'wordcloud') {
+		        		$("#quick_wordcloud_select option[value='" + data.return_value + "']").remove();
+		        	}
 		        },
 		        error: function(response){
 		        },
     		});
-			
-		})
+    }
+
+    function addQuickSelectHandlers() {
+		$("#quick_lecture_select").change(function(data) {
+			quick_update('lecture', this.options[this.selectedIndex].value)
+		});
+		$("#quick_quiz_select").change(function(data) {
+			quick_update('quiz', this.options[this.selectedIndex].value)
+		});
+		$("#quick_wordcloud_select").change(function(data) {
+			quick_update('wordcloud', this.options[this.selectedIndex].value)
+		});
+
 	}
 
 	$(document).ready(addQuickSelectHandlers);

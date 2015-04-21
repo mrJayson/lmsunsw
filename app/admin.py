@@ -190,13 +190,9 @@ class Admin_Site(AdminSite):
 
 
     def post(self, request, extra_context=None):
-        if 'quick_settings' in request.POST:
-            form = QuickSettingsForm(data=request.POST)
-            extra_context['quick_settings_form'] = form
-            if form.is_valid():
-                form.save()
-        else:
-            extra_context['quick_settings_form'] = QuickSettingsForm()
+
+        # quick_settings_form is never processed, just used as a placeholder for ajax submissions
+        extra_context['quick_settings_form'] = QuickSettingsForm(session=request.session)
 
         if 'quiz' in request.POST:
             form = QuickQuizForm(data=request.POST)

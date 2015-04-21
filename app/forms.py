@@ -345,11 +345,30 @@ class QuickSettingsForm(forms.Form):
         self.helper = FormHelper(self)
         self.helper.form_id = 'quick_settings_form'
         self.helper.layout = Layout()
+        # assign current lecture from session
         if session!=None and session.has_key('quick_lecture'):
             quick_lecture = session.get('quick_lecture')
         else:
-            quick_lecture = Lecture.objects.last()
-        self.fields['Lecture'] = forms.ChoiceField(widget=forms.Select(attrs={_('id'):('quick_lecture_select'), _('class'): _('form-control')}), initial=quick_lecture, choices=[(i.id,i.lecture_name) for i in Lecture.objects.all()])
+            quick_lecture = Lecture.objects.last().id
+
+        visible_quizzes = [(i.id, i.question) for i in Quiz.objects.filter(visible=True)]
+        visible_wordclouds = [(i.id, i.title) for i in Wordcloud.objects.filter(visible=True)]
+        self.fields['Lecture'] = forms.ChoiceField(
+            label = _("Current Lecture"),
+            initial = quick_lecture,
+            choices = [(i.id,i.lecture_name) for i in Lecture.objects.all()],
+            widget = forms.Select(attrs={_('id'):('quick_lecture_select'), _('class'): _('form-control')}),
+            )
+        self.fields['visible_quizzes'] = forms.ChoiceField(
+            label = _("Currently visible Quizzes, click to finish"),
+            choices = visible_quizzes,
+            widget=forms.SelectMultiple(attrs={_('id'):('quick_quiz_select'), _('class'): _('form-control')}),
+            )
+        self.fields['visible_wordclouds'] = forms.ChoiceField(
+            label = _("Currently visible Wordclouds, click to finish"),
+            choices = visible_wordclouds,
+            widget=forms.SelectMultiple(attrs={_('id'):('quick_wordcloud_select'), _('class'): _('form-control')}),
+            )
 
 class QuickQuizForm(forms.ModelForm):
     class Meta:
@@ -363,10 +382,11 @@ class QuickQuizForm(forms.ModelForm):
 
         self.fields['question'] = forms.CharField(label=_("Question"), widget=forms.TextInput(attrs={_('class'): _('form-control')}))
         self.fields['visible'] = forms.BooleanField(initial=True, required=False)
+        # assign current lecture from session
         if session!=None and session.has_key('quick_lecture'):
             quick_lecture = session.get('quick_lecture')
         else:
-            quick_lecture = Lecture.objects.last()
+            quick_lecture = Lecture.objects.last().id
         self.fields['Lecture'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):quick_lecture}))
 
         self.helper.add_input(Submit(_('quiz'), _('Submit')))
@@ -390,10 +410,11 @@ class QuickWordcloudForm(forms.ModelForm):
         self.helper.layout = Layout()
         self.fields['title'] = forms.CharField(label=_("Title"), widget=forms.TextInput(attrs={_('class'): _('form-control')}))
         self.fields['visible'] = forms.BooleanField(initial=True, required=False)
+        # assign current lecture from session
         if session!=None and session.has_key('quick_lecture'):
             quick_lecture = session.get('quick_lecture')
         else:
-            quick_lecture = Lecture.objects.last()
+            quick_lecture = Lecture.objects.last().id
         self.fields['Lecture'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):quick_lecture}))
         self.helper.add_input(Submit(_('wordcloud'), _('Submit')))
 

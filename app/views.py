@@ -16,7 +16,7 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.sessions.models import Session
 from django.views.decorators.cache import cache_page
 
-from app.models import ConfidenceMeter
+from app.models import ConfidenceMeter, Quiz, Wordcloud
 
 '''generic view for displaying single messages to the user'''
 class AlertView(TemplateView):
@@ -98,9 +98,31 @@ def quick_update(request):
     # for admin quick settings
     if request.is_ajax():
         user = request.user
+        response = {}
         if request.POST.has_key('lecture'):
+            # store current lecture in session
             request.session['quick_lecture'] = request.POST.get('lecture')
-        return HttpResponse(json.dumps({'quick_lecture': request.POST.get('lecture')}), content_type=_('application/json'))
+            response['return_type'] = 'lecture'
+            response['return_value'] = request.POST.get('lecture')
+            response['notice'] = "Updated Current Lecture to %(lecture)s" % {'lecture':request.POST.get('lecture')}
+        if request.POST.has_key('quiz'):
+            # mark selected quiz as not visible
+            quiz = Quiz.objects.get(id=request.POST.get('quiz'))
+            quiz.visible = False
+            quiz.save()
+            response['return_type'] = 'quiz'
+            response['return_value'] = request.POST.get('quiz')
+            response['notice'] = "Turned off Quiz %(quiz)s" % {'quiz':request.POST.get('quiz')}
+        if request.POST.has_key('wordcloud'):
+            # mark selected wordcloud as not visible
+            wordcloud = Wordcloud.objects.get(id=request.POST.get('wordcloud'))
+            wordcloud.visible = False
+            wordcloud.save()
+            response['return_type'] = 'wordcloud'
+            response['return_value'] = request.POST.get('wordcloud')
+            response['notice'] = "Turned off Wordcloud %(wordcloud)s" % {'wordcloud':request.POST.get('wordcloud')}
+
+        return HttpResponse(json.dumps(response), content_type=_('application/json'))
     else:
          #if not ajax request, render 404 as they are not supposed to request via non ajax
         raise Http404

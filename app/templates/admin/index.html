@@ -7,14 +7,8 @@
 	Dashboard
 </h1>
 <div id="admin_alerts">
-
+	<!--if there are any alerts, add them dynamically with js-->
 </div>
-	<!--<div class="alert alert-warning alert-dismissable" role="alert">
-		test
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		</button>
-	</div>-->
 <div class="col-md-6 col-xs-12">
 	<div class="panel panel-primary">
 		<div class="panel panel-heading">
@@ -44,7 +38,14 @@
 			</div>
 		</div>
 		<div class="panel panel-body" id="quick-quiz-panel">
-			{% crispy quick_quiz_form %}
+			<form method="post">
+				<input type="hidden" name="csrfmiddlewaretoken" value='{{csrf_token}}'>
+				{{ quick_quiz_form|crispy }}
+				{{ quick_quiz_inline_form|crispy }}
+				<div class="form_actions">
+					<input type="submit" name="quiz" value="Submit" class="btn btn-primary" id="submit-id-wordcloud">
+				</div>
+			</form>
 		</div>
 	</div>
 

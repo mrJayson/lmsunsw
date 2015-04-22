@@ -15,7 +15,8 @@ from django.shortcuts import render, redirect
 
 from app.models import *
 from app.forms import (LectureAdminForm, QuizAdminForm, WordcloudAdminForm, QuizChoiceInLineForm, 
-CodeSnippetAdminForm, ThreadAdminForm, QuickSettingsForm, QuickQuizForm, QuickQuizInlines, QuickWordcloudForm, QuickCodeSnippetForm)
+CodeSnippetAdminForm, ThreadAdminForm, QuickSettingsForm, QuickQuizForm, QuickQuizInlineFormSet, 
+QuickWordcloudForm, QuickCodeSnippetForm)
 
 ###################################################################################################
 
@@ -176,7 +177,7 @@ class Admin_Site(AdminSite):
     def get(self, request, extra_context=None):
         
         extra_context['quick_quiz_form'] = QuickQuizForm(session=request.session)
-        #extra_context['quick_quiz_inline_form'] = QuickQuizForm()
+        extra_context['quick_quiz_inline_form'] = QuickQuizInlineFormSet(instance=Quiz())
         extra_context['quick_wordcloud_form'] = QuickWordcloudForm(session=request.session)
         extra_context['quick_codesnippet_form'] = QuickCodeSnippetForm()
         extra_context['quick_settings_form'] = QuickSettingsForm(session=request.session)
@@ -187,41 +188,53 @@ class Admin_Site(AdminSite):
         if 'quiz' in request.POST:
             form = QuickQuizForm(data=request.POST)
             if form.is_valid():
-                form.save()
-                # successful, give new form for next submission
-                extra_context['quick_quiz_form'] = QuickQuizForm()
+                quiz = form.save(commit=False)
+                # quiz from valid, now check inline forms
+                inline_form = QuickQuizInlineFormSet(data=request.POST, instance=quiz)
+                if inline_form.is_valid():
+                    quiz.save()
+                    inline_form.save()
+                    # successful, give new form for next submission
+                    extra_context['quick_quiz_form'] = QuickQuizForm(session=request.session)
+                    extra_context['quick_quiz_inline_form'] = QuickQuizInlineFormSet(instance=Quiz())
+                else:
+                    # errors present, give back form with error messages
+                    extra_context['quick_quiz_form'] = form
+                    extra_context['quick_quiz_inline_form'] = QuickQuizInlineFormSet(data=request.POST, instance=Quiz())
             else:
                 # errors present, give back form with error messages
                 extra_context['quick_quiz_form'] = form
+                extra_context['quick_quiz_inline_form'] = QuickQuizInlineFormSet(data=request.POST, instance=Quiz())
         else:
             # if not Post, give new form
-            extra_context['quick_quiz_form'] = QuickQuizForm()
+            extra_context['quick_quiz_form'] = QuickQuizForm(session=request.session)
+            extra_context['quick_quiz_inline_form'] = QuickQuizInlineFormSet(instance=Quiz())
 
         if 'wordcloud' in request.POST:
             form = QuickWordcloudForm(data=request.POST) 
             if form.is_valid():
                 form.save()
                 # successful, give new form for next submission
-                extra_context['quick_wordcloud_form'] = QuickWordcloudForm()
+                extra_context['quick_wordcloud_form'] = QuickWordcloudForm(session=request.session)
             else:
                 # errors present, give back form with error messages
                 extra_context['quick_wordcloud_form'] = form
         else:
             # if not Post, give new form
-            extra_context['quick_wordcloud_form'] = QuickWordcloudForm()
+            extra_context['quick_wordcloud_form'] = QuickWordcloudForm(session=request.session)
 
         if 'codesnippet' in request.POST:
             form = QuickCodeSnippetForm(data=request.POST)
             if form.is_valid():
                 form.save()
                 # successful, give new form for next submission
-                extra_context['quick_codesnippet_form'] = QuickCodeSnippetForm()
+                extra_context['quick_codesnippet_form'] = QuickCodeSnippetForm(session=request.session)
             else:
                 # errors present, give back form with error messages
                 extra_context['quick_codesnippet_form'] = form
         else:
             # if not Post, give new form
-            extra_context['quick_codesnippet_form'] = QuickCodeSnippetForm()
+            extra_context['quick_codesnippet_form'] = QuickCodeSnippetForm(session=request.session)
 
         # quick_settings_form is never processed, just used as a placeholder for ajax submissions
         extra_context['quick_settings_form'] = QuickSettingsForm(session=request.session)

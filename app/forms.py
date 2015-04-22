@@ -445,7 +445,7 @@ class QuickCodeSnippetForm(forms.ModelForm):
         model = CodeSnippet
         fields = ('syntax', 'code', 'linenumbers', 'style')
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, session=None, *args, **kwargs):
         super(QuickCodeSnippetForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.layout = Layout()

@@ -81,6 +81,7 @@ class Quiz(models.Model):
     question = models.TextField()
     visible = models.BooleanField(default=False)
     Lecture = models.ForeignKey(Lecture)
+    last_touch = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
         return unicode(self.Lecture.lecture_name + " " + self.question)

@@ -246,6 +246,16 @@ class Admin_Site(AdminSite):
             return redirect('index')
         else:
             extra_context = {} if extra_context==None else extra_context
+            quiz_hash = []
+            for quiz in Quiz.objects.order_by('last_touch').reverse()[:5]:
+                d = QuizChoice.objects.filter(Quiz=quiz)
+                quiz_hash.append({quiz: d})
+                print {quiz: d}
+
+            #extra_context['recent_quizzes'] = Quiz.objects.order_by('last_touch').reverse()[:5]
+            extra_context['recent_quizzes'] = quiz_hash
+            print quiz_hash
+            
             # do forms stuff
             if request.method == 'POST':
                 self.post(request, extra_context)

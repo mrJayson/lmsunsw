@@ -112,7 +112,7 @@ class Rand():
     @staticmethod
     def post(thread=None, content=None, Creator=None, anonymous=None):
         thread = (Rand.thread() if (len(Thread.objects.all())==0) else choice(Thread.objects.all())) if thread==None else thread
-        content = Rand.randomString(40) if content==None else content
+        content = Rand.randomString(200) if content==None else content
         Creator = (Rand.user() if (len(User.objects.all())==0) else choice(User.objects.all())) if Creator==None else Creator
         rank = thread.replies
         anonymous = Rand.randomBool() if anonymous==None else anonymous
@@ -244,7 +244,7 @@ def populate():
 
     create_superuser(username="admin", first_name="administration", last_name="account", email="admin@admin.com", password="admin")
     create_student(username="Jack", first_name="Jack", last_name="James", email="Jack@James.com", password="password")
-    num_students = 10
+    num_students = 100
 
     for i in xrange(num_students):
         create_student()
@@ -313,7 +313,7 @@ def populate():
     wc = create_wordcloud(title="What is your favourite Colour?", visible=True)
     words = ['Red', 'Blue', 'Green', 'Orange', 'Yellow', 'Purple', 'Cyan', 'Magenta', 'Crimson']
     for i in xrange(num_students):
-        create_wordcloud_submission(Wordcloud=wc, word=choice(words))
+        create_wordcloud_submission(User=User.objects.all()[i], Wordcloud=wc, word=choice(words))
 
 def run():
     clear()

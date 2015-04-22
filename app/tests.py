@@ -1,4 +1,4 @@
-from django.test import TestCase, RequestFactory
+from django.test import TestCase, RequestFactory, Client
 from app.models import *
 from django.db import IntegrityError
 from populate import Rand
@@ -347,7 +347,7 @@ class Quiz_Usage(TestCase):
 			Rand.quizchoice(correct=correct[i])
 		self.assertEquals(Quiz.objects.first().quiz_type, QuizType.MULTIMCQ)
 
-class SimpleRequestTest(TestCase):
+class Get_Request_Tests(TestCase):
 
 	def setUp(self):
 		self.factory = RequestFactory()
@@ -435,3 +435,19 @@ class SimpleRequestTest(TestCase):
 		view = WordcloudSubmissionView.as_view()
 		response = view(request)
 		self.assertEquals(response.status_code, 200)
+
+
+class Post_Request_Tests(TestCase):
+
+	def setUp(self):
+		c = Client()
+		User.objects.create(username="AAA", first_name="A", last_name="A", email="A@test.com", password="A", is_superuser=True)
+
+	def index_view_test(self):
+
+		request = c.post('/login', {'username': 'aaa', 'password': 'a'})
+		
+		view = WordcloudSubmissionView.as_view()
+		request = view(request)
+		self.assertEquals(request.status_code, 200)
+		self.assertRedirects(request, '/admin:index')

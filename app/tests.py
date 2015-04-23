@@ -390,40 +390,29 @@ class Get_Request(TestCase):
 
 	def test_lecture_view(self):
 
-		Lecture.objects.create(lecture_name="Lecture 3", lecture_slide="A")
-		
-		request = self.client.get('/course/01')
-		self.assertEquals(request.status_code, 200)
-		'''
-		request = self.factory.get('/course/01')
-		request.user = self.user
-		view = LectureView.as_view()
-		response = view(request)
-		self.assertEquals(response.status_code, 200)
-		'''
+		Lecture.objects.create(lecture_name="Lecture 1", lecture_slide="A")
+		self.assertEquals(Lecture.objects.get(id=01).lecture_name, 'Lecture 1')
+
+		request = self.client.get('/course/01/lecture-1')
+		self.assertEquals(request.status_code, 302)
+	
 
 	def test_quiz_view(self):
+
+		l1 = Lecture.objects.create(lecture_name="Lecture 1")
+		q1 = Quiz.objects.create(question="question", visible=True, Lecture=l1)
+		QuizChoice.objects.create(choice="choice", Quiz=q1, correct=True)
 		
-		request = self.factory.get('/course')
-		request.user = self.user
-		view = QuizView.as_view()
-		response = view(request)
-		self.assertEquals(response.status_code, 200)
+		request = self.client.get('/course/01/lecture-1/quiz/01/question')
+		self.assertEquals(request.status_code, 302)
+
 
 	def test_lecture_slide_view(self):
 
-		Lecture.objects.create(lecture_name="Lecture 3", lecture_slide="A")
+		Lecture.objects.create(lecture_name="Lecture 1", lecture_slide="A")
 		
-		request = self.client.get('/course/01')
-		self.assertEquals(request.status_code, 200)
-
-		'''
-		request = self.factory.get('/course')
-		request.user = self.user
-		view = LectureSlideView.as_view()
-		response = view(request)
-		self.assertEquals(response.status_code, 200)
-		'''
+		request = self.client.get('/course/230/Lecture-1')
+		self.assertEquals(request.status_code, 302)
 
 	def test_thread_view_page(self):
 		
@@ -446,27 +435,17 @@ class Get_Request(TestCase):
 		t2 = Thread.objects.create(title="Chocolate", content="chocolate", Creator=self.user, views=0, anonymous=False)
 		Post.objects.create(Thread=t2, content="Volvo is a car brand", Creator=self.user, rank=1, anonymous=True)
 
-		request = self.factory.get('/course')
-		request.user = self.user
-		view = PostView.as_view()
-		response = view(request)
-		self.assertEquals(response.status_code, 200)
+		request = self.client.get('/course/threads/01/chocolate')
+		self.assertEquals(request.status_code, 302)
 
 	def test_wordcloud(self):
 
 		l1 = Lecture.objects.create(lecture_name="Lecture 3", lecture_slide="A")
 		Wordcloud.objects.create(title="test", Lecture=l1, visible=True)
 
-		request = self.client.get('/course/01')
-		self.assertEquals(request.status_code, 200)
+		request = self.client.get('/course/01/lecture-1/wordcloud/01/test')
+		self.assertEquals(request.status_code, 302)
 
-		'''
-		request = self.factory.get('/course')
-		request.user = self.user
-		view = WordcloudSubmissionView.as_view()
-		response = view(request)
-		self.assertEquals(response.status_code, 200)
-		'''
 """
 class Post_Request_Tests(TestCase):
 

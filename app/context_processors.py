@@ -57,7 +57,8 @@ def get_confidence_meter_values(request):
 def currents(request):
 
 	return {'current_quiz_list': Quiz.objects.filter(visible = True),
-	'current_wordcloud_list': Wordcloud.objects.filter(visible = True)
+	'current_wordcloud_list': Wordcloud.objects.filter(visible = True),
+    'current_url': request.path,
 	}
 
 # get_models returns all the models, but there are 

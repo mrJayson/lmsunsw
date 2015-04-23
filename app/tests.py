@@ -429,7 +429,7 @@ class Get_Request_Tests(TestCase):
 		self.assertEquals(response.status_code, 200)
 
 	def wordcloud_test(self):
-		
+
 		request = self.factory.get('/course')
 		request.user = self.user
 		view = WordcloudSubmissionView.as_view()
@@ -440,14 +440,12 @@ class Get_Request_Tests(TestCase):
 class Post_Request_Tests(TestCase):
 
 	def setUp(self):
-		c = Client()
-		User.objects.create(username="AAA", first_name="A", last_name="A", email="A@test.com", password="A", is_superuser=True)
-
+		client = Client()
+		
 	def index_view_test(self):
 
-		request = c.post('/login', {'username': 'aaa', 'password': 'a'})
+		request = self.client.post('/createuser', {'username': 'aaa', 'password1': 'a', 'password2': 'a', 'first_name': 'A', 'last_name': 'Dude', 'email': 'A@test.com'})
 		
-		view = WordcloudSubmissionView.as_view()
-		request = view(request)
-		self.assertEquals(request.status_code, 200)
-		self.assertRedirects(request, '/admin:index')
+		self.assertEquals(request.status_code, 302)
+		self.assertEquals(request['Location'], '/admin:login')
+	

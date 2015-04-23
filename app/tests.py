@@ -411,7 +411,7 @@ class Get_Request(TestCase):
 
 		Lecture.objects.create(lecture_name="Lecture 1", lecture_slide="A")
 		
-		request = self.client.get('/course/230/Lecture-1')
+		request = self.client.get('/course/01/Lecture-1')
 		self.assertEquals(request.status_code, 302)
 
 	def test_thread_view_page(self):
@@ -452,22 +452,18 @@ class Post_Request_Tests(TestCase):
 		self.client = Client()
 		User.objects.create(username="AAA", first_name="A", last_name="A", email="A@test.com", password="A", is_superuser=True)
 		User.objects.create(username="bbb", first_name="B", last_name="b", email="b@test.com", password="b", is_superuser=False)	
+		Lecture.objects.create(lecture_name="Lecture 1", lecture_slide="A")
 	
+	def test_page_rerouting(self):
+
+		request = self.client.get('/course/01/Lecture-1')
+		self.assertEquals(request.status_code,302)
+		self.assertRedirects(request, '/login?next=/course/01/Lecture-1')
+		response = self.client.post('/login', {'username': 'bbb', 'password': 'B'})
+		self.assertEquals(response.status_code, 302)
+		self.assertRedirects(response, '/course/01/Lecture-1')
+
 	
-	def test_superuser_login(self):
-
-		request = self.client.post('/login', {'username': 'aaa', 'password': 'A'})	
-		self.assertEquals(request.status_code, 302)
-		self.assertRedirects(request, '/admin:index')
-
-	def test_student_login(self):
-
-		request = self.client.post('/login', {'username': 'BBB', 'password': 'b'})	
-
-		self.assertEquals(request.status_code, 302)
-		self.assertRedirects(request, '/login')
-
-
 	def test_create_user(self):
 
 		request = self.client.post('/createuser', {'username': 'aaa', 'password1': 'a', 'password2': 'a', 'first_name': 'A', 'last_name': 'Dude', 'email': 'A@test.com'})

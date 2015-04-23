@@ -446,19 +446,35 @@ class Get_Request(TestCase):
 		request = self.client.get('/course/01/lecture-1/wordcloud/01/test')
 		self.assertEquals(request.status_code, 302)
 
-"""
 class Post_Request_Tests(TestCase):
 
 	def setUp(self):
 		self.client = Client()
-		
-	def test_login(self):
-		print("post request")
+		User.objects.create(username="AAA", first_name="A", last_name="A", email="A@test.com", password="A", is_superuser=True)
+		User.objects.create(username="bbb", first_name="B", last_name="b", email="b@test.com", password="b", is_superuser=False)	
+	
+	
+	def test_superuser_login(self):
+
+		request = self.client.post('/login', {'username': 'aaa', 'password': 'A'})	
+		self.assertEquals(request.status_code, 302)
+		self.assertRedirects(request, '/admin:index')
+
+	def test_student_login(self):
+
+		request = self.client.post('/login', {'username': 'BBB', 'password': 'b'})	
+
+		self.assertEquals(request.status_code, 302)
+		self.assertRedirects(request, '/login')
+
+
+	def test_create_user(self):
+
 		request = self.client.post('/createuser', {'username': 'aaa', 'password1': 'a', 'password2': 'a', 'first_name': 'A', 'last_name': 'Dude', 'email': 'A@test.com'})
 		
 		self.assertEquals(request.status_code, 302)
-		self.assertEquals(request['Location'], '/admin:login')
+		self.assertRedirects(request, '/alert/create_user_success')
 
-		print ("testing post")
 
-"""
+
+

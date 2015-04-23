@@ -12,6 +12,9 @@ from app.docsURL import glist
 from random import choice
 from string import ascii_lowercase
 
+verbose = True
+# print for each object creation if verbose is True
+
 first_names = ['Annie', 'Adam', 'Becky', 'Bert', 'Chris', 'Christina', 'David', 'Danielle', 'Edison', 'Ellie', 
     'Frank', 'Faye', 'Graham', 'Gwen', 'Harvey', 'Haley', 'Isaac', 'Isabella', 'Jason', 'Jessica', 
     'Keith', 'Katelyn', 'Luke', 'Lynette', 'Morgan', 'Mandy', 'Neil', 'Natalie', 'Oliver', 'Olivia', 
@@ -161,7 +164,8 @@ def create_user(username=None, first_name=None, last_name=None, email=None, pass
     new_user.save()
     # create accompanying entry for additional user data
     new_user_profile, created = UserProfile.objects.get_or_create(user=new_user)
-    print "created user: " + new_user.username
+    if 'verbose' in locals() and verbose == True:
+        print "created user: " + new_user.username
     return new_user
 
 def create_student(username=None, first_name=None, last_name=None, email=None, password=None):
@@ -173,50 +177,58 @@ def create_superuser(username=None, first_name=None, last_name=None, email=None,
 def create_lecture(lecture_name=None):
     
     new_lecture = Rand.lecture(lecture_name=lecture_name)
-    print "created lecture: " + new_lecture.lecture_name
+    if 'verbose' in locals() and verbose == True:
+        print "created lecture: " + new_lecture.lecture_name
     return new_lecture
 
 def create_quiz(question=None, visible=None, Lecture=None):
     
     new_quiz = Rand.quiz(question, visible, Lecture)
-    print "created quiz: " + new_quiz.question
+    if 'verbose' in locals() and verbose == True:
+        print "created quiz: " + new_quiz.question
     return new_quiz
 
 def create_quiz_choice(choice=None, Quiz=None, correct=None):
     
     new_quiz_choice = Rand.quizchoice(quiz_choice=choice, quiz=Quiz, correct=correct)
-    print "created quiz_choice: " + new_quiz_choice.choice
+    if 'verbose' in locals() and verbose == True:
+        print "created quiz_choice: " + new_quiz_choice.choice
     return new_quiz_choice
 
 def create_quiz_choice_selection(User=None, Quiz_Choice=None, Quiz=None):
     if Quiz_Choice == None and Quiz != None:
         Quiz_Choice = choice(QuizChoice.objects.filter(Quiz=Quiz))
     new_quiz_choice_selection = Rand.quizchoiceselected(user=User, quizchoice=Quiz_Choice)
-    print "create quiz_choice_selection: User '"+ new_quiz_choice_selection.User.username + "' voted '" + new_quiz_choice_selection.QuizChoice.choice + "' for " + new_quiz_choice_selection.QuizChoice.Quiz.question
+    if 'verbose' in locals() and verbose == True:
+        print "create quiz_choice_selection: User '"+ new_quiz_choice_selection.User.username + "' voted '" + new_quiz_choice_selection.QuizChoice.choice + "' for " + new_quiz_choice_selection.QuizChoice.Quiz.question
     return new_quiz_choice_selection
 
 def create_thread(title=None, content=None, Creator=None, views=None, anonymous=None):
     
     new_thread = Rand.thread(title, content, Creator, views)
-    print "created thread: " + new_thread.title
+    if 'verbose' in locals() and verbose == True:
+        print "created thread: " + new_thread.title
     return new_thread
 
 def create_post(Thread=None, content=None, Creator=None, anonymous=None):
     
     new_post = Rand.post(Thread, content, Creator)
-    print "created post: " + new_post.content
+    if 'verbose' in locals() and verbose == True:
+        print "created post: " + new_post.content
     return new_post
 
 def create_wordcloud(title=None, image=None, Lecture=None, visible=None):
     
     new_wordcloud = Rand.wordcloud(title, image, Lecture, visible)
-    print "created wordcloud: " + new_wordcloud.title
+    if 'verbose' in locals() and verbose == True:
+        print "created wordcloud: " + new_wordcloud.title
     return new_wordcloud
 
 def create_wordcloud_submission(User=None, Wordcloud=None, word=None):
     
     new_wordcloud_submission = Rand.wordcloudsubmission(user=User, wordcloud=Wordcloud, word=word)
-    print "created wordcloud submission: " + new_wordcloud_submission.word
+    if 'verbose' in locals() and verbose == True:
+        print "created wordcloud submission: " + new_wordcloud_submission.word
     return new_wordcloud_submission
 
 def clear():

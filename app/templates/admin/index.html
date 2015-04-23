@@ -95,7 +95,24 @@
 			</div>
 		</div>
 		<div class="panel panel-body" id="quiz-results-panel">
-			<table>
+			{% for quiz in recent_quizzes %}
+				<table class="table">
+				{% for question, choices in quiz.items %}
+					<thead>
+						<tr>{{question}}</tr>
+					</thead>
+					<tbody>
+						<tr>
+						{% for choice in choices %}
+							<td>{{choice}}</td>
+						{% endfor %}
+						</tr>
+					</tbody>
+				{% endfor %}
+				</table>
+			{% endfor %}
+
+<!--			<table>
 				<thead></thead>
 				<tbody>
 					{% for quiz in recent_quizzes %}
@@ -111,7 +128,7 @@
 					{% endfor %}
 				</tbody>
 			</table>
-		</div>
+		</div>-->
 	</div>
 
 	<div class="panel panel-primary">
@@ -171,7 +188,7 @@
 	    });
 	}
 	
-	var ping_interval = 100*15
+	var ping_interval = 1000*15
     setInterval(function() {
         $.ajax({
 	        type: "GET",

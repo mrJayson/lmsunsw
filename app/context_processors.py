@@ -67,8 +67,6 @@ IGNORE_MODELS = (
     "sessions",
     "admin",
     "contenttypes",
-    "confidencemeter",
-
 )
 IGNORE_APPS = (
 	"ConfidenceMeter",

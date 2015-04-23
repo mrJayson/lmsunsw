@@ -188,8 +188,10 @@ def create_quiz_choice(choice=None, Quiz=None, correct=None):
     print "created quiz_choice: " + new_quiz_choice.choice
     return new_quiz_choice
 
-def create_quiz_choice_selection(User=None, QuizChoice=None):
-    new_quiz_choice_selection = Rand.quizchoiceselected(user=User, quizchoice=QuizChoice)
+def create_quiz_choice_selection(User=None, Quiz_Choice=None, Quiz=None):
+    if Quiz_Choice == None and Quiz != None:
+        Quiz_Choice = choice(QuizChoice.objects.filter(Quiz=Quiz))
+    new_quiz_choice_selection = Rand.quizchoiceselected(user=User, quizchoice=Quiz_Choice)
     print "create quiz_choice_selection: User '"+ new_quiz_choice_selection.User.username + "' voted '" + new_quiz_choice_selection.QuizChoice.choice + "' for " + new_quiz_choice_selection.QuizChoice.Quiz.question
     return new_quiz_choice_selection
 
@@ -255,7 +257,7 @@ def populate():
     lecture2 = create_lecture("Lecture 2")
     lecture3 = create_lecture("Lecture 3")
 
-    quiz1 = create_quiz("What colour is the sky?", True, lecture1)
+    quiz1 = create_quiz("What colour is the sky?", False, lecture1)
     create_quiz_choice("Red", quiz1, False)
     create_quiz_choice("Blue", quiz1, True)
     create_quiz_choice("Green", quiz1, False)
@@ -301,6 +303,10 @@ def populate():
     create_quiz_choice("TV", quiz7, False)
     create_quiz_choice("Iphone", quiz7, False)
     create_quiz_choice("Radio", quiz7, True)
+
+    for i in xrange(10):
+        create_quiz_choice_selection(Quiz=quiz1)
+        create_quiz_choice_selection(Quiz=quiz2)
 
     #for i in xrange(num_students * 3):
     #    create_quiz_choice_selection()

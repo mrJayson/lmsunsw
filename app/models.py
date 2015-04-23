@@ -78,6 +78,11 @@ class QuizType():
     ZEROMCQ = 3
 
 class Quiz(models.Model):
+
+    class Meta:
+        verbose_name = "Quiz"
+        verbose_name_plural = "Quizzes"
+
     question = models.TextField()
     visible = models.BooleanField(default=False)
     Lecture = models.ForeignKey(Lecture)

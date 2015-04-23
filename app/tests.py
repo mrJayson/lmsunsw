@@ -455,7 +455,7 @@ class Post_Request_Tests(TestCase):
 		User.objects.create(username="bbb", first_name="B", last_name="b", email="b@test.com", password="b", is_superuser=False)	
 		Lecture.objects.create(lecture_name="Lecture 1", lecture_slide="A")
 	
-<<<<<<< HEAD
+
 	
 	def test_superuser_login(self):
 
@@ -469,16 +469,14 @@ class Post_Request_Tests(TestCase):
 
 		#self.assertEquals(request.status_code, 302)
 		#self.assertRedirects(request, '/login')
-=======
+
 	def test_page_rerouting(self):
->>>>>>> c28a20fdefdc96555438b4a93b24cbbe06512da3
+
 
 		request = self.client.get('/course/01/Lecture-1')
 		self.assertEquals(request.status_code,302)
 		self.assertRedirects(request, '/login?next=/course/01/Lecture-1')
 		response = self.client.post('/login', {'username': 'bbb', 'password': 'B'})
-		self.assertEquals(response.status_code, 302)
-		self.assertRedirects(response, '/course/01/Lecture-1')
 
 	
 	def test_create_user(self):

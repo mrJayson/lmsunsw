@@ -487,7 +487,8 @@ class Post_Request_Tests(TestCase):
 		self.assertRedirects(request, '/login?next=/course/01/Lecture-1')
 		response = self.client.post('/login', {'username': 'bbb', 'password': 'B'})
 		self.assertEquals(response.status_code, 200)
-
+		self.assertEquals(response.context['current_url'], '/login')
+		print response.context['current_url']
 	
 	def test_create_user(self):
 

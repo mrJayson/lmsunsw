@@ -450,15 +450,16 @@ class Post_Request_Tests(TestCase):
 
 	def setUp(self):
 		self.client = Client()
-		create_superuser(username="admin", first_name="administration", last_name="account", email="admin@admin.com", password="admin")
+		self.su = create_superuser(username="admin", first_name="administration", last_name="account", email="admin@admin.com", password="admin")
 		#User.objects.create_user(username="AAA", first_name="A", last_name="A", email="A@test.com", password="A", is_superuser=True)
-		create_user(username="BBB", first_name="B", last_name="b", email="b@test.com", password="b", is_superuser=False)	
+		self.u1 = create_user(username="BBB", first_name="B", last_name="b", email="b@test.com", password="b", is_superuser=False)	
+		self.u2 = create_user(username="ccc", first_name="c", last_name="b", email="c@test.com", password="c", is_superuser=False)	
 		Lecture.objects.create(lecture_name="Lecture 1", lecture_slide="A")
 	
 
 	def test_superuser_login(self):
 
-		response = self.client.post('/login', {'username': 'admin', 'password': 'admin'})	
+		response = self.client.post('/login', {'username': 'admin', 'password': 'admin'})
 		self.assertEquals(response.status_code, 302)
 		self.assertRedirects(response, '/', status_code=302, target_status_code=302)
 
@@ -471,6 +472,13 @@ class Post_Request_Tests(TestCase):
 
 		#self.assertEquals(request.status_code, 302)
 		#self.assertRedirects(request, '/login')
+
+	def test_login_fails(self):
+
+		response = self.client.post('/login', {'username': 'AAA', 'password': 'aaa'})
+		self.assertEquals(response.status_code, 200)
+		#self.assertEquals(response.context, 'Please enter the correct username and password for a staff account. Note that both fields may be case-sensitive.')
+	
 	def test_page_rerouting(self):
 
 
@@ -478,15 +486,24 @@ class Post_Request_Tests(TestCase):
 		self.assertEquals(request.status_code,302)
 		self.assertRedirects(request, '/login?next=/course/01/Lecture-1')
 		response = self.client.post('/login', {'username': 'bbb', 'password': 'B'})
+		self.assertEquals(response.status_code, 200)
 
 	
 	def test_create_user(self):
 
-		request = self.client.post('/createuser', {'username': 'aaa', 'password1': 'a', 'password2': 'a', 'first_name': 'A', 'last_name': 'Dude', 'email': 'A@test.com'})
+		response = self.client.post('/createuser', {'username': 'aaa', 'password1': 'a', 'password2': 'a', 'first_name': 'A', 'last_name': 'Dude', 'email': 'A@test.com'})
 		
+		self.assertEquals(response.status_code, 302)
+		self.assertRedirects(response, '/alert/create_user_success')
+
+	def test_create_thread(self):
+		request = self.client.post('/course/threads/new', {'title':'testing', 'content':'this is a test','Creator':self.u1})
 		self.assertEquals(request.status_code, 302)
-		self.assertRedirects(request, '/alert/create_user_success')
+		#self.assertEquals(Thread.object.get(id=01).title, 'testing')
 
+	def test_post_reply(self):
+		Thread.objects.create(title="Colour", content="Types of Colour", Creator=self.u1, views=0, anonymous=True)
 
-
-
+		self.user = self.u2
+		request = self.client.post('/course/threads/01/colour', {'Thread': 01, 'content': 'red', 'Creator': self.user})
+		#self.assertEquals(Post.objects.get(id=01).content, 'red')

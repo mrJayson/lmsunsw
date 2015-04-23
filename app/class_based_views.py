@@ -36,17 +36,17 @@ class IndexView(TemplateView, BaseSidebarContextMixin):
         return context
 
 
-class LectureView(TemplateView, SidebarContextMixin):
-    template_name = _('app/lecture.html')
-
-
-
 class CreateUser(CreateView):
     template_name = _('app/create_user.html')
     form_class = CreateUserForm
 
     def get_success_url(self):
         return reverse('alert', kwargs={'tag':'create_user_success'})
+
+
+class LectureView(TemplateView, SidebarContextMixin):
+    template_name = _('app/lecture.html')
+
 
 class QuizView(FormView, SidebarContextMixin):
     template_name = _('app/quiz.html')

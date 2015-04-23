@@ -1,4 +1,4 @@
-from django.test import TestCase, RequestFactory
+from django.test import TestCase, RequestFactory, Client
 from app.models import *
 from django.db import IntegrityError
 from populate import Rand
@@ -347,19 +347,134 @@ class Quiz_Usage(TestCase):
 			Rand.quizchoice(correct=correct[i])
 		self.assertEquals(Quiz.objects.first().quiz_type, QuizType.MULTIMCQ)
 
-class SimpleRequestTest(TestCase):
+
+class Get_Request(TestCase):
 
 	def setUp(self):
+		
 		self.factory = RequestFactory()
+		self.client = Client()
 		self.user = User.objects.create(username="AAA", first_name="A", last_name="A", email="A@test.com", password="A", is_superuser=True)
 
-	def test_details(self):
+	def test_index_view(self):
 		# the request URL is what you type into the web browser.
 		# look at urls.py for what the mappings are
 		request = self.factory.get('/index')
-
-		request.user = self.user
 		
+		request.user = self.user
 		view = IndexView.as_view()
 		response = view(request)
 		self.assertEquals(response.status_code, 200)
+
+	def test_createuser_view(self):
+
+		request = self.factory.get('/createuser')
+		request.user = self.user
+		view = CreateUser.as_view()
+		response = view(request)
+		self.assertEquals(response.status_code, 200)
+
+	def test_alert_view(self):
+
+		request = self.client.get('/alert/create_user_success')
+		self.assertEquals(request.status_code, 200)
+		'''
+		self.kwargs['tag'] = "create_user_success"
+		request = self.factory.get('/alert/', self)
+
+		request.user = self.user
+		view = AlertView.as_view()
+		response = view(request)
+		self.assertEquals(response.status_code, 200)
+		'''
+
+	def test_lecture_view(self):
+
+		Lecture.objects.create(lecture_name="Lecture 1", lecture_slide="A")
+		self.assertEquals(Lecture.objects.get(id=01).lecture_name, 'Lecture 1')
+
+		request = self.client.get('/course/01/lecture-1')
+		self.assertEquals(request.status_code, 302)
+	
+
+	def test_quiz_view(self):
+
+		l1 = Lecture.objects.create(lecture_name="Lecture 1")
+		q1 = Quiz.objects.create(question="question", visible=True, Lecture=l1)
+		QuizChoice.objects.create(choice="choice", Quiz=q1, correct=True)
+		
+		request = self.client.get('/course/01/lecture-1/quiz/01/question')
+		self.assertEquals(request.status_code, 302)
+
+
+	def test_lecture_slide_view(self):
+
+		Lecture.objects.create(lecture_name="Lecture 1", lecture_slide="A")
+		
+		request = self.client.get('/course/230/Lecture-1')
+		self.assertEquals(request.status_code, 302)
+
+	def test_thread_view_page(self):
+		
+		request = self.factory.get('/course')
+		request.user = self.user
+		view = ThreadView.as_view()
+		response = view(request)
+		self.assertEquals(response.status_code, 200)
+
+	def test_create_thread_view(self):
+		
+		request = self.factory.get('/course')
+		request.user = self.user
+		view = CreateThreadView.as_view()
+		response = view(request)
+		self.assertEquals(response.status_code, 200)
+
+	def test_post_view(self):
+		
+		t2 = Thread.objects.create(title="Chocolate", content="chocolate", Creator=self.user, views=0, anonymous=False)
+		Post.objects.create(Thread=t2, content="Volvo is a car brand", Creator=self.user, rank=1, anonymous=True)
+
+		request = self.client.get('/course/threads/01/chocolate')
+		self.assertEquals(request.status_code, 302)
+
+	def test_wordcloud(self):
+
+		l1 = Lecture.objects.create(lecture_name="Lecture 3", lecture_slide="A")
+		Wordcloud.objects.create(title="test", Lecture=l1, visible=True)
+
+		request = self.client.get('/course/01/lecture-1/wordcloud/01/test')
+		self.assertEquals(request.status_code, 302)
+
+class Post_Request_Tests(TestCase):
+
+	def setUp(self):
+		self.client = Client()
+		User.objects.create(username="AAA", first_name="A", last_name="A", email="A@test.com", password="A", is_superuser=True)
+		User.objects.create(username="bbb", first_name="B", last_name="b", email="b@test.com", password="b", is_superuser=False)	
+	
+	
+	def test_superuser_login(self):
+
+		request = self.client.post('/login', {'username': 'aaa', 'password': 'A'})	
+		self.assertEquals(request.status_code, 302)
+		self.assertRedirects(request, '/admin:index')
+
+	def test_student_login(self):
+
+		request = self.client.post('/login', {'username': 'BBB', 'password': 'b'})	
+
+		self.assertEquals(request.status_code, 302)
+		self.assertRedirects(request, '/login')
+
+
+	def test_create_user(self):
+
+		request = self.client.post('/createuser', {'username': 'aaa', 'password1': 'a', 'password2': 'a', 'first_name': 'A', 'last_name': 'Dude', 'email': 'A@test.com'})
+		
+		self.assertEquals(request.status_code, 302)
+		self.assertRedirects(request, '/alert/create_user_success')
+
+
+
+

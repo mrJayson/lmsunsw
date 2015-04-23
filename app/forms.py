@@ -66,7 +66,7 @@ class CreateUserForm(UserCreationForm):
         return new_user
 
     def clean_username(self):
-        username = self.cleaned_dat.get('username')
+        username = self.cleaned_data.get('username')
         return username.lower()
 
 class QuizSelectionForm(forms.Form):

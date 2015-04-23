@@ -347,24 +347,26 @@ class Quiz_Usage(TestCase):
 			Rand.quizchoice(correct=correct[i])
 		self.assertEquals(Quiz.objects.first().quiz_type, QuizType.MULTIMCQ)
 
-class Get_Request_Tests(TestCase):
+
+class Get_Request(TestCase):
 
 	def setUp(self):
+		
 		self.factory = RequestFactory()
+		self.client = Client()
 		self.user = User.objects.create(username="AAA", first_name="A", last_name="A", email="A@test.com", password="A", is_superuser=True)
 
-	def index_view_test(self):
+	def test_index_view(self):
 		# the request URL is what you type into the web browser.
 		# look at urls.py for what the mappings are
 		request = self.factory.get('/index')
-
-		request.user = self.user
 		
+		request.user = self.user
 		view = IndexView.as_view()
 		response = view(request)
 		self.assertEquals(response.status_code, 200)
 
-	def createuser_view_test(self):
+	def test_createuser_view(self):
 
 		request = self.factory.get('/createuser')
 		request.user = self.user
@@ -372,23 +374,35 @@ class Get_Request_Tests(TestCase):
 		response = view(request)
 		self.assertEquals(response.status_code, 200)
 
-	def alert_view_test(self):
+	def test_alert_view(self):
 
-		request = self.factory.get('/alert')
+		request = self.client.get('/alert/create_user_success')
+		self.assertEquals(request.status_code, 200)
+		'''
+		self.kwargs['tag'] = "create_user_success"
+		request = self.factory.get('/alert/', self)
+
 		request.user = self.user
 		view = AlertView.as_view()
 		response = view(request)
 		self.assertEquals(response.status_code, 200)
+		'''
 
-	def lecture_view_test(self):
+	def test_lecture_view(self):
+
+		Lecture.objects.create(lecture_name="Lecture 3", lecture_slide="A")
 		
-		request = self.factory.get('/course')
+		request = self.client.get('/course/01')
+		self.assertEquals(request.status_code, 200)
+		'''
+		request = self.factory.get('/course/01')
 		request.user = self.user
 		view = LectureView.as_view()
 		response = view(request)
 		self.assertEquals(response.status_code, 200)
+		'''
 
-	def quiz_view_test(self):
+	def test_quiz_view(self):
 		
 		request = self.factory.get('/course')
 		request.user = self.user
@@ -396,15 +410,22 @@ class Get_Request_Tests(TestCase):
 		response = view(request)
 		self.assertEquals(response.status_code, 200)
 
-	def lecture_slide_view_test(self):
+	def test_lecture_slide_view(self):
+
+		Lecture.objects.create(lecture_name="Lecture 3", lecture_slide="A")
 		
+		request = self.client.get('/course/01')
+		self.assertEquals(request.status_code, 200)
+
+		'''
 		request = self.factory.get('/course')
 		request.user = self.user
 		view = LectureSlideView.as_view()
 		response = view(request)
 		self.assertEquals(response.status_code, 200)
+		'''
 
-	def thread_view_page_test(self):
+	def test_thread_view_page(self):
 		
 		request = self.factory.get('/course')
 		request.user = self.user
@@ -412,7 +433,7 @@ class Get_Request_Tests(TestCase):
 		response = view(request)
 		self.assertEquals(response.status_code, 200)
 
-	def create_thread_view_test(self):
+	def test_create_thread_view(self):
 		
 		request = self.factory.get('/course')
 		request.user = self.user
@@ -420,32 +441,45 @@ class Get_Request_Tests(TestCase):
 		response = view(request)
 		self.assertEquals(response.status_code, 200)
 
-	def post_view_test(self):
+	def test_post_view(self):
 		
+		t2 = Thread.objects.create(title="Chocolate", content="chocolate", Creator=self.user, views=0, anonymous=False)
+		Post.objects.create(Thread=t2, content="Volvo is a car brand", Creator=self.user, rank=1, anonymous=True)
+
 		request = self.factory.get('/course')
 		request.user = self.user
 		view = PostView.as_view()
 		response = view(request)
 		self.assertEquals(response.status_code, 200)
 
-	def wordcloud_test(self):
+	def test_wordcloud(self):
 
+		l1 = Lecture.objects.create(lecture_name="Lecture 3", lecture_slide="A")
+		Wordcloud.objects.create(title="test", Lecture=l1, visible=True)
+
+		request = self.client.get('/course/01')
+		self.assertEquals(request.status_code, 200)
+
+		'''
 		request = self.factory.get('/course')
 		request.user = self.user
 		view = WordcloudSubmissionView.as_view()
 		response = view(request)
 		self.assertEquals(response.status_code, 200)
-
-
+		'''
+"""
 class Post_Request_Tests(TestCase):
 
 	def setUp(self):
-		client = Client()
+		self.client = Client()
 		
-	def index_view_test(self):
-
+	def test_login(self):
+		print("post request")
 		request = self.client.post('/createuser', {'username': 'aaa', 'password1': 'a', 'password2': 'a', 'first_name': 'A', 'last_name': 'Dude', 'email': 'A@test.com'})
 		
 		self.assertEquals(request.status_code, 302)
 		self.assertEquals(request['Location'], '/admin:login')
-	
+
+		print ("testing post")
+
+"""

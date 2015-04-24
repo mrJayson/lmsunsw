@@ -1,4 +1,5 @@
 from django.test import TestCase, RequestFactory, Client
+from django.core.urlresolvers import reverse
 from app.models import *
 from django.db import IntegrityError
 from populate import *
@@ -477,7 +478,8 @@ class Post_Request_Tests(TestCase):
 
 		response = self.client.post('/login', {'username': 'AAA', 'password': 'aaa'})
 		self.assertEquals(response.status_code, 200)
-		#self.assertEquals(response.context, 'Please enter the correct username and password for a staff account. Note that both fields may be case-sensitive.')
+		#self.assertContains(response, 'Please enter the correct username and password for a staff account. Note that both fields may be case-sensitive.')
+
 	
 	def test_page_rerouting(self):
 
@@ -505,15 +507,10 @@ class Post_Request_Tests(TestCase):
 		self.assertEquals(Thread.objects.get(id=01).title, 'Apple')
 		#print Thread.objects.get(id=01).title
 
-		self.user = self.u1
-		#request = self.client.post('/course/threads/new', {'title':'testing', 'content':'this is a test', 'Creator': self.user, 'views': 0, 'submit': 'Submit'})
-		request = {'title': 'testing', 'content': 'this is a test'}
-
-		#form = 
-		#request.save
-		#self.assertEquals(request.status_code, 302)
-		#print Thread.objects.get(id=02).title
-		#self.assertEquals(Thread.objects.get(id=02).title, 'testing')
+		self.user = self.u1 
+		response = self.client.post('/course/threads/new', {'title':'testing', 'content':'new thread', 'Creator':self.user, 'views':0})
+		self.assertEquals(response.status_code, 302)
+		self.assertRedirects(response, '/login?next=/course/threads')
 		
 	def test_post_reply(self):
 
@@ -523,24 +520,23 @@ class Post_Request_Tests(TestCase):
 		self.assertEquals(Post.objects.get(id=01).content, 'Blue')
 
 		self.user = self.u2
-		request = self.client.post('/course/threads/01/colour', {'Thread': 01, 'content': 'red','anonymous': True})
-		#request = {'Thread': 01, 'content': 'red', 'anonymous': True}
-
-		form = PostReplyForm(self.user, self.t1, request)		
-		self.assertTrue(form.is_valid())
-		post = form.save()
-		self.assertEquals(Post.objects.get(id=02).content, 'red')
-		
-
-		self.assertEquals(request.status_code, 302)
+		response = self.client.post('/course/threads/01/colour', {'Thread':01,'content':'testing reply','Creator':self.user, 'anonymous':False})
+		self.assertEquals(response.status_code, 302)
+		self.assertRedirects(response, '/login?next=/course/threads/01/colour')
+		self.assertEquals(Post.objects.get(id=02).content, 'testing reply')
 		#print request.context['current_url']
 		#response = self.client.get('/course/threads/01/colour')
-		print Post.objects.get(id=02).content
+		#print Post.objects.get(id=02).content
 		#self.assertEquals(Post.objects.get(id=01).content, 'red')
 
 	def test_wordcloud_submit(self):
 
 		Wordcloud.objects.create(title="test", Lecture=self.l1, visible=True)
 		self.assertEquals(Wordcloud.objects.get(id=01).title, 'test')
+
+		'''
+		self.user = u1
+		response = self.client.post('/course/01/lecture-1/wordcloud/01/test', {'lecture_list':self.l1, 'wordcloud':'maybe'})
+		'''
 
 		

@@ -210,6 +210,7 @@ class CodeSnippet(models.Model):
     code = models.TextField()
     linenumbers = models.BooleanField(default=settings.DEFAULT_LINE_NUMBERS)
     style = models.CharField(max_length=30, choices=tuple(STYLE_MAP.items()), default='default')
+    Lecture = models.ForeignKey(Lecture)
 
     class Meta:
         verbose_name = _('Code snippet')

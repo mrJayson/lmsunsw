@@ -167,3 +167,25 @@ class WordcloudSubmissionView(CreateView, SidebarContextMixin):
 
     def get_success_url(self):
         return reverse('wordcloud', kwargs={'lect_id':self.kwargs.get('lect_id'), 'url_slug':self.kwargs.get('url_slug'), 'wordcloud_id':self.kwargs.get('wordcloud_id'), 'wordcloud_slug':self.kwargs.get('wordcloud_slug')})
+
+class CodeSnippetView(ListView, SidebarContextMixin):
+    template_name = _('app/code_snippet.html')
+    model = CodeSnippet
+
+    #def get_queryset(self, *args, **kwargs):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -18,6 +18,7 @@ class Migration(migrations.Migration):
                 ('syntax', models.CharField(max_length=30)),
                 ('code', models.TextField()),
                 ('linenumbers', models.BooleanField(default=False)),
+                ('Lecture', models.ForeignKey(to='app.Lecture')),
             ],
             options={
                 'verbose_name': 'Code snippet',

@@ -1,20 +1,21 @@
-<div id="sidebar-wrapper">
-    <ul class="sidebar-nav">
-        <li>
-            {% include "app/confidence_meter.html" %}
-        </li>
+<div id="sidebar-wrapper" role="navigation">
+
+    {% include "app/confidence_meter.html" %}
+
+    <ul class="nav nav-pills nav-stacked">
         <li>
             <a href="{% url 'index' %}"> Index </a>
         </li>
         <li>
             <a href="{% url 'thread' %}">Posts</a>
         </li>
+
         {% if current_quiz_list %}<!--current quiz list-->
-            <li>
-                New Quizzes
-            </li>
-            <li>
-                <ul>
+            <li role="presentation" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                    New Quizzes <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
                     {% for quiz in current_quiz_list %}
                         <li>
                             <a href="{% url 'quiz' quiz.Lecture.id quiz.Lecture.slug quiz.id quiz.question %}"> {{ quiz.question }} </a>
@@ -23,12 +24,14 @@
                 </ul>
             </li>
         {% endif %} <!-- endif current quiz list-->
+
+
         {% if current_wordcloud_list %}
-            <li>
-                New Wordclouds
-            <li>
-            <li>
-                <ul>
+            <li role="presentation" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                    New Wordclouds <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
                     {% for wordcloud in current_wordcloud_list %}
                         <li>
                             <a href="{% url 'wordcloud' wordcloud.Lecture.id wordcloud.Lecture.slug wordcloud.id wordcloud.title %}"> {{ wordcloud.title }} </a>
@@ -37,41 +40,23 @@
                 </ul>
             </li>
         {% endif %}
-        {% for lecture in lecture_list %}
-            <li>
-                <a href="{% url 'lecture' lecture.id lecture.slug %}">{{ lecture.lecture_name }}</a>
-                {% if lecture.id == current_lecture.id %}
-                    <ul>
-                        {% if current_lecture.lecture_slide %}<!--if lecture slides are available-->
-                            <li>
-                                <a href="{% url 'lecture_slide' lecture.id lecture.slug %}">Lecture Slides</a>
-                            </li>
-                        {% endif %}
-                        {% if quiz_list %}<!--Quiz sub-list-->
-                            <li>
-                                Quiz History
-                            </li>
-                        
-                            {% for quiz in quiz_list %}
-                                <li>
-                                    <a href="{% url 'quiz' lecture.id lecture.slug quiz.id quiz.question %}"> {{ quiz.question }} </a>
-                                </li>
-                            {% endfor %}<!--end for quiz_list-->
-                        {% endif %}<!--end if quiz_list-->
-                        {% if wordcloud_list %}<!--Quiz sub-list-->
-                            <li>
-                                WordClouds History
-                            </li>
-                        
-                            {% for wordcloud in wordcloud_list %}
-                                <li>
-                                    <a href="{% url 'wordcloud' wordcloud.Lecture.id wordcloud.Lecture.slug wordcloud.id wordcloud.title %}"> {{ wordcloud.title }} </a>
-                                </li>
-                            {% endfor %}<!--end for wordcloud_list-->
-                        {% endif %}<!--end if wordcloud_list-->
-                    </ul>
-                {% endif %}<!--end if current_lecture-->
+
+        {% if lecture_list %}
+        <li role="presentation" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                    Lectures <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    {% for lecture in lecture_list %}
+                        <li>
+                            <a href="{% url 'lecture' lecture.id lecture.slug %}">{{ lecture.lecture_name }}</a>
+
+                        </li>
+                    {% endfor %}
+                </ul>
             </li>
-        {% endfor %}<!--end for lecture_list-->
+        {% endif %}<!--end if lecture_list-->
+
+
     </ul>
 </div>

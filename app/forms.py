@@ -133,9 +133,9 @@ class QuizSelectionForm(forms.Form):
                     )
                 # depending on the chosen choice, display the result in place of the submit button
                 if quiz_choice_selected.first().QuizChoice.correct:
-                    self.helper.add_input(Button(name = _(""), value=_("CORRECT"), css_class=_('btn-success')))
+                    self.helper.add_input(Button(name = "", value="CORRECT", css_class="btn-success"))
                 else:
-                    self.helper.add_input(Button(name = _(""), value=_("WRONG"), css_class=_('btn-danger')))
+                    self.helper.add_input(Button(name = "", value="WRONG", css_class="btn-danger"))
 
         ################### MULTIMCQ ###################
         # forms are checkboxes, can have multiple correct answers, but at least one correct
@@ -186,13 +186,13 @@ class QuizSelectionForm(forms.Form):
 
                 if len(overlapping_choices) == 0:
                     # completely wrong
-                    self.helper.add_input(Button(name = _(""), value=_("WRONG"), css_class=_('btn-danger')))
+                    self.helper.add_input(Button(name = _(""), value="WRONG", css_class='btn-danger'))
                 elif len(overlapping_choices) == len(list_of_corrects):
                     # all correct
-                    self.helper.add_input(Button(name = _(""), value=_("CORRECT"), css_class=_('btn-success')))
+                    self.helper.add_input(Button(name = _(""), value="CORRECT", css_class='btn-success'))
                 else:
                     # somewhere in between, partially correct
-                    self.helper.add_input(Button(name = _(""), value=_("PARTIALLY CORRECT"), css_class=_('btn-warning')))
+                    self.helper.add_input(Button(name = _(""), value="PARTIALLY CORRECT", css_class='btn-warning'))
 
 
         # to prevent default form messages from being displayed, answer selection can never be wrong
@@ -443,7 +443,7 @@ class QuickWordcloudForm(forms.ModelForm):
 class QuickCodeSnippetForm(forms.ModelForm):
     class Meta:
         model = CodeSnippet
-        fields = ('syntax', 'code', 'linenumbers', 'style')
+        fields = ('syntax', 'code', 'linenumbers', 'style', 'Lecture')
 
     def __init__(self, session=None, *args, **kwargs):
         super(QuickCodeSnippetForm, self).__init__(*args, **kwargs)
@@ -451,8 +451,18 @@ class QuickCodeSnippetForm(forms.ModelForm):
         self.helper.layout = Layout()
 
         self.fields['code'] = forms.CharField(label=_("Code"), widget=forms.Textarea(attrs={_('class'): _('form-control')}))
+        # assign current lecture from session
+        if session!=None and session.has_key('quick_lecture'):
+            quick_lecture = session.get('quick_lecture')
+        else:
+            quick_lecture = Lecture.objects.last().id
+        self.fields['Lecture'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):quick_lecture}))
 
         self.helper.add_input(Submit(_('codesnippet'), _('Submit')))
+
+    def clean_Lecture(self):
+        lecture = Lecture.objects.get(id=self.cleaned_data.get('Lecture'))
+        return lecture
 
 ###################################################################################################
 # Custom Admin forms

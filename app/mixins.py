@@ -5,7 +5,7 @@ Definition of custom mixins.
 from django.views.generic.base import ContextMixin
 from django.contrib import admin
 
-from app.models import Lecture, Quiz, QuizChoiceSelected, Wordcloud, WordcloudSubmission
+from app.models import Lecture, Quiz, QuizChoiceSelected, CodeSnippet, Wordcloud, WordcloudSubmission
 
 class BaseSidebarContextMixin(ContextMixin):
 	def get_context_data(self, *args, **kwargs):
@@ -28,4 +28,6 @@ class SidebarContextMixin(BaseSidebarContextMixin):
 			Lecture__in=list(set([k.Lecture for k in [j.Quiz for j in [i.QuizChoice for i in QuizChoiceSelected.objects.select_related().all()]]])))
 		context['wordcloud_list'] = Wordcloud.objects.filter(Lecture=self.kwargs['lect_id'], visible=False).filter(
 			id__in=list(set([i.Wordcloud.id for i in WordcloudSubmission.objects.all()])))
+		context['codesnippet_list'] = CodeSnippet.objects.filter(Lecture=self.kwargs['lect_id'])
 		return context
+

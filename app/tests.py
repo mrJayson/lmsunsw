@@ -440,7 +440,7 @@ class Get_Request(TestCase):
 
 	def test_wordcloud(self):
 
-		l1 = Lecture.objects.create(lecture_name="Lecture 3", lecture_slide="A")
+		l1 = Lecture.objects.create(lecture_name="Lecture 1", lecture_slide="A")
 		Wordcloud.objects.create(title="test", Lecture=l1, visible=True)
 
 		request = self.client.get('/course/01/lecture-1/wordcloud/01/test')
@@ -454,7 +454,7 @@ class Post_Request_Tests(TestCase):
 		#User.objects.create_user(username="AAA", first_name="A", last_name="A", email="A@test.com", password="A", is_superuser=True)
 		self.u1 = create_user(username="BBB", first_name="B", last_name="b", email="b@test.com", password="b", is_superuser=False)	
 		self.u2 = create_user(username="ccc", first_name="c", last_name="b", email="c@test.com", password="c", is_superuser=False)	
-		Lecture.objects.create(lecture_name="Lecture 1", lecture_slide="A")
+		self.l1 = Lecture.objects.create(lecture_name="Lecture 1", lecture_slide="A")
 	
 
 	def test_superuser_login(self):
@@ -495,15 +495,52 @@ class Post_Request_Tests(TestCase):
 		
 		self.assertEquals(response.status_code, 302)
 		self.assertRedirects(response, '/alert/create_user_success')
+		#print User.objects.get(id=04).username
+		self.assertEquals(User.objects.get(id=04).username, 'aaa')
 
 	def test_create_thread(self):
-		request = self.client.post('/course/threads/new', {'title':'testing', 'content':'this is a test','Creator':self.u1})
-		self.assertEquals(request.status_code, 302)
-		#self.assertEquals(Thread.object.get(id=01).title, 'testing')
 
+		u2 = User.objects.create(username="RRR", first_name="A", last_name="R", email="@test.com", password="A", is_superuser=False)
+		Thread.objects.create(title="Apple", content="Types of Fruit", Creator=u2, views=0, anonymous=False)
+		self.assertEquals(Thread.objects.get(id=01).title, 'Apple')
+		#print Thread.objects.get(id=01).title
+
+		self.user = self.u1
+		#request = self.client.post('/course/threads/new', {'title':'testing', 'content':'this is a test', 'Creator': self.user, 'views': 0, 'submit': 'Submit'})
+		request = {'title': 'testing', 'content': 'this is a test'}
+
+		#form = 
+		#request.save
+		#self.assertEquals(request.status_code, 302)
+		#print Thread.objects.get(id=02).title
+		#self.assertEquals(Thread.objects.get(id=02).title, 'testing')
+		
 	def test_post_reply(self):
-		Thread.objects.create(title="Colour", content="Types of Colour", Creator=self.u1, views=0, anonymous=True)
+
+		self.t1 = Thread.objects.create(title="Colour", content="Types of Colour", Creator=self.u1, views=0, anonymous=True)
+		self.assertEquals(Thread.objects.get(id=01).title, 'Colour')
+		Post.objects.create(Thread=self.t1, content="Blue", Creator=self.u1, rank=1, anonymous=True)
+		self.assertEquals(Post.objects.get(id=01).content, 'Blue')
 
 		self.user = self.u2
-		request = self.client.post('/course/threads/01/colour', {'Thread': 01, 'content': 'red', 'Creator': self.user})
+		request = self.client.post('/course/threads/01/colour', {'Thread': 01, 'content': 'red','anonymous': True})
+		#request = {'Thread': 01, 'content': 'red', 'anonymous': True}
+
+		form = PostReplyForm(self.user, self.t1, request)		
+		self.assertTrue(form.is_valid())
+		post = form.save()
+		self.assertEquals(Post.objects.get(id=02).content, 'red')
+		
+
+		self.assertEquals(request.status_code, 302)
+		#print request.context['current_url']
+		#response = self.client.get('/course/threads/01/colour')
+		print Post.objects.get(id=02).content
 		#self.assertEquals(Post.objects.get(id=01).content, 'red')
+
+	def test_wordcloud_submit(self):
+
+		Wordcloud.objects.create(title="test", Lecture=self.l1, visible=True)
+		self.assertEquals(Wordcloud.objects.get(id=01).title, 'test')
+
+		

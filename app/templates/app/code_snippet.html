@@ -1,0 +1,14 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+	{% for codesnippet in codesnippet_list %}
+	<div>
+		{{ codesnippet.render_code|safe }}
+	</div>
+	{% endfor %}
+
+{% endblock %}
+
+{% block sidebar %}
+    {% include "app/sidebar.html" %}
+{% endblock %}

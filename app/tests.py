@@ -1,4 +1,5 @@
 from django.test import TestCase, RequestFactory, Client
+from django.core.urlresolvers import reverse
 from app.models import *
 from django.db import IntegrityError
 from populate import *
@@ -440,7 +441,7 @@ class Get_Request(TestCase):
 
 	def test_wordcloud(self):
 
-		l1 = Lecture.objects.create(lecture_name="Lecture 3", lecture_slide="A")
+		l1 = Lecture.objects.create(lecture_name="Lecture 1", lecture_slide="A")
 		Wordcloud.objects.create(title="test", Lecture=l1, visible=True)
 
 		request = self.client.get('/course/01/lecture-1/wordcloud/01/test')
@@ -454,7 +455,7 @@ class Post_Request_Tests(TestCase):
 		#User.objects.create_user(username="AAA", first_name="A", last_name="A", email="A@test.com", password="A", is_superuser=True)
 		self.u1 = create_user(username="BBB", first_name="B", last_name="b", email="b@test.com", password="b", is_superuser=False)	
 		self.u2 = create_user(username="ccc", first_name="c", last_name="b", email="c@test.com", password="c", is_superuser=False)	
-		Lecture.objects.create(lecture_name="Lecture 1", lecture_slide="A")
+		self.l1 = Lecture.objects.create(lecture_name="Lecture 1", lecture_slide="A")
 	
 
 	def test_superuser_login(self):
@@ -477,7 +478,8 @@ class Post_Request_Tests(TestCase):
 
 		response = self.client.post('/login', {'username': 'AAA', 'password': 'aaa'})
 		self.assertEquals(response.status_code, 200)
-		#self.assertEquals(response.context, 'Please enter the correct username and password for a staff account. Note that both fields may be case-sensitive.')
+		#self.assertContains(response, 'Please enter the correct username and password for a staff account. Note that both fields may be case-sensitive.')
+
 	
 	def test_page_rerouting(self):
 
@@ -495,15 +497,46 @@ class Post_Request_Tests(TestCase):
 		
 		self.assertEquals(response.status_code, 302)
 		self.assertRedirects(response, '/alert/create_user_success')
+		#print User.objects.get(id=04).username
+		self.assertEquals(User.objects.get(id=04).username, 'aaa')
 
 	def test_create_thread(self):
-		request = self.client.post('/course/threads/new', {'title':'testing', 'content':'this is a test','Creator':self.u1})
-		self.assertEquals(request.status_code, 302)
-		#self.assertEquals(Thread.object.get(id=01).title, 'testing')
 
+		u2 = User.objects.create(username="RRR", first_name="A", last_name="R", email="@test.com", password="A", is_superuser=False)
+		Thread.objects.create(title="Apple", content="Types of Fruit", Creator=u2, views=0, anonymous=False)
+		self.assertEquals(Thread.objects.get(id=01).title, 'Apple')
+		#print Thread.objects.get(id=01).title
+
+		self.user = self.u1 
+		response = self.client.post('/course/threads/new', {'title':'testing', 'content':'new thread', 'Creator':self.user, 'views':0})
+		self.assertEquals(response.status_code, 302)
+		self.assertRedirects(response, '/login?next=/course/threads')
+		
 	def test_post_reply(self):
-		Thread.objects.create(title="Colour", content="Types of Colour", Creator=self.u1, views=0, anonymous=True)
+
+		self.t1 = Thread.objects.create(title="Colour", content="Types of Colour", Creator=self.u1, views=0, anonymous=True)
+		self.assertEquals(Thread.objects.get(id=01).title, 'Colour')
+		Post.objects.create(Thread=self.t1, content="Blue", Creator=self.u1, rank=1, anonymous=True)
+		self.assertEquals(Post.objects.get(id=01).content, 'Blue')
 
 		self.user = self.u2
-		request = self.client.post('/course/threads/01/colour', {'Thread': 01, 'content': 'red', 'Creator': self.user})
+		response = self.client.post('/course/threads/01/colour', {'Thread':01,'content':'testing reply','Creator':self.user, 'anonymous':False})
+		self.assertEquals(response.status_code, 302)
+		self.assertRedirects(response, '/login?next=/course/threads/01/colour')
+		self.assertEquals(Post.objects.get(id=02).content, 'testing reply')
+		#print request.context['current_url']
+		#response = self.client.get('/course/threads/01/colour')
+		#print Post.objects.get(id=02).content
 		#self.assertEquals(Post.objects.get(id=01).content, 'red')
+
+	def test_wordcloud_submit(self):
+
+		Wordcloud.objects.create(title="test", Lecture=self.l1, visible=True)
+		self.assertEquals(Wordcloud.objects.get(id=01).title, 'test')
+
+		'''
+		self.user = u1
+		response = self.client.post('/course/01/lecture-1/wordcloud/01/test', {'lecture_list':self.l1, 'wordcloud':'maybe'})
+		'''
+
+		

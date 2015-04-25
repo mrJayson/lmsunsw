@@ -24,7 +24,7 @@
     	<ul class="nav navbar-nav navbar-left" style="margin-left: 130px;">
     		{% if current_lecture.lecture_slide %}<!--if lecture slides are available-->
                 <li class="{% current 'lecture_slide' %}">
-                    <a href="{% url 'lecture_slide' lecture.id lecture.slug %}">Lecture Slides</a>
+                    <a href="{% url 'lecture_slide' current_lecture.id current_lecture.slug %}">Lecture Slides</a>
                 </li>
             {% endif %}
 

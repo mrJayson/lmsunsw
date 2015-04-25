@@ -500,36 +500,7 @@ class Post_Request_Tests(TestCase):
 		#print User.objects.get(id=04).username
 		self.assertEquals(User.objects.get(id=04).username, 'aaa')
 
-	def test_create_thread(self):
-
-		u2 = User.objects.create(username="RRR", first_name="A", last_name="R", email="@test.com", password="A", is_superuser=False)
-		Thread.objects.create(title="Apple", content="Types of Fruit", Creator=u2, views=0, anonymous=False)
-		self.assertEquals(Thread.objects.get(id=01).title, 'Apple')
-		#print Thread.objects.get(id=01).title
-
-		self.user = self.u1 
-		response = self.client.post('/course/threads/new', {'title':'testing', 'content':'new thread', 'Creator':self.user, 'views':0})
-		self.assertEquals(response.status_code, 302)
-		self.assertRedirects(response, '/login?next=/course/threads')
-		
-	def test_post_reply(self):
-
-		self.t1 = Thread.objects.create(title="Colour", content="Types of Colour", Creator=self.u1, views=0, anonymous=True)
-		self.assertEquals(Thread.objects.get(id=01).title, 'Colour')
-		Post.objects.create(Thread=self.t1, content="Blue", Creator=self.u1, rank=1, anonymous=True)
-		self.assertEquals(Post.objects.get(id=01).content, 'Blue')
-
-		self.user = self.u2
-		response = self.client.post('/course/threads/01/colour', {'Thread':01,'content':'testing reply','Creator':self.user, 'anonymous':False})
-		self.assertEquals(response.status_code, 302)
-		self.assertRedirects(response, '/login?next=/course/threads/01/colour')
-		self.assertEquals(Post.objects.get(id=02).content, 'testing reply')
-		#print request.context['current_url']
-		#response = self.client.get('/course/threads/01/colour')
-		#print Post.objects.get(id=02).content
-		#self.assertEquals(Post.objects.get(id=01).content, 'red')
-
-	def test_wordcloud_submit(self):
+def test_wordcloud_submit(self):
 
 		Wordcloud.objects.create(title="test", Lecture=self.l1, visible=True)
 		self.assertEquals(Wordcloud.objects.get(id=01).title, 'test')
@@ -539,4 +510,42 @@ class Post_Request_Tests(TestCase):
 		response = self.client.post('/course/01/lecture-1/wordcloud/01/test', {'lecture_list':self.l1, 'wordcloud':'maybe'})
 		'''
 
+
+
+
+class Redirect_Tests(TestCase):
+
+	def test_login_redirect(self):
+		create_student(username="jack", password="password")	
+		c = Client()
+		response = c.post(reverse('login'), data={'username': 'jack', 'password': 'password'})
+		# returns the redirect response and no more
+		# response['Location'] is only available for redirect responses
+		# added "http://testserver" to reverse as response['Locations'] is the absolute_url
+		# and need to convert reverse's relative_url to absolute
+		self.assertEquals(response.status_code, 302)
+		# these two tests are the same
+		self.assertRedirects(response, reverse('root'))
+		self.assertEquals(response['Location'], "http://testserver"+reverse('root'))
+
+	def test_student_login(self):
+		create_student(username="jack", password="password")	
+		c = Client()
+		response = c.post(reverse('login'), data={'username': 'jack', 'password': 'password'}, follow=True)
+		# follow=True follows the redirects to the end
+		# response.context['current_url'] is available for all standard responses
+		self.assertEquals(response.status_code, 200)
+		self.assertEquals(response.context['current_url'], reverse('root'))
+		# root and index url map both /index and / to the same view
+
+	def test_admin_login(self):
+		create_superuser(username="admin", password="admin")	
+		c = Client()
+		response = c.post(reverse('login'), data={'username': 'admin', 'password': 'admin'}, follow=True)
+		# follow=True follows the redirects to the end
+		# response.context['current_url'] is available for all standard responses
+		self.assertEquals(response.status_code, 200)
+		self.assertEquals(response.context['current_url'], reverse('admin:index'))
+
+	
 		

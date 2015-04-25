@@ -349,8 +349,11 @@ class QuickSettingsForm(forms.Form):
         # assign current lecture from session
         if session!=None and session.has_key('quick_lecture'):
             quick_lecture = session.get('quick_lecture')
-        else:
+        elif Lecture.objects.all().exists():
+            # must be existing lecture to choose from
             quick_lecture = Lecture.objects.last().id
+        else:
+            quick_lecture = ""
 
         visible_quizzes = [(i.id, i.question) for i in Quiz.objects.filter(visible=True)]
         visible_wordclouds = [(i.id, i.title) for i in Wordcloud.objects.filter(visible=True)]
@@ -388,8 +391,11 @@ class QuickQuizForm(forms.ModelForm):
         # assign current lecture from session
         if session!=None and session.has_key('quick_lecture'):
             quick_lecture = session.get('quick_lecture')
-        else:
+        elif Lecture.objects.all().exists():
+            # must be existing lecture to choose from
             quick_lecture = Lecture.objects.last().id
+        else:
+            quick_lecture = ""
         self.fields['Lecture'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):quick_lecture}))
         self.helper.add_input(Submit(_('quiz'), _('Submit')))
 
@@ -430,8 +436,11 @@ class QuickWordcloudForm(forms.ModelForm):
         # assign current lecture from session
         if session!=None and session.has_key('quick_lecture'):
             quick_lecture = session.get('quick_lecture')
-        else:
+        elif Lecture.objects.all().exists():
+            # must be existing lecture to choose from
             quick_lecture = Lecture.objects.last().id
+        else:
+            quick_lecture = ""
         self.fields['Lecture'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):quick_lecture}))
         self.helper.add_input(Submit(_('wordcloud'), _('Submit')))
 
@@ -454,8 +463,11 @@ class QuickCodeSnippetForm(forms.ModelForm):
         # assign current lecture from session
         if session!=None and session.has_key('quick_lecture'):
             quick_lecture = session.get('quick_lecture')
-        else:
+        elif Lecture.objects.all().exists():
+            # must be existing lecture to choose from
             quick_lecture = Lecture.objects.last().id
+        else:
+            quick_lecture = ""
         self.fields['Lecture'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):quick_lecture}))
 
         self.helper.add_input(Submit(_('codesnippet'), _('Submit')))

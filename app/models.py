@@ -12,7 +12,7 @@ from django.conf import settings
 
 from autoslug import AutoSlugField
 
-from wordcloud import WordCloud
+from wordcloud.wordcloud import WordCloud
 
 
 from pygments import highlight, styles

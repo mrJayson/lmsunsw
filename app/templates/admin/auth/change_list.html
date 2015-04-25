@@ -1,5 +1,5 @@
 {% extends "app/layout.html" %}
-{% load i18n admin_urls admin_static admin_list app_admin_list %}
+{% load i18n admin_urls admin_static admin_list templatetag %}
 
 {% block extrahead %}
   {% if cl.formset or action_form %}

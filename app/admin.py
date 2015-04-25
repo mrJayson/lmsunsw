@@ -249,13 +249,11 @@ class Admin_Site(AdminSite):
             recent_quizzes = []
 
             for quiz in Quiz.objects.filter(id__in=list(set([i.QuizChoice.Quiz.id for i in QuizChoiceSelected.objects.all() if i.QuizChoice.Quiz.visible==False]))).order_by('last_touch').reverse()[:5]:
-                d = QuizChoice.objects.filter(Quiz=quiz)
-                recent_quizzes.append({quiz: d})
-                print {quiz: d}
+                choices = QuizChoice.objects.filter(Quiz=quiz)
+                recent_quizzes.append({quiz: choices})
 
             #extra_context['recent_quizzes'] = Quiz.objects.order_by('last_touch').reverse()[:5]
             extra_context['recent_quizzes'] = recent_quizzes
-            print recent_quizzes
             
             # do forms stuff
             if request.method == 'POST':
@@ -264,10 +262,6 @@ class Admin_Site(AdminSite):
                 self.get(request, extra_context)
 
             return super(Admin_Site, self).index(request, extra_context)
-
-
-
-    
 
     def app_index(self, request, app_label,extra_context=None):
         # another uneccesary page for students

@@ -1,6 +1,6 @@
+{% load current from templatetag %}
 
-
-<div class="navbar navbar-inverse navbar-fixed-top">
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="navbar-header">
         {% if user.is_authenticated %}
         <!-- mobile display navbar -->
@@ -14,21 +14,22 @@
                 <span class="icon-bar"></span>
             </button>
         {% endif %}
-
-        <a href="{% url 'index' %}" class="navbar-brand">LMSUNSW</a>
+        
+        	<a href="{% url 'root' %}" class="navbar-brand">LMSUNSW</a>
+    	
 
     </div>
     {% if user.is_authenticated %}
     <div class="navbar-collapse collapse">
-    	<ul class="nav navbar-nav navbar-left">
+    	<ul class="nav navbar-nav navbar-left" style="margin-left: 130px;">
     		{% if current_lecture.lecture_slide %}<!--if lecture slides are available-->
-                <li>
+                <li class="{% current 'lecture_slide' %}">
                     <a href="{% url 'lecture_slide' lecture.id lecture.slug %}">Lecture Slides</a>
                 </li>
             {% endif %}
 
             {% if quiz_list %}<!--Quiz sub-list-->
-				<li class="dropdown">
+				<li class="dropdown {% current 'quiz' %}">
 		          	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Quiz History<span class="caret"></span></a>
 		          	<ul class="dropdown-menu" role="menu">
 		          		{% for quiz in quiz_list %}
@@ -42,14 +43,14 @@
 
             {% if codesnippet_list %}<!--codesnippet sub-list-->
 
-		                    <li>
+		                    <li class="{% current 'codesnippet' %}">
 		                        <a href="{% url 'codesnippet' current_lecture.id current_lecture.slug %}"> Code Snippets </a>
 		                    </li>
 
             {% endif %}<!--end if codesnippet_list-->
 
             {% if wordcloud_list %}<!--wordcloud sub-list-->
-				<li class="dropdown">
+				<li class="dropdown {% current 'wordcloud' %}">
 		          	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Wordcloud History<span class="caret"></span></a>
 		          	<ul class="dropdown-menu" role="menu">
 		          		{% for wordcloud in wordcloud_list %}

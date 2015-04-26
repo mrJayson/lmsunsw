@@ -492,7 +492,7 @@ class LectureAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(LectureAdminForm, self).__init__(*args, **kwargs)
         self.fields['lecture_name'].widget = widgets.AdminTextInputWidget({_('class'): _('form-control'), _('placeholder'): _('Title of the Lecture')})
-        self.fields['lecture_slide'].widget = widgets.AdminURLFieldWidget({_('class'): _('form-control'), _('placeholder'): _('Lecture Slide URL')})
+        self.fields['lecture_slide'].widget = widgets.AdminFileWidget({_('class'): _('form-control'), _('placeholder'): _('Lecture Slide URL')})
         self.fields['collab_doc'].widget = widgets.AdminURLFieldWidget({_('class'): _('form-control'), _('placeholder'): _('A generic Document will be provided if left empty')})
 
     def clean_collab_doc(self):

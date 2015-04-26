@@ -7,3 +7,5 @@
 # Python compiled files
 *.pyc
 db.sqlite3
+media/wordcloud/*
+media/lecture/*

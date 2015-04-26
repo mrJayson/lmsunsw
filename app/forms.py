@@ -360,7 +360,7 @@ class QuickSettingsForm(forms.Form):
         self.fields['Lecture'] = forms.ChoiceField(
             label = _("Current Lecture"),
             initial = quick_lecture,
-            choices = [(i.id,i.lecture_name) for i in Lecture.objects.all()],
+            choices = [(i.id,i.title) for i in Lecture.objects.all()],
             widget = forms.Select(attrs={_('id'):('quick_lecture_select'), _('class'): _('form-control')}),
             )
         if visible_quizzes:
@@ -479,6 +479,18 @@ class QuickCodeSnippetForm(forms.ModelForm):
 ###################################################################################################
 # Custom Admin forms
 
+class LectureMaterialInLineFormset(BaseInlineFormSet):
+    def clean(self):
+        # check that each form has only one of the fields entered
+        for form in self.forms:
+            local = form.cleaned_data['local_lecture_material']==None
+            online = form.cleaned_data['online_lecture_material']==""
+            print local
+            print online
+            if not (local and not online) or (not local and online):
+                raise forms.ValidationError('One and only one field can be filled for each slot')
+        return super(LectureMaterialInLineFormset, self).clean()
+
 class DefaultUserAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(DefaultUserAdminForm, self).__init__(*args, **kwargs)
@@ -491,8 +503,7 @@ class QuizAdminForm(forms.ModelForm):
 class LectureAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(LectureAdminForm, self).__init__(*args, **kwargs)
-        self.fields['lecture_name'].widget = widgets.AdminTextInputWidget({_('class'): _('form-control'), _('placeholder'): _('Title of the Lecture')})
-        self.fields['lecture_slide'].widget = widgets.AdminFileWidget({_('class'): _('form-control'), _('placeholder'): _('Lecture Slide URL')})
+        self.fields['title'].widget = widgets.AdminTextInputWidget({_('class'): _('form-control'), _('placeholder'): _('Title of the Lecture')})
         self.fields['collab_doc'].widget = widgets.AdminURLFieldWidget({_('class'): _('form-control'), _('placeholder'): _('A generic Document will be provided if left empty')})
 
     def clean_collab_doc(self):

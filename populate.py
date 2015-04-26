@@ -42,10 +42,10 @@ class Rand():
 
 
     @staticmethod
-    def lecture(lecture_name=None, lecture_slide=None, collab_doc=None):
-        lecture_name = Rand.randomString(10) if lecture_name==None else lecture_name
+    def lecture(title=None, collab_doc=None):
+        title = Rand.randomString(10) if title==None else title
         collab_doc = Lecture.get_unused_gdoc() if collab_doc==None else collab_doc
-        return Lecture.objects.create(lecture_name=lecture_name, lecture_slide=lecture_slide, collab_doc=collab_doc)
+        return Lecture.objects.create(title=title, collab_doc=collab_doc)
 
     @staticmethod
     def quiz(question=None, visible=None, lecture=None):
@@ -175,11 +175,11 @@ def create_student(username=None, first_name=None, last_name=None, email=None, p
 def create_superuser(username=None, first_name=None, last_name=None, email=None, password=None):
     return create_user(username, first_name, last_name, email, password, True)
 
-def create_lecture(lecture_name=None):
+def create_lecture(title=None):
     
-    new_lecture = Rand.lecture(lecture_name=lecture_name)
+    new_lecture = Rand.lecture(title=title)
     if 'verbose_populate' in globals() and verbose_populate == True:
-        print "created lecture: " + new_lecture.lecture_name
+        print "created lecture: " + new_lecture.title
     return new_lecture
 
 def create_quiz(question=None, visible=None, Lecture=None):

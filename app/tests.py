@@ -212,38 +212,28 @@ class Lecture_Model(TestCase):
 		
 
 	def test_correct_attr(self):
-		Lecture.objects.create(lecture_name="Lecture 1")
-		Lecture.objects.create(lecture_name="Lecture 2")
-		Lecture.objects.create(lecture_name="Lecture 3", lecture_slide="A")
-		Lecture.objects.create(lecture_name="Lecture 4")
-		Lecture.objects.create(lecture_name="Lecture 5")
-		Lecture.objects.create(lecture_name="Lecture 6")
-		Lecture.objects.create(lecture_name="Lecture 7")
-		Lecture.objects.create(lecture_name="Lecture 8")
-		Lecture.objects.create(lecture_name="Lecture 9")
-		Lecture.objects.create(lecture_name="Lecture 10")
+		Lecture.objects.create(title="Lecture 1")
+		Lecture.objects.create(title="Lecture 2")
+		Lecture.objects.create(title="Lecture 3")
+		Lecture.objects.create(title="Lecture 4")
+		Lecture.objects.create(title="Lecture 5")
+		Lecture.objects.create(title="Lecture 6")
+		Lecture.objects.create(title="Lecture 7")
+		Lecture.objects.create(title="Lecture 8")
+		Lecture.objects.create(title="Lecture 9")
+		Lecture.objects.create(title="Lecture 10")
 		#check name is inserted correctly
-		self.assertEquals(Lecture.objects.get(id=1).lecture_name, "Lecture 1")
-		self.assertEquals(Lecture.objects.get(id=2).lecture_name, "Lecture 2")
-		self.assertEquals(Lecture.objects.get(id=3).lecture_name, "Lecture 3")
-		self.assertEquals(Lecture.objects.get(id=4).lecture_name, "Lecture 4")
-		self.assertEquals(Lecture.objects.get(id=5).lecture_name, "Lecture 5")
-		self.assertEquals(Lecture.objects.get(id=6).lecture_name, "Lecture 6")
-		self.assertEquals(Lecture.objects.get(id=7).lecture_name, "Lecture 7")
-		self.assertEquals(Lecture.objects.get(id=8).lecture_name, "Lecture 8")
-		self.assertEquals(Lecture.objects.get(id=9).lecture_name, "Lecture 9")
-		self.assertEquals(Lecture.objects.get(id=10).lecture_name, "Lecture 10")
-		#check for 
-		self.assertEquals(Lecture.objects.get(id=1).lecture_slide, None)
-		self.assertEquals(Lecture.objects.get(id=2).lecture_slide, None)
-		self.assertEquals(Lecture.objects.get(id=3).lecture_slide, "A")
-		self.assertEquals(Lecture.objects.get(id=4).lecture_slide, None)
-		self.assertEquals(Lecture.objects.get(id=5).lecture_slide, None)
-		self.assertEquals(Lecture.objects.get(id=6).lecture_slide, None)
-		self.assertEquals(Lecture.objects.get(id=7).lecture_slide, None)
-		self.assertEquals(Lecture.objects.get(id=8).lecture_slide, None)
-		self.assertEquals(Lecture.objects.get(id=9).lecture_slide, None)
-		self.assertEquals(Lecture.objects.get(id=10).lecture_slide, None)
+		self.assertEquals(Lecture.objects.get(id=1).title, "Lecture 1")
+		self.assertEquals(Lecture.objects.get(id=2).title, "Lecture 2")
+		self.assertEquals(Lecture.objects.get(id=3).title, "Lecture 3")
+		self.assertEquals(Lecture.objects.get(id=4).title, "Lecture 4")
+		self.assertEquals(Lecture.objects.get(id=5).title, "Lecture 5")
+		self.assertEquals(Lecture.objects.get(id=6).title, "Lecture 6")
+		self.assertEquals(Lecture.objects.get(id=7).title, "Lecture 7")
+		self.assertEquals(Lecture.objects.get(id=8).title, "Lecture 8")
+		self.assertEquals(Lecture.objects.get(id=9).title, "Lecture 9")
+		self.assertEquals(Lecture.objects.get(id=10).title, "Lecture 10")
+
 
 		for i, item in enumerate(min(glist, Lecture.objects.all())):
 			self.assertEquals(glist[i], Lecture.objects.get(id=i+1).collab_doc)
@@ -256,25 +246,25 @@ class Lecture_Model(TestCase):
 class Quiz_Model(TestCase):
 
 	def test_correct_attr(self):
-		l1 = Lecture.objects.create(lecture_name="Lecture 1")
+		l1 = Lecture.objects.create(title="Lecture 1")
 		q1 = Quiz.objects.create(question="question", visible=True, Lecture=l1)
 		QuizChoice.objects.create(choice="choice", Quiz=q1, correct=True)
 		QuizChoice.objects.create(choice="choice", Quiz=q1, correct=True)
 
-		l2 = Lecture.objects.create(lecture_name="Lecture 2")
+		l2 = Lecture.objects.create(title="Lecture 2")
 		q2 = Quiz.objects.create(question="question", visible=False, Lecture=l2)
 		QuizChoice.objects.create(choice="choice", Quiz=q2, correct=True)
 		QuizChoice.objects.create(choice="choice", Quiz=q2, correct=True)
 		QuizChoice.objects.create(choice="choice", Quiz=q2, correct=True)
 
-		l3 = Lecture.objects.create(lecture_name="Lecture 3")
+		l3 = Lecture.objects.create(title="Lecture 3")
 		q3 = Quiz.objects.create(question="question", visible=True, Lecture=l3)
 		QuizChoice.objects.create(choice="choice", Quiz=q3, correct=True)
 		QuizChoice.objects.create(choice="choice", Quiz=q3, correct=True)
 		QuizChoice.objects.create(choice="choice", Quiz=q3, correct=True)
 		QuizChoice.objects.create(choice="choice", Quiz=q3, correct=True)
 
-		l4 = Lecture.objects.create(lecture_name="Lecture 4")
+		l4 = Lecture.objects.create(title="Lecture 4")
 		q4 = Quiz.objects.create(question="question", visible=False, Lecture=l4)
 		QuizChoice.objects.create(choice="choice", Quiz=q4, correct=True)
 		QuizChoice.objects.create(choice="choice", Quiz=q4, correct=True)
@@ -391,8 +381,8 @@ class Get_Request(TestCase):
 
 	def test_lecture_view(self):
 
-		Lecture.objects.create(lecture_name="Lecture 1", lecture_slide="A")
-		self.assertEquals(Lecture.objects.get(id=01).lecture_name, 'Lecture 1')
+		Lecture.objects.create(title="Lecture 1")
+		self.assertEquals(Lecture.objects.get(id=01).title, 'Lecture 1')
 
 		request = self.client.get('/course/01/lecture-1')
 		self.assertEquals(request.status_code, 302)
@@ -400,20 +390,13 @@ class Get_Request(TestCase):
 
 	def test_quiz_view(self):
 
-		l1 = Lecture.objects.create(lecture_name="Lecture 1")
+		l1 = Lecture.objects.create(title="Lecture 1")
 		q1 = Quiz.objects.create(question="question", visible=True, Lecture=l1)
 		QuizChoice.objects.create(choice="choice", Quiz=q1, correct=True)
 		
 		request = self.client.get('/course/01/lecture-1/quiz/01/question')
 		self.assertEquals(request.status_code, 302)
 
-
-	def test_lecture_slide_view(self):
-
-		Lecture.objects.create(lecture_name="Lecture 1", lecture_slide="A")
-		
-		request = self.client.get('/course/01/Lecture-1')
-		self.assertEquals(request.status_code, 302)
 
 	def test_thread_view_page(self):
 		
@@ -441,7 +424,7 @@ class Get_Request(TestCase):
 
 	def test_wordcloud(self):
 
-		l1 = Lecture.objects.create(lecture_name="Lecture 1", lecture_slide="A")
+		l1 = Lecture.objects.create(title="Lecture 1")
 		Wordcloud.objects.create(title="test", Lecture=l1, visible=True)
 
 		request = self.client.get('/course/01/lecture-1/wordcloud/01/test')
@@ -455,7 +438,7 @@ class Post_Request_Tests(TestCase):
 		#User.objects.create_user(username="AAA", first_name="A", last_name="A", email="A@test.com", password="A", is_superuser=True)
 		self.u1 = create_user(username="BBB", first_name="B", last_name="b", email="b@test.com", password="b", is_superuser=False)	
 		self.u2 = create_user(username="ccc", first_name="c", last_name="b", email="c@test.com", password="c", is_superuser=False)	
-		self.l1 = Lecture.objects.create(lecture_name="Lecture 1", lecture_slide="A")
+		self.l1 = Lecture.objects.create(title="Lecture 1")
 	
 
 	def test_superuser_login(self):

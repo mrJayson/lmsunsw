@@ -16,7 +16,7 @@ from django.shortcuts import render, redirect
 from app.models import *
 from app.forms import (LectureAdminForm, QuizAdminForm, WordcloudAdminForm, QuizChoiceInLineForm, 
 CodeSnippetAdminForm, ThreadAdminForm, QuickSettingsForm, QuickQuizForm, QuickQuizInlineFormSet, 
-QuickWordcloudForm, QuickCodeSnippetForm)
+QuickWordcloudForm, QuickCodeSnippetForm, LectureMaterialInLineFormset)
 
 ###################################################################################################
 
@@ -41,7 +41,7 @@ class QuizChoiceInLine(admin.StackedInline):
     # min number of quiz choices per quiz is two
     min_num = 2
     # display two more quiz choices forms by default, giving 4 choices as standard
-    extra = 2-1
+    extra = 2
     # override admin css styling for inputs
     def formfield_for_dbfield(self, db_field, *args, **kwargs):
         if db_field.name == 'choice':
@@ -97,9 +97,20 @@ class QuizResultsAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return False
 
+class LectureMaterialInLine(admin.StackedInline):
+    model = LectureMaterial
+    extra = 0
+    min_num = 1
+    formset = LectureMaterialInLineFormset
+
+    def formfield_for_dbfield(self, db_field, *args, **kwargs):
+        if db_field.name == 'online_lecture_material':
+            kwargs['widget'] = widgets.AdminTextInputWidget({'id': 'admin-form-control', 'class': 'form-control'})
+        return super(LectureMaterialInLine, self).formfield_for_dbfield(db_field, *args, **kwargs)
 
 class LectureAdmin(admin.ModelAdmin):
     form = LectureAdminForm
+    inlines = [LectureMaterialInLine]
 
 
 class UserProfileAdmin(admin.ModelAdmin):

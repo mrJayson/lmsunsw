@@ -77,6 +77,7 @@ IGNORE_APPS = (
 	"Post",
 	"Permission",
 	"Group",
+    "LectureMaterial",
 )
 
 # apps to ignore for students

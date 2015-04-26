@@ -105,7 +105,7 @@ def quick_update(request):
             lecture = Lecture.objects.get(id=request.POST.get('lecture'))
             response['return_type'] = 'lecture'
             response['return_value'] = request.POST.get('lecture')
-            response['notice'] = "Updated Current Lecture to %(lecture)s" % {'lecture':lecture.lecture_name}
+            response['notice'] = "Updated Current Lecture to %(lecture)s" % {'lecture':lecture.title}
         if request.POST.has_key('quiz'):
             # mark selected quiz as not visible
             quiz = Quiz.objects.get(id=request.POST.get('quiz'))

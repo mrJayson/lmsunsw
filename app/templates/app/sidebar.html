@@ -15,7 +15,7 @@
                 <ul class="dropdown-menu" role="menu">
                     {% for lecture in lecture_list %}
                         <li>
-                            <a href="{% url 'lecture' lecture.id lecture.slug %}">{{ lecture.lecture_name }}</a>
+                            <a href="{% url 'lecture' lecture.id lecture.slug %}">{{ lecture.title }}</a>
 
                         </li>
                     {% endfor %}

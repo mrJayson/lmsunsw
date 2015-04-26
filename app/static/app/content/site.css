@@ -161,3 +161,8 @@ iframe {
 .panel .panel-heading {
   margin-bottom: 0;
 }
+
+/* since overriding default admin css, need to migrate some css over */
+.empty-form {
+  display: none;
+}

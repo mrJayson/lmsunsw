@@ -30,17 +30,17 @@ class UserProfile(models.Model):
         return unicode(self.user)
 
 class Lecture(models.Model):
-    lecture_name = models.CharField(max_length=30, unique=True)
-    lecture_slide = models.FileField(upload_to="lecture", blank=True, null=True, help_text=_("Optional, Provide a URL link to the lecture slides to be displayed"))
+    title = models.CharField(max_length=30, unique=True)
+    
     collab_doc = models.URLField(blank=True, null=True, help_text=_("Optional, Provide a URL Link to a specific google docs, a blank default will be used if empty"))
-    slug = AutoSlugField(populate_from='lecture_name')
+    slug = AutoSlugField(populate_from='title')
 
     @property
     def get_absolute_url(self):
         return _("%(id)s/%(slug)s") % {'id':self.id, 'slug':self.slug}
 
     def __unicode__(self):
-        return unicode(self.lecture_name)
+        return unicode(self.title)
 
     @staticmethod
     def gdoc_used(gdoc):
@@ -68,6 +68,12 @@ class Lecture(models.Model):
             self.collab_doc = Lecture.get_unused_gdoc()
         return super(Lecture, self).save(*args, **kwargs)
 
+class LectureMaterial(models.Model):
+
+    Lecture = models.ForeignKey(Lecture)
+    local_lecture_material = models.FileField(upload_to="lecture", blank=True, null=True)
+    online_lecture_material = models.URLField(blank=True, null=True)
+
 class QuizType():
     # represents an enum
     # one right answer
@@ -89,7 +95,7 @@ class Quiz(models.Model):
     last_touch = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
-        return unicode(self.Lecture.lecture_name + " " + self.question)
+        return unicode(self.Lecture.title + " " + self.question)
 
     @property
     def quiz_type(self):

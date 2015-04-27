@@ -432,105 +432,6 @@ class Get_Request(TestCase):
 		request = self.client.get('/course/01/lecture-1/wordcloud/01/test')
 		self.assertEquals(request.status_code, 302)
 
-class Post_Request_Tests(TestCase):
-
-	def setUp(self):
-		self.client = Client()
-		self.su = create_superuser(username="admin", first_name="administration", last_name="account", email="admin@admin.com", password="admin")
-		#User.objects.create_user(username="AAA", first_name="A", last_name="A", email="A@test.com", password="A", is_superuser=True)
-		self.u1 = create_student(username="BBB", password="b")	
-		self.u2 = create_student(username="ccc", password="c")	
-		self.l1 = Lecture.objects.create(title="Lecture 1")
-	
-
-	def test_superuser_login(self):
-
-		response = self.client.post('/login', {'username': 'admin', 'password': 'admin'})
-		self.assertEquals(response.status_code, 302)
-		self.assertRedirects(response, '/', status_code=302, target_status_code=302)
-
-	def test_student_login(self):
-
-		response = self.client.post('/login', {'username': 'bbb', 'password': 'b'})	
-		self.assertEquals(response.status_code, 302)
-		self.assertRedirects(response, '/', status_code=302, target_status_code=302)
-
-
-		#self.assertEquals(request.status_code, 302)
-		#self.assertRedirects(request, '/login')
-
-	def test_login_fails(self):
-
-		response = self.client.post('/login', {'username': 'AAA', 'password': 'aaa'})
-		self.assertEquals(response.status_code, 200)
-		#self.assertContains(response, 'Please enter the correct username and password for a staff account. Note that both fields may be case-sensitive.')
-
-	
-	def test_page_rerouting(self):
-
-
-		request = self.client.get('/course/01/Lecture-1')
-		self.assertEquals(request.status_code,302)
-		self.assertRedirects(request, '/login?next=/course/01/Lecture-1')
-		response = self.client.post('/login', {'username': 'bbb', 'password': 'B'})
-		self.assertEquals(response.status_code, 200)
-		self.assertEquals(response.context['current_url'], '/login')
-	
-	def test_create_user(self):
-
-		response = self.client.post('/createuser', {'username': 'aaa', 'password1': 'a', 'password2': 'a', 'first_name': 'A', 'last_name': 'Dude', 'email': 'A@test.com'})
-		
-		self.assertEquals(response.status_code, 302)
-		self.assertRedirects(response, '/alert/create_user_success')
-		#print User.objects.get(id=04).username
-		self.assertEquals(User.objects.get(id=04).username, 'aaa')
-
-	def test_wordcloud_submit(self):
-
-		Wordcloud.objects.create(title="test", Lecture=self.l1, visible=True)
-		self.assertEquals(Wordcloud.objects.get(id=01).title, 'test')
-
-		'''
-		self.user = u1
-		response = self.client.post('/course/01/lecture-1/wordcloud/01/test', {'lecture_list':self.l1, 'wordcloud':'maybe'})
-		'''
-
-
-class New_Form_Test(TestCase):
-
-	def test_new_thread(self):
-		
-		u1 = create_student(username="jack", password="password")
-		Thread.objects.create(title="happy", content="first", Creator=u1, views=0, anonymous=False)
-		self.assertEquals(Thread.objects.get(id=01).title, 'happy')
-		c = Client()
-		
-		response = c.post(reverse('login'), data={'username': 'jack', 'password': 'password'}, follow = True)
-		self.assertEquals(response.status_code, 200)
-		self.assertEquals(response.context['current_url'], reverse('root'))
-
-
-		response = c.post(reverse('create_thread'), data={'Creator':u1.id, 'title': 'testing', 'content': 'testing thread', 'anonymous': False, 'views':0}, follow=True)
-		self.assertEquals(response.status_code, 200)
-
-
-		self.assertEquals(Thread.objects.get(id=02).title, 'testing')
-
-	def test_reply_thread(self):
-
-		u1 = create_student(username="jack", password="password")
-		t1 = Thread.objects.create(title="Chocolate", content="chocolate", Creator=u1, views=0, anonymous=False)
-		self.assertEquals(Thread.objects.get(id=01).title, 'Chocolate')
-
-		c = Client()
-		response = c.post(reverse('login'), data={'username': 'jack', 'password': 'password'}, follow = True)
-		self.assertEquals(response.status_code, 200)
-		self.assertEquals(response.context['current_url'], reverse('root'))
-
-		# need to supply all form data, including hidden form data
-		response = c.post(reverse('post', kwargs={'thread_id':t1.id, 'thread_slug':t1.slug}), data={'Creator':u1.id, 'anonymous': False, 'Thread': t1.id, 'content': 'testing reply'}, follow=True)
-		self.assertEquals(response.status_code, 200)
-		self.assertEquals(Post.objects.get(id=01).content, 'testing reply')
 
 class Redirect_Tests(TestCase):
 
@@ -566,5 +467,86 @@ class Redirect_Tests(TestCase):
 		self.assertEquals(response.status_code, 200)
 		self.assertEquals(response.context['current_url'], reverse('admin:index'))
 
-	
+
+class New_Form_Test(TestCase):
+
+	def test_new_user(self):
+
+		c = Client()
+		response = c.post(reverse('createuser'), data={'username': 'aaa', 'password1': 'a', 'password2': 'a', 'first_name': 'A', 'last_name': 'Dude', 'email': 'A@test.com'})
+		self.assertEquals(response.status_code, 302)
+		self.assertRedirects(response, '/alert/create_user_success')
+		self.assertEquals(User.objects.get(id=01).username, 'aaa')
+
+
+	def test_new_thread(self):
 		
+		u1 = create_student(username="jack", password="password")
+		Thread.objects.create(title="happy", content="first", Creator=u1, views=0, anonymous=False)
+		self.assertEquals(Thread.objects.get(id=01).title, 'happy')
+		c = Client()
+		
+		response = c.post(reverse('login'), data={'username': 'jack', 'password': 'password'}, follow = True)
+		self.assertEquals(response.status_code, 200)
+		self.assertEquals(response.context['current_url'], reverse('root'))
+
+
+		response = c.post(reverse('create_thread'), data={'Creator':u1.id, 'title': 'testing', 'content': 'testing thread', 'anonymous': False, 'views':0}, follow=True)
+		self.assertEquals(response.status_code, 200)
+
+
+		self.assertEquals(Thread.objects.get(id=02).title, 'testing')
+
+	def test_reply_thread(self):
+
+		u1 = create_student(username="jack", password="password")
+		t1 = Thread.objects.create(title="Chocolate", content="chocolate", Creator=u1, views=0, anonymous=False)
+		self.assertEquals(Thread.objects.get(id=01).title, 'Chocolate')
+
+		c = Client()
+		response = c.post(reverse('login'), data={'username': 'jack', 'password': 'password'}, follow = True)
+		self.assertEquals(response.status_code, 200)
+		self.assertEquals(response.context['current_url'], reverse('root'))
+
+		# need to supply all form data, including hidden form data
+		response = c.post(reverse('post', kwargs={'thread_id':t1.id, 'thread_slug':t1.slug}), data={'Creator':u1.id, 'anonymous': False, 'Thread': t1.id, 'content': 'testing reply'}, follow=True)
+		self.assertEquals(response.status_code, 200)
+		self.assertEquals(Post.objects.get(id=01).content, 'testing reply')
+
+	def test_wordcloud(self):
+
+		u1 = create_student(username="jack", password="password")
+		l1 = Lecture.objects.create(title="Lecture 1")
+		w1 = Wordcloud.objects.create(title="test", Lecture=l1, visible=True)
+		c=Client()
+
+		response = c.post(reverse('login'), data={'username': 'jack', 'password': 'password'}, follow = True)
+		self.assertEquals(response.status_code, 200)
+		self.assertEquals(response.context['current_url'], reverse('lecture', kwargs={'lect_id': l1.id, 'url_slug': l1.slug}))
+
+		response = c.post(reverse('wordcloud', kwargs={'lect_id': l1.id, 'url_slug': l1.slug,'wordcloud_id': w1.id, 'wordcloud_slug': w1.title}), data={'word': 'seomthing',  'User': u1.id, 'Wordcloud': w1.id}, follow = True)
+		self.assertEquals(response.status_code, 200)
+		#print response.context['current_url']
+		self.assertEquals(response.context['current_url'],reverse('wordcloud', kwargs={'lect_id':l1.id, 'url_slug':l1.slug, 'wordcloud_id':w1.id, 'wordcloud_slug':w1.title}))
+		#print response.context['form']
+		#print type(response.context['form'])
+		#self.assertEquals(response.context['form'].errors.word, 'Input must be only one word')
+
+		#self.assertEquals(response.context['current_url'], )
+		#self.assertEquals(Wordcloud.objects.filter(User=u1.id, Wordcloud=w1.id).word, 'something')
+'''	
+	def test_quiz_selection(self):
+		#single choice answer
+		u1=create_student(username="jack", password="password")
+		u2=create_student(username="harry", password="harry")
+		l1=Lecture.objects.create(title="Lecture 1")
+		q1=Quiz.objects.create(question="question", visible=True, Lecture=l1)
+		QuizChoice.objects.create(choice="choice", Quiz=q1, correct=True)
+		c=Client()
+
+		response=c.post(reverse('quiz', kwargs={'lect_id':l1.id, 'url_slug':l1.slug, 'quiz_id':q1.id, 'quiz_slug':q1.question}), data={'choices':'choice', 'user':u1.id})
+		self.assertEquals(response.status_code, 302)
+		print response.context['form']
+		#self.assertEquals(response.context['current_url'], reverse('quiz', kwargs={'lect_id':l1.id, 'url_slug':l1.slug, 'quiz_id':q1.id, 'quiz_slug':q1.question}))		
+		
+'''

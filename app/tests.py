@@ -436,8 +436,8 @@ class Post_Request_Tests(TestCase):
 		self.client = Client()
 		self.su = create_superuser(username="admin", first_name="administration", last_name="account", email="admin@admin.com", password="admin")
 		#User.objects.create_user(username="AAA", first_name="A", last_name="A", email="A@test.com", password="A", is_superuser=True)
-		self.u1 = create_user(username="BBB", first_name="B", last_name="b", email="b@test.com", password="b", is_superuser=False)	
-		self.u2 = create_user(username="ccc", first_name="c", last_name="b", email="c@test.com", password="c", is_superuser=False)	
+		self.u1 = create_student(username="BBB", password="b")	
+		self.u2 = create_student(username="ccc", password="c")	
 		self.l1 = Lecture.objects.create(title="Lecture 1")
 	
 
@@ -483,7 +483,7 @@ class Post_Request_Tests(TestCase):
 		#print User.objects.get(id=04).username
 		self.assertEquals(User.objects.get(id=04).username, 'aaa')
 
-def test_wordcloud_submit(self):
+	def test_wordcloud_submit(self):
 
 		Wordcloud.objects.create(title="test", Lecture=self.l1, visible=True)
 		self.assertEquals(Wordcloud.objects.get(id=01).title, 'test')
@@ -494,7 +494,41 @@ def test_wordcloud_submit(self):
 		'''
 
 
+class New_Form_Test(TestCase):
 
+	def test_new_thread(self):
+		
+		u1 = create_student(username="jack", password="password")
+		Thread.objects.create(title="happy", content="first", Creator=u1, views=0, anonymous=False)
+		self.assertEquals(Thread.objects.get(id=01).title, 'happy')
+		c = Client()
+		
+		response = c.post(reverse('login'), data={'username': 'jack', 'password': 'password'}, follow = True)
+		self.assertEquals(response.status_code, 200)
+		self.assertEquals(response.context['current_url'], reverse('root'))
+
+		response = c.post(reverse('create_thread'), user = u1, data = {'titile': 'testing', 'content': 'testing thread'})
+		self.assertEquals(response.status_code, 200)
+		print response.context['current_url']
+
+		self.assertEquals(Thread.objects.get(id=02).title, 'testing')
+
+	def test_reply_thread(self):
+
+		u1 = create_student(username="jack", password="password")
+		t1 = Thread.objects.create(title="Chocolate", content="chocolate", Creator=u1, views=0, anonymous=False)
+		self.assertEquals(Thread.objects.get(id=01).title, 'Chocolate')
+
+		c = Client()
+		response = c.post(reverse('login'), data={'username': 'jack', 'password': 'password'}, follow = True)
+		self.assertEquals(response.status_code, 200)
+		self.assertEquals(response.context['current_url'], reverse('root'))
+
+'''
+		response = c.post(reverse('post'),user = u1, thread = t1, data={'content': 'testing reply'})
+		self.assertEquals(response.status_code, 200)
+		self.assertEquals(Post.objects.get(id=01).content, 'testing reply')
+'''
 
 class Redirect_Tests(TestCase):
 

@@ -71,6 +71,9 @@ class CreateUserForm(UserCreationForm):
 
 class QuizSelectionForm(forms.Form):
 
+    class Meta:
+        fields = ()
+
     def __init__(self, user, quiz, *args, **kwargs):
 
         ################ data initialise ###################
@@ -215,9 +218,12 @@ class QuizSelectionForm(forms.Form):
         return [QuizChoiceSelected.objects.create(User=user_object, QuizChoice=selection)
         for selection in QuizChoice.objects.filter(id__in=selected_choices)]
 
-    class Meta:
-        fields = ()
 class CreateThreadForm(forms.ModelForm):
+
+    class Meta:
+        model = Thread
+        fields = ('title', 'content', 'Creator', 'views')
+
     def __init__(self, user, *args, **kwargs):
         super(CreateThreadForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
@@ -242,11 +248,13 @@ class CreateThreadForm(forms.ModelForm):
         user_object = User.objects.get(id=self.cleaned_data.get('Creator'))
         return user_object
 
-    class Meta:
-        model = Thread
-        fields = ('title', 'content')
+    
 
 class PostReplyForm(forms.ModelForm):
+
+    class Meta:
+        model = Post
+        fields = ('content', 'Thread', 'Creator', 'anonymous')
 
     def __init__(self, user, thread, *args, **kwargs):
         super(PostReplyForm, self).__init__(*args, **kwargs)
@@ -260,17 +268,20 @@ class PostReplyForm(forms.ModelForm):
         self.fields['anonymous'] = forms.BooleanField(initial=True, required=False)
         self.helper.add_input(Submit(_('submit'), _('Submit')))
 
-    class Meta:
-        model = Post
-        fields = ('content',)
+    def clean_Thread(self):
+        thread_object = Thread.objects.get(id=self.cleaned_data.get('Thread'))
+        return thread_object
+
+    def clean_Creator(self):
+        user_object = User.objects.get(id=self.cleaned_data.get('Creator'))
+        return user_object
 
     def save(self, *args, **kwargs):
-        data = self.cleaned_data
-        thread_object = Thread.objects.get(id=data.get('Thread'))
-        content = data.get('content')
-        Creator = user_object = User.objects.get(id=data.get('Creator'))
+        thread_object = self.cleaned_data.get('Thread')
+        content = self.cleaned_data.get('content')
+        Creator = self.cleaned_data.get('Creator')
         rank = thread_object.replies
-        anonymous = data.get('anonymous')
+        anonymous = self.cleaned_data.get('anonymous')
         post_object = Post.objects.create(Thread=thread_object, content=content, Creator=Creator, rank=rank, anonymous=anonymous)
         return post_object
 

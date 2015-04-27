@@ -12,9 +12,9 @@ from app.docsURL import glist
 from random import choice
 from string import ascii_lowercase
 
-global verbose_populate
-verbose_populate = True
+verbose_populate = False
 # print for each object creation if verbose is True
+
 
 first_names = ['Annie', 'Adam', 'Becky', 'Bert', 'Chris', 'Christina', 'David', 'Danielle', 'Edison', 'Ellie', 
     'Frank', 'Faye', 'Graham', 'Gwen', 'Harvey', 'Haley', 'Isaac', 'Isabella', 'Jason', 'Jessica', 
@@ -151,7 +151,6 @@ def create_user(username=None, first_name=None, last_name=None, email=None, pass
     """
     Set all users' is_staff to True to be able to access all of the django admin features
     """
-    
     new_user = Rand.user(username=username, first_name=first_name, last_name=last_name, email=email,  password=password, is_superuser=is_superuser)
     if is_superuser == False:
         new_user.user_permissions.add(
@@ -255,6 +254,8 @@ def vote():
         
 
 def populate():
+
+
     print "Populating database"
 
     create_superuser(username="admin", first_name="administration", last_name="account", email="admin@admin.com", password="admin")

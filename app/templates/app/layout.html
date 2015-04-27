@@ -26,10 +26,12 @@
                         <div class="push"></div>
                     </div>
                     <div class="footer">
-                            <hr>
-                            <footer>
+                        <hr>
+                        <footer>
+                            {% if num_sessions %}
                                 Number of users online: {{ num_sessions }}
-                            </footer>
+                            {% endif %}
+                        </footer>
                     </div>
                 </div>
         </div>

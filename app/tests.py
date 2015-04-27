@@ -3,9 +3,11 @@ from django.core.urlresolvers import reverse
 from app.models import *
 from django.db import IntegrityError
 from populate import *
+
 from app.docsURL import glist
 from app.views import *
 from app.class_based_views import *
+from app.forms import CreateThreadForm
 
 # Create your tests here.
 
@@ -507,9 +509,10 @@ class New_Form_Test(TestCase):
 		self.assertEquals(response.status_code, 200)
 		self.assertEquals(response.context['current_url'], reverse('root'))
 
-		response = c.post(reverse('create_thread'), user = u1, data = {'titile': 'testing', 'content': 'testing thread'})
+
+		response = c.post(reverse('create_thread'), data={'Creator':u1.id, 'title': 'testing', 'content': 'testing thread', 'anonymous': False, 'views':0}, follow=True)
 		self.assertEquals(response.status_code, 200)
-		print response.context['current_url']
+
 
 		self.assertEquals(Thread.objects.get(id=02).title, 'testing')
 
@@ -524,11 +527,10 @@ class New_Form_Test(TestCase):
 		self.assertEquals(response.status_code, 200)
 		self.assertEquals(response.context['current_url'], reverse('root'))
 
-'''
-		response = c.post(reverse('post'),user = u1, thread = t1, data={'content': 'testing reply'})
+		# need to supply all form data, including hidden form data
+		response = c.post(reverse('post', kwargs={'thread_id':t1.id, 'thread_slug':t1.slug}), data={'Creator':u1.id, 'anonymous': False, 'Thread': t1.id, 'content': 'testing reply'}, follow=True)
 		self.assertEquals(response.status_code, 200)
 		self.assertEquals(Post.objects.get(id=01).content, 'testing reply')
-'''
 
 class Redirect_Tests(TestCase):
 

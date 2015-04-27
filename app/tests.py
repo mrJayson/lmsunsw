@@ -527,26 +527,99 @@ class New_Form_Test(TestCase):
 		response = c.post(reverse('wordcloud', kwargs={'lect_id': l1.id, 'url_slug': l1.slug,'wordcloud_id': w1.id, 'wordcloud_slug': w1.title}), data={'word': 'seomthing',  'User': u1.id, 'Wordcloud': w1.id}, follow = True)
 		self.assertEquals(response.status_code, 200)
 		#print response.context['current_url']
-		self.assertEquals(response.context['current_url'],reverse('wordcloud', kwargs={'lect_id':l1.id, 'url_slug':l1.slug, 'wordcloud_id':w1.id, 'wordcloud_slug':w1.title}))
 		#print response.context['form']
-		#print type(response.context['form'])
-		#self.assertEquals(response.context['form'].errors.word, 'Input must be only one word')
+		self.assertEquals(response.context['current_url'],reverse('wordcloud', kwargs={'lect_id':l1.id, 'url_slug':l1.slug, 'wordcloud_id':w1.id, 'wordcloud_slug':w1.title}))
 
-		#self.assertEquals(response.context['current_url'], )
-		#self.assertEquals(Wordcloud.objects.filter(User=u1.id, Wordcloud=w1.id).word, 'something')
-'''	
 	def test_quiz_selection(self):
 		#single choice answer
 		u1=create_student(username="jack", password="password")
 		u2=create_student(username="harry", password="harry")
 		l1=Lecture.objects.create(title="Lecture 1")
-		q1=Quiz.objects.create(question="question", visible=True, Lecture=l1)
-		QuizChoice.objects.create(choice="choice", Quiz=q1, correct=True)
+		q1=create_quiz(question="question", visible=True, Lecture=l1)
+		create_quiz_choice(choice="yes", Quiz=q1, correct=True)
+		create_quiz_choice(choice="nope", Quiz=q1, correct=False)
 		c=Client()
 
-		response=c.post(reverse('quiz', kwargs={'lect_id':l1.id, 'url_slug':l1.slug, 'quiz_id':q1.id, 'quiz_slug':q1.question}), data={'choices':'choice', 'user':u1.id})
-		self.assertEquals(response.status_code, 302)
-		print response.context['form']
-		#self.assertEquals(response.context['current_url'], reverse('quiz', kwargs={'lect_id':l1.id, 'url_slug':l1.slug, 'quiz_id':q1.id, 'quiz_slug':q1.question}))		
+		response=c.post(reverse('login'), data={'username':'jack', 'password':'password'},follow=True)
+		self.assertEquals(response.status_code, 200)
+		self.assertEquals(response.context['current_url'], reverse('lecture', kwargs={'lect_id':l1.id, 'url_slug':l1.slug}))
+
+		response=c.post(reverse('quiz', kwargs={'lect_id':l1.id, 'url_slug':l1.slug, 'quiz_id':q1.id, 'quiz_slug':q1.question}), data={'choices':1, 'user':u1.id}, follow=True)
+		#print response.context['form']
+		self.assertEquals(response.status_code, 200)
+		self.assertEquals(response.context['current_url'], reverse('quiz', kwargs={'lect_id':l1.id, 'url_slug':l1.slug, 'quiz_id':q1.id, 'quiz_slug':q1.question}))		
+
+#Message that checks that it is correct
+		#self.assertEquals(response.context['form'].QuizChoice.correct, 'CORRECT')
 		
-'''
+		#multiple choice answers (all correct)
+		l2=Lecture.objects.create(title="Lecture 2")
+		q2=create_quiz(question="question2", visible=True, Lecture=l2)
+		create_quiz_choice(choice="yes", Quiz=q2, correct=True)
+		create_quiz_choice(choice="no", Quiz=q2, correct=False)
+		create_quiz_choice(choice="yes", Quiz=q2, correct=True)
+
+		response=c.post(reverse('login'), data={'username':'jack', 'password':'password'},follow=True)
+		self.assertEquals(response.status_code, 200)
+		self.assertEquals(response.context['current_url'], reverse('lecture', kwargs={'lect_id':l2.id, 'url_slug':l2.slug}))
+
+		response=c.post(reverse('quiz', kwargs={'lect_id':l2.id, 'url_slug':l2.slug, 'quiz_id':q2.id, 'quiz_slug':q2.question}), data={'choices':5, 'choices':3, 'user':u1.id}, follow=True)
+		self.assertEquals(response.status_code, 200)
+		#print response.context['form']
+		self.assertEquals(response.context['current_url'], reverse('quiz', kwargs={'lect_id':l2.id, 'url_slug':l2.slug, 'quiz_id':q2.id, 'quiz_slug':q2.question}))		
+		
+
+
+
+class Form_Error_Test(TestCase):
+
+	'''
+	def test_wordcloud_multiplewords(self):
+
+		u1=create_student(username="jack", password="password")
+		l1=Lecture.objects.create(title="Lecture 1")
+		w1=Wordcloud.objects.create(title="test", Lecture=l1, visible=True)
+		c=Client()
+
+		response=c.post(reverse('login'), data={'username': 'jack', 'password': 'password'}, follow=True)
+		self.assertEquals(response.status_code, 200)
+		self.assertEquals(response.context['current_url'], reverse('lecture', kwargs={'lect_id': l1.id, 'url_slug': l1.slug}))
+
+		response=c.post(reverse('wordcloud', kwargs={'lect_id': l1.id, 'url_slug': l1.slug, 'wordcloud_id': w1.id, 'wordcloud_slug': w1.title}), data={'word': 'something something', 'User': u1.id, 'Wordcloud': w1.id}, follow=True)
+		self.assertEquals(response.status_code, 200)
+		#print response.context['current_url']
+		self.assertEquals(response.context['current_url'], reverse('wordcloud', kwargs={'lect_id': l1.id, 'url_slug': l1.slug, 'wordcloud_id': w1.id, 'wordcloud_slug':w1.title}))
+		#print response.context['form']
+		#print type(response.context['form'])
+		self.assertEquals(response.context['form'].errors['word'], 'Input must be only one word')
+	'''
+	
+	def test_incorrect_login(self):
+		
+		u1=create_student(username="jack", password="password")
+		c=Client()
+
+		#one field missing
+		response=c.post(reverse('login'), data={'username': 'jack'}, follow=True)
+		self.assertEquals(response.status_code, 200)
+		#print response.context['form']
+		self.assertEquals(response.context['current_url'], reverse('login'))
+		#self.assertEquals(response.context['form'].error, 'This Field is Required')
+
+
+		#both fields missing
+		response=c.post(reverse('login'), data={}, follow=True)
+		self.assertEquals(response.status_code, 200)
+		#print response.context['form']
+		self.assertEquals(response.context['current_url'], reverse('login'))
+		#self.assertEquals(response.context['form'].error, 'This Field is Required')
+
+		#username and password dont match
+		response=c.post(reverse('login'), data={'username':'test', 'password':'none'}, follow=True)
+		self.assertEquals(response.status_code, 200)
+		print response.context['form']
+		self.assertEquals(response.context['current_url'], reverse('login'))
+		#self.assertEquals(response.context['form'].error, 'Please enter a correct username and password. Note that both fields may be case-sensitive.')
+
+
+#	def test_quiz_partial_correct(self):

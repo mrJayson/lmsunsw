@@ -550,7 +550,7 @@ class New_Form_Test(TestCase):
 		self.assertEquals(response.context['current_url'], reverse('quiz', kwargs={'lect_id':l1.id, 'url_slug':l1.slug, 'quiz_id':q1.id, 'quiz_slug':q1.question}))		
 
 #Message that checks that it is correct
-		#self.assertEquals(response.context['form'].QuizChoice.correct, 'CORRECT')
+		self.assertEquals(QuizChoice.objects.get(id=01).correct, True)
 		
 		#multiple choice answers (all correct)
 		l2=Lecture.objects.create(title="Lecture 2")
@@ -567,6 +567,21 @@ class New_Form_Test(TestCase):
 		self.assertEquals(response.status_code, 200)
 		#print response.context['form']
 		self.assertEquals(response.context['current_url'], reverse('quiz', kwargs={'lect_id':l2.id, 'url_slug':l2.slug, 'quiz_id':q2.id, 'quiz_slug':q2.question}))		
+
+	def test_quickCreateQuiz_form(self):
+		u1=create_superuser(username="admin", password="password")
+		l1=Lecture.objects.create(title="Lecture 3")
+		c=Client()
+
+		response=c.post(reverse('login'), data={'username': 'admin', 'password': 'password'}, follow=True)
+		self.assertEquals(response.status_code, 200)
+		self.assertEquals(response.context['current_url'], reverse('admin:index'))
+
+		response=c.post(reverse('admin:login'), data={'question': 'test', 'visible': False, 'Lecture': l1.id, 'User': u1.id}, follow=True)
+		self.assertEquals(response.status_code, 200)
+		#print response.context['form']
+		#self.assertEquals(Quiz.objects.get(id=01).question, 'test')
+		self.assertEquals(response.context['current_url'], reverse('admin:login'))
 		
 
 
@@ -617,7 +632,7 @@ class Form_Error_Test(TestCase):
 		#username and password dont match
 		response=c.post(reverse('login'), data={'username':'test', 'password':'none'}, follow=True)
 		self.assertEquals(response.status_code, 200)
-		print response.context['form']
+		#print response.context['form']
 		self.assertEquals(response.context['current_url'], reverse('login'))
 		#self.assertEquals(response.context['form'].error, 'Please enter a correct username and password. Note that both fields may be case-sensitive.')
 

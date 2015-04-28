@@ -93,6 +93,7 @@ class Quiz(models.Model):
     visible = models.BooleanField(default=False)
     Lecture = models.ForeignKey(Lecture)
     last_touch = models.DateTimeField(auto_now=True)
+    slug = AutoSlugField(populate_from='question')
 
     def __unicode__(self):
         return unicode(self.Lecture.title + " " + self.question)
@@ -182,6 +183,7 @@ class Wordcloud(models.Model):
     image = models.ImageField(upload_to="wordcloud", blank=True, null=True)
     Lecture = models.ForeignKey(Lecture)
     visible = models.BooleanField(default=False)
+    slug = AutoSlugField(populate_from='title')
 
     def __unicode__(self):
         return unicode(self.title)

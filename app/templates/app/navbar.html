@@ -34,7 +34,7 @@
 		          	<ul class="dropdown-menu" role="menu">
 		          		{% for quiz in quiz_list %}
 		                    <li>
-		                        <a href="{% url 'quiz' current_lecture.id current_lecture.slug quiz.id quiz.question %}"> {{ quiz.question }} </a>
+		                        <a href="{% url 'quiz' current_lecture.id current_lecture.slug quiz.id quiz.slug %}"> {{ quiz.question }} </a>
 		                    </li>
 		                {% endfor %}<!--end for quiz_list-->
 		          	</ul>
@@ -55,7 +55,7 @@
 		          	<ul class="dropdown-menu" role="menu">
 		          		{% for wordcloud in wordcloud_list %}
 		                    <li>
-		                        <a href="{% url 'wordcloud' wordcloud.Lecture.id wordcloud.Lecture.slug wordcloud.id wordcloud.title %}"> {{ wordcloud.title }} </a>
+		                        <a href="{% url 'wordcloud' wordcloud.Lecture.id wordcloud.Lecture.slug wordcloud.id wordcloud.slug %}"> {{ wordcloud.title }} </a>
 		                    </li>
 		                {% endfor %}<!--end for wordcloud_list-->
 		          	</ul>

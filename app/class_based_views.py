@@ -26,7 +26,7 @@ class IndexView(TemplateView, BaseSidebarContextMixin):
                 # only display index page if in the event there are no lectures to display
                 return super(IndexView, self).dispatch(request, *args, **kwargs)
             else:
-                return redirect(reverse('lecture', kwargs={'lect_id': lecture.id, 'url_slug': lecture.slug}))
+                return redirect(reverse('lecture', kwargs={'lecture_id': lecture.id, 'url_slug': lecture.slug}))
         
     def get_context_data(self, *args, **kwargs):
         context = super(IndexView, self).get_context_data(*args, **kwargs)
@@ -70,13 +70,13 @@ class QuizView(FormView, SidebarContextMixin):
         return super(QuizView, self).form_valid(form)
 
     def get_success_url(self):
-        lect_id = self.kwargs.get('lect_id')
+        lecture_id = self.kwargs.get('lecture_id')
         quiz_id = self.kwargs.get('quiz_id')
-        lecture = Lecture.objects.get(id=self.kwargs.get('lect_id'))
+        lecture = Lecture.objects.get(id=self.kwargs.get('lecture_id'))
         quiz = Quiz.objects.get(id=self.kwargs.get('quiz_id'))
 
         
-        return reverse('quiz', kwargs={'lect_id':lecture.id, 'url_slug':lecture.slug, 'quiz_id':quiz.id, 'quiz_slug':quiz.question})
+        return reverse('quiz', kwargs={'lecture_id':lecture.id, 'url_slug':lecture.slug, 'quiz_id':quiz.id, 'quiz_slug':quiz.question})
 
 class LectureSlideView(TemplateView, SidebarContextMixin):
     template_name = _('app/lecture_slide.html')
@@ -159,14 +159,13 @@ class WordcloudSubmissionView(CreateView, SidebarContextMixin):
         user = self.request.user
         wordcloud = Wordcloud.objects.get(id=self.kwargs.get('wordcloud_id'))
         if self.request.method == "POST":
-            print "POST"
             form = WordcloudSubmissionForm(user=user, wordcloud=wordcloud, data=self.request.POST)
         else: # mainly for GET requests
             form = WordcloudSubmissionForm(user=user, wordcloud=wordcloud)
         return form
 
     def get_success_url(self):
-        return reverse('wordcloud', kwargs={'lect_id':self.kwargs.get('lect_id'), 'url_slug':self.kwargs.get('url_slug'), 'wordcloud_id':self.kwargs.get('wordcloud_id'), 'wordcloud_slug':self.kwargs.get('wordcloud_slug')})
+        return reverse('wordcloud', kwargs={'lecture_id':self.kwargs.get('lecture_id'), 'url_slug':self.kwargs.get('url_slug'), 'wordcloud_id':self.kwargs.get('wordcloud_id'), 'wordcloud_slug':self.kwargs.get('wordcloud_slug')})
 
 class CodeSnippetView(ListView, SidebarContextMixin):
     template_name = _('app/code_snippet.html')

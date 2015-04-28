@@ -34,11 +34,11 @@ urlpatterns = patterns('',
     # generic alert message page
     url(r'^alert/(?P<tag>.*)$', AlertView.as_view(), name='alert'),
     # lecture index page
-    url(r'^course/(?P<lect_id>[0-9]+)/(?P<url_slug>[^/]+)$', login_required(LectureView.as_view()), name='lecture'),
+    url(r'^course/(?P<lecture_id>[0-9]+)/(?P<url_slug>[^/]+)$', login_required(LectureView.as_view()), name='lecture'),
     # quiz page
-    url(r'^course/(?P<lect_id>[0-9]+)/(?P<url_slug>[^/]+)/quiz/(?P<quiz_id>[0-9]+)/(?P<quiz_slug>[^/]+)$', login_required(QuizView.as_view()), name='quiz'),
+    url(r'^course/(?P<lecture_id>[0-9]+)/(?P<url_slug>[^/]+)/quiz/(?P<quiz_id>[0-9]+)/(?P<quiz_slug>[^/]+)$', login_required(QuizView.as_view()), name='quiz'),
     # lecture slide page
-    url(r'^course/(?P<lect_id>[0-9]+)/(?P<url_slug>[^/]+)/lecture_slide/?$', login_required(LectureSlideView.as_view()), name='lecture_slide'),
+    url(r'^course/(?P<lecture_id>[0-9]+)/(?P<url_slug>[^/]+)/lecture_slide/?$', login_required(LectureSlideView.as_view()), name='lecture_slide'),
     # thread index page
     url(r'^course/threads/?$', login_required(ThreadView.as_view()), name='thread'),
     # thread create page
@@ -46,9 +46,9 @@ urlpatterns = patterns('',
     # posts page
     url(r'^course/threads/(?P<thread_id>[0-9]+)/(?P<thread_slug>[^/]+)$', login_required(PostView.as_view()), name='post'),
     # wordclouds page
-    url(r'^course/(?P<lect_id>[0-9]+)/(?P<url_slug>[^/]+)/wordcloud/(?P<wordcloud_id>[0-9]+)/(?P<wordcloud_slug>[^/]+)$', login_required(WordcloudSubmissionView.as_view()), name='wordcloud'),
+    url(r'^course/(?P<lecture_id>[0-9]+)/(?P<url_slug>[^/]+)/wordcloud/(?P<wordcloud_id>[0-9]+)/(?P<wordcloud_slug>[^/]+)$', login_required(WordcloudSubmissionView.as_view()), name='wordcloud'),
 
-    url(r'^course/(?P<lect_id>[0-9]+)/(?P<url_slug>[^/]+)/code/?$', login_required(CodeSnippetView.as_view()), name='codesnippet'),
+    url(r'^course/(?P<lecture_id>[0-9]+)/(?P<url_slug>[^/]+)/code/?$', login_required(CodeSnippetView.as_view()), name='codesnippet'),
     # generic login page
     url(r'^login/?$', login_forbidden(login), 
         {'template_name':'app/login.html',

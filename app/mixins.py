@@ -20,14 +20,14 @@ class SidebarContextMixin(BaseSidebarContextMixin):
 		context['slug'] = self.kwargs['url_slug']
 
 		#need to pass identity of current lecture into template
-		context['current_lecture'] = Lecture.objects.get(id=self.kwargs['lect_id'])
+		context['current_lecture'] = Lecture.objects.get(id=self.kwargs['lecture_id'])
 
 		#used on the sidebar to display tabs
 
-		context['quiz_list'] = Quiz.objects.filter(Lecture = self.kwargs['lect_id'], visible = False).filter(
+		context['quiz_list'] = Quiz.objects.filter(Lecture = self.kwargs['lecture_id'], visible = False).filter(
 			Lecture__in=list(set([k.Lecture for k in [j.Quiz for j in [i.QuizChoice for i in QuizChoiceSelected.objects.select_related().all()]]])))
-		context['wordcloud_list'] = Wordcloud.objects.filter(Lecture=self.kwargs['lect_id'], visible=False).filter(
+		context['wordcloud_list'] = Wordcloud.objects.filter(Lecture=self.kwargs['lecture_id'], visible=False).filter(
 			id__in=list(set([i.Wordcloud.id for i in WordcloudSubmission.objects.all()])))
-		context['codesnippet_list'] = CodeSnippet.objects.filter(Lecture=self.kwargs['lect_id'])
+		context['codesnippet_list'] = CodeSnippet.objects.filter(Lecture=self.kwargs['lecture_id'])
 		return context
 

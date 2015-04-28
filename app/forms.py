@@ -496,8 +496,6 @@ class LectureMaterialInLineFormset(BaseInlineFormSet):
         for form in self.forms:
             local = form.cleaned_data['local_lecture_material']==None
             online = form.cleaned_data['online_lecture_material']==""
-            print local
-            print online
             if not (local and not online) or (not local and online):
                 raise forms.ValidationError('One and only one field can be filled for each slot')
         return super(LectureMaterialInLineFormset, self).clean()

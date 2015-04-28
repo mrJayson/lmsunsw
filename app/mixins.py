@@ -17,7 +17,7 @@ class SidebarContextMixin(BaseSidebarContextMixin):
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(SidebarContextMixin, self).get_context_data(*args, **kwargs)
-		context['slug'] = self.kwargs['url_slug']
+		context['slug'] = self.kwargs['lecture_slug']
 
 		#need to pass identity of current lecture into template
 		context['current_lecture'] = Lecture.objects.get(id=self.kwargs['lecture_id'])

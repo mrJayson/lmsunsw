@@ -522,13 +522,13 @@ class New_Form_Test(TestCase):
 
 		response = c.post(reverse('login'), data={'username': 'jack', 'password': 'password'}, follow = True)
 		self.assertEquals(response.status_code, 200)
-		self.assertEquals(response.context['current_url'], reverse('lecture', kwargs={'lecture_id': l1.id, 'url_slug': l1.slug}))
+		self.assertEquals(response.context['current_url'], reverse('lecture', kwargs={'lecture_id': l1.id, 'lecture_slug': l1.slug}))
 
-		response = c.post(reverse('wordcloud', kwargs={'lecture_id': l1.id, 'url_slug': l1.slug,'wordcloud_id': w1.id, 'wordcloud_slug': w1.slug}), data={'word': 'seomthing',  'User': u1.id, 'Wordcloud': w1.id}, follow = True)
+		response = c.post(reverse('wordcloud', kwargs={'lecture_id': l1.id, 'lecture_slug': l1.slug,'wordcloud_id': w1.id, 'wordcloud_slug': w1.slug}), data={'word': 'seomthing',  'User': u1.id, 'Wordcloud': w1.id}, follow = True)
 		self.assertEquals(response.status_code, 200)
 		#print response.context['current_url']
 		#print response.context['form']
-		self.assertEquals(response.context['current_url'],reverse('wordcloud', kwargs={'lecture_id':l1.id, 'url_slug':l1.slug, 'wordcloud_id':w1.id, 'wordcloud_slug':w1.slug}))
+		self.assertEquals(response.context['current_url'],reverse('wordcloud', kwargs={'lecture_id':l1.id, 'lecture_slug':l1.slug, 'wordcloud_id':w1.id, 'wordcloud_slug':w1.slug}))
 
 	def test_quiz_selection(self):
 		#single choice answer
@@ -542,12 +542,12 @@ class New_Form_Test(TestCase):
 
 		response=c.post(reverse('login'), data={'username':'jack', 'password':'password'},follow=True)
 		self.assertEquals(response.status_code, 200)
-		self.assertEquals(response.context['current_url'], reverse('lecture', kwargs={'lecture_id':l1.id, 'url_slug':l1.slug}))
+		self.assertEquals(response.context['current_url'], reverse('lecture', kwargs={'lecture_id':l1.id, 'lecture_slug':l1.slug}))
 
-		response=c.post(reverse('quiz', kwargs={'lecture_id':l1.id, 'url_slug':l1.slug, 'quiz_id':q1.id, 'quiz_slug':q1.slug}), data={'choices':1, 'user':u1.id}, follow=True)
+		response=c.post(reverse('quiz', kwargs={'lecture_id':l1.id, 'lecture_slug':l1.slug, 'quiz_id':q1.id, 'quiz_slug':q1.slug}), data={'choices':1, 'user':u1.id}, follow=True)
 		#print response.context['form']
 		self.assertEquals(response.status_code, 200)
-		self.assertEquals(response.context['current_url'], reverse('quiz', kwargs={'lecture_id':l1.id, 'url_slug':l1.slug, 'quiz_id':q1.id, 'quiz_slug':q1.slug}))		
+		self.assertEquals(response.context['current_url'], reverse('quiz', kwargs={'lecture_id':l1.id, 'lecture_slug':l1.slug, 'quiz_id':q1.id, 'quiz_slug':q1.slug}))		
 
 #Message that checks that it is correct
 		self.assertEquals(QuizChoice.objects.get(id=01).correct, True)
@@ -561,12 +561,12 @@ class New_Form_Test(TestCase):
 
 		response=c.post(reverse('login'), data={'username':'jack', 'password':'password'},follow=True)
 		self.assertEquals(response.status_code, 200)
-		self.assertEquals(response.context['current_url'], reverse('lecture', kwargs={'lecture_id':l2.id, 'url_slug':l2.slug}))
+		self.assertEquals(response.context['current_url'], reverse('lecture', kwargs={'lecture_id':l2.id, 'lecture_slug':l2.slug}))
 
-		response=c.post(reverse('quiz', kwargs={'lecture_id':l2.id, 'url_slug':l2.slug, 'quiz_id':q2.id, 'quiz_slug':q2.slug}), data={'choices':5, 'choices':3, 'user':u1.id}, follow=True)
+		response=c.post(reverse('quiz', kwargs={'lecture_id':l2.id, 'lecture_slug':l2.slug, 'quiz_id':q2.id, 'quiz_slug':q2.slug}), data={'choices':5, 'choices':3, 'user':u1.id}, follow=True)
 		self.assertEquals(response.status_code, 200)
 		#print response.context['form']
-		self.assertEquals(response.context['current_url'], reverse('quiz', kwargs={'lecture_id':l2.id, 'url_slug':l2.slug, 'quiz_id':q2.id, 'quiz_slug':q2.slug}))		
+		self.assertEquals(response.context['current_url'], reverse('quiz', kwargs={'lecture_id':l2.id, 'lecture_slug':l2.slug, 'quiz_id':q2.id, 'quiz_slug':q2.slug}))		
 
 	def test_quickCreateQuiz_form(self):
 		u1=create_superuser(username="admin", password="password")
@@ -598,12 +598,12 @@ class Form_Error_Test(TestCase):
 
 		response=c.post(reverse('login'), data={'username': 'jack', 'password': 'password'}, follow=True)
 		self.assertEquals(response.status_code, 200)
-		self.assertEquals(response.context['current_url'], reverse('lecture', kwargs={'lecture_id': l1.id, 'url_slug': l1.slug}))
+		self.assertEquals(response.context['current_url'], reverse('lecture', kwargs={'lecture_id': l1.id, 'lecture_slug': l1.slug}))
 
-		response=c.post(reverse('wordcloud', kwargs={'lecture_id': l1.id, 'url_slug': l1.slug, 'wordcloud_id': w1.id, 'wordcloud_slug': w1.slug}), data={'word': 'something something', 'User': u1.id, 'Wordcloud': w1.id}, follow=True)
+		response=c.post(reverse('wordcloud', kwargs={'lecture_id': l1.id, 'lecture_slug': l1.slug, 'wordcloud_id': w1.id, 'wordcloud_slug': w1.slug}), data={'word': 'something something', 'User': u1.id, 'Wordcloud': w1.id}, follow=True)
 		self.assertEquals(response.status_code, 200)
 		#print response.context['current_url']
-		self.assertEquals(response.context['current_url'], reverse('wordcloud', kwargs={'lecture_id': l1.id, 'url_slug': l1.slug, 'wordcloud_id': w1.id, 'wordcloud_slug':w1.slug}))
+		self.assertEquals(response.context['current_url'], reverse('wordcloud', kwargs={'lecture_id': l1.id, 'lecture_slug': l1.slug, 'wordcloud_id': w1.id, 'wordcloud_slug':w1.slug}))
 		#print response.context['form']
 		#print type(response.context['form'])
 		self.assertEquals(response.context['form'].errors['word'], 'Input must be only one word')

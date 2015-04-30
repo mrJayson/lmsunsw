@@ -1,4 +1,5 @@
 ﻿{% load staticfiles %}
+{% load swampdragon_tags %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,7 +47,13 @@
     <script src="{% static 'app/scripts/site.js' %}"></script>
     {% include 'session_security/all.html' %}
     {% if user.is_authenticated %}
-    <!-- ensure refreshes only occur when logged in -->
+        {% swampdragon_settings %}
+        <script type="text/javascript" src="{% static 'swampdragon/js/dist/swampdragon.js' %}"></script>
+        <script type="text/javascript" src="{% static 'swampdragon/js/legacy/swampdragon-vanilla.js' %}"></script>
+        <script type="text/javascript" src="{% static 'swampdragon/js/legacy/swampdragon.js' %}"></script>
+        <script src="{% static 'app/scripts/notifications.js' %}"></script>
+
+        <!-- ensure refreshes only occur when logged in -->
         <script>
             /* updates the confidence meter periodically */
             var ping_interval = 1000*15

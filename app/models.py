@@ -23,6 +23,12 @@ from pygments.styles import STYLE_MAP
 
 from app.docsURL import glist
 
+from swampdragon.models import SelfPublishModel
+from app.serializers import NotificationSerializer
+
+
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='UserProfile')
     # like a toString
@@ -237,4 +243,6 @@ class CodeSnippet(models.Model):
         # Included in a DIV, so the next item will be displayed below.
         return _('<div class="code"><style type="text/css">%(css)s</style>\n<pre>%(html)s</pre></div>\n') % {'css':css, 'html':html}
 
-
+class Notification(SelfPublishModel, models.Model):
+    serializer_class = NotificationSerializer
+    message = models.TextField()

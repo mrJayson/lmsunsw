@@ -292,4 +292,4 @@ adminsite.register(Lecture, LectureAdmin)
 adminsite.register(Wordcloud, WordcloudAdmin)
 adminsite.register(CodeSnippet, CodeSnippetAdmin)
 adminsite.register(Thread, ThreadAdmin)
-
+adminsite.register(Notification)

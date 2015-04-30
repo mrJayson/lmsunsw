@@ -11,87 +11,6 @@ from app.forms import CreateThreadForm
 
 # Create your tests here.
 
-class User_Case(TestCase):
-
-	def setUp(self):
-		User.objects.create(username="AAA", first_name="A", last_name="A", email="A@test.com", password="A", is_superuser=True)
-		User.objects.create(username="BBB", first_name="B", last_name="B", email="B@test.com", password="B", is_superuser=True)
-		User.objects.create(username="CCC", first_name="C", last_name="C", email="C@test.com", password="C", is_superuser=True)
-		User.objects.create(username="DDD", first_name="D", last_name="D", email="D@test.com", password="D", is_superuser=True)
-		User.objects.create(username="EEE", first_name="E", last_name="E", email="E@test.com", password="E", is_superuser=True)
-		User.objects.create(username="FFF", first_name="F", last_name="F", email="F@test.com", password="F", is_superuser=False)
-		User.objects.create(username="GGG", first_name="G", last_name="G", email="G@test.com", password="G", is_superuser=False)
-		User.objects.create(username="HHH", first_name="H", last_name="H", email="H@test.com", password="H", is_superuser=False)
-		User.objects.create(username="III", first_name="I", last_name="I", email="I@test.com", password="I", is_superuser=False)
-		User.objects.create(username="JJJ", first_name="J", last_name="J", email="J@test.com", password="J", is_superuser=False)
-		User.objects.create(username="KKK", first_name="K", last_name="K", email="K@test.com", password="K", is_superuser=False)
-
-	def test_correct_attr(self):
-		self.assertEquals(User.objects.get(id=1).username, "AAA")
-		self.assertEquals(User.objects.get(id=2).username, "BBB")
-		self.assertEquals(User.objects.get(id=3).username, "CCC")
-		self.assertEquals(User.objects.get(id=4).username, "DDD")
-		self.assertEquals(User.objects.get(id=5).username, "EEE")
-		self.assertEquals(User.objects.get(id=6).username, "FFF")
-		self.assertEquals(User.objects.get(id=7).username, "GGG")
-		self.assertEquals(User.objects.get(id=8).username, "HHH")
-		self.assertEquals(User.objects.get(id=9).username, "III")
-		self.assertEquals(User.objects.get(id=10).username, "JJJ")
-		self.assertEquals(User.objects.get(id=11).username, "KKK")
-
-		self.assertEquals(User.objects.get(id=1).first_name, "A")
-		self.assertEquals(User.objects.get(id=2).first_name, "B")
-		self.assertEquals(User.objects.get(id=3).first_name, "C")
-		self.assertEquals(User.objects.get(id=4).first_name, "D")
-		self.assertEquals(User.objects.get(id=5).first_name, "E")
-		self.assertEquals(User.objects.get(id=6).first_name, "F")
-		self.assertEquals(User.objects.get(id=7).first_name, "G")
-		self.assertEquals(User.objects.get(id=8).first_name, "H")
-		self.assertEquals(User.objects.get(id=9).first_name, "I")
-		self.assertEquals(User.objects.get(id=10).first_name, "J")
-		self.assertEquals(User.objects.get(id=11).first_name, "K")
-
-		self.assertEquals(User.objects.get(id=1).last_name, "A")
-		self.assertEquals(User.objects.get(id=2).last_name, "B")
-		self.assertEquals(User.objects.get(id=3).last_name, "C")
-		self.assertEquals(User.objects.get(id=4).last_name, "D")
-		self.assertEquals(User.objects.get(id=5).last_name, "E")
-		self.assertEquals(User.objects.get(id=6).last_name, "F")
-		self.assertEquals(User.objects.get(id=7).last_name, "G")
-		self.assertEquals(User.objects.get(id=8).last_name, "H")
-		self.assertEquals(User.objects.get(id=9).last_name, "I")
-		self.assertEquals(User.objects.get(id=10).last_name, "J")
-		self.assertEquals(User.objects.get(id=11).last_name, "K")
-
-		self.assertEquals(User.objects.get(id=1).email, "A@test.com")
-		self.assertEquals(User.objects.get(id=2).email, "B@test.com")
-		self.assertEquals(User.objects.get(id=3).email, "C@test.com")
-		self.assertEquals(User.objects.get(id=4).email, "D@test.com")
-		self.assertEquals(User.objects.get(id=5).email, "E@test.com")
-		self.assertEquals(User.objects.get(id=6).email, "F@test.com")
-		self.assertEquals(User.objects.get(id=7).email, "G@test.com")
-		self.assertEquals(User.objects.get(id=8).email, "H@test.com")
-		self.assertEquals(User.objects.get(id=9).email, "I@test.com")
-		self.assertEquals(User.objects.get(id=10).email, "J@test.com")
-		self.assertEquals(User.objects.get(id=11).email, "K@test.com")
-
-		self.assertEquals(User.objects.get(id=1).password, "A")
-		self.assertEquals(User.objects.get(id=2).password, "B")
-		self.assertEquals(User.objects.get(id=3).password, "C")
-		self.assertEquals(User.objects.get(id=4).password, "D")
-		self.assertEquals(User.objects.get(id=5).password, "E")
-		self.assertEquals(User.objects.get(id=6).password, "F")
-		self.assertEquals(User.objects.get(id=7).password, "G")
-		self.assertEquals(User.objects.get(id=8).password, "H")
-		self.assertEquals(User.objects.get(id=9).password, "I")
-		self.assertEquals(User.objects.get(id=10).password, "J")
-		self.assertEquals(User.objects.get(id=11).password, "K")
-
-		for i in xrange(1,5):
-			self.assertEquals(User.objects.get(id=i).is_superuser, True)
-		for n in xrange(6,11):
-			self.assertEquals(User.objects.get(id=n).is_superuser, False)
-
 class Forum_Post_New(TestCase):
 
 	def setUp(self):
@@ -213,30 +132,14 @@ class Forum_Thread_New(TestCase):
 class Lecture_Model(TestCase):
 		
 
-	def test_correct_attr(self):
-		Lecture.objects.create(title="Lecture 1")
-		Lecture.objects.create(title="Lecture 2")
-		Lecture.objects.create(title="Lecture 3")
-		Lecture.objects.create(title="Lecture 4")
-		Lecture.objects.create(title="Lecture 5")
-		Lecture.objects.create(title="Lecture 6")
-		Lecture.objects.create(title="Lecture 7")
-		Lecture.objects.create(title="Lecture 8")
-		Lecture.objects.create(title="Lecture 9")
-		Lecture.objects.create(title="Lecture 10")
-		#check name is inserted correctly
-		self.assertEquals(Lecture.objects.get(id=1).title, "Lecture 1")
-		self.assertEquals(Lecture.objects.get(id=2).title, "Lecture 2")
-		self.assertEquals(Lecture.objects.get(id=3).title, "Lecture 3")
-		self.assertEquals(Lecture.objects.get(id=4).title, "Lecture 4")
-		self.assertEquals(Lecture.objects.get(id=5).title, "Lecture 5")
-		self.assertEquals(Lecture.objects.get(id=6).title, "Lecture 6")
-		self.assertEquals(Lecture.objects.get(id=7).title, "Lecture 7")
-		self.assertEquals(Lecture.objects.get(id=8).title, "Lecture 8")
-		self.assertEquals(Lecture.objects.get(id=9).title, "Lecture 9")
-		self.assertEquals(Lecture.objects.get(id=10).title, "Lecture 10")
+	def test_creation(self):
 
+		num_test = 10
+		title_list = [Rand.randomString(10) for _ in xrange(num_test)]
 
+		for i in xrange(num_test):
+			Lecture.objects.create(title=title_list[i])
+			self.assertEquals(Lecture.objects.get(id=i+1).title, title_list[i])
 		for i, item in enumerate(min(glist, Lecture.objects.all())):
 			self.assertEquals(glist[i], Lecture.objects.get(id=i+1).collab_doc)
 
@@ -371,23 +274,8 @@ class Get_Request(TestCase):
 
 		request = self.client.get('/alert/create_user_success')
 		self.assertEquals(request.status_code, 200)
-		'''
-		self.kwargs['tag'] = "create_user_success"
-		request = self.factory.get('/alert/', self)
 
-		request.user = self.user
-		view = AlertView.as_view()
-		response = view(request)
-		self.assertEquals(response.status_code, 200)
-		'''
-
-	def test_lecture_view(self):
-
-		Lecture.objects.create(title="Lecture 1")
-		self.assertEquals(Lecture.objects.get(id=01).title, 'Lecture 1')
-
-		request = self.client.get('/course/01/lecture-1')
-		self.assertEquals(request.status_code, 302)
+	
 	
 
 	def test_quiz_view(self):
@@ -433,7 +321,53 @@ class Get_Request(TestCase):
 		self.assertEquals(request.status_code, 302)
 
 
+class Login_Required_Tests(TestCase):
+	# check that appropriate views require log in
+	def setUp(self):
+		self.c = Client()
+
+	def test_lecture_login_required(self):
+		response = self.c.get('/course/01/lecture-1')
+		self.assertEquals(response.status_code, 302)
+		self.assertEquals(response['Location'], "http://testserver"+reverse('login')+"?next=/course/01/lecture-1")
+
+	def test_quiz_login_required(self):
+		response = self.c.get('/course/01/lecture-1/quiz/01/quiz-slug')
+		self.assertEquals(response.status_code, 302)
+		self.assertEquals(response['Location'], "http://testserver"+reverse('login')+"?next=/course/01/lecture-1/quiz/01/quiz-slug")
+
+	def test_lecture_slide_login_required(self):
+		response = self.c.get('/course/01/lecture-1/lecture_slide')
+		self.assertEquals(response.status_code, 302)
+		self.assertEquals(response['Location'], "http://testserver"+reverse('login')+"?next=/course/01/lecture-1/lecture_slide")
+
+	def test_thread_index_login_required(self):
+		response = self.c.get('/course/threads')
+		self.assertEquals(response.status_code, 302)
+		self.assertEquals(response['Location'], "http://testserver"+reverse('login')+"?next=/course/threads")
+
+	def test_thread_new_login_required(self):
+		response = self.c.get('/course/threads/new')
+		self.assertEquals(response.status_code, 302)
+		self.assertEquals(response['Location'], "http://testserver"+reverse('login')+"?next=/course/threads/new")
+
+	def test_thread_details_login_required(self):
+		response = self.c.get('/course/threads/01/thread_slug')
+		self.assertEquals(response.status_code, 302)
+		self.assertEquals(response['Location'], "http://testserver"+reverse('login')+"?next=/course/threads/01/thread_slug")
+
+	def test_wordcloud_login_required(self):
+		response = self.c.get('/course/01/lecture-1/wordcloud/01/wordcloud-slug')
+		self.assertEquals(response.status_code, 302)
+		self.assertEquals(response['Location'], "http://testserver"+reverse('login')+"?next=/course/01/lecture-1/wordcloud/01/wordcloud-slug")
+
+	def test_code_snippet_login_required(self):
+		response = self.c.get('/course/01/lecture-1/code')
+		self.assertEquals(response.status_code, 302)
+		self.assertEquals(response['Location'], "http://testserver"+reverse('login')+"?next=/course/01/lecture-1/code")
+
 class Redirect_Tests(TestCase):
+
 
 	def test_login_redirect(self):
 		create_student(username="jack", password="password")	
@@ -448,14 +382,44 @@ class Redirect_Tests(TestCase):
 		self.assertRedirects(response, reverse('root'))
 		self.assertEquals(response['Location'], "http://testserver"+reverse('root'))
 
-	def test_student_login(self):
+	def test_student_login1(self):
 		create_student(username="jack", password="password")	
 		c = Client()
 		response = c.post(reverse('login'), data={'username': 'jack', 'password': 'password'}, follow=True)
 		# follow=True follows the redirects to the end
 		# response.context['current_url'] is available for all standard responses
 		self.assertEquals(response.status_code, 200)
+		# no lecture created, go to root url
 		self.assertEquals(response.context['current_url'], reverse('root'))
+		# root and index url map both /index and / to the same view
+
+	def test_student_login2(self):
+		lecture = Lecture.objects.create(title="Lecture 1")
+		create_student(username="jack", password="password")	
+		c = Client()
+		response = c.post(reverse('login'), data={'username': 'jack', 'password': 'password'}, follow=True)
+		# follow=True follows the redirects to the end
+		# response.context['current_url'] is available for all standard responses
+
+		self.assertEquals(response.status_code, 200)
+		# redirect to lecture if lecture exists
+		self.assertEquals(response.context['current_url'],
+			reverse('lecture', kwargs={'lecture_id': lecture.id, 'lecture_slug':lecture.slug}))
+		# root and index url map both /index and / to the same view
+
+	def test_student_login3(self):
+		lecture1 = Lecture.objects.create(title="Lecture 1")
+		lecture2 = Lecture.objects.create(title="Lecture 2")
+		create_student(username="jack", password="password")	
+		c = Client()
+		response = c.post(reverse('login'), data={'username': 'jack', 'password': 'password'}, follow=True)
+		# follow=True follows the redirects to the end
+		# response.context['current_url'] is available for all standard responses
+
+		self.assertEquals(response.status_code, 200)
+		# redirect to most recent lecture
+		self.assertEquals(response.context['current_url'],
+			reverse('lecture', kwargs={'lecture_id': lecture2.id, 'lecture_slug':lecture2.slug}))
 		# root and index url map both /index and / to the same view
 
 	def test_admin_login(self):
@@ -588,26 +552,6 @@ class New_Form_Test(TestCase):
 
 class Form_Error_Test(TestCase):
 
-	'''
-	def test_wordcloud_multiplewords(self):
-
-		u1=create_student(username="jack", password="password")
-		l1=Lecture.objects.create(title="Lecture 1")
-		w1=Wordcloud.objects.create(title="test", Lecture=l1, visible=True)
-		c=Client()
-
-		response=c.post(reverse('login'), data={'username': 'jack', 'password': 'password'}, follow=True)
-		self.assertEquals(response.status_code, 200)
-		self.assertEquals(response.context['current_url'], reverse('lecture', kwargs={'lecture_id': l1.id, 'lecture_slug': l1.slug}))
-
-		response=c.post(reverse('wordcloud', kwargs={'lecture_id': l1.id, 'lecture_slug': l1.slug, 'wordcloud_id': w1.id, 'wordcloud_slug': w1.slug}), data={'word': 'something something', 'User': u1.id, 'Wordcloud': w1.id}, follow=True)
-		self.assertEquals(response.status_code, 200)
-		#print response.context['current_url']
-		self.assertEquals(response.context['current_url'], reverse('wordcloud', kwargs={'lecture_id': l1.id, 'lecture_slug': l1.slug, 'wordcloud_id': w1.id, 'wordcloud_slug':w1.slug}))
-		#print response.context['form']
-		#print type(response.context['form'])
-		self.assertEquals(response.context['form'].errors['word'], 'Input must be only one word')
-	'''
 	
 	def test_incorrect_login(self):
 		

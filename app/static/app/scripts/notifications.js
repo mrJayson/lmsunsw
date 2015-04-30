@@ -35,17 +35,6 @@ function onOpen() {
 function addNotification(notification) {
     // If we have permission to show browser notifications
     // we can show the notifiaction
-    if (window.Notification && Notification.permission === "granted") {
-        new Notification(notification.message);
-    }
-
-    // Add the new notification
-    var li = document.createElement("li");
-    notificationsList.insertBefore(li, notificationsList.firstChild);
-    li.innerHTML = notification.message;
-
-    // Remove excess notifications
-    while (notificationsList.getElementsByTagName("li").length > 5) {
-        notificationsList.getElementsByTagName("li")[5].remove();
-    }
+    $.notify("Hello World");
+    console.log(notification)
 }

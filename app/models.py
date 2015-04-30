@@ -12,7 +12,7 @@ from django.conf import settings
 
 from autoslug import AutoSlugField
 
-from wordcloud import WordCloud
+#from wordcloud import WordCloud
 
 
 from pygments import highlight, styles
@@ -37,7 +37,6 @@ class UserProfile(models.Model):
 
 class Lecture(models.Model):
     title = models.CharField(max_length=30, unique=True)
-    
     collab_doc = models.URLField(blank=True, null=True, help_text=_("Optional, Provide a URL Link to a specific google docs, a blank default will be used if empty"))
     slug = AutoSlugField(populate_from='title')
 
@@ -198,7 +197,7 @@ class Wordcloud(models.Model):
     def words(self):
         # joins all the words into one string with space as separator
         return " ".join([word.word for word in WordcloudSubmission.objects.filter(Wordcloud=self)])
-
+    '''
     def generate_image(self):
         # returns whether or not it generated an image
         if self.words != '':
@@ -210,6 +209,7 @@ class Wordcloud(models.Model):
             self.save()
             return True
         return False
+    '''
 
 class WordcloudSubmission(models.Model):
     User = models.ForeignKey(User)

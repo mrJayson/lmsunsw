@@ -7,9 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LMSUNSW</title>
     
-    <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.min.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/sidebar.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/animate.min.css' %}" />
     <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
     {% block extrahead %}{% endblock %}
 </head>
@@ -44,7 +45,7 @@
     <script src="{% static 'app/scripts/site.js' %}"></script>
     <script src="{% static 'app/scripts/bootstrap-notify.js' %}"></script>
     {% include 'session_security/all.html' %}
-    
+
     {% if user.is_authenticated %}
         {% swampdragon_settings %}
         <script type="text/javascript" src="{% static 'swampdragon/js/dist/swampdragon.min.js' %}"></script>

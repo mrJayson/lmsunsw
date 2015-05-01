@@ -38,9 +38,13 @@ function student_poll(current_quiz_list) {
             /* update confidence meter */
             refresh_confidence(data)
             /* update new quiz badge number */
-            if (data.reload == 'new quiz') {
+            if (data.quiz_difference > 0) {
                 $("#current_quiz_list").load(' #current_quiz_list', function() {$(this).children().unwrap()})
-                $.notify("New Quiz Available")
+                $.notify("quiz closed")
+            }
+            else if (data.quiz_difference < 0) {
+                $("#current_quiz_list").load(' #current_quiz_list', function() {$(this).children().unwrap()})
+                $.notify("new quiz available")
             }
         },
         error: function(response){

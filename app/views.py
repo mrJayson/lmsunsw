@@ -72,7 +72,8 @@ def student_poll(request):
         results = get_confidence_meter_values(request)
         # if there is a change in the quiz_list by checking length
         if int(request.GET.get("quiz_length")) != len(Quiz.objects.filter(visible = True)):
-            results.update({'reload': 'new quiz'})
+            difference = int(request.GET.get("quiz_length")) - len(Quiz.objects.filter(visible = True))
+            results.update({'quiz_difference': difference})
         return HttpResponse(json.dumps(results), content_type=_('application/json'))
     else:
         #if not ajax request, render index page as they are not supposed to request via non ajax

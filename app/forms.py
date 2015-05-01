@@ -100,7 +100,7 @@ class QuizSelectionForm(forms.Form):
 
             # if quiz not answered yet, filter will return an empty list
             quiz_choice_selected = QuizChoiceSelected.objects.filter(User=user, QuizChoice__Quiz=quiz.id)
-            if len(quiz_choice_selected) == 0:
+            if len(quiz_choice_selected) == 0 and quiz.visible:
                 # Quiz not answered yet, prepare form to collect
                 self.fields['choices'] = forms.ChoiceField(
                     choices = quiz_choice_list,
@@ -118,7 +118,22 @@ class QuizSelectionForm(forms.Form):
                     )
                 # form is to have a submit button since it needs to collect data
                 self.helper.add_input(Submit(_('submit'), _('Submit')))
-            else:
+
+            elif len(quiz_choice_selected) == 0 and not quiz.visible:
+                # Quiz not answered yet, prepare form to collect
+                self.fields['choices'] = forms.ChoiceField(
+                    choices = quiz_choice_list,
+                    required=True,
+                    widget=forms.RadioSelect
+                    )
+                self.helper.layout.append(
+                    Fieldset(
+                        quiz.question,
+                        Field('choices', disabled=_('true'))
+                        )
+                    )
+
+            elif len(quiz_choice_selected) != 0:
                 # Quiz answered, prepare form to display result
                 # SINGLEMCQ only allows one choice to be selected
                 initial_value = quiz_choice_selected.first().QuizChoice.id
@@ -167,7 +182,21 @@ class QuizSelectionForm(forms.Form):
                     )
                 # form is to have a submit button since it needs to collect data
                 self.helper.add_input(Submit(_('submit'), _('Submit')))
-            else:
+            elif len(quiz_choice_selected) == 0 and not quiz.visible:
+
+                self.fields['choices'] = forms.MultipleChoiceField(
+                    choices = quiz_choice_list,
+                    required=True,
+                    widget=forms.CheckboxSelectMultiple,
+                    )
+                self.helper.layout.append(
+                    Fieldset(
+                        quiz.question,
+                        Field('choices', disabled=_('true'))
+                        )
+                    )
+
+            elif len(quiz_choice_selected) != 0:
                 # Quiz answered, prepare form to display result
                 # MULTIMCQ will have many choices selected
                 initial_value = [qcs.QuizChoice.id for qcs in quiz_choice_selected]

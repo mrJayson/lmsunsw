@@ -93,8 +93,25 @@ class Quiz(models.Model):
     last_touch = models.DateTimeField(auto_now=True)
     slug = AutoSlugField(populate_from='question')
 
+    # code snippet fields, all are optional
+    syntax = models.CharField(blank=True, null=True, max_length=30, choices=settings.LANGUAGE_CHOICES, default=settings.DEFAULT_LANGUAGE)
+    code = models.TextField(blank=True, null=True, )
+    linenumbers = models.NullBooleanField(blank=True, null=True, default=settings.DEFAULT_LINE_NUMBERS)
+    style = models.CharField(blank=True, null=True, max_length=30, choices=tuple(STYLE_MAP.items()), default='default')
+
     def __unicode__(self):
         return unicode(self.Lecture.title + " " + self.question)
+
+    @property
+    def render_code(self):
+        style = styles.get_style_by_name(self.style)
+        formatter = HtmlFormatter(linenos=self.linenumbers, style=style, nowrap=True, classprefix='code%s-' % self.pk)
+        html = highlight(self.code, get_lexer_by_name(self.syntax), formatter)
+        css = formatter.get_style_defs()
+
+        # Included in a DIV, so the next item will be displayed below.
+        return _('<div class="code"><style type="text/css">%(css)s</style>\n<pre>%(html)s</pre></div>\n') % {'css':css, 'html':html}
+
 
     @property
     def quiz_type(self):

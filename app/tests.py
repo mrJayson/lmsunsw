@@ -602,3 +602,45 @@ class Form_Error_Test(TestCase):
 
 
 #	def test_quiz_partial_correct(self):
+
+class Check_correct_URL(TestCase):
+
+	def test_user_path(self):
+
+		u1=create_student(username="jack", password="password")
+		u2=create_student(username="harry", password="harry")
+		l1=Lecture.objects.create(title="Lecture 1")
+		l2=Lecture.objects.create(title="Lecture 2")
+		
+		c=Client()
+
+		response=c.post(reverse('login'), data={'username': 'jack', 'password': 'password'}, follow=True)
+
+		request=c.get(reverse('lecture', kwargs={'lecture_id': l1.id, 'lecture_slug': l1.slug}))
+		request=c.get(reverse('thread'))
+		
+		response = c.post(reverse('create_thread'), data={'Creator':u1.id, 'title': 'testing', 'content': 'testing thread', 'anonymous': False, 'views':0}, follow=True)
+		#print response.context['form']
+		#self.assertEquals(Thread.objects.get(id=01).title, 'testing')
+
+		request=c.get(reverse('post', kwargs={'thread_id': 01, 'thread_slug':Thread.objects.get(id=01).slug}))
+
+		response=c.post(reverse('post', kwargs={'thread_id': 01, 'thread_slug': Thread.objects.get(id=01).slug}), data={'Creator':u1.id, 'anonymous': False, 'Thread': 01, 'content': 'testing reply'}, follow=True)
+
+		request=c.get(reverse('lecture', kwargs={'lecture_id': l2.id, 'lecture_slug': l2.slug}))
+		request=c.get(reverse('thread'))
+
+		request=c.get(reverse('post', kwargs={'thread_id': 01, 'thread_slug':Thread.objects.get(id=01).slug}))
+		request=c.get(reverse('post', kwargs={'thread_id': 01, 'thread_slug':Thread.objects.get(id=01).slug}))
+
+
+		response=c.post(reverse('create_thread'), data={'Creator':u1.id, 'title': 'testing2', 'content': 'testing another thread', 'anonymous':True, 'views':0}, follow=True)
+
+		self.assertEquals(response.context['current_url'], reverse('thread'))
+		self.assertEquals(Thread.objects.get(id=01).views,5)
+		self.assertEquals(Thread.objects.get(id=01).title, 'testing')
+		
+		self.assertEquals(Post.objects.get(id=01).content, 'testing reply')
+		
+		self.assertEquals(Thread.objects.get(id=02).views,0)
+		self.assertEquals(Thread.objects.get(id=02).title, 'testing2')

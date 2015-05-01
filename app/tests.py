@@ -546,9 +546,6 @@ class New_Form_Test(TestCase):
 		#print response.context['form']
 		#self.assertEquals(Quiz.objects.get(id=01).question, 'test')
 		self.assertEquals(response.context['current_url'], reverse('admin:login'))
-		
-
-
 
 class Form_Error_Test(TestCase):
 

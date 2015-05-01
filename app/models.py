@@ -12,7 +12,7 @@ from django.conf import settings
 
 from autoslug import AutoSlugField
 
-from wordcloud import WordCloud
+#from wordcloud import WordCloud
 
 
 from pygments import highlight, styles
@@ -193,6 +193,7 @@ class Wordcloud(models.Model):
         # joins all the words into one string with space as separator
         return " ".join([word.word for word in WordcloudSubmission.objects.filter(Wordcloud=self)])
 
+'''
     def generate_image(self):
         # returns whether or not it generated an image
         if self.words != '':
@@ -204,6 +205,7 @@ class Wordcloud(models.Model):
             self.save()
             return True
         return False
+'''
 
 class WordcloudSubmission(models.Model):
     User = models.ForeignKey(User)

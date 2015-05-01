@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from session_security.utils import get_last_activity, set_last_activity
 from session_security.settings import EXPIRE_AFTER, PASSIVE_URLS
 from django.contrib.auth import logout
+from django.contrib.sessions.models import Session
 
 class SessionSecurityMiddleware(middleware.SessionSecurityMiddleware):
 

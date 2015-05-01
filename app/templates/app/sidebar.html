@@ -26,11 +26,11 @@
             <a href="{% url 'thread' %}">Posts</a>
         </li>
         {% if current_quiz_list %}<!--current quiz list-->
-            <li role="presentation" class="dropdown">
+            <li id="current_quiz_list" role="presentation" class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
                     New Quizzes <span class="badge">{{current_quiz_list|length}}</span>
                 </a>
-                <ul class="dropdown-menu" role="menu">
+                <ul id="current_quiz_list_inner" class="dropdown-menu" role="menu">
                     {% for quiz in current_quiz_list %}
                         <li>
                             <a href="{% url 'quiz' quiz.Lecture.id quiz.Lecture.slug quiz.id quiz.slug %}"> {{ quiz.question }} </a>
@@ -46,7 +46,7 @@
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
                     New Wordclouds <span class="badge">{{current_wordcloud_list|length}}</span>
                 </a>
-                <ul class="dropdown-menu" role="menu">
+                <ul id="current_wordcloud_list" class="dropdown-menu" role="menu">
                     {% for wordcloud in current_wordcloud_list %}
                         <li>
                             <a href="{% url 'wordcloud' wordcloud.Lecture.id wordcloud.Lecture.slug wordcloud.id wordcloud.slug %}"> {{ wordcloud.title }} </a>

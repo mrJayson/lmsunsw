@@ -27,19 +27,24 @@ function refresh_confidence(data) {
     }
 }
 
-function student_poll() {
+function student_poll(current_quiz_list) {
+    /* send data in poll to compare and retrieve if needed */
     $.ajax({
         type: "GET",
         url:  "/student_poll/",
         dataType: 'json',
+        data: {'quiz_length': current_quiz_list},
         success: function (data) {
             /* update confidence meter */
             refresh_confidence(data)
             /* update new quiz badge number */
-            
+            if (data.reload == 'new quiz') {
+                $("#current_quiz_list").load(' #current_quiz_list', function() {$(this).children().unwrap()})
+                $("#current_wordcloud_list").load(' #current_wordcloud_list', function() {$(this).children().unwrap()})
+                $.notify("New Quiz Available")
+            }
         },
         error: function(response){
-
         },
     });
 }

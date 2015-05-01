@@ -66,9 +66,13 @@ def long_poll(request):
 
 def student_poll(request):
     if request.is_ajax():
+
         # need to import in here to prevent circular imports
         from app.context_processors import get_confidence_meter_values
         results = get_confidence_meter_values(request)
+        # if there is a change in the quiz_list by checking length
+        if int(request.GET.get("quiz_length")) != len(Quiz.objects.filter(visible = True)):
+            results.update({'reload': 'new quiz'})
         return HttpResponse(json.dumps(results), content_type=_('application/json'))
     else:
         #if not ajax request, render index page as they are not supposed to request via non ajax

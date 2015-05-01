@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/sidebar.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/animate.min.css' %}" />
     <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
     {% block extrahead %}{% endblock %}
 </head>
@@ -44,6 +45,7 @@
     <script src="{% static 'app/scripts/flot/jquery.flot.pie.min.js' %}"></script>
 
     <script src="{% static 'app/scripts/site.js' %}"></script>
+    <script src="{% static 'app/scripts/bootstrap-notify.min.js' %}"></script>
     {% include 'session_security/all.html' %}
     
     {% if user.is_authenticated and not "admin" in current_url %}
@@ -51,9 +53,9 @@
     <!-- ensure refreshes only occur when logged in and not in admin view-->
         <script>
             /* updates the confidence meter periodically */
-            var ping_interval = 1000*15
+            var ping_interval = 1000*5
             setInterval(function() {
-                student_poll()
+                student_poll($("#current_quiz_list_inner li").length)
                 }, ping_interval
             )
         </script>

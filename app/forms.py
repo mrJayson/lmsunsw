@@ -285,68 +285,6 @@ class PostReplyForm(forms.ModelForm):
         post_object = Post.objects.create(Thread=thread_object, content=content, Creator=Creator, rank=rank, anonymous=anonymous)
         return post_object
 
-class WordcloudSubmissionForm(forms.ModelForm):
-
-    class Meta:
-        model = WordcloudSubmission
-        fields = ('User', 'Wordcloud', 'word')
-
-    def __init__(self, user, wordcloud, *args, **kwargs):
-        super(WordcloudSubmissionForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper(self)
-        self.helper.layout = Layout()
-        
-        previous_entries = WordcloudSubmission.objects.filter(User=user, Wordcloud=wordcloud)
-        if previous_entries.exists():
-            # if submission has already been made
-            self.fields['word'] = forms.CharField(label=_("You have submitted the word:"), initial=previous_entries.first().word, widget=forms.TextInput(attrs={_('class'): _('form-control'), _('placeholder'):_('Enter one word only')}))
-            self.fields['User'] = forms.CharField(widget=forms.HiddenInput())
-            self.fields['Wordcloud'] = forms.CharField(widget=forms.HiddenInput())
-            self.helper.layout.append(
-            Fieldset(
-                    wordcloud.title,
-                    Field('word', disabled=True),
-                    Field('User'),
-                    Field('Wordcloud'),
-                )
-            )
-            self.helper.add_input(Button(name = _(""), value=_("Submitted"), css_class=_('btn-primary')))
-
-        else:
-            self.fields['word'] = forms.CharField(label=_("Enter your word into the wordcloud!"), widget=forms.TextInput(attrs={_('class'): _('form-control'), _('placeholder'):_('Enter one word only')}))
-            self.fields['User'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):user.id}))
-            self.fields['Wordcloud'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):wordcloud.id}))
-            self.helper.layout.append(
-            Fieldset(
-                    wordcloud.title,
-                    Field('word'),
-                    Field('User'),
-                    Field('Wordcloud'),
-                )
-            )
-            self.helper.add_input(Submit(_('submit'), _('Submit')))
-            
-    def is_valid(self):
-        valid = super(WordcloudSubmissionForm, self).is_valid()
-        if not valid:
-            # no need to check if already invalid
-            return valid
-        if re.search('[^a-zA-Z]', self.cleaned_data.get('word')):
-            self._errors['word'] = [_('Input must be only one word')]
-            return False
-            
-        # passed all tests
-        return True
-
-    def clean_User(self):
-        return User.objects.get(id=self.cleaned_data.get('User'))
-
-    def clean_Wordcloud(self):
-        return Wordcloud.objects.get(id=self.cleaned_data.get('Wordcloud'))
-
-    def clean_word(self):
-        return self.cleaned_data.get('word').lstrip().rstrip()
-
 ###################################################################################################
 # Admin Dashboard forms
 
@@ -367,7 +305,6 @@ class QuickSettingsForm(forms.Form):
             quick_lecture = ""
 
         visible_quizzes = [(i.id, i.question) for i in Quiz.objects.filter(visible=True)]
-        visible_wordclouds = [(i.id, i.title) for i in Wordcloud.objects.filter(visible=True)]
         self.fields['Lecture'] = forms.ChoiceField(
             label = _("Current Lecture"),
             initial = quick_lecture,
@@ -379,12 +316,6 @@ class QuickSettingsForm(forms.Form):
                 label = _("Currently visible Quizzes, click to finish"),
                 choices = visible_quizzes,
                 widget=forms.SelectMultiple(attrs={_('id'):('quick_quiz_select'), _('class'): _('form-control')}),
-                )
-        if visible_wordclouds:
-            self.fields['visible_wordclouds'] = forms.ChoiceField(
-                label = _("Currently visible Wordclouds, click to finish"),
-                choices = visible_wordclouds,
-                widget=forms.SelectMultiple(attrs={_('id'):('quick_wordcloud_select'), _('class'): _('form-control')}),
                 )
 
 class QuickQuizForm(forms.ModelForm):
@@ -432,32 +363,6 @@ QuickQuizInlineFormSet = inlineformset_factory(
     can_delete=False,
     extra=4,
     )
-
-class QuickWordcloudForm(forms.ModelForm):
-    class Meta:
-        model = Wordcloud
-        fields = ('title', 'visible', 'Lecture')
-
-    def __init__(self, session=None, *args, **kwargs):
-        super(QuickWordcloudForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper(self)
-        self.helper.layout = Layout()
-        self.fields['title'] = forms.CharField(label=_("Title"), widget=forms.TextInput(attrs={_('class'): _('form-control')}))
-        self.fields['visible'] = forms.BooleanField(initial=True, required=False)
-        # assign current lecture from session
-        if session!=None and session.has_key('quick_lecture'):
-            quick_lecture = session.get('quick_lecture')
-        elif Lecture.objects.all().exists():
-            # must be existing lecture to choose from
-            quick_lecture = Lecture.objects.last().id
-        else:
-            quick_lecture = ""
-        self.fields['Lecture'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):quick_lecture}))
-        self.helper.add_input(Submit(_('wordcloud'), _('Submit')))
-
-    def clean_Lecture(self):
-        lecture = Lecture.objects.get(id=self.cleaned_data.get('Lecture'))
-        return lecture
 
 
 class QuickCodeSnippetForm(forms.ModelForm):
@@ -522,14 +427,9 @@ class LectureAdminForm(forms.ModelForm):
             collab_doc = Lecture.get_unused_gdoc()
         return collab_doc
 
-class WordcloudAdminForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(WordcloudAdminForm, self).__init__(*args, **kwargs)
-        self.fields['title'].widget = widgets.AdminTextInputWidget({_('class'): _('form-control'), _('placeholder'): _('Title of the wordcloud')})
-
 class QuizChoiceInLineForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super(WordcloudAdminForm, self).__init__(*args, **kwargs)
+        super(QuizChoiceInLineForm, self).__init__(*args, **kwargs)
         self.fields['choice'].widget = widgets.AdminTextareaWidget({_('class'): _('form-control'), _('placeholder'): _('One of the quiz choices')})
         self.fields['Quiz'].widget = widgets.AdminURLFieldWidget({_('class'): _('form-control'), _('placeholder'): _('Lecture Slide URL')})
         self.fields['correct'].widget = widgets.AdminURLFieldWidget({_('class'): _('form-control'), _('placeholder'): _('A generic Document will be provided if left empty')})

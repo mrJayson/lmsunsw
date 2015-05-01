@@ -14,9 +14,9 @@ from django.conf import settings
 from django.shortcuts import render, redirect
 
 from app.models import *
-from app.forms import (LectureAdminForm, QuizAdminForm, WordcloudAdminForm, QuizChoiceInLineForm, 
-CodeSnippetAdminForm, ThreadAdminForm, QuickSettingsForm, QuickQuizForm, QuickQuizInlineFormSet, 
-QuickWordcloudForm, QuickCodeSnippetForm, LectureMaterialInLineFormset)
+from app.forms import (LectureAdminForm, QuizAdminForm, QuizChoiceInLineForm, 
+CodeSnippetAdminForm, ThreadAdminForm, QuickSettingsForm, QuickQuizForm, QuickQuizInlineFormSet,
+QuickCodeSnippetForm, LectureMaterialInLineFormset)
 
 ###################################################################################################
 
@@ -132,39 +132,6 @@ class UserProfileAdmin(admin.ModelAdmin):
             return redirect(reverse('admin:%s_%s_change' % (self.model._meta.app_label, self.model._meta.model_name), args=(request.user.UserProfile.id,)))
         return super(UserProfileAdmin, self).changelist_view(request=request, extra_context=extra_context)
 
-class WordcloudAdmin(admin.ModelAdmin):
-    form = WordcloudAdminForm
-    
-    def add_view(self, request, form_url='', extra_context=None):
-        self.exclude = ('words',)
-        return super(WordcloudAdmin, self).add_view(request, form_url, extra_context)
-
-    def change_view(self, request, object_id, form_url='', extra_context=None):
-        self.readonly_fields = ('words',)
-        fieldsets = (
-            ('Attributes', {
-                'fields': ('title', 'Lecture', 'visible',)
-            }),
-            ('Input', {
-                'readonly_fields': ('words',)
-            }),
-        )
-        return super(WordcloudAdmin, self).change_view(request, object_id, form_url, extra_context)
-
-    def save_model(self, request, obj, form, change):
-        # change parameter is flag for new object created or changing object, not if field has changed
-        # if visible is flagged as False and there are words available, a wordcloud can be generated
-        # need to gather all the words and generate the image
-        # need to generate a new image if title also changes
-
-        before_save_obj = Wordcloud.objects.get(id=obj.id)
-        if (before_save_obj.visible == True and obj.visible == False) and obj.words:
-            # if wordcloud changes from visible to not visible
-            # and if there are words to process
-            obj.generate_image()
-
-        return super(WordcloudAdmin, self).save_model(request, obj, form, change)
-
 class CodeSnippetAdmin(admin.ModelAdmin):
     form = CodeSnippetAdminForm
 
@@ -189,7 +156,6 @@ class Admin_Site(AdminSite):
         
         extra_context['quick_quiz_form'] = QuickQuizForm(session=request.session)
         extra_context['quick_quiz_inline_form'] = QuickQuizInlineFormSet(instance=Quiz())
-        extra_context['quick_wordcloud_form'] = QuickWordcloudForm(session=request.session)
         extra_context['quick_codesnippet_form'] = QuickCodeSnippetForm(session=request.session)
         extra_context['quick_settings_form'] = QuickSettingsForm(session=request.session)
 
@@ -221,18 +187,6 @@ class Admin_Site(AdminSite):
             extra_context['quick_quiz_form'] = QuickQuizForm(session=request.session)
             extra_context['quick_quiz_inline_form'] = QuickQuizInlineFormSet(instance=Quiz())
 
-        if 'wordcloud' in request.POST:
-            form = QuickWordcloudForm(data=request.POST) 
-            if form.is_valid():
-                form.save()
-                # successful, give new form for next submission
-                extra_context['quick_wordcloud_form'] = QuickWordcloudForm(session=request.session)
-            else:
-                # errors present, give back form with error messages
-                extra_context['quick_wordcloud_form'] = form
-        else:
-            # if not Post, give new form
-            extra_context['quick_wordcloud_form'] = QuickWordcloudForm(session=request.session)
 
         if 'codesnippet' in request.POST:
             form = QuickCodeSnippetForm(data=request.POST)
@@ -289,7 +243,6 @@ adminsite.register(UserProfile, UserProfileAdmin)
 adminsite.register(Quiz, QuizAdmin)
 adminsite.register(QuizProxy, QuizResultsAdmin)
 adminsite.register(Lecture, LectureAdmin)
-adminsite.register(Wordcloud, WordcloudAdmin)
 adminsite.register(CodeSnippet, CodeSnippetAdmin)
 adminsite.register(Thread, ThreadAdmin)
 

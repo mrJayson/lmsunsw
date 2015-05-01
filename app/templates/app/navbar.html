@@ -49,19 +49,6 @@
 
             {% endif %}<!--end if codesnippet_list-->
 
-            {% if wordcloud_list %}<!--wordcloud sub-list-->
-				<li class="dropdown {% current 'wordcloud' %}">
-		          	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Wordcloud History<span class="caret"></span></a>
-		          	<ul class="dropdown-menu" role="menu">
-		          		{% for wordcloud in wordcloud_list %}
-		                    <li>
-		                        <a href="{% url 'wordcloud' wordcloud.Lecture.id wordcloud.Lecture.slug wordcloud.id wordcloud.slug %}"> {{ wordcloud.title }} </a>
-		                    </li>
-		                {% endfor %}<!--end for wordcloud_list-->
-		          	</ul>
-		        </li>
-            {% endif %}<!--end if wordcloud_list-->
-
 
     	</ul>
         <ul class="nav navbar-nav navbar-right">

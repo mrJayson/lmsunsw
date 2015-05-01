@@ -122,31 +122,6 @@ class Rand():
         anonymous = Rand.randomBool() if anonymous==None else anonymous
         return Post.objects.create(Thread=thread, content=content, Creator=Creator, rank=rank, anonymous=anonymous)
 
-    @staticmethod
-    def wordcloud(title=None, image=None, lecture=None, visible=None):
-        title = Rand.randomString(5) if title==None else title
-        # cannot generate rand image
-        image = None if image==None else image
-        lecture = (Rand.lecture() if (len(Lecture.objects.all())==0) else choice(Lecture.objects.all())) if lecture==None else lecture
-        visible = Rand.randomBool() if visible==None else visible
-        return Wordcloud.objects.create(title=title, image=image, Lecture=lecture, visible=visible)
-
-    @staticmethod
-    def wordcloudsubmission(user=None, wordcloud=None, word=None):
-
-        while True:
-            user = (Rand.user() if (len(User.objects.all())==0) else choice(User.objects.all())) if user==None else user
-            wordcloud = (Rand.wordcloud() if (len(Wordcloud.objects.all())==0) else choice(Wordcloud.objects.all())) if wordcloud==None else wordcloud
-            if WordcloudSubmission.objects.filter(User=user, Wordcloud=wordcloud).exists():
-                user=None
-                wordcloud=None
-            else:
-                break
-
-        word = Rand.randomString(1) if word==None else word
-
-        return WordcloudSubmission.objects.create(User=user, Wordcloud=wordcloud, word=word)
-
 def create_user(username=None, first_name=None, last_name=None, email=None, password=None, is_superuser=None):
     """
     Set all users' is_staff to True to be able to access all of the django admin features
@@ -217,19 +192,7 @@ def create_post(Thread=None, content=None, Creator=None, anonymous=None):
         print "created post: " + new_post.content
     return new_post
 
-def create_wordcloud(title=None, image=None, Lecture=None, visible=None):
-    
-    new_wordcloud = Rand.wordcloud(title, image, Lecture, visible)
-    if 'verbose_populate' in globals() and verbose_populate == True:
-        print "created wordcloud: " + new_wordcloud.title
-    return new_wordcloud
 
-def create_wordcloud_submission(User=None, Wordcloud=None, word=None):
-    
-    new_wordcloud_submission = Rand.wordcloudsubmission(user=User, wordcloud=Wordcloud, word=word)
-    if 'verbose_populate' in globals() and verbose_populate == True:
-        print "created wordcloud submission: " + new_wordcloud_submission.word
-    return new_wordcloud_submission
 
 def clear():
     print "Clearing database"
@@ -242,8 +205,6 @@ def clear():
     ConfidenceMeter.objects.all().delete()
     Thread.objects.all().delete()
     Post.objects.all().delete()
-    Wordcloud.objects.all().delete()
-    WordcloudSubmission.objects.all().delete()
     CodeSnippet.objects.all().delete()
     # remove all user sessions
     django.contrib.sessions.models.Session.objects.all().delete()
@@ -330,10 +291,6 @@ def populate():
     for i in xrange(num_students):
         create_post(anonymous=False)
     
-    wc = create_wordcloud(title="What is your favourite Colour?", visible=True)
-    words = ['Red', 'Blue', 'Green', 'Orange', 'Yellow', 'Purple', 'Cyan', 'Magenta', 'Crimson']
-    for i in xrange(num_students):
-        create_wordcloud_submission(User=User.objects.all()[i], Wordcloud=wc, word=choice(words))
 
 def run():
     clear()

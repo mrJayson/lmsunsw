@@ -40,7 +40,6 @@ function student_poll(current_quiz_list) {
             /* update new quiz badge number */
             if (data.reload == 'new quiz') {
                 $("#current_quiz_list").load(' #current_quiz_list', function() {$(this).children().unwrap()})
-                $("#current_wordcloud_list").load(' #current_wordcloud_list', function() {$(this).children().unwrap()})
                 $.notify("New Quiz Available")
             }
         },

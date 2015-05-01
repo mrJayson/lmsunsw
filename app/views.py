@@ -16,7 +16,7 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.sessions.models import Session
 from django.views.decorators.cache import cache_page
 
-from app.models import ConfidenceMeter, Quiz, Wordcloud, Lecture
+from app.models import ConfidenceMeter, Quiz, Lecture
 
 '''generic view for displaying single messages to the user'''
 class AlertView(TemplateView):
@@ -129,20 +129,7 @@ def quick_update(request):
             response['return_type'] = 'quiz'
             response['return_value'] = request.POST.get('quiz')
             response['notice'] = "Turned off Quiz %(quiz)s" % {'quiz':quiz.question}
-        if request.POST.has_key('wordcloud'):
-            # mark selected wordcloud as not visible
-            wordcloud = Wordcloud.objects.get(id=request.POST.get('wordcloud'))
-            wordcloud.visible = False
-            wordcloud.save()
-            # can only reach this area by turning wordcloud's visible to not visible, therefore, always generate image
-            created = wordcloud.generate_image()
-            response['return_type'] = 'wordcloud'
-            response['return_value'] = request.POST.get('wordcloud')
-            response['notice'] = "Turned off Wordcloud %(wordcloud)s" % {'wordcloud':wordcloud.title}
-            if created:
-                response['notice'] += ", Generating an image from inputs"
-            else:
-                response['notice'] += ", No words were submitted, no image created"
+
 
         return HttpResponse(json.dumps(response), content_type=_('application/json'))
     else:

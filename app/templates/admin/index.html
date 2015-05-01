@@ -44,25 +44,9 @@
 				{{ quick_quiz_form|crispy }}
 				{{ quick_quiz_inline_form|crispy }}
 				<div class="form_actions">
-					<input type="submit" name="quiz" value="Submit" class="btn btn-primary" id="submit-id-wordcloud">
+					<input type="submit" name="quiz" value="Submit" class="btn btn-primary" id="submit-id-quiz">
 				</div>
 			</form>
-		</div>
-	</div>
-
-	<div class="panel panel-primary">
-		<div class="panel panel-heading">
-			<div id="float-left">
-				Quick Create Wordcloud
-			</div>
-			<div id="float-text-right">
-				<button class="btn btn-default" onclick="minimize_panel('quick-wordcloud-panel', 'quick-wordcloud-btn');">
-	                    <span id="quick-wordcloud-btn" class="glyphicon glyphicon-chevron-up"></span>
-	            </button>
-			</div>
-		</div>
-		<div class="panel panel-body" id="quick-wordcloud-panel">
-			{% crispy quick_wordcloud_form %}
 		</div>
 	</div>
 
@@ -149,9 +133,7 @@
 			$("#quick_quiz_select").change(function(data) {
 				quick_update('quiz', this.options[this.selectedIndex].value, "{{csrf_token}}")
 			});
-			$("#quick_wordcloud_select").change(function(data) {
-				quick_update('wordcloud', this.options[this.selectedIndex].value, "{{csrf_token}}")
-			});
+
 		}
 		$(document).ready(addQuickSelectHandlers);
 	</script>

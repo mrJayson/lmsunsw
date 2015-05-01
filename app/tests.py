@@ -424,13 +424,6 @@ class Get_Request(TestCase):
 		request = self.client.get('/course/threads/01/chocolate')
 		self.assertEquals(request.status_code, 302)
 
-	def test_wordcloud(self):
-
-		l1 = Lecture.objects.create(title="Lecture 1")
-		Wordcloud.objects.create(title="test", Lecture=l1, visible=True)
-
-		request = self.client.get('/course/01/lecture-1/wordcloud/01/test')
-		self.assertEquals(request.status_code, 302)
 
 
 class Redirect_Tests(TestCase):
@@ -513,23 +506,6 @@ class New_Form_Test(TestCase):
 		self.assertEquals(response.status_code, 200)
 		self.assertEquals(Post.objects.get(id=01).content, 'testing reply')
 
-	def test_wordcloud(self):
-
-		u1 = create_student(username="jack", password="password")
-		l1 = Lecture.objects.create(title="Lecture 1")
-		w1 = Wordcloud.objects.create(title="test", Lecture=l1, visible=True)
-		c=Client()
-
-		response = c.post(reverse('login'), data={'username': 'jack', 'password': 'password'}, follow = True)
-		self.assertEquals(response.status_code, 200)
-		self.assertEquals(response.context['current_url'], reverse('lecture', kwargs={'lecture_id': l1.id, 'lecture_slug': l1.slug}))
-
-		response = c.post(reverse('wordcloud', kwargs={'lecture_id': l1.id, 'lecture_slug': l1.slug,'wordcloud_id': w1.id, 'wordcloud_slug': w1.slug}), data={'word': 'seomthing',  'User': u1.id, 'Wordcloud': w1.id}, follow = True)
-		self.assertEquals(response.status_code, 200)
-		#print response.context['current_url']
-		#print response.context['form']
-		self.assertEquals(response.context['current_url'],reverse('wordcloud', kwargs={'lecture_id':l1.id, 'lecture_slug':l1.slug, 'wordcloud_id':w1.id, 'wordcloud_slug':w1.slug}))
-
 	def test_quiz_selection(self):
 		#single choice answer
 		u1=create_student(username="jack", password="password")
@@ -588,26 +564,7 @@ class New_Form_Test(TestCase):
 
 class Form_Error_Test(TestCase):
 
-	'''
-	def test_wordcloud_multiplewords(self):
 
-		u1=create_student(username="jack", password="password")
-		l1=Lecture.objects.create(title="Lecture 1")
-		w1=Wordcloud.objects.create(title="test", Lecture=l1, visible=True)
-		c=Client()
-
-		response=c.post(reverse('login'), data={'username': 'jack', 'password': 'password'}, follow=True)
-		self.assertEquals(response.status_code, 200)
-		self.assertEquals(response.context['current_url'], reverse('lecture', kwargs={'lecture_id': l1.id, 'lecture_slug': l1.slug}))
-
-		response=c.post(reverse('wordcloud', kwargs={'lecture_id': l1.id, 'lecture_slug': l1.slug, 'wordcloud_id': w1.id, 'wordcloud_slug': w1.slug}), data={'word': 'something something', 'User': u1.id, 'Wordcloud': w1.id}, follow=True)
-		self.assertEquals(response.status_code, 200)
-		#print response.context['current_url']
-		self.assertEquals(response.context['current_url'], reverse('wordcloud', kwargs={'lecture_id': l1.id, 'lecture_slug': l1.slug, 'wordcloud_id': w1.id, 'wordcloud_slug':w1.slug}))
-		#print response.context['form']
-		#print type(response.context['form'])
-		self.assertEquals(response.context['form'].errors['word'], 'Input must be only one word')
-	'''
 	
 	def test_incorrect_login(self):
 		

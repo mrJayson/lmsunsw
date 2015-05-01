@@ -59,9 +59,6 @@ function quick_update(data_id, value, csrf_token) {
 			if (data.return_type == 'quiz') {
 				$("#quick_quiz_select option[value='" + data.return_value + "']").remove();
 			}
-			if (data.return_type == 'wordcloud') {
-				$("#quick_wordcloud_select option[value='" + data.return_value + "']").remove();
-			}
 			if (typeof data.notice !== 'undefined') {
 				close_button = 	'<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
 								'<span aria-hidden="true">&times;</span>' +
@@ -80,9 +77,6 @@ function addQuickSelectHandlers() {
 	});
 	$("#quick_quiz_select").change(function(data) {
 		quick_update('quiz', this.options[this.selectedIndex].value, "{{csrf_token}}")
-	});
-	$("#quick_wordcloud_select").change(function(data) {
-		quick_update('wordcloud', this.options[this.selectedIndex].value, "{{csrf_token}}")
 	});
 }
 

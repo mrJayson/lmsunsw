@@ -46,8 +46,6 @@ urlpatterns = patterns('',
     url(r'^course/threads/new/?$', login_required(CreateThreadView.as_view()), name='create_thread'),
     # posts page
     url(r'^course/threads/(?P<thread_id>[0-9]+)/(?P<thread_slug>[^/]+)$', login_required(PostView.as_view()), name='post'),
-    # wordclouds page
-    url(r'^course/(?P<lecture_id>[0-9]+)/(?P<lecture_slug>[^/]+)/wordcloud/(?P<wordcloud_id>[0-9]+)/(?P<wordcloud_slug>[^/]+)$', login_required(WordcloudSubmissionView.as_view()), name='wordcloud'),
 
     url(r'^course/(?P<lecture_id>[0-9]+)/(?P<lecture_slug>[^/]+)/code/?$', login_required(CodeSnippetView.as_view()), name='codesnippet'),
     # generic login page

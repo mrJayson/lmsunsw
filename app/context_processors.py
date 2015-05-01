@@ -11,7 +11,7 @@ from django.utils.safestring import mark_safe
 from django.contrib.admin import ModelAdmin
 from django.contrib.admin.validation import BaseValidator
 
-from app.models import ConfidenceMeter, Quiz, Lecture, QuizChoice, QuizChoiceSelected, Wordcloud
+from app.models import ConfidenceMeter, Quiz, Lecture, QuizChoice, QuizChoiceSelected
 
 def django_sessions(request):
 	# context processor to add num of users on the site
@@ -57,7 +57,6 @@ def get_confidence_meter_values(request):
 def currents(request):
 
 	return {'current_quiz_list': Quiz.objects.filter(visible = True),
-	'current_wordcloud_list': Wordcloud.objects.filter(visible = True),
     'current_url': request.path,
 	}
 
@@ -73,7 +72,6 @@ IGNORE_APPS = (
 	"ConfidenceMeter",
 	"QuizChoice",
 	"QuizChoiceSelected",
-	"WordcloudSubmission",
 	"Post",
 	"Permission",
 	"Group",

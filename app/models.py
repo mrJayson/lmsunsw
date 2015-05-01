@@ -12,8 +12,6 @@ from django.conf import settings
 
 from autoslug import AutoSlugField
 
-#from wordcloud import WordCloud
-
 
 from pygments import highlight, styles
 from pygments.formatters.html import HtmlFormatter
@@ -178,42 +176,6 @@ class Post(models.Model):
     def Creator_name(self):
         return _("anonymous") if self.anonymous else self.Creator
 
-class Wordcloud(models.Model):
-    title = models.CharField(max_length=30, unique=True)
-    image = models.ImageField(upload_to="wordcloud", blank=True, null=True)
-    Lecture = models.ForeignKey(Lecture)
-    visible = models.BooleanField(default=False)
-    slug = AutoSlugField(populate_from='title')
-
-    def __unicode__(self):
-        return unicode(self.title)
-
-    @property
-    def words(self):
-        # joins all the words into one string with space as separator
-        return " ".join([word.word for word in WordcloudSubmission.objects.filter(Wordcloud=self)])
-
-'''
-    def generate_image(self):
-        # returns whether or not it generated an image
-        if self.words != '':
-            wc = WordCloud(font_path="static/app/fonts/Microsoft Sans Serif.ttf", width=800, height=400).generate(self.words)
-            filepath = "wordcloud/"+ self.title +".png"
-            img = wc.to_image()
-            img.save(settings.MEDIA_ROOT + "/" + filepath, 'PNG') # create the image file on filesystem
-            self.image = filepath # add the image to the model
-            self.save()
-            return True
-        return False
-'''
-
-class WordcloudSubmission(models.Model):
-    User = models.ForeignKey(User)
-    Wordcloud = models.ForeignKey(Wordcloud)
-    word = models.CharField(max_length=30)
-
-    class Meta:
-        unique_together = ('User', 'Wordcloud') 
 
 class CodeSnippet(models.Model):
     syntax = models.CharField(max_length=30, choices=settings.LANGUAGE_CHOICES, default=settings.DEFAULT_LANGUAGE)

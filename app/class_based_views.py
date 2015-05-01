@@ -10,7 +10,7 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from app.mixins import BaseSidebarContextMixin, SidebarContextMixin
-from app.forms import QuizSelectionForm, CreateThreadForm, CreateUserForm, PostReplyForm, WordcloudSubmissionForm
+from app.forms import QuizSelectionForm, CreateThreadForm, CreateUserForm, PostReplyForm
 from app.models import *
 
 class IndexView(TemplateView, BaseSidebarContextMixin):
@@ -144,28 +144,6 @@ class PostView(CreateView, BaseSidebarContextMixin):
     def get_success_url(self):
         return reverse('post', kwargs={'thread_id':self.kwargs.get('thread_id'), 'thread_slug':self.kwargs.get('thread_slug')})
 
-class WordcloudSubmissionView(CreateView, SidebarContextMixin):
-    # view for students to submit word to wordcloud
-    template_name = _('app/wordcloud_submission.html')
-    model = WordcloudSubmission
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(WordcloudSubmissionView, self).get_context_data(*args, **kwargs)
-        context['lecture_list'] = Lecture.objects.all()
-        context['wordcloud'] = Wordcloud.objects.get(id=self.kwargs.get('wordcloud_id'))
-        return context
-
-    def get_form(self, data=None, files=None, *args, **kwargs):
-        user = self.request.user
-        wordcloud = Wordcloud.objects.get(id=self.kwargs.get('wordcloud_id'))
-        if self.request.method == "POST":
-            form = WordcloudSubmissionForm(user=user, wordcloud=wordcloud, data=self.request.POST)
-        else: # mainly for GET requests
-            form = WordcloudSubmissionForm(user=user, wordcloud=wordcloud)
-        return form
-
-    def get_success_url(self):
-        return reverse('wordcloud', kwargs={'lecture_id':self.kwargs.get('lecture_id'), 'lecture_slug':self.kwargs.get('lecture_slug'), 'wordcloud_id':self.kwargs.get('wordcloud_id'), 'wordcloud_slug':self.kwargs.get('wordcloud_slug')})
 
 class CodeSnippetView(ListView, SidebarContextMixin):
     template_name = _('app/code_snippet.html')

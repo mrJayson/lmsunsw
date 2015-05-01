@@ -40,20 +40,5 @@
             </li>
         {% endif %} <!-- endif current quiz list-->
 
-
-        {% if current_wordcloud_list %}
-            <li role="presentation" class="dropdown {% current 'wordcloud' %}">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                    New Wordclouds <span class="badge">{{current_wordcloud_list|length}}</span>
-                </a>
-                <ul id="current_wordcloud_list" class="dropdown-menu" role="menu">
-                    {% for wordcloud in current_wordcloud_list %}
-                        <li>
-                            <a href="{% url 'wordcloud' wordcloud.Lecture.id wordcloud.Lecture.slug wordcloud.id wordcloud.slug %}"> {{ wordcloud.title }} </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </li>
-        {% endif %}
     </ul>
 </div>

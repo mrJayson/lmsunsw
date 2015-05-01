@@ -27,6 +27,23 @@ function refresh_confidence(data) {
     }
 }
 
+function student_poll() {
+    $.ajax({
+        type: "GET",
+        url:  "/student_poll/",
+        dataType: 'json',
+        success: function (data) {
+            /* update confidence meter */
+            refresh_confidence(data)
+            /* update new quiz badge number */
+            
+        },
+        error: function(response){
+
+        },
+    });
+}
+
 function vote(vote) {
     vote = typeof vote !== 'undefined' ? {vote:vote} : {};
     $.ajax({

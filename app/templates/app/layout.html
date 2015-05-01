@@ -45,13 +45,15 @@
 
     <script src="{% static 'app/scripts/site.js' %}"></script>
     {% include 'session_security/all.html' %}
-    {% if user.is_authenticated %}
-    <!-- ensure refreshes only occur when logged in -->
+    
+    {% if user.is_authenticated and not "admin" in current_url %}
+    
+    <!-- ensure refreshes only occur when logged in and not in admin view-->
         <script>
             /* updates the confidence meter periodically */
             var ping_interval = 1000*15
             setInterval(function() {
-                vote()
+                student_poll()
                 }, ping_interval
             )
         </script>

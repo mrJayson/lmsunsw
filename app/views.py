@@ -64,6 +64,17 @@ def long_poll(request):
         raise Http404
         pass
 
+def student_poll(request):
+    if request.is_ajax():
+        # need to import in here to prevent circular imports
+        from app.context_processors import get_confidence_meter_values
+        results = get_confidence_meter_values(request)
+        return HttpResponse(json.dumps(results), content_type=_('application/json'))
+    else:
+        #if not ajax request, render index page as they are not supposed to request via non ajax
+        raise Http404
+        pass
+
 def vote(request):
     # voting for the confusion meter
 

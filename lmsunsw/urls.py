@@ -24,6 +24,7 @@ urlpatterns = patterns('',
 
     url(r'^vote/$', login_required(vote), name='vote'),
     url(r'^poll/$', login_required(long_poll), name='poll'),
+    url(r'^student_poll/$', login_required(student_poll), name='student_poll'),
     url(r'^quick_update/$', login_required(quick_update), name='quick_update'),
 
     # index page

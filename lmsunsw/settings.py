@@ -51,6 +51,7 @@ INSTALLED_APPS = (
     'session_security',
     'autoslug',
     'password_reset',
+    'debug_toolbar',
 
 )
 

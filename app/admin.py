@@ -221,13 +221,7 @@ class Admin_Site(AdminSite):
             return redirect('index')
         else:
             extra_context = {} if extra_context==None else extra_context
-            recent_quizzes = []
 
-
-            recent_quizzes.append({quiz: choices})
-
-            #extra_context['recent_quizzes'] = Quiz.objects.order_by('last_touch').reverse()[:5]
-            extra_context['recent_quizzes'] = recent_quizzes
             
             # do forms stuff
             if request.method == 'POST':

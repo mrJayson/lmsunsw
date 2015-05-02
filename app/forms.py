@@ -211,7 +211,7 @@ class QuizSelectionForm(forms.Form):
         if quiz.quiz_type == QuizType.MULTIMCQ:
 
             # if quiz not answered yet, filter will return an empty list
-            quiz_choice_selected = QuizChoiceSelected.objects.filter(User=user, QuizChoice__Quiz=quiz.id)
+            quiz_choice_selected = QuizChoiceSelected.objects.select_related.filter(User=user, QuizChoice__Quiz=quiz.id)
             if len(quiz_choice_selected) == 0:
                 # Quiz not answered yet, prepare form to collect
                 self.fields['choices'] = forms.MultipleChoiceField(

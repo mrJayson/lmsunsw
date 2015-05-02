@@ -46,6 +46,7 @@
 
     <script src="{% static 'app/scripts/site.js' %}"></script>
     <script src="{% static 'app/scripts/bootstrap-notify.min.js' %}"></script>
+
     {% include 'session_security/all.html' %}
     
     {% if user.is_authenticated and not "admin" in current_url %}

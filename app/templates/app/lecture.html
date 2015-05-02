@@ -3,7 +3,7 @@
 
 {% block content %}
     {% if current_lecture.collab_doc %}
-        <object data="{{ current_lecture.collab_doc }}" width="100%" height="95%"></object>
+    <iframe src="{{ current_lecture.collab_doc }}"></iframe>
     {% else %}
         No Document Linked!
     {% endif %}

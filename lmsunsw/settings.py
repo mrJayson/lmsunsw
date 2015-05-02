@@ -55,14 +55,15 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'app.middleware.SessionSecurityMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 ROOT_URLCONF = 'lmsunsw.urls'
@@ -74,12 +75,12 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 # Caching for performance boost
 
-CACHE = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'cache_table',
-    }
-}
+#CACHE = {
+#    'default': {
+#        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+#        'LOCATION': 'cache_table',
+#    }
+#}
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
@@ -240,5 +241,5 @@ LANGUAGE_CHOICES = (
     ('xml','xml'),
     ('xslt','xslt'),
 )
-DEFAULT_LINE_NUMBERS = False
-DEFAULT_LANGUAGE = 'html'
+
+DEFAULT_LANGUAGE = 'c'

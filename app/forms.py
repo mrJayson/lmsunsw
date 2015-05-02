@@ -453,7 +453,7 @@ QuickQuizInlineFormSet = inlineformset_factory(
 class QuickCodeSnippetForm(forms.ModelForm):
     class Meta:
         model = CodeSnippet
-        fields = ('syntax', 'code', 'linenumbers', 'style', 'Lecture')
+        fields = ('syntax', 'code', 'style', 'Lecture')
 
     def __init__(self, session=None, *args, **kwargs):
         super(QuickCodeSnippetForm, self).__init__(*args, **kwargs)

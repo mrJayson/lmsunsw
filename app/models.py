@@ -96,7 +96,6 @@ class Quiz(models.Model):
     # code snippet fields, all are optional
     syntax = models.CharField(blank=True, null=True, max_length=30, choices=settings.LANGUAGE_CHOICES, default=settings.DEFAULT_LANGUAGE)
     code = models.TextField(blank=True, null=True, )
-    linenumbers = models.NullBooleanField(blank=True, null=True, default=settings.DEFAULT_LINE_NUMBERS)
     style = models.CharField(blank=True, null=True, max_length=30, choices=tuple(STYLE_MAP.items()), default='default')
 
     # freeform answer, optional 
@@ -109,7 +108,7 @@ class Quiz(models.Model):
     def render_code(self):
         if self.code != None:
             style = styles.get_style_by_name(self.style)
-            formatter = HtmlFormatter(linenos=self.linenumbers, style=style, nowrap=True, classprefix='code%s-' % self.pk)
+            formatter = HtmlFormatter(style=style, nowrap=True, classprefix='code%s-' % self.pk)
             html = highlight(self.code, get_lexer_by_name(self.syntax), formatter)
             css = formatter.get_style_defs()
             # Included in a DIV, so the next item will be displayed below.
@@ -202,7 +201,6 @@ class Post(models.Model):
 class CodeSnippet(models.Model):
     syntax = models.CharField(max_length=30, choices=settings.LANGUAGE_CHOICES, default=settings.DEFAULT_LANGUAGE)
     code = models.TextField()
-    linenumbers = models.BooleanField(default=settings.DEFAULT_LINE_NUMBERS)
     style = models.CharField(max_length=30, choices=tuple(STYLE_MAP.items()), default='default')
     Lecture = models.ForeignKey(Lecture)
 
@@ -216,7 +214,7 @@ class CodeSnippet(models.Model):
     @property
     def render_code(self):
         style = styles.get_style_by_name(self.style)
-        formatter = HtmlFormatter(linenos=self.linenumbers, style=style, nowrap=True, classprefix='code%s-' % self.pk)
+        formatter = HtmlFormatter(style=style, nowrap=True, classprefix='code%s-' % self.pk)
         html = highlight(self.code, get_lexer_by_name(self.syntax), formatter)
         css = formatter.get_style_defs()
 

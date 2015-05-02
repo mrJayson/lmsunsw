@@ -1,6 +1,8 @@
 {% load current from templatetag %}
+{% load cache %}
 
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+
     <div class="navbar-header">
         {% if user.is_authenticated %}
         <!-- mobile display navbar -->
@@ -19,6 +21,7 @@
     	
 
     </div>
+
     {% if user.is_authenticated %}
     <div class="navbar-collapse collapse">
     	<ul class="nav navbar-nav navbar-left" style="margin-left: 130px;">

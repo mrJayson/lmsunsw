@@ -1,5 +1,6 @@
 {% extends "app/layout.html" %}
 {% load crispy_forms_tags %}
+{% load cache %}
 
 {% block content %}
 <div class="login-form">
@@ -7,6 +8,7 @@
     <form  method="post">
         <!--need to place submit button out of standard order, must manually add in-->
         {% csrf_token %}
+        {% cache 30 login %}
         {{form|crispy}}
         <div class="row">
             <div class="col-xs-4">
@@ -17,6 +19,7 @@
                 <input class="btn btn-primary" style="" type="submit" value="Log In"/>
             </div>
         </div>
+        {% endcache %}
     </form>
 </div>
 

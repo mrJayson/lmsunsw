@@ -11,6 +11,7 @@ from django.utils.safestring import mark_safe
 from django.contrib.admin import ModelAdmin
 from django.contrib.admin.validation import BaseValidator
 
+
 from app.models import ConfidenceMeter, Quiz, Lecture, QuizChoice, QuizChoiceSelected
 
 def django_sessions(request):
@@ -82,6 +83,8 @@ IGNORE_APPS = (
 IGNORE_APPS_FOR_STUDENTS = (
 	"Thread",
 	)
+
+
 
 def app_list(request):
     '''

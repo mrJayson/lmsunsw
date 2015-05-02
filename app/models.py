@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.utils.text import Truncator
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from django.utils.functional import cached_property
 
 from autoslug import AutoSlugField
 
@@ -116,7 +117,7 @@ class Quiz(models.Model):
 
         return ""
 
-    @property
+    @cached_property
     def quiz_type(self):
     # must return an enum of QuizType
         quiz_choice_list = QuizChoice.objects.filter(Quiz=self.id)
@@ -169,7 +170,7 @@ class Thread(models.Model):
     def __unicode__(self):
         return unicode(self.title)
 
-    @property
+    @cached_property
     def replies(self):
         replies = len(Post.objects.filter(Thread=self.id))
         return replies
@@ -178,7 +179,7 @@ class Thread(models.Model):
         self.views = self.views + 1
         self.save()
 
-    @property
+    @cached_property
     def Creator_name(self):
         return _("anonymous") if self.anonymous else self.Creator
 

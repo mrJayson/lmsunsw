@@ -82,12 +82,21 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 #        'LOCATION': 'cache_table',
 #    }
 #}
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '127.0.0.1:11211',
+if 'RDS_DB_NAME' in os.environ:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+            'LOCATION': 'lmsunsw-memcached.88ixmu.cfg.apse2.cache.amazonaws.com:11211',
+        }
     }
-}
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+            'LOCATION': '127.0.0.1:11211',
+        }
+    }
+
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases

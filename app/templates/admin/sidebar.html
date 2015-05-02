@@ -1,4 +1,5 @@
-
+{% load cache %}
+{% cache 3600 admin-sidebar %}
 <div id="sidebar-wrapper">
     <ul class="nav nav-pills nav-stacked">
     	
@@ -18,3 +19,4 @@
     	{% endif %}
     </ul>
 </div>
+{% endcache %}

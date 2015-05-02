@@ -1,0 +1,615 @@
+2015/05/02 21:23:20 INFO  - jmeter.util.JMeterUtils: Setting Locale to en_AU 
+2015/05/02 21:23:20 INFO  - jmeter.JMeter: Loading user properties from: /usr/share/jmeter/bin/user.properties 
+2015/05/02 21:23:20 INFO  - jmeter.JMeter: Loading system properties from: /usr/share/jmeter/bin/system.properties 
+2015/05/02 21:23:20 INFO  - jmeter.JMeter: Copyright (c) 1998-2014 The Apache Software Foundation 
+2015/05/02 21:23:20 INFO  - jmeter.JMeter: Version 2.11.20140723 
+2015/05/02 21:23:20 INFO  - jmeter.JMeter: java.version=1.7.0_79 
+2015/05/02 21:23:20 INFO  - jmeter.JMeter: java.vm.name=OpenJDK 64-Bit Server VM 
+2015/05/02 21:23:20 INFO  - jmeter.JMeter: os.name=Linux 
+2015/05/02 21:23:20 INFO  - jmeter.JMeter: os.arch=amd64 
+2015/05/02 21:23:20 INFO  - jmeter.JMeter: os.version=3.16.0-23-generic 
+2015/05/02 21:23:20 INFO  - jmeter.JMeter: file.encoding=UTF-8 
+2015/05/02 21:23:20 INFO  - jmeter.JMeter: Default Locale=English (Australia) 
+2015/05/02 21:23:20 INFO  - jmeter.JMeter: JMeter  Locale=English (Australia) 
+2015/05/02 21:23:20 INFO  - jmeter.JMeter: JMeterHome=/usr/share/jmeter 
+2015/05/02 21:23:20 INFO  - jmeter.JMeter: user.dir  =/home/sheryl/thesis/lmsunsw 
+2015/05/02 21:23:20 INFO  - jmeter.JMeter: PWD       =/home/sheryl/thesis/lmsunsw 
+2015/05/02 21:23:20 INFO  - jmeter.JMeter: IP: 127.0.1.1 Name: ubuntu FullName: ubuntu 
+2015/05/02 21:23:20 INFO  - jmeter.JMeter: Loaded icon properties from org/apache/jmeter/images/icon.properties 
+2015/05/02 21:23:20 INFO  - jmeter.engine.util.CompoundVariable: Note: Function class names must contain the string: '.functions.' 
+2015/05/02 21:23:20 INFO  - jmeter.engine.util.CompoundVariable: Note: Function class names must not contain the string: '.gui.' 
+2015/05/02 21:23:21 INFO  - jmeter.gui.action.LookAndFeelCommand: Using look and feel: javax.swing.plaf.metal.MetalLookAndFeel [Metal, CrossPlatform] 
+2015/05/02 21:23:21 INFO  - jmeter.util.BSFTestElement: Registering JMeter version of JavaScript engine as work-round for BSF-22 
+2015/05/02 21:23:22 INFO  - jmeter.protocol.http.sampler.HTTPSamplerBase: Cannot find .className property for htmlParser, using default 
+2015/05/02 21:23:22 INFO  - jmeter.protocol.http.sampler.HTTPSamplerBase: Parser for text/html is  
+2015/05/02 21:23:22 INFO  - jmeter.protocol.http.sampler.HTTPSamplerBase: Parser for application/xhtml+xml is  
+2015/05/02 21:23:22 INFO  - jmeter.protocol.http.sampler.HTTPSamplerBase: Parser for application/xml is  
+2015/05/02 21:23:22 INFO  - jmeter.protocol.http.sampler.HTTPSamplerBase: Parser for text/xml is  
+2015/05/02 21:23:22 INFO  - jmeter.protocol.http.sampler.HTTPSamplerBase: Parser for text/vnd.wap.wml is org.apache.jmeter.protocol.http.parser.RegexpHTMLParser 
+2015/05/02 21:23:22 INFO  - jmeter.gui.util.MenuFactory: Skipping org.apache.jmeter.protocol.http.modifier.gui.ParamModifierGui 
+2015/05/02 21:23:22 INFO  - jorphan.exec.KeyToolUtils: keytool found at 'keytool' 
+2015/05/02 21:23:22 INFO  - jmeter.protocol.http.proxy.ProxyControl: HTTP(S) Test Script Recorder SSL Proxy will use keys that support embedded 3rd party resources in file /usr/share/jmeter/bin/proxyserver.jks 
+2015/05/02 21:23:22 INFO  - jmeter.samplers.SampleResult: Note: Sample TimeStamps are START times 
+2015/05/02 21:23:22 INFO  - jmeter.samplers.SampleResult: sampleresult.default.encoding is set to ISO-8859-1 
+2015/05/02 21:23:22 INFO  - jmeter.samplers.SampleResult: sampleresult.useNanoTime=true 
+2015/05/02 21:23:22 INFO  - jmeter.samplers.SampleResult: sampleresult.nanoThreadSleep=5000 
+2015/05/02 21:23:29 INFO  - jmeter.services.FileServer: Default base='/home/sheryl/thesis/lmsunsw' 
+2015/05/02 21:23:33 INFO  - jmeter.gui.action.Load: Loading file: /home/sheryl/thesis/lmsunsw/jmeter/user login.jmx 
+2015/05/02 21:23:33 INFO  - jmeter.services.FileServer: Set new base='/home/sheryl/thesis/lmsunsw/jmeter' 
+2015/05/02 21:23:33 INFO  - jmeter.save.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2 
+2015/05/02 21:23:33 INFO  - jmeter.save.SaveService: Using SaveService properties file encoding UTF-8 
+2015/05/02 21:23:33 INFO  - jmeter.save.SaveService: Using SaveService properties version 2.6 
+2015/05/02 21:23:33 INFO  - jmeter.save.SaveService: Using SaveService properties file version 1554411 
+2015/05/02 21:23:33 INFO  - jmeter.save.SaveService: All converter versions present and correct 
+2015/05/02 21:23:33 INFO  - jmeter.protocol.http.control.CookieManager: Settings: Delete null: true Check: true Allow variable: true Save: false Prefix: COOKIE_ 
+2015/05/02 21:23:34 INFO  - jmeter.services.FileServer: Set new base='/home/sheryl/thesis/lmsunsw/jmeter' 
+2015/05/02 21:23:47 INFO  - jmeter.engine.StandardJMeterEngine: Listeners will be started after enabling running version 
+2015/05/02 21:23:47 INFO  - jmeter.engine.StandardJMeterEngine: To revert to the earlier behaviour, define jmeterengine.startlistenerslater=false 
+2015/05/02 21:23:47 INFO  - jmeter.engine.StandardJMeterEngine: Running the test! 
+2015/05/02 21:23:47 INFO  - jmeter.samplers.SampleEvent: List of sample_variables: [] 
+2015/05/02 21:23:47 INFO  - jmeter.samplers.SampleEvent: List of sample_variables: [] 
+2015/05/02 21:23:47 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(true,*local*) 
+2015/05/02 21:23:47 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 1 : Admin User 
+2015/05/02 21:23:47 INFO  - jmeter.engine.StandardJMeterEngine: Starting 1 threads for group Admin User. 
+2015/05/02 21:23:47 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 21:23:47 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 1 threads 1 ramp-up 1 perThread 1000.0 delayedStart=false 
+2015/05/02 21:23:47 INFO  - jmeter.threads.JMeterThread: jmeterthread.startearlier=true (see jmeter.properties) 
+2015/05/02 21:23:47 INFO  - jmeter.threads.JMeterThread: Running PostProcessors in forward order 
+2015/05/02 21:23:47 INFO  - jmeter.threads.ThreadGroup: Started thread group number 1 
+2015/05/02 21:23:47 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 2 : Student Login 
+2015/05/02 21:23:47 INFO  - jmeter.engine.StandardJMeterEngine: Starting 10 threads for group Student Login. 
+2015/05/02 21:23:47 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 21:23:47 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 2 threads 10 ramp-up 20 perThread 2000.0 delayedStart=false 
+2015/05/02 21:23:47 INFO  - jmeter.threads.ThreadGroup: Started thread group number 2 
+2015/05/02 21:23:47 INFO  - jmeter.engine.StandardJMeterEngine: All thread groups have been started 
+2015/05/02 21:23:47 INFO  - jmeter.threads.JMeterThread: Thread started: Admin User 1-1 
+2015/05/02 21:23:47 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-1 
+2015/05/02 21:23:47 INFO  - jmeter.services.FileServer: Stored: login.txt 
+2015/05/02 21:23:47 INFO  - jmeter.protocol.http.sampler.HTTPHCAbstractImpl: Local host = ubuntu 
+2015/05/02 21:23:47 INFO  - jmeter.protocol.http.sampler.HTTPHC4Impl: HTTP request retry count = 0 
+2015/05/02 21:23:47 INFO  - jmeter.protocol.http.sampler.HTTPHC4Impl: Setting up HTTPS TrustAll scheme 
+2015/05/02 21:23:47 INFO  - jmeter.util.JsseSSLManager: Using default SSL protocol: TLS 
+2015/05/02 21:23:47 INFO  - jmeter.util.JsseSSLManager: SSL session context: per-thread 
+2015/05/02 21:23:48 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-1 
+2015/05/02 21:23:49 INFO  - jmeter.threads.JMeterThread: Thread finished: Admin User 1-1 
+2015/05/02 21:23:49 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-2 
+2015/05/02 21:23:50 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-2 
+2015/05/02 21:23:51 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-3 
+2015/05/02 21:23:52 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-3 
+2015/05/02 21:23:53 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-4 
+2015/05/02 21:23:54 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-4 
+2015/05/02 21:23:55 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-5 
+2015/05/02 21:23:56 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-5 
+2015/05/02 21:23:57 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-6 
+2015/05/02 21:23:58 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-6 
+2015/05/02 21:23:59 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-7 
+2015/05/02 21:24:00 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-7 
+2015/05/02 21:24:01 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-8 
+2015/05/02 21:24:02 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-8 
+2015/05/02 21:24:03 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-9 
+2015/05/02 21:24:04 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-9 
+2015/05/02 21:24:05 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-10 
+2015/05/02 21:24:06 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-10 
+2015/05/02 21:24:06 INFO  - jmeter.engine.StandardJMeterEngine: Notifying test listeners of end of test 
+2015/05/02 21:24:06 INFO  - jmeter.services.FileServer: Close: login.txt 
+2015/05/02 21:24:06 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(false,*local*) 
+2015/05/02 21:26:49 INFO  - jmeter.engine.StandardJMeterEngine: Running the test! 
+2015/05/02 21:26:49 INFO  - jmeter.samplers.SampleEvent: List of sample_variables: [] 
+2015/05/02 21:26:49 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(true,*local*) 
+2015/05/02 21:26:49 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 1 : Admin User 
+2015/05/02 21:26:49 INFO  - jmeter.engine.StandardJMeterEngine: Starting 1 threads for group Admin User. 
+2015/05/02 21:26:49 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 21:26:49 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 1 threads 1 ramp-up 1 perThread 1000.0 delayedStart=false 
+2015/05/02 21:26:49 INFO  - jmeter.threads.ThreadGroup: Started thread group number 1 
+2015/05/02 21:26:49 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 2 : Student Login 
+2015/05/02 21:26:49 INFO  - jmeter.engine.StandardJMeterEngine: Starting 10 threads for group Student Login. 
+2015/05/02 21:26:49 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 21:26:49 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 2 threads 10 ramp-up 20 perThread 2000.0 delayedStart=false 
+2015/05/02 21:26:49 INFO  - jmeter.threads.JMeterThread: Thread started: Admin User 1-1 
+2015/05/02 21:26:49 INFO  - jmeter.services.FileServer: Stored: login.txt 
+2015/05/02 21:26:49 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-1 
+2015/05/02 21:26:49 INFO  - jmeter.threads.ThreadGroup: Started thread group number 2 
+2015/05/02 21:26:49 INFO  - jmeter.engine.StandardJMeterEngine: All thread groups have been started 
+2015/05/02 21:26:49 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-1 
+2015/05/02 21:26:50 INFO  - jmeter.threads.JMeterThread: Thread finished: Admin User 1-1 
+2015/05/02 21:26:51 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-2 
+2015/05/02 21:26:51 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-2 
+2015/05/02 21:26:53 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-3 
+2015/05/02 21:26:53 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-3 
+2015/05/02 21:26:55 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-4 
+2015/05/02 21:26:55 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-4 
+2015/05/02 21:26:57 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-5 
+2015/05/02 21:26:57 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-5 
+2015/05/02 21:26:59 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-6 
+2015/05/02 21:26:59 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-6 
+2015/05/02 21:27:01 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-7 
+2015/05/02 21:27:01 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-7 
+2015/05/02 21:27:03 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-8 
+2015/05/02 21:27:03 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-8 
+2015/05/02 21:27:05 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-9 
+2015/05/02 21:27:05 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-9 
+2015/05/02 21:27:07 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-10 
+2015/05/02 21:27:07 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-10 
+2015/05/02 21:27:07 INFO  - jmeter.engine.StandardJMeterEngine: Notifying test listeners of end of test 
+2015/05/02 21:27:07 INFO  - jmeter.services.FileServer: Close: login.txt 
+2015/05/02 21:27:07 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(false,*local*) 
+2015/05/02 21:27:21 INFO  - jmeter.engine.StandardJMeterEngine: Running the test! 
+2015/05/02 21:27:21 INFO  - jmeter.samplers.SampleEvent: List of sample_variables: [] 
+2015/05/02 21:27:21 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(true,*local*) 
+2015/05/02 21:27:22 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 1 : Admin User 
+2015/05/02 21:27:22 INFO  - jmeter.engine.StandardJMeterEngine: Starting 1 threads for group Admin User. 
+2015/05/02 21:27:22 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 21:27:22 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 1 threads 1 ramp-up 1 perThread 1000.0 delayedStart=false 
+2015/05/02 21:27:22 INFO  - jmeter.threads.ThreadGroup: Started thread group number 1 
+2015/05/02 21:27:22 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 2 : Student Login 
+2015/05/02 21:27:22 INFO  - jmeter.engine.StandardJMeterEngine: Starting 10 threads for group Student Login. 
+2015/05/02 21:27:22 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 21:27:22 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 2 threads 10 ramp-up 20 perThread 2000.0 delayedStart=false 
+2015/05/02 21:27:22 INFO  - jmeter.threads.JMeterThread: Thread started: Admin User 1-1 
+2015/05/02 21:27:22 INFO  - jmeter.services.FileServer: Stored: login.txt 
+2015/05/02 21:27:22 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-1 
+2015/05/02 21:27:22 INFO  - jmeter.threads.ThreadGroup: Started thread group number 2 
+2015/05/02 21:27:22 INFO  - jmeter.engine.StandardJMeterEngine: All thread groups have been started 
+2015/05/02 21:27:23 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-1 
+2015/05/02 21:27:23 INFO  - jmeter.threads.JMeterThread: Thread finished: Admin User 1-1 
+2015/05/02 21:27:24 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-2 
+2015/05/02 21:27:25 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-2 
+2015/05/02 21:27:26 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-3 
+2015/05/02 21:27:27 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-3 
+2015/05/02 21:27:28 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-4 
+2015/05/02 21:27:29 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-4 
+2015/05/02 21:27:30 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-5 
+2015/05/02 21:27:31 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-5 
+2015/05/02 21:27:32 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-6 
+2015/05/02 21:27:33 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-6 
+2015/05/02 21:27:34 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-7 
+2015/05/02 21:27:35 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-7 
+2015/05/02 21:27:36 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-8 
+2015/05/02 21:27:37 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-8 
+2015/05/02 21:27:38 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-9 
+2015/05/02 21:27:39 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-9 
+2015/05/02 21:27:40 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-10 
+2015/05/02 21:27:41 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-10 
+2015/05/02 21:27:41 INFO  - jmeter.engine.StandardJMeterEngine: Notifying test listeners of end of test 
+2015/05/02 21:27:41 INFO  - jmeter.services.FileServer: Close: login.txt 
+2015/05/02 21:27:41 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(false,*local*) 
+2015/05/02 21:31:15 INFO  - jmeter.engine.StandardJMeterEngine: Running the test! 
+2015/05/02 21:31:15 INFO  - jmeter.samplers.SampleEvent: List of sample_variables: [] 
+2015/05/02 21:31:15 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(true,*local*) 
+2015/05/02 21:31:15 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 1 : Admin User 
+2015/05/02 21:31:15 INFO  - jmeter.engine.StandardJMeterEngine: Starting 1 threads for group Admin User. 
+2015/05/02 21:31:15 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 21:31:15 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 1 threads 1 ramp-up 1 perThread 1000.0 delayedStart=false 
+2015/05/02 21:31:15 INFO  - jmeter.threads.ThreadGroup: Started thread group number 1 
+2015/05/02 21:31:15 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 2 : Student Login 
+2015/05/02 21:31:15 INFO  - jmeter.engine.StandardJMeterEngine: Starting 10 threads for group Student Login. 
+2015/05/02 21:31:15 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 21:31:15 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 2 threads 10 ramp-up 20 perThread 2000.0 delayedStart=false 
+2015/05/02 21:31:15 INFO  - jmeter.threads.JMeterThread: Thread started: Admin User 1-1 
+2015/05/02 21:31:15 INFO  - jmeter.services.FileServer: Stored: login.txt 
+2015/05/02 21:31:15 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-1 
+2015/05/02 21:31:15 INFO  - jmeter.threads.ThreadGroup: Started thread group number 2 
+2015/05/02 21:31:15 INFO  - jmeter.engine.StandardJMeterEngine: All thread groups have been started 
+2015/05/02 21:31:17 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-1 
+2015/05/02 21:31:17 INFO  - jmeter.threads.JMeterThread: Thread finished: Admin User 1-1 
+2015/05/02 21:31:17 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-2 
+2015/05/02 21:31:18 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-2 
+2015/05/02 21:31:19 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-3 
+2015/05/02 21:31:20 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-3 
+2015/05/02 21:31:21 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-4 
+2015/05/02 21:31:22 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-4 
+2015/05/02 21:31:23 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-5 
+2015/05/02 21:31:24 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-5 
+2015/05/02 21:31:25 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-6 
+2015/05/02 21:31:26 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-6 
+2015/05/02 21:31:27 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-7 
+2015/05/02 21:31:28 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-7 
+2015/05/02 21:31:29 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-8 
+2015/05/02 21:31:30 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-8 
+2015/05/02 21:31:31 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-9 
+2015/05/02 21:31:32 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-9 
+2015/05/02 21:31:33 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-10 
+2015/05/02 21:31:34 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-10 
+2015/05/02 21:31:34 INFO  - jmeter.engine.StandardJMeterEngine: Notifying test listeners of end of test 
+2015/05/02 21:31:34 INFO  - jmeter.services.FileServer: Close: login.txt 
+2015/05/02 21:31:34 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(false,*local*) 
+2015/05/02 21:32:32 INFO  - jmeter.engine.StandardJMeterEngine: Running the test! 
+2015/05/02 21:32:32 INFO  - jmeter.samplers.SampleEvent: List of sample_variables: [] 
+2015/05/02 21:32:32 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(true,*local*) 
+2015/05/02 21:32:32 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 1 : Admin User 
+2015/05/02 21:32:32 INFO  - jmeter.engine.StandardJMeterEngine: Starting 1 threads for group Admin User. 
+2015/05/02 21:32:32 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 21:32:32 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 1 threads 1 ramp-up 1 perThread 1000.0 delayedStart=false 
+2015/05/02 21:32:32 INFO  - jmeter.threads.ThreadGroup: Started thread group number 1 
+2015/05/02 21:32:32 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 2 : Student Login 
+2015/05/02 21:32:32 INFO  - jmeter.engine.StandardJMeterEngine: Starting 10 threads for group Student Login. 
+2015/05/02 21:32:32 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 21:32:32 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 2 threads 10 ramp-up 20 perThread 2000.0 delayedStart=false 
+2015/05/02 21:32:32 INFO  - jmeter.threads.JMeterThread: Thread started: Admin User 1-1 
+2015/05/02 21:32:32 INFO  - jmeter.services.FileServer: Stored: login.txt 
+2015/05/02 21:32:32 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-1 
+2015/05/02 21:32:32 INFO  - jmeter.threads.ThreadGroup: Started thread group number 2 
+2015/05/02 21:32:32 INFO  - jmeter.engine.StandardJMeterEngine: All thread groups have been started 
+2015/05/02 21:32:33 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-1 
+2015/05/02 21:32:33 INFO  - jmeter.threads.JMeterThread: Thread finished: Admin User 1-1 
+2015/05/02 21:32:34 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-2 
+2015/05/02 21:32:35 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-2 
+2015/05/02 21:32:36 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-3 
+2015/05/02 21:32:37 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-3 
+2015/05/02 21:32:38 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-4 
+2015/05/02 21:32:39 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-4 
+2015/05/02 21:32:40 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-5 
+2015/05/02 21:32:41 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-5 
+2015/05/02 21:32:42 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-6 
+2015/05/02 21:32:43 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-6 
+2015/05/02 21:32:44 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-7 
+2015/05/02 21:32:45 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-7 
+2015/05/02 21:32:46 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-8 
+2015/05/02 21:32:47 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-8 
+2015/05/02 21:32:48 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-9 
+2015/05/02 21:32:49 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-9 
+2015/05/02 21:32:50 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-10 
+2015/05/02 21:32:51 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-10 
+2015/05/02 21:32:51 INFO  - jmeter.engine.StandardJMeterEngine: Notifying test listeners of end of test 
+2015/05/02 21:32:51 INFO  - jmeter.services.FileServer: Close: login.txt 
+2015/05/02 21:32:51 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(false,*local*) 
+2015/05/02 21:32:56 INFO  - jmeter.engine.StandardJMeterEngine: Running the test! 
+2015/05/02 21:32:56 INFO  - jmeter.samplers.SampleEvent: List of sample_variables: [] 
+2015/05/02 21:32:56 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(true,*local*) 
+2015/05/02 21:32:56 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 1 : Admin User 
+2015/05/02 21:32:56 INFO  - jmeter.engine.StandardJMeterEngine: Starting 1 threads for group Admin User. 
+2015/05/02 21:32:56 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 21:32:56 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 1 threads 1 ramp-up 1 perThread 1000.0 delayedStart=false 
+2015/05/02 21:32:56 INFO  - jmeter.threads.ThreadGroup: Started thread group number 1 
+2015/05/02 21:32:56 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 2 : Student Login 
+2015/05/02 21:32:56 INFO  - jmeter.engine.StandardJMeterEngine: Starting 10 threads for group Student Login. 
+2015/05/02 21:32:56 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 21:32:56 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 2 threads 10 ramp-up 20 perThread 2000.0 delayedStart=false 
+2015/05/02 21:32:56 INFO  - jmeter.threads.JMeterThread: Thread started: Admin User 1-1 
+2015/05/02 21:32:56 INFO  - jmeter.services.FileServer: Stored: login.txt 
+2015/05/02 21:32:56 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-1 
+2015/05/02 21:32:56 INFO  - jmeter.threads.ThreadGroup: Started thread group number 2 
+2015/05/02 21:32:56 INFO  - jmeter.engine.StandardJMeterEngine: All thread groups have been started 
+2015/05/02 21:32:57 INFO  - jmeter.threads.JMeterThread: Thread finished: Admin User 1-1 
+2015/05/02 21:32:57 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-1 
+2015/05/02 21:32:58 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-2 
+2015/05/02 21:32:59 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-2 
+2015/05/02 21:33:00 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-3 
+2015/05/02 21:33:01 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-3 
+2015/05/02 21:33:02 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-4 
+2015/05/02 21:33:03 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-4 
+2015/05/02 21:33:04 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-5 
+2015/05/02 21:33:05 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-5 
+2015/05/02 21:33:06 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-6 
+2015/05/02 21:33:07 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-6 
+2015/05/02 21:33:08 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-7 
+2015/05/02 21:33:09 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-7 
+2015/05/02 21:33:10 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-8 
+2015/05/02 21:33:11 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-8 
+2015/05/02 21:33:12 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-9 
+2015/05/02 21:33:13 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-9 
+2015/05/02 21:33:14 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-10 
+2015/05/02 21:33:15 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-10 
+2015/05/02 21:33:15 INFO  - jmeter.engine.StandardJMeterEngine: Notifying test listeners of end of test 
+2015/05/02 21:33:15 INFO  - jmeter.services.FileServer: Close: login.txt 
+2015/05/02 21:33:15 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(false,*local*) 
+2015/05/02 21:33:44 INFO  - jmeter.engine.StandardJMeterEngine: Running the test! 
+2015/05/02 21:33:44 INFO  - jmeter.samplers.SampleEvent: List of sample_variables: [] 
+2015/05/02 21:33:44 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(true,*local*) 
+2015/05/02 21:33:44 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 1 : Admin User 
+2015/05/02 21:33:44 INFO  - jmeter.engine.StandardJMeterEngine: Starting 1 threads for group Admin User. 
+2015/05/02 21:33:44 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 21:33:44 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 1 threads 1 ramp-up 1 perThread 1000.0 delayedStart=false 
+2015/05/02 21:33:44 INFO  - jmeter.threads.ThreadGroup: Started thread group number 1 
+2015/05/02 21:33:44 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 2 : Student Login 
+2015/05/02 21:33:44 INFO  - jmeter.engine.StandardJMeterEngine: Starting 10 threads for group Student Login. 
+2015/05/02 21:33:44 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 21:33:44 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 2 threads 10 ramp-up 20 perThread 2000.0 delayedStart=false 
+2015/05/02 21:33:44 INFO  - jmeter.threads.JMeterThread: Thread started: Admin User 1-1 
+2015/05/02 21:33:44 INFO  - jmeter.services.FileServer: Stored: login.txt 
+2015/05/02 21:33:44 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-1 
+2015/05/02 21:33:44 INFO  - jmeter.threads.ThreadGroup: Started thread group number 2 
+2015/05/02 21:33:44 INFO  - jmeter.engine.StandardJMeterEngine: All thread groups have been started 
+2015/05/02 21:33:46 INFO  - jmeter.threads.JMeterThread: Thread finished: Admin User 1-1 
+2015/05/02 21:33:46 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-1 
+2015/05/02 21:33:46 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-2 
+2015/05/02 21:33:47 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-2 
+2015/05/02 21:33:48 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-3 
+2015/05/02 21:33:49 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-3 
+2015/05/02 21:33:50 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-4 
+2015/05/02 21:33:51 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-4 
+2015/05/02 21:33:52 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-5 
+2015/05/02 21:33:53 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-5 
+2015/05/02 21:33:54 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-6 
+2015/05/02 21:33:55 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-6 
+2015/05/02 21:33:56 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-7 
+2015/05/02 21:33:57 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-7 
+2015/05/02 21:33:58 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-8 
+2015/05/02 21:33:59 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-8 
+2015/05/02 21:34:00 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-9 
+2015/05/02 21:34:01 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-9 
+2015/05/02 21:34:02 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-10 
+2015/05/02 21:34:03 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-10 
+2015/05/02 21:34:03 INFO  - jmeter.engine.StandardJMeterEngine: Notifying test listeners of end of test 
+2015/05/02 21:34:03 INFO  - jmeter.services.FileServer: Close: login.txt 
+2015/05/02 21:34:03 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(false,*local*) 
+2015/05/02 21:35:26 INFO  - jmeter.engine.StandardJMeterEngine: Running the test! 
+2015/05/02 21:35:26 INFO  - jmeter.samplers.SampleEvent: List of sample_variables: [] 
+2015/05/02 21:35:26 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(true,*local*) 
+2015/05/02 21:35:26 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 1 : Admin User 
+2015/05/02 21:35:26 INFO  - jmeter.engine.StandardJMeterEngine: Starting 1 threads for group Admin User. 
+2015/05/02 21:35:26 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 21:35:26 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 1 threads 1 ramp-up 1 perThread 1000.0 delayedStart=false 
+2015/05/02 21:35:26 INFO  - jmeter.threads.ThreadGroup: Started thread group number 1 
+2015/05/02 21:35:26 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 2 : Student Login 
+2015/05/02 21:35:26 INFO  - jmeter.engine.StandardJMeterEngine: Starting 10 threads for group Student Login. 
+2015/05/02 21:35:26 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 21:35:26 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 2 threads 10 ramp-up 20 perThread 2000.0 delayedStart=false 
+2015/05/02 21:35:26 INFO  - jmeter.threads.JMeterThread: Thread started: Admin User 1-1 
+2015/05/02 21:35:26 INFO  - jmeter.services.FileServer: Stored: login.txt 
+2015/05/02 21:35:26 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-1 
+2015/05/02 21:35:26 INFO  - jmeter.threads.ThreadGroup: Started thread group number 2 
+2015/05/02 21:35:26 INFO  - jmeter.engine.StandardJMeterEngine: All thread groups have been started 
+2015/05/02 21:35:28 INFO  - jmeter.threads.JMeterThread: Thread finished: Admin User 1-1 
+2015/05/02 21:35:28 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-1 
+2015/05/02 21:35:28 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-2 
+2015/05/02 21:35:29 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-2 
+2015/05/02 21:35:30 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-3 
+2015/05/02 21:35:31 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-3 
+2015/05/02 21:35:32 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-4 
+2015/05/02 21:35:33 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-4 
+2015/05/02 21:35:34 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-5 
+2015/05/02 21:35:35 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-5 
+2015/05/02 21:35:36 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-6 
+2015/05/02 21:35:37 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-6 
+2015/05/02 21:35:38 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-7 
+2015/05/02 21:35:39 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-7 
+2015/05/02 21:35:40 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-8 
+2015/05/02 21:35:41 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-8 
+2015/05/02 21:35:42 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-9 
+2015/05/02 21:35:43 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-9 
+2015/05/02 21:35:44 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-10 
+2015/05/02 21:35:45 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-10 
+2015/05/02 21:35:45 INFO  - jmeter.engine.StandardJMeterEngine: Notifying test listeners of end of test 
+2015/05/02 21:35:45 INFO  - jmeter.services.FileServer: Close: login.txt 
+2015/05/02 21:35:45 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(false,*local*) 
+2015/05/02 21:51:15 INFO  - jmeter.engine.StandardJMeterEngine: Running the test! 
+2015/05/02 21:51:15 INFO  - jmeter.samplers.SampleEvent: List of sample_variables: [] 
+2015/05/02 21:51:15 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(true,*local*) 
+2015/05/02 21:51:15 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 1 : Admin User 
+2015/05/02 21:51:15 INFO  - jmeter.engine.StandardJMeterEngine: Starting 1 threads for group Admin User. 
+2015/05/02 21:51:15 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 21:51:15 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 1 threads 1 ramp-up 1 perThread 1000.0 delayedStart=false 
+2015/05/02 21:51:15 INFO  - jmeter.threads.ThreadGroup: Started thread group number 1 
+2015/05/02 21:51:15 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 2 : Student Login 
+2015/05/02 21:51:15 INFO  - jmeter.engine.StandardJMeterEngine: Starting 10 threads for group Student Login. 
+2015/05/02 21:51:15 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 21:51:15 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 2 threads 10 ramp-up 20 perThread 2000.0 delayedStart=false 
+2015/05/02 21:51:15 INFO  - jmeter.threads.JMeterThread: Thread started: Admin User 1-1 
+2015/05/02 21:51:15 INFO  - jmeter.services.FileServer: Stored: login.txt 
+2015/05/02 21:51:15 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-1 
+2015/05/02 21:51:15 INFO  - jmeter.threads.ThreadGroup: Started thread group number 2 
+2015/05/02 21:51:15 INFO  - jmeter.engine.StandardJMeterEngine: All thread groups have been started 
+2015/05/02 21:51:17 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-2 
+2015/05/02 21:51:18 INFO  - jmeter.threads.JMeterThread: Thread finished: Admin User 1-1 
+2015/05/02 21:51:19 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-1 
+2015/05/02 21:51:19 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-3 
+2015/05/02 21:51:19 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-2 
+2015/05/02 21:51:21 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-4 
+2015/05/02 21:51:22 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-3 
+2015/05/02 21:51:23 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-5 
+2015/05/02 21:51:23 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-4 
+2015/05/02 21:51:25 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-6 
+2015/05/02 21:51:27 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-7 
+2015/05/02 21:51:28 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-6 
+2015/05/02 21:51:29 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-5 
+2015/05/02 21:51:29 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-8 
+2015/05/02 21:51:30 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-7 
+2015/05/02 21:51:31 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-9 
+2015/05/02 21:51:33 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-10 
+2015/05/02 21:51:35 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-8 
+2015/05/02 21:51:35 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-9 
+2015/05/02 21:51:36 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-10 
+2015/05/02 21:51:36 INFO  - jmeter.engine.StandardJMeterEngine: Notifying test listeners of end of test 
+2015/05/02 21:51:36 INFO  - jmeter.services.FileServer: Close: login.txt 
+2015/05/02 21:51:36 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(false,*local*) 
+2015/05/02 21:57:58 INFO  - jmeter.engine.StandardJMeterEngine: Running the test! 
+2015/05/02 21:57:58 INFO  - jmeter.samplers.SampleEvent: List of sample_variables: [] 
+2015/05/02 21:57:58 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(true,*local*) 
+2015/05/02 21:57:58 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 1 : Admin User 
+2015/05/02 21:57:58 INFO  - jmeter.engine.StandardJMeterEngine: Starting 1 threads for group Admin User. 
+2015/05/02 21:57:58 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 21:57:58 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 1 threads 1 ramp-up 1 perThread 1000.0 delayedStart=false 
+2015/05/02 21:57:58 INFO  - jmeter.threads.ThreadGroup: Started thread group number 1 
+2015/05/02 21:57:58 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 2 : Student Login 
+2015/05/02 21:57:58 INFO  - jmeter.engine.StandardJMeterEngine: Starting 10 threads for group Student Login. 
+2015/05/02 21:57:58 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 21:57:58 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 2 threads 10 ramp-up 20 perThread 2000.0 delayedStart=false 
+2015/05/02 21:57:58 INFO  - jmeter.threads.JMeterThread: Thread started: Admin User 1-1 
+2015/05/02 21:57:58 INFO  - jmeter.services.FileServer: Stored: login.txt 
+2015/05/02 21:57:58 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-1 
+2015/05/02 21:57:58 INFO  - jmeter.threads.ThreadGroup: Started thread group number 2 
+2015/05/02 21:57:58 INFO  - jmeter.engine.StandardJMeterEngine: All thread groups have been started 
+2015/05/02 21:58:00 INFO  - jmeter.threads.JMeterThread: Thread finished: Admin User 1-1 
+2015/05/02 21:58:00 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-1 
+2015/05/02 21:58:00 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-2 
+2015/05/02 21:58:02 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-2 
+2015/05/02 21:58:02 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-3 
+2015/05/02 21:58:04 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-3 
+2015/05/02 21:58:04 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-4 
+2015/05/02 21:58:06 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-4 
+2015/05/02 21:58:06 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-5 
+2015/05/02 21:58:08 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-5 
+2015/05/02 21:58:08 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-6 
+2015/05/02 21:58:10 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-6 
+2015/05/02 21:58:10 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-7 
+2015/05/02 21:58:12 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-8 
+2015/05/02 21:58:12 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-7 
+2015/05/02 21:58:14 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-9 
+2015/05/02 21:58:16 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-10 
+2015/05/02 21:58:18 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-8 
+2015/05/02 21:58:24 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-9 
+2015/05/02 21:59:24 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-10 
+2015/05/02 21:59:24 INFO  - jmeter.engine.StandardJMeterEngine: Notifying test listeners of end of test 
+2015/05/02 21:59:24 INFO  - jmeter.services.FileServer: Close: login.txt 
+2015/05/02 21:59:24 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(false,*local*) 
+2015/05/02 22:00:44 INFO  - jmeter.engine.StandardJMeterEngine: Running the test! 
+2015/05/02 22:00:44 INFO  - jmeter.samplers.SampleEvent: List of sample_variables: [] 
+2015/05/02 22:00:44 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(true,*local*) 
+2015/05/02 22:00:44 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 1 : Admin User 
+2015/05/02 22:00:44 INFO  - jmeter.engine.StandardJMeterEngine: Starting 1 threads for group Admin User. 
+2015/05/02 22:00:44 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 22:00:44 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 1 threads 1 ramp-up 1 perThread 1000.0 delayedStart=false 
+2015/05/02 22:00:44 INFO  - jmeter.threads.ThreadGroup: Started thread group number 1 
+2015/05/02 22:00:44 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 2 : Student Login 
+2015/05/02 22:00:44 INFO  - jmeter.engine.StandardJMeterEngine: Starting 10 threads for group Student Login. 
+2015/05/02 22:00:44 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 22:00:44 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 2 threads 10 ramp-up 20 perThread 2000.0 delayedStart=false 
+2015/05/02 22:00:44 INFO  - jmeter.threads.JMeterThread: Thread started: Admin User 1-1 
+2015/05/02 22:00:44 INFO  - jmeter.services.FileServer: Stored: login.txt 
+2015/05/02 22:00:44 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-1 
+2015/05/02 22:00:44 INFO  - jmeter.threads.ThreadGroup: Started thread group number 2 
+2015/05/02 22:00:44 INFO  - jmeter.engine.StandardJMeterEngine: All thread groups have been started 
+2015/05/02 22:00:45 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-1 
+2015/05/02 22:00:46 INFO  - jmeter.threads.JMeterThread: Thread finished: Admin User 1-1 
+2015/05/02 22:00:46 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-2 
+2015/05/02 22:00:47 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-2 
+2015/05/02 22:00:48 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-3 
+2015/05/02 22:00:49 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-3 
+2015/05/02 22:00:50 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-4 
+2015/05/02 22:00:51 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-4 
+2015/05/02 22:00:52 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-5 
+2015/05/02 22:00:53 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-5 
+2015/05/02 22:00:54 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-6 
+2015/05/02 22:00:55 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-6 
+2015/05/02 22:00:56 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-7 
+2015/05/02 22:00:57 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-7 
+2015/05/02 22:00:58 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-8 
+2015/05/02 22:00:59 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-8 
+2015/05/02 22:01:00 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-9 
+2015/05/02 22:01:01 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-9 
+2015/05/02 22:01:02 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-10 
+2015/05/02 22:01:03 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-10 
+2015/05/02 22:01:03 INFO  - jmeter.engine.StandardJMeterEngine: Notifying test listeners of end of test 
+2015/05/02 22:01:03 INFO  - jmeter.services.FileServer: Close: login.txt 
+2015/05/02 22:01:03 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(false,*local*) 
+2015/05/02 22:02:50 INFO  - jmeter.engine.StandardJMeterEngine: Running the test! 
+2015/05/02 22:02:50 INFO  - jmeter.samplers.SampleEvent: List of sample_variables: [] 
+2015/05/02 22:02:50 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(true,*local*) 
+2015/05/02 22:02:50 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 1 : Admin User 
+2015/05/02 22:02:50 INFO  - jmeter.engine.StandardJMeterEngine: Starting 1 threads for group Admin User. 
+2015/05/02 22:02:50 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 22:02:50 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 1 threads 1 ramp-up 1 perThread 1000.0 delayedStart=false 
+2015/05/02 22:02:50 INFO  - jmeter.threads.ThreadGroup: Started thread group number 1 
+2015/05/02 22:02:50 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 2 : Student Login 
+2015/05/02 22:02:50 INFO  - jmeter.engine.StandardJMeterEngine: Starting 10 threads for group Student Login. 
+2015/05/02 22:02:50 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 22:02:50 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 2 threads 10 ramp-up 20 perThread 2000.0 delayedStart=false 
+2015/05/02 22:02:50 INFO  - jmeter.threads.JMeterThread: Thread started: Admin User 1-1 
+2015/05/02 22:02:50 INFO  - jmeter.services.FileServer: Stored: login.txt 
+2015/05/02 22:02:50 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-1 
+2015/05/02 22:02:50 INFO  - jmeter.threads.ThreadGroup: Started thread group number 2 
+2015/05/02 22:02:50 INFO  - jmeter.engine.StandardJMeterEngine: All thread groups have been started 
+2015/05/02 22:02:52 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-2 
+2015/05/02 22:02:54 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-3 
+2015/05/02 22:02:56 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-4 
+2015/05/02 22:02:58 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-5 
+2015/05/02 22:03:00 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-6 
+2015/05/02 22:03:02 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-7 
+2015/05/02 22:03:04 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-8 
+2015/05/02 22:03:06 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-9 
+2015/05/02 22:03:08 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-10 
+2015/05/02 22:03:18 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-2 
+2015/05/02 22:03:19 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-1 
+2015/05/02 22:03:19 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-3 
+2015/05/02 22:03:19 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-6 
+2015/05/02 22:03:19 INFO  - jmeter.threads.JMeterThread: Thread finished: Admin User 1-1 
+2015/05/02 22:03:19 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-4 
+2015/05/02 22:03:19 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-8 
+2015/05/02 22:03:19 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-7 
+2015/05/02 22:03:20 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-9 
+2015/05/02 22:03:20 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-5 
+2015/05/02 22:03:20 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-10 
+2015/05/02 22:03:20 INFO  - jmeter.engine.StandardJMeterEngine: Notifying test listeners of end of test 
+2015/05/02 22:03:20 INFO  - jmeter.services.FileServer: Close: login.txt 
+2015/05/02 22:03:20 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(false,*local*) 
+2015/05/02 22:09:00 INFO  - jmeter.engine.StandardJMeterEngine: Running the test! 
+2015/05/02 22:09:00 INFO  - jmeter.samplers.SampleEvent: List of sample_variables: [] 
+2015/05/02 22:09:00 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(true,*local*) 
+2015/05/02 22:09:00 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 1 : Admin User 
+2015/05/02 22:09:00 INFO  - jmeter.engine.StandardJMeterEngine: Starting 1 threads for group Admin User. 
+2015/05/02 22:09:00 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 22:09:00 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 1 threads 1 ramp-up 1 perThread 1000.0 delayedStart=false 
+2015/05/02 22:09:00 INFO  - jmeter.threads.ThreadGroup: Started thread group number 1 
+2015/05/02 22:09:00 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 2 : Student Login 
+2015/05/02 22:09:00 INFO  - jmeter.engine.StandardJMeterEngine: Starting 10 threads for group Student Login. 
+2015/05/02 22:09:00 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 22:09:00 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 2 threads 10 ramp-up 20 perThread 2000.0 delayedStart=false 
+2015/05/02 22:09:00 INFO  - jmeter.threads.JMeterThread: Thread started: Admin User 1-1 
+2015/05/02 22:09:00 INFO  - jmeter.services.FileServer: Stored: login.txt 
+2015/05/02 22:09:00 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-1 
+2015/05/02 22:09:00 INFO  - jmeter.threads.ThreadGroup: Started thread group number 2 
+2015/05/02 22:09:00 INFO  - jmeter.engine.StandardJMeterEngine: All thread groups have been started 
+2015/05/02 22:09:02 INFO  - jmeter.threads.JMeterThread: Thread finished: Admin User 1-1 
+2015/05/02 22:09:02 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-1 
+2015/05/02 22:09:02 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-2 
+2015/05/02 22:09:04 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-2 
+2015/05/02 22:09:04 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-3 
+2015/05/02 22:09:06 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-3 
+2015/05/02 22:09:06 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-4 
+2015/05/02 22:09:08 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-4 
+2015/05/02 22:09:08 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-5 
+2015/05/02 22:09:10 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-5 
+2015/05/02 22:09:10 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-6 
+2015/05/02 22:09:12 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-6 
+2015/05/02 22:09:12 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-7 
+2015/05/02 22:09:14 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-7 
+2015/05/02 22:09:14 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-8 
+2015/05/02 22:09:16 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-8 
+2015/05/02 22:09:16 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-9 
+2015/05/02 22:09:18 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-9 
+2015/05/02 22:09:18 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-10 
+2015/05/02 22:09:20 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-10 
+2015/05/02 22:09:20 INFO  - jmeter.engine.StandardJMeterEngine: Notifying test listeners of end of test 
+2015/05/02 22:09:20 INFO  - jmeter.services.FileServer: Close: login.txt 
+2015/05/02 22:09:20 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(false,*local*) 
+2015/05/02 22:09:23 INFO  - jmeter.engine.StandardJMeterEngine: Running the test! 
+2015/05/02 22:09:23 INFO  - jmeter.samplers.SampleEvent: List of sample_variables: [] 
+2015/05/02 22:09:23 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(true,*local*) 
+2015/05/02 22:09:23 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 1 : Admin User 
+2015/05/02 22:09:23 INFO  - jmeter.engine.StandardJMeterEngine: Starting 1 threads for group Admin User. 
+2015/05/02 22:09:23 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 22:09:23 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 1 threads 1 ramp-up 1 perThread 1000.0 delayedStart=false 
+2015/05/02 22:09:23 INFO  - jmeter.threads.ThreadGroup: Started thread group number 1 
+2015/05/02 22:09:23 INFO  - jmeter.engine.StandardJMeterEngine: Starting ThreadGroup: 2 : Student Login 
+2015/05/02 22:09:23 INFO  - jmeter.engine.StandardJMeterEngine: Starting 10 threads for group Student Login. 
+2015/05/02 22:09:23 INFO  - jmeter.engine.StandardJMeterEngine: Thread will continue on error 
+2015/05/02 22:09:23 INFO  - jmeter.threads.ThreadGroup: Starting thread group number 2 threads 10 ramp-up 20 perThread 2000.0 delayedStart=false 
+2015/05/02 22:09:23 INFO  - jmeter.threads.JMeterThread: Thread started: Admin User 1-1 
+2015/05/02 22:09:23 INFO  - jmeter.services.FileServer: Stored: login.txt 
+2015/05/02 22:09:23 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-1 
+2015/05/02 22:09:23 INFO  - jmeter.threads.ThreadGroup: Started thread group number 2 
+2015/05/02 22:09:23 INFO  - jmeter.engine.StandardJMeterEngine: All thread groups have been started 
+2015/05/02 22:09:24 INFO  - jmeter.threads.JMeterThread: Thread finished: Admin User 1-1 
+2015/05/02 22:09:24 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-1 
+2015/05/02 22:09:25 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-2 
+2015/05/02 22:09:26 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-2 
+2015/05/02 22:09:27 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-3 
+2015/05/02 22:09:28 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-3 
+2015/05/02 22:09:29 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-4 
+2015/05/02 22:09:30 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-4 
+2015/05/02 22:09:31 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-5 
+2015/05/02 22:09:32 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-5 
+2015/05/02 22:09:33 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-6 
+2015/05/02 22:09:34 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-6 
+2015/05/02 22:09:35 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-7 
+2015/05/02 22:09:36 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-7 
+2015/05/02 22:09:37 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-8 
+2015/05/02 22:09:38 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-8 
+2015/05/02 22:09:39 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-9 
+2015/05/02 22:09:40 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-9 
+2015/05/02 22:09:41 INFO  - jmeter.threads.JMeterThread: Thread started: Student Login 2-10 
+2015/05/02 22:09:42 INFO  - jmeter.threads.JMeterThread: Thread finished: Student Login 2-10 
+2015/05/02 22:09:42 INFO  - jmeter.engine.StandardJMeterEngine: Notifying test listeners of end of test 
+2015/05/02 22:09:42 INFO  - jmeter.services.FileServer: Close: login.txt 
+2015/05/02 22:09:42 INFO  - jmeter.gui.util.JMeterMenuBar: setRunning(false,*local*) 

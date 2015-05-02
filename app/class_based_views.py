@@ -50,8 +50,11 @@ class LectureView(TemplateView, SidebarContextMixin):
 
 class QuizView(FormView, SidebarContextMixin):
     template_name = _('app/quiz.html')
-    #form_class = QuizSelectionForm
-    #queryset = QuizChoice.objects.filter(Quiz = self.kwargs(quiz_id))
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(QuizView, self).get_context_data(*args, **kwargs)
+        context['code_snippet'] = Quiz.objects.get(id=self.kwargs.get('quiz_id')).render_code
+        return context
 
     def get_form(self, data=None, files=None, *args, **kwargs):
         user = self.request.user

@@ -78,8 +78,8 @@ class QuizType():
     SINGLEMCQ = 1
     # multiple right answers
     MULTIMCQ = 2
-    # zero right answers
-    ZEROMCQ = 3
+    # freeform question
+    FREEFORM = 3
 
 class Quiz(models.Model):
 
@@ -99,19 +99,23 @@ class Quiz(models.Model):
     linenumbers = models.NullBooleanField(blank=True, null=True, default=settings.DEFAULT_LINE_NUMBERS)
     style = models.CharField(blank=True, null=True, max_length=30, choices=tuple(STYLE_MAP.items()), default='default')
 
+    # freeform answer, optional 
+    answer = models.TextField()
+
     def __unicode__(self):
         return unicode(self.Lecture.title + " " + self.question)
 
     @property
     def render_code(self):
-        style = styles.get_style_by_name(self.style)
-        formatter = HtmlFormatter(linenos=self.linenumbers, style=style, nowrap=True, classprefix='code%s-' % self.pk)
-        html = highlight(self.code, get_lexer_by_name(self.syntax), formatter)
-        css = formatter.get_style_defs()
+        if self.code != None:
+            style = styles.get_style_by_name(self.style)
+            formatter = HtmlFormatter(linenos=self.linenumbers, style=style, nowrap=True, classprefix='code%s-' % self.pk)
+            html = highlight(self.code, get_lexer_by_name(self.syntax), formatter)
+            css = formatter.get_style_defs()
+            # Included in a DIV, so the next item will be displayed below.
+            return _('<div class="code"><style type="text/css">%(css)s</style>\n<pre>%(html)s</pre></div>\n') % {'css':css, 'html':html}
 
-        # Included in a DIV, so the next item will be displayed below.
-        return _('<div class="code"><style type="text/css">%(css)s</style>\n<pre>%(html)s</pre></div>\n') % {'css':css, 'html':html}
-
+        return ""
 
     @property
     def quiz_type(self):
@@ -119,13 +123,14 @@ class Quiz(models.Model):
         quiz_choice_list = QuizChoice.objects.filter(Quiz=self.id)
         # acan ssume that for each quiz, there must always be at least 2 choice associated
         num_correct = len(QuizChoice.objects.filter(Quiz=self.id, correct=True))
-        if num_correct == 0:
-            return QuizType.ZEROMCQ
+        
+        if self.answer != u"":
+            return QuizType.FREEFORM
         elif num_correct == 1:
             return QuizType.SINGLEMCQ
-        else:
-            # for all else it is multimcq
+        elif num_correct > 1:
             return QuizType.MULTIMCQ
+
 
 class QuizChoice(models.Model):
     choice = models.TextField()
@@ -142,10 +147,10 @@ class QuizChoice(models.Model):
 
 class QuizChoiceSelected(models.Model):
     User = models.ForeignKey(User)
-    QuizChoice = models.ForeignKey(QuizChoice)
-
-    class Meta:
-        unique_together = ('User', 'QuizChoice') 
+    QuizChoice = models.ForeignKey(QuizChoice, blank=True, null=True)
+    # for when answer is for freeform quiz
+    answer = models.TextField(blank=True, null=True)
+    Quiz = models.ForeignKey(Quiz, blank=True, null=True)
 
 class ConfidenceMeter(models.Model):
     User = models.OneToOneField(User)

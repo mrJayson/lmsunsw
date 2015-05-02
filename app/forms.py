@@ -14,7 +14,7 @@ from django.conf import settings
 from django.forms.models import inlineformset_factory, BaseInlineFormSet
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit, Field, Button
+from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit, Field, Button, HTML
 from crispy_forms.bootstrap import InlineField
 
 from app.models import *
@@ -76,7 +76,7 @@ class QuizSelectionForm(forms.Form):
 
     def __init__(self, user, quiz, *args, **kwargs):
 
-        ################ data initialise ###################
+        ################ data initialisation ###################
 
         super(QuizSelectionForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
@@ -90,6 +90,55 @@ class QuizSelectionForm(forms.Form):
             quiz_choice_list.append((quiz_choice.id, quiz_choice.choice))
 
         # switch on quiz_type
+
+        ################### FREEFORM ###################
+        # form is a textfield
+        # response cannot be checked, display answer for user to compare
+
+        if quiz.quiz_type == QuizType.FREEFORM:
+            quiz_answer = QuizChoiceSelected.objects.filter(User=user, Quiz=quiz)
+            if quiz_answer.exists():
+                # filter returns a list, get first, also assume list length is 1
+                quiz_answer=quiz_answer[0]
+
+                self.fields['answer'] = forms.CharField(initial=quiz_answer.answer, widget=forms.Textarea(attrs={_('class'): _('form-control')}))
+                self.fields['correct_answer'] = forms.CharField(initial=quiz.answer, widget=forms.Textarea(attrs={_('class'): _('form-control')}))
+
+                # add hidden values into form
+                self.fields['user'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):user.id}))
+                self.fields['quiz'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):quiz.id}))
+
+                # determining whether to display code is handled in the view and passed in as context
+                # since crispy form displays code all in one line
+                self.helper.layout.append(
+                    Fieldset(
+                        quiz.question,
+                        Field('answer', disabled=_('true')),
+                        Field('correct_answer', disabled=_('true')),
+                        Field('user'),
+                        Field('quiz'),
+                    )
+                )
+
+            else:
+                self.fields['answer'] = forms.CharField(widget=forms.Textarea(attrs={_('class'): _('form-control')}))
+
+                # add hidden values into form
+                self.fields['user'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):user.id}))
+                self.fields['quiz'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):quiz.id}))
+
+                # determining whether to display code is handled in the view and passed in as context
+                # since crispy form displays code all in one line
+                self.helper.layout.append(
+                    Fieldset(
+                        quiz.question,
+                        Field('answer'),
+                        Field('user'),
+                        Field('quiz'),
+                    )
+                )
+            # form is to have a submit button since it needs to collect data
+            self.helper.add_input(Submit(_('submit'), _('Submit')))
         
 
         ################### SINGLEMCQ ###################
@@ -226,7 +275,6 @@ class QuizSelectionForm(forms.Form):
                     # somewhere in between, partially correct
                     self.helper.add_input(Button(name = _(""), value="PARTIALLY CORRECT", css_class='btn-warning'))
 
-
         # to prevent default form messages from being displayed, answer selection can never be wrong
         self.helper.form_show_errors = False
         self.helper.form_show_labels = False
@@ -238,14 +286,22 @@ class QuizSelectionForm(forms.Form):
         user = self.cleaned_data.get('user')
         return User.objects.get(id=user)
 
+    def clean_quiz(self):
+        quiz = self.cleaned_data.get('quiz')
+        return Quiz.objects.get(id=quiz)
+
     def save(self, *args, **kwargs):
         data = self.cleaned_data
-        # change a single choice into an array of single choice so that it will work in the query
-        selected_choices = data.get('choices') if type(data.get('choices'))==type([]) else [data.get('choices')]
-        # need user and choices to create object
-        user_object = User.objects.get(username=data.get('user'))
-        return [QuizChoiceSelected.objects.create(User=user_object, QuizChoice=selection)
-        for selection in QuizChoice.objects.filter(id__in=selected_choices)]
+
+        if not data.get('answer') == None:
+            return QuizChoiceSelected.objects.create(User=data.get('user'), Quiz=data.get('quiz'), answer=data.get('answer'))
+        else:
+            # change a single choice into an array of single choice so that it will work in the query
+            selected_choices = data.get('choices') if type(data.get('choices'))==type([]) else [data.get('choices')]
+            # need user and choices to create object
+            user_object = User.objects.get(username=data.get('user'))
+            return [QuizChoiceSelected.objects.create(User=user_object, QuizChoice=selection)
+            for selection in QuizChoice.objects.filter(id__in=selected_choices)]
 
 class CreateThreadForm(forms.ModelForm):
 

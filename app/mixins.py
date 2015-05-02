@@ -24,8 +24,7 @@ class SidebarContextMixin(BaseSidebarContextMixin):
 
 		#used on the sidebar to display tabs
 
-		context['quiz_list'] = Quiz.objects.filter(Lecture = self.kwargs['lecture_id'], visible = False).filter(
-			Lecture__in=list(set([k.Lecture for k in [j.Quiz for j in [i.QuizChoice for i in QuizChoiceSelected.objects.select_related().all()]]])))
+		context['quiz_list'] = Quiz.objects.filter(Lecture = self.kwargs['lecture_id'], visible = False)
 		context['codesnippet_list'] = CodeSnippet.objects.filter(Lecture=self.kwargs['lecture_id'])
 		return context
 

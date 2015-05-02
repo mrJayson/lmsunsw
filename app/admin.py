@@ -38,10 +38,10 @@ class CustomUserAdmin(UserAdmin):
 
 class QuizChoiceInLine(admin.StackedInline):
     model = QuizChoice
-    # min number of quiz choices per quiz is two
-    min_num = 2
-    # display two more quiz choices forms by default, giving 4 choices as standard
-    extra = 2
+    # no min since quiz can be freeform
+    min_num = 0
+    # display none in beginning to simplify display
+    extra = 0
     # override admin css styling for inputs
     def formfield_for_dbfield(self, db_field, *args, **kwargs):
         if db_field.name == 'choice':
@@ -54,6 +54,16 @@ class QuizAdmin(admin.ModelAdmin):
     """
     inlines = [QuizChoiceInLine]
     form = QuizAdminForm
+    fieldsets = (
+        ('Quiz Question', {
+            'fields': ('question', 'visible', 'Lecture','answer')
+            }
+        ),
+        ('Code Snippet', {
+            'fields': ('syntax', 'code')
+            }
+        ),
+    )
 
 class QuizProxy(Quiz):
     # need proxy model since django admin does not allow a model to be registered twice

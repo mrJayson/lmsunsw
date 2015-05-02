@@ -28,7 +28,7 @@
         {% if current_quiz_list %}<!--current quiz list-->
             <li id="current_quiz_list" role="presentation" class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                    New Quizzes <span class="badge">{{current_quiz_list|length}}</span>
+                    Available Quizzes <span class="badge">{{current_quiz_list|length}}</span>
                 </a>
                 <ul id="current_quiz_list_inner" class="dropdown-menu" role="menu">
                     {% for quiz in current_quiz_list %}

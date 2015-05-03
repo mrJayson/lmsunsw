@@ -1,12 +1,12 @@
 ﻿{% extends "app/layout.html" %}
-{% load cache %}
+
 
 {% block content %}
-{% cache 30 alert %}
+
 <div class="container">
 	<div class="alert alert-success">
 		{{msg}}
 	</div>
 </div>
-{% endcache %}
+
 {% endblock %}

@@ -80,7 +80,7 @@
 	            </button>
 			</div>
 		</div>
-		<div id="quiz-result-summary" class="panel panel-body" id="quiz-results-panel">
+		<div class="panel panel-body" id="quiz-results-panel">
 			{% if recent_quiz %}
 				<table class="table">
 					<thead>
@@ -144,9 +144,8 @@
 
 {% endblock %}
 
-{% block scripts %}
+{% block scripts %}{{ block.super }}
 
-	<script src="{% static 'app/scripts/admin_site.min.js' %}"></script>
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.min.js"></script>
 
 <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="/js/flot/excanvas.min.js"></script><![endif]-->   

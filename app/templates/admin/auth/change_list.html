@@ -1,7 +1,7 @@
 {% extends "admin/admin_layout.html" %}
 {% load i18n admin_urls admin_static admin_list templatetag %}
 
-{% block extrahead %}
+{% block extrahead %}{{ block.super }}
   {% if cl.formset or action_form %}
     <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
   {% endif %}

@@ -77,10 +77,4 @@ function addClickHandlers() {
 }
 $(document).ready(addClickHandlers);
 
-/* to toggle panels in admin */
-function minimize_panel(panel_body_id, panel_btn) {
-    var panel = document.getElementById(panel_body_id);
-    $(panel).slideToggle();
-    var btn = document.getElementById(panel_btn);
-    $(btn).toggleClass("glyphicon glyphicon-chevron-down glyphicon glyphicon-chevron-up");  
-}
+

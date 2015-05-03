@@ -10,6 +10,11 @@
 {% endblock %}
 
 {% block extrahead %}
-	
+	<link rel="stylesheet" type="text/css" href="{% static 'app/content/sidebar.min.css' %}" />
+{% endblock %}
+
+{% block scripts %}{{ block.super }}
+<script src="{% static 'app/scripts/admin_site.js' %}"></script>
+
 {% endblock %}
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="2.6" jmeter="2.11.20140723">
+<jmeterTestPlan version="1.2" properties="2.8" jmeter="2.13 r1665067">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -287,6 +287,7 @@
                 <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
                 <assertionsResultsToSave>0</assertionsResultsToSave>
                 <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
               </value>
             </objProp>
             <stringProp name="filename"></stringProp>
@@ -349,6 +350,7 @@
                 <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
                 <assertionsResultsToSave>0</assertionsResultsToSave>
                 <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
               </value>
             </objProp>
             <stringProp name="filename"></stringProp>
@@ -417,6 +419,84 @@
                 <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
                 <assertionsResultsToSave>0</assertionsResultsToSave>
                 <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+        </hashTree>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler" enabled="true">
+          <stringProp name="cacheKey"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors; // necessary imports
+
+      
+List&lt;String&gt; urls = new ArrayList&lt;String&gt;(); // initialize array of URLs
+Collections.addAll(urls,args); // read URLs from &quot;Parameters&quot; input and add them to array
+ExecutorService pool = Executors.newFixedThreadPool(urls.size()); // initialize pool of Future Tasks with number of threads equal to size of URLs provided
+for (String url : urls) { // for each URL from list
+   final String currentURL = url;
+   pool.submit(new Runnable() { // Sumbit a new thread which will execute GET request
+
+       @Override
+       public void run() {
+           try {
+               HttpClient client = new DefaultHttpClient(); // Use Apache Commons HTTPClient to perform GET request
+  HttpGet get = new HttpGet(currentURL);
+     HttpResponse response = client.execute(get);
+HttpEntity entity = response.getEntity();
+EntityUtils.consume(entity);
+           } catch (Exception ex) {
+               ex.printStackTrace();
+           }
+
+       }
+   });
+}
+pool.shutdown(); // shut down thread pool</stringProp>
+          <stringProp name="scriptLanguage">Groovy</stringProp>
+        </JSR223Sampler>
+        <hashTree>
+          <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>false</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
               </value>
             </objProp>
             <stringProp name="filename"></stringProp>
@@ -654,6 +734,7 @@
                 <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
                 <assertionsResultsToSave>0</assertionsResultsToSave>
                 <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
               </value>
             </objProp>
             <stringProp name="filename"></stringProp>
@@ -734,6 +815,7 @@
                 <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
                 <assertionsResultsToSave>0</assertionsResultsToSave>
                 <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
               </value>
             </objProp>
             <stringProp name="filename"></stringProp>
@@ -818,6 +900,7 @@
                 <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
                 <assertionsResultsToSave>0</assertionsResultsToSave>
                 <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
               </value>
             </objProp>
             <stringProp name="filename"></stringProp>
@@ -889,6 +972,7 @@
                 <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
                 <assertionsResultsToSave>0</assertionsResultsToSave>
                 <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
               </value>
             </objProp>
             <stringProp name="filename"></stringProp>
@@ -951,6 +1035,7 @@
                 <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
                 <assertionsResultsToSave>0</assertionsResultsToSave>
                 <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
               </value>
             </objProp>
             <stringProp name="filename"></stringProp>
@@ -1033,6 +1118,7 @@
                 <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
                 <assertionsResultsToSave>0</assertionsResultsToSave>
                 <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
               </value>
             </objProp>
             <stringProp name="filename"></stringProp>
@@ -1095,6 +1181,7 @@
                 <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
                 <assertionsResultsToSave>0</assertionsResultsToSave>
                 <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
               </value>
             </objProp>
             <stringProp name="filename"></stringProp>
@@ -1157,6 +1244,7 @@
                 <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
                 <assertionsResultsToSave>0</assertionsResultsToSave>
                 <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
               </value>
             </objProp>
             <stringProp name="filename"></stringProp>
@@ -1242,6 +1330,7 @@
                 <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
                 <assertionsResultsToSave>0</assertionsResultsToSave>
                 <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
               </value>
             </objProp>
             <stringProp name="filename"></stringProp>
@@ -1375,6 +1464,7 @@
                 <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
                 <assertionsResultsToSave>0</assertionsResultsToSave>
                 <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
               </value>
             </objProp>
             <stringProp name="filename"></stringProp>
@@ -1466,6 +1556,7 @@
                 <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
                 <assertionsResultsToSave>0</assertionsResultsToSave>
                 <bytes>true</bytes>
+                <threadCounts>true</threadCounts>
               </value>
             </objProp>
             <stringProp name="filename"></stringProp>

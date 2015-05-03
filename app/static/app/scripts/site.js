@@ -41,12 +41,15 @@ function student_poll(current_quiz_list) {
             /* update new quiz badge number */
             if (data.quiz_difference > 0) {
                 $('#current_quiz_list').load(' #current_quiz_list', function() {$(this).children().unwrap()})
+                $('#page-content-wrapper').load(' #page-content-wrapper', function() {$(this).children().unwrap()})
                 $.notify("quiz closed")
             }
             else if (data.quiz_difference < 0) {
                 $('#current_quiz_list').load(' #current_quiz_list', function() {$(this).children().unwrap()})
+                $('#page-content-wrapper').load(' #page-content-wrapper', function() {$(this).children().unwrap()})
                 $.notify("new quiz available")
             }
+
         },
         error: function(response){
         },

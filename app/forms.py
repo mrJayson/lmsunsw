@@ -98,10 +98,33 @@ class QuizSelectionForm(forms.Form):
         if quiz.quiz_type == QuizType.FREEFORM:
             quiz_answer = QuizChoiceSelected.objects.filter(User=user, Quiz=quiz)
             if quiz_answer.exists():
+                # Quiz answered, prepare form to display result
                 # filter returns a list, get first, also assume list length is 1
                 quiz_answer=quiz_answer[0]
 
-                self.fields['answer'] = forms.CharField(initial=quiz_answer.answer, widget=forms.Textarea(attrs={_('class'): _('form-control')}))
+                self.fields['answer'] = forms.CharField(label="Compare your answer to the correct answer",initial=quiz_answer.answer, widget=forms.Textarea(attrs={_('class'): _('form-control')}))
+                self.fields['correct_answer'] = forms.CharField(initial=quiz.answer, widget=forms.Textarea(attrs={_('class'): _('form-control')}))
+
+                # add hidden values into form
+                self.fields['user'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):user.id}))
+                self.fields['quiz'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):quiz.id}))
+
+                # determining whether to display code is handled in the view and passed in as context
+                # since crispy form displays code all in one line
+                self.helper.layout.append(
+                    Fieldset(
+                        quiz.question,
+                        Field('answer', disabled=_('true')),
+                        Field('correct_answer', disabled=_('true')),
+                        Field('user'),
+                        Field('quiz'),
+                    )
+                )
+
+            if not quiz_answer.exists() and not quiz.visible:
+                # Quiz not answered yet, but finished, disable fields
+
+                self.fields['answer'] = forms.CharField(label="You did not answer the quiz in time",  widget=forms.Textarea(attrs={_('class'): _('form-control')}))
                 self.fields['correct_answer'] = forms.CharField(initial=quiz.answer, widget=forms.Textarea(attrs={_('class'): _('form-control')}))
 
                 # add hidden values into form
@@ -121,6 +144,7 @@ class QuizSelectionForm(forms.Form):
                 )
 
             else:
+                # Quiz not answered yet, prepare form to collect
                 self.fields['answer'] = forms.CharField(widget=forms.Textarea(attrs={_('class'): _('form-control')}))
 
                 # add hidden values into form
@@ -137,8 +161,8 @@ class QuizSelectionForm(forms.Form):
                         Field('quiz'),
                     )
                 )
-            # form is to have a submit button since it needs to collect data
-            self.helper.add_input(Submit(_('submit'), _('Submit')))
+                # form is to have a submit button since it needs to collect data
+                self.helper.add_input(Submit(_('submit'), _('Submit')))
         
 
         ################### SINGLEMCQ ###################
@@ -169,8 +193,9 @@ class QuizSelectionForm(forms.Form):
                 self.helper.add_input(Submit(_('submit'), _('Submit')))
 
             elif len(quiz_choice_selected) == 0 and not quiz.visible:
-                # Quiz not answered yet, prepare form to collect
+                # Quiz not answered yet, but finished, disable fields
                 self.fields['choices'] = forms.ChoiceField(
+                    label="You did not answer the quiz in time",
                     choices = quiz_choice_list,
                     required=True,
                     widget=forms.RadioSelect
@@ -276,7 +301,7 @@ class QuizSelectionForm(forms.Form):
                     self.helper.add_input(Button(name = _(""), value="PARTIALLY CORRECT", css_class='btn-warning'))
 
         # to prevent default form messages from being displayed, answer selection can never be wrong
-        self.helper.form_show_labels = False
+        #self.helper.form_show_labels = False
 
     def is_valid(self):
         return super(QuizSelectionForm, self).is_valid()

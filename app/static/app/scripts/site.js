@@ -29,6 +29,7 @@ function refresh_confidence(data) {
 
 function student_poll(current_quiz_list) {
     /* send data in poll to compare and retrieve if needed */
+    
     $.ajax({
         type: "GET",
         url:  "/student_poll/",

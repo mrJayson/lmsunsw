@@ -1,0 +1,25 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+{% endblock %}
+
+{% block sidebar %}
+	{% include "app/sidebar.html" %}
+{% endblock %}
+
+{% block extrahead %}
+	
+{% endblock %}
+
+{% block scripts %}
+    <!-- ensure refreshes only occur when logged in and not in admin view-->
+        <script type="text/javascript">
+            /* updates the confidence meter periodically */
+            var ping_interval = 1000*5
+            setInterval(function() {
+                student_poll($("#current_quiz_list_inner li").length)
+                }, ping_interval
+            )
+        </script>
+{% endblock %}

@@ -1,4 +1,4 @@
-{% extends "app/layout.html" %}
+{% extends "admin/admin_layout.html" %}
 {% load i18n admin_urls admin_static admin_modify %}
 
 {% block extrahead %}{{ block.super }}
@@ -54,8 +54,4 @@
 
 </div>
 </form>
-{% endblock %}
-
-{% block sidebar %}
-	{% include "admin/sidebar.html" %}
 {% endblock %}

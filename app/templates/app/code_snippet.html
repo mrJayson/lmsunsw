@@ -1,4 +1,4 @@
-{% extends "app/layout.html" %}
+{% extends "app/authenticated_layout.html" %}
 
 {% block content %}
 	{% for codesnippet in codesnippet_list %}
@@ -7,8 +7,4 @@
 	</div>
 	{% endfor %}
 
-{% endblock %}
-
-{% block sidebar %}
-    {% include "app/sidebar.html" %}
 {% endblock %}

@@ -1,4 +1,4 @@
-﻿{% extends "app/layout.html" %}
+﻿{% extends "app/authenticated_layout.html" %}
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -6,8 +6,4 @@
 
 {% crispy form %}
 
-{% endblock %}
-
-{% block sidebar %}
-    {% include "app/sidebar.html" %}
 {% endblock %}

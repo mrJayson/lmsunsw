@@ -14,6 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView, View
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.sessions.models import Session
+from django.core.cache import cache
 
 from app.models import ConfidenceMeter, Quiz, Lecture
 
@@ -86,13 +87,24 @@ def vote(request):
             vote = request.GET.get("vote")
             # update model
             confidence_object, created = ConfidenceMeter.objects.get_or_create(User=user)
+            # new vote 
             if vote == u'1':
                 confidence = 1
+                cache.incr("good_confidence_meter_data")
             elif vote == u'-1':
                 confidence = -1
+                cache.incr("bad_confidence_meter_data")
             else:
                 #all else is neutral
                 confidence = 0
+                cache.incr("neutral_confidence_meter_data")
+
+            if confidence_object.confidence == 1:
+                cache.decr("good_confidence_meter_data")
+            elif confidence_object.confidence == -1:
+                cache.decr("bad_confidence_meter_data")
+            else:
+                cache.decr("neutral_confidence_meter_data")
 
             confidence_object.confidence = confidence
             confidence_object.save()

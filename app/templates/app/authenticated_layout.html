@@ -19,7 +19,7 @@
     <!-- ensure refreshes only occur when logged in and not in admin view-->
         <script type="text/javascript">
             /* updates the confidence meter periodically */
-            var ping_interval = 1000*5
+            var ping_interval = 1000*20
             setInterval(function() {
                 student_poll($("#current_quiz_list_inner li").length)
                 }, ping_interval

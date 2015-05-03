@@ -63,7 +63,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'app.middleware.SessionSecurityMiddleware',
+    #'app.middleware.SessionSecurityMiddleware',
     #'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
@@ -261,4 +261,4 @@ LANGUAGE_CHOICES = (
 
 DEFAULT_LANGUAGE = 'c'
 
-
+STUDENT_POLL_INTERVAL = 15

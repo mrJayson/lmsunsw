@@ -4,15 +4,15 @@ function plot_confidence(data) {
     	var value = data[key]
     	color = ''
     	/* place in each if statement to prevent key 'current' from being in the graph */
-    	if (key=='good') {
+    	if (key=='good_confidence_meter_data') {
     		color="#5cb85c"
     		flot_data.push({label: key, data: value, color: color})
     	}
-    	if (key=='neutral') {
+    	if (key=='neutral_confidence_meter_data') {
     		color="#f0ad4e"
     		flot_data.push({label: key, data: value, color: color})
     	}
-    	if (key=='bad') {
+    	if (key=='bad_confidence_meter_data') {
     		color="#d9534f"
     		flot_data.push({label: key, data: value, color: color})
     	}

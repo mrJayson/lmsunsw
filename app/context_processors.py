@@ -10,56 +10,82 @@ from django.db.models import get_models
 from django.utils.safestring import mark_safe
 from django.contrib.admin import ModelAdmin
 from django.contrib.admin.validation import BaseValidator
+from django.core.cache import cache
+from django.conf import settings
 
 
 from app.models import ConfidenceMeter, Quiz, Lecture, QuizChoice, QuizChoiceSelected
 
+session_refresh_interval = 60
+
 def django_sessions(request):
 	# context processor to add num of users on the site
-	sessions_decoded_data = [i.get_decoded() for i in Session.objects.all()]
-	users = []
-	for data in sessions_decoded_data:
-		if data.has_key('_auth_user_id'):
-			users += [data.get('_auth_user_id')]
-	num_sessions = len(set(users))
-	ret_val = {'num_sessions':num_sessions}
-	return ret_val
+
+
+    num_sessions = cache.get('session_data')
+    if num_sessions == None:
+        users = []
+        sessions_decoded_data = [i.get_decoded() for i in Session.objects.all()]
+        for data in sessions_decoded_data:
+            if data.has_key('_auth_user_id'):
+                users += [data.get('_auth_user_id')]
+        num_sessions = len(set(users))
+        # update value in cache
+        cache.set('session_data', num_sessions, session_refresh_interval)
+    ret_val = {'num_sessions':num_sessions}
+    return ret_val
 
 def get_confidence_meter_values(request):
 	# context processor for retreiving data for confidence meter
-	good = 0
-	neutral = 0
-	bad = 0
-	for vote in ConfidenceMeter.objects.all():
-		if vote.confidence == 1:
-			good += 1
-		elif vote.confidence == -1:
-			bad += 1
-		else:
-			neutral += 1
 
-	sum = good+bad+neutral
-	sum = 1 if sum==0 else sum
-	bad = bad * 100 / sum
-	neutral = neutral * 100 / sum
-	# so ensure that the total sums to 100, make good 100 - bad and neutral
-	good = 100 - neutral - bad
-	if request.user.is_authenticated():
-		try:
-			current = ConfidenceMeter.objects.get(User=request.user).confidence
-		except ConfidenceMeter.DoesNotExist:
-			current = None
-	else:
-		current = None
+    if not request.user.is_authenticated():
+        return {}
 
-	ret_val = {'good': good, 'neutral': neutral, 'bad': bad, 'current': current}
-	return ret_val
+    confidence_meter_data = cache.get_many(['good_confidence_meter_data', 'neutral_confidence_meter_data', 'bad_confidence_meter_data'])
+
+    if confidence_meter_data == {}:
+
+        good_confidence_meter_data = 0
+        neutral_confidence_meter_data = 0
+        bad_confidence_meter_data = 0
+        for vote in ConfidenceMeter.objects.all():
+            if vote.confidence == 1:
+                good_confidence_meter_data += 1
+            elif vote.confidence == -1:
+                bad_confidence_meter_data += 1
+            else:
+                neutral_confidence_meter_data += 1
+
+        sum = good_confidence_meter_data+bad_confidence_meter_data+neutral_confidence_meter_data
+        sum = 1 if sum==0 else sum
+        bad_confidence_meter_data = bad_confidence_meter_data * 100 / sum
+        neutral_confidence_meter_data = neutral_confidence_meter_data * 100 / sum
+        # so ensure that the total sums to 100, make good 100 - bad and neutral
+        good_confidence_meter_data = 100 - neutral_confidence_meter_data - bad_confidence_meter_data
+        confidence_meter_data = {'good_confidence_meter_data': good_confidence_meter_data, 'neutral_confidence_meter_data': neutral_confidence_meter_data, 'bad_confidence_meter_data': bad_confidence_meter_data}
+        
+        # store in cache
+        cache.set_many(confidence_meter_data, settings.STUDENT_POLL_INTERVAL)
+
+    try:
+        current = ConfidenceMeter.objects.get(User=request.user).confidence
+    except ConfidenceMeter.DoesNotExist:
+        current = None
+
+
+    confidence_meter_data.update({'current': current})
+    return confidence_meter_data
 
 def currents(request):
 
-	return {'current_quiz_list': Quiz.objects.filter(visible = True),
+    current_quiz_list = cache.get('current_quiz_list')
+    if current_quiz_list == None:
+        current_quiz_list = Quiz.objects.filter(visible = True)
+        cache.set('current_quiz_list', current_quiz_list)
+
+    return {'current_quiz_list': current_quiz_list,
     'current_url': request.path,
-	}
+    }
 
 # get_models returns all the models, but there are 
 # some which we would like to ignore
@@ -90,6 +116,8 @@ def app_list(request):
     '''
     Get all models and add them to the context apps variable.
     '''
+    if not request.user.is_superuser:
+        return {}
     user = request.user
     app_dict = {}
     admin_class = ModelAdmin

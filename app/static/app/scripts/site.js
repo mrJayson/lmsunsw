@@ -7,9 +7,9 @@ $("#menu-toggle").click(function(e) {
 });
 
 function refresh_confidence(data) {
-    $("#progress-bar-good").attr("style", "width: "+ data.good +"%");
-    $("#progress-bar-neutral").attr("style", "width: "+ data.neutral +"%");
-    $("#progress-bar-bad").attr("style", "width: "+ data.bad +"%");
+    $("#progress-bar-good").attr("style", "width: "+ data["good_confidence_meter_data"] +"%");
+    $("#progress-bar-neutral").attr("style", "width: "+ data["neutral_confidence_meter_data"] +"%");
+    $("#progress-bar-bad").attr("style", "width: "+ data["bad_confidence_meter_data"] +"%");
     if (data.current == 1) {
         $("#good-btn").html("good<span class='glyphicon glyphicon-ok'></span>")
     } else {

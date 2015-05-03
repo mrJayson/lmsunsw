@@ -1,7 +1,6 @@
 {% load current from templatetag %}
-
-
 <div id="sidebar-wrapper" role="navigation">
+
 
     {% include "app/confidence_meter.html" %}
 
@@ -25,7 +24,9 @@
         <li class="{% current 'thread' %}">
             <a href="{% url 'thread' %}">Posts</a>
         </li>
-        {% if current_quiz_list %}<!--current quiz list-->
+    
+        {% if current_quiz_list %}
+        <!--current quiz list-->
             <li id="current_quiz_list" role="presentation" class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
                     Available Quizzes <span class="badge">{{current_quiz_list|length}}</span>

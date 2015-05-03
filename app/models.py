@@ -10,6 +10,7 @@ from django.utils.text import Truncator
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.utils.functional import cached_property
+from django.core.cache import cache
 
 from autoslug import AutoSlugField
 
@@ -105,6 +106,38 @@ class Quiz(models.Model):
 
     def __unicode__(self):
         return unicode(self.Lecture.title + " " + self.question)
+
+    def save(self, *args, **kwargs):
+
+        ret_val = super(Quiz, self).save(*args, **kwargs)
+
+        if self.visible == True:
+            # update current_quiz_list in cache
+            current_quiz_list = cache.get('current_quiz_list')
+            try:
+                current_quiz_list.append(self)
+            except AttributeError:
+                # first call, nothing in cache yet
+                current_quiz_list = [self]
+
+            cache.set('current_quiz_list', current_quiz_list, None)
+            print cache.get('current_quiz_list')
+        elif self.visible == False:
+            current_quiz_list = cache.get('current_quiz_list')
+            try:
+                current_quiz_list.remove(self)
+                cache.set('current_quiz_list', current_quiz_list, None)
+            except ValueError:
+                # not in list
+                pass
+            except AttributeError:
+                # list is not a list, but None
+                # and None does not have remove()
+                pass    
+            
+        return ret_val
+
+
 
     @property
     def render_code(self):

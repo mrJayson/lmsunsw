@@ -6,7 +6,21 @@
 
     <ul class="nav nav-pills nav-stacked">
         
+        {% if lecture_list %}
+            <li role="presentation" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                    Lectures <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    {% for lecture in lecture_list %}
+                        <li>
+                            <a href="{% url 'lecture' lecture.id lecture.slug %}">{{ lecture.title }}</a>
 
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endif %}<!--end if lecture_list-->
         <li class="{% current 'thread' %}">
             <a href="{% url 'thread' %}">Posts</a>
         </li>

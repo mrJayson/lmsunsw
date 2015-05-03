@@ -11,6 +11,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.utils.functional import cached_property
 from django.core.cache import cache
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.contrib.auth.models import Permission
 
 from autoslug import AutoSlugField
 
@@ -28,6 +31,8 @@ class UserProfile(models.Model):
     # like a toString
     def __unicode__(self):
         return unicode(self.user)
+
+
 
 class Lecture(models.Model):
     title = models.CharField(max_length=30, unique=True)

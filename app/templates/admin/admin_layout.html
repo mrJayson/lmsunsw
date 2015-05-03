@@ -6,7 +6,11 @@
 {% endblock %}
 
 {% block sidebar %}
+	{% if user.is_superuser %}
     {% include "admin/sidebar.html" %}
+    {% else %}
+    {% include "app/sidebar.html" %}
+    {% endif %}
 {% endblock %}
 
 {% block extrahead %}

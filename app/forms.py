@@ -63,6 +63,8 @@ class CreateUserForm(UserCreationForm):
             Permission.objects.get(name=_('Can add post')),
             Permission.objects.get(name=_('Can change post')),
         )
+        new_user.is_staff = True
+        new_user.save()
         return new_user
 
     def clean_username(self):

@@ -8,10 +8,12 @@ from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
 from app.mixins import BaseSidebarContextMixin, SidebarContextMixin
 from app.forms import QuizSelectionForm, CreateThreadForm, CreateUserForm, PostReplyForm
 from app.models import *
+from app.cache_helpers import *
 
 class IndexView(TemplateView, BaseSidebarContextMixin):
     template_name = _('app/index.html')
@@ -90,22 +92,15 @@ class ThreadView(ListView, BaseSidebarContextMixin):
     template_name = _('app/thread.html')
     model = Thread
 
-    def get_context_data(self, *args, **kwargs):
-        context = super(ThreadView, self).get_context_data(*args, **kwargs)
-        context['lecture_list'] = Lecture.objects.all()
-        return context
 
     def get_queryset(self, *args, **kwargs):
-        return Thread.objects.all()
+        thread_list = get_thread_list()
+
+        return thread_list
 
 class CreateThreadView(CreateView, BaseSidebarContextMixin):
     template_name = _('app/create_thread.html')
     model = Thread
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(CreateThreadView, self).get_context_data(*args, **kwargs)
-        context['lecture_list'] = Lecture.objects.all()
-        return context
 
     def get_form(self, data=None, files=None, *args, **kwargs):
         user = self.request.user
@@ -123,21 +118,33 @@ class PostView(CreateView, BaseSidebarContextMixin):
     template_name = _('app/post.html')
     model = Post
 
+    @staticmethod
+    def get_thread_from_id(id):
+        thread_list = cache.get('thread_list')
+        if thread_list == None:
+            thread_list = Thread.objects.all()
+            cache.set('thread_list', thread_list, settings.THREAD_LIST_CACHE_INTERVAL)
+
+        thread = thread_list.get(id=id)
+        return thread
+
     def dispatch(self, request, *args, **kwargs):
-        thread = Thread.objects.get(id=kwargs.get('thread_id'))
-        thread.inc_views()
+
+        PostView.get_thread_from_id(kwargs.get('thread_id')).inc_views()
         return super(PostView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *args, **kwargs):
         context = super(PostView, self).get_context_data(*args, **kwargs)
-        context['lecture_list'] = Lecture.objects.all()
-        context['thread'] = Thread.objects.get(id=self.kwargs.get('thread_id'))
-        context['posts'] = Post.objects.filter(Thread = self.kwargs.get('thread_id'))
+
+        thread = PostView.get_thread_from_id(self.kwargs.get('thread_id'))
+        context['thread'] = thread
+
+        context['posts'] = Post.objects.select_related().filter(Thread = thread)
         return context
 
     def get_form(self, data=None, files=None, *args, **kwargs):
         user = self.request.user
-        thread = Thread.objects.get(id=self.kwargs.get('thread_id'))
+        thread = PostView.get_thread_from_id(self.kwargs.get('thread_id'))
         if self.request.method == "POST":
             form = PostReplyForm(user=user, thread=thread, data=self.request.POST)
         else: # for GET requests

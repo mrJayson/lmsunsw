@@ -80,7 +80,7 @@ def currents(request):
 
     current_quiz_list = cache.get('current_quiz_list')
     if current_quiz_list == None:
-        current_quiz_list = Quiz.objects.filter(visible = True)
+        current_quiz_list = Quiz.objects.select_related().filter(visible = True)
         cache.set('current_quiz_list', current_quiz_list)
 
     return {'current_quiz_list': current_quiz_list,

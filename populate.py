@@ -12,7 +12,7 @@ from app.docsURL import glist
 from random import choice
 from string import ascii_lowercase
 
-verbose_populate = False
+verbose_populate = True
 # print for each object creation if verbose is True
 
 
@@ -221,7 +221,7 @@ def populate():
 
     create_superuser(username="admin", first_name="administration", last_name="account", email="admin@admin.com", password="admin")
     create_student(username="Jack", first_name="Jack", last_name="James", email="Jack@James.com", password="password")
-    num_students = 100
+    num_students = 300
 
     for i in xrange(num_students):
         create_student()
@@ -279,15 +279,16 @@ def populate():
     create_quiz_choice("Iphone", quiz7, False)
     create_quiz_choice("Radio", quiz7, True)
 
-    for i in xrange(10):
-#        create_quiz_choice_selection(Quiz=quiz1)
-#        create_quiz_choice_selection(Quiz=quiz2)
-        create_quiz_choice_selection(Quiz=quiz6)
+    User_list = User.objects.all()
+    for i in xrange(300):
+        create_quiz_choice_selection(Quiz=quiz1, User=User_list[i])
+        create_quiz_choice_selection(Quiz=quiz2, User=User_list[i])
+        create_quiz_choice_selection(Quiz=quiz6, User=User_list[i])
 
     #for i in xrange(num_students * 3):
     #    create_quiz_choice_selection()
 
-    for i in xrange(5):
+    for i in xrange(50):
         create_thread(anonymous=False)
     for i in xrange(num_students):
         create_post(anonymous=False)

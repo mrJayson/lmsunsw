@@ -66,7 +66,42 @@ class Lecture(models.Model):
         if self.collab_doc == None:
             # no collab docs has been specified, need to link it with an ununsed gdoc
             self.collab_doc = Lecture.get_unused_gdoc()
-        return super(Lecture, self).save(*args, **kwargs)
+
+        #check if this object is a new entry in db
+        created = False
+        if self.id == None:
+            created = True
+        ret_val = super(Lecture, self).save(*args, **kwargs)
+            # update cache for lecture based entries
+        if created == True:
+            lecture_list = cache.get('lecture_list')
+            try:
+                lecture_list.append(self)
+            except AttributeError:
+                # first call, nothing in cache yet
+                lecture_list = [self]
+            cache.set('lecture_list', lecture_list)
+
+        return ret_val
+
+    def delete(self, *args, **kwargs):
+
+        # remove from caches before actual delete
+
+        lecture_list = cache.get('lecture_list')
+        try:
+            lecture_list.remove(self)
+            cache.set('lecture_list', lecture_list)
+        except ValueError:
+            # not in list
+            pass
+        except AttributeError:
+            # list is not a list, but None
+            # and None does not have remove()
+            pass    
+
+        return super(Lecture, self).delete(*args, **kwargs)
+
 
 class LectureMaterial(models.Model):
 
@@ -120,13 +155,12 @@ class Quiz(models.Model):
                 # first call, nothing in cache yet
                 current_quiz_list = [self]
 
-            cache.set('current_quiz_list', current_quiz_list, None)
-            print cache.get('current_quiz_list')
+            cache.set('current_quiz_list', current_quiz_list)
         elif self.visible == False:
             current_quiz_list = cache.get('current_quiz_list')
             try:
                 current_quiz_list.remove(self)
-                cache.set('current_quiz_list', current_quiz_list, None)
+                cache.set('current_quiz_list', current_quiz_list)
             except ValueError:
                 # not in list
                 pass
@@ -136,6 +170,25 @@ class Quiz(models.Model):
                 pass    
             
         return ret_val
+
+    def delete(self, *args, **kwargs):
+
+        # remove from caches before actual delete
+
+        current_quiz_list = cache.get('current_quiz_list')
+        try:
+            current_quiz_list.remove(self)
+            cache.set('current_quiz_list', current_quiz_list)
+        except ValueError:
+            # not in list
+            pass
+        except AttributeError:
+            # list is not a list, but None
+            # and None does not have remove()
+            pass    
+
+        return super(Quiz, self).delete(*args, **kwargs)
+
 
 
 
@@ -204,22 +257,54 @@ class Thread(models.Model):
     slug = AutoSlugField(populate_from='title')
     last_post = models.DateTimeField(auto_now=True)
     anonymous = models.BooleanField(default=True)
+    replies = models.SmallIntegerField(default=0)
 
     def __unicode__(self):
         return unicode(self.title)
 
-    @cached_property
-    def replies(self):
-        replies = len(Post.objects.filter(Thread=self.id))
-        return replies
+    def save(self, *args, **kwargs):
+         #check if this object is a new entry in db
+        created = False
+        if self.id == None:
+            created = True
+        # save the object
+        ret_val = super(Thread, self).save(*args, **kwargs)
+            # update cache for lecture based entries
+        if created == True:
+            thread_list = cache.get('thread_list')
+            try:
+                thread_list.append(self)
+            except AttributeError:
+                # first call, nothing in cache yet
+                thread_list = Thread.objects.all()
+            cache.set('thread_list', thread_list, settings.THREAD_LIST_CACHE_INTERVAL)
+
+        return ret_val
+
+    def delete(self, *args, **kwargs):
+
+        # remove from caches before actual delete
+
+        thread_list = cache.get('thread_list')
+        try:
+            thread_list.remove(self)
+            cache.set('thread_list', thread_list, settings.THREAD_LIST_CACHE_INTERVAL)
+        except ValueError:
+            # not in list
+            pass
+        except AttributeError:
+            # list is not a list, but None
+            # and None does not have remove()
+            pass    
+
+        return super(Thread, self).delete(*args, **kwargs)
 
     def inc_views(self):
         self.views = self.views + 1
         self.save()
 
-    @cached_property
     def Creator_name(self):
-        return _("anonymous") if self.anonymous else self.Creator
+        return _("anonymous") if self.anonymous else self.Creator.username
 
 class Post(models.Model):
     Thread = models.ForeignKey(Thread)
@@ -234,7 +319,12 @@ class Post(models.Model):
 
     @property
     def Creator_name(self):
-        return _("anonymous") if self.anonymous else self.Creator
+        return _("anonymous") if self.anonymous else self.Creator.username
+
+    def save(self, *args, **kwargs):
+        self.Thread.replies = self.Thread.replies + 1
+        self.Thread.save()
+        return super(Post, self).save(*args, **kwargs)
 
 
 class CodeSnippet(models.Model):

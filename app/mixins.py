@@ -4,13 +4,19 @@ Definition of custom mixins.
 
 from django.views.generic.base import ContextMixin
 from django.contrib import admin
+from django.core.cache import cache
 
 from app.models import Lecture, Quiz, QuizChoiceSelected, CodeSnippet
 
 class BaseSidebarContextMixin(ContextMixin):
 	def get_context_data(self, *args, **kwargs):
 		context = super(BaseSidebarContextMixin, self).get_context_data(*args, **kwargs)
-		context['lecture_list'] = Lecture.objects.all()
+		lecture_list = cache.get('lecture_list')
+		if lecture_list == None:
+			lecture_list = Lecture.objects.all()
+			cache.set('lecture_list', lecture_list, 60)
+
+		context['lecture_list'] = lecture_list
 		return context
 
 class SidebarContextMixin(BaseSidebarContextMixin):

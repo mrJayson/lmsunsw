@@ -12,6 +12,7 @@
 					<th>Views</th>
 					<th>Creator</th>
 					<th>Last Post</th>
+					<th>Created On</th>
 				</tr>
 			</thead>
 			{% for thread in object_list %}
@@ -22,6 +23,7 @@
 					<td>{{ thread.views }}</td>
 					<td>{{ thread.Creator_name }}</td>
 					<td>{{ thread.last_post }}</td>
+					<td>{{ thread.created_on }}</td>
 				</tr>
 			</tbody>
 			{% endfor %}

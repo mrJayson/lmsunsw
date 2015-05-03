@@ -100,14 +100,15 @@ class Quiz(models.Model):
     style = models.CharField(blank=True, null=True, max_length=30, choices=tuple(STYLE_MAP.items()), default='default')
 
     # freeform answer, optional 
-    answer = models.TextField()
+    answer = models.TextField(blank=True, null=True)
 
     def __unicode__(self):
         return unicode(self.Lecture.title + " " + self.question)
 
     @property
     def render_code(self):
-        if self.code != None:
+ 
+        if self.code != None and self.code != "":
             style = styles.get_style_by_name(self.style)
             formatter = HtmlFormatter(style=style, nowrap=True, classprefix='code%s-' % self.pk)
             html = highlight(self.code, get_lexer_by_name(self.syntax), formatter)
@@ -124,12 +125,13 @@ class Quiz(models.Model):
         # acan ssume that for each quiz, there must always be at least 2 choice associated
         num_correct = len(QuizChoice.objects.filter(Quiz=self.id, correct=True))
         
-        if self.answer != u"":
-            return QuizType.FREEFORM
-        elif num_correct == 1:
+        
+        if num_correct == 1:
             return QuizType.SINGLEMCQ
         elif num_correct > 1:
             return QuizType.MULTIMCQ
+        elif self.answer != u"":
+            return QuizType.FREEFORM
 
 
 class QuizChoice(models.Model):

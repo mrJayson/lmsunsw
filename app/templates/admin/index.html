@@ -80,23 +80,44 @@
 	            </button>
 			</div>
 		</div>
-		<div class="panel panel-body" id="quiz-results-panel">
-			{% for quiz in recent_quizzes %}
+		<div id="quiz-result-summary" class="panel panel-body" id="quiz-results-panel">
+			{% if recent_quiz %}
 				<table class="table">
-				{% for question, choices in quiz.items %}
 					<thead>
-						<tr>{{question}}</tr>
+						<tr>{{ recent_quiz.question }}</tr>
 					</thead>
 					<tbody>
-						<tr>
-						{% for choice in choices %}
-							<td>{{choice}}</td>
-						{% endfor %}
-						</tr>
+						{% if recent_quiz.quiz_type == 3 %}
+							<tr>
+								<td>
+									{{freeform_submissions}} submissions collected
+								</td>
+							</tr>
+						{% endif %}
+
+						{% if recent_quiz_choices %}
+							{% for recent_quiz_choice in recent_quiz_choices %}
+								<tr>
+									<td>{{recent_quiz_choice.choice}}</td>
+									<td>
+										  <div class="progress-bar {% cycle 'progress-bar-info' 'progress-bar-success' 'progress-bar-warning' 'progress-bar-danger'%}" role="progressbar" style="min-width: 2em; width: {{recent_quiz_choice.relative_percentage}}%;">
+										  	{{recent_quiz_choice.times_chosen}}
+	  										</div>
+										</td>
+								</tr>
+							{% endfor %}
+						{% endif %}
+						
 					</tbody>
-				{% endfor %}
+					{% if recent_quiz.quiz_type == 2 %}
+					<tfooter>
+						<tr>
+							<td>Numbers will be higher as this is an MCQ with multiple right answers</td>
+						</tr>
+					</tfooter>
+					{% endif %}
 				</table>
-			{% endfor %}
+			{% endif %}
 		</div>
 
 	</div>

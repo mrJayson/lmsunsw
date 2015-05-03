@@ -39,11 +39,11 @@ function student_poll(current_quiz_list) {
             refresh_confidence(data)
             /* update new quiz badge number */
             if (data.quiz_difference > 0) {
-                $("#current_quiz_list").load(' #current_quiz_list', function() {$(this).children().unwrap()})
+                $('#current_quiz_list').load(' #current_quiz_list', function() {$(this).children().unwrap()})
                 $.notify("quiz closed")
             }
             else if (data.quiz_difference < 0) {
-                $("#current_quiz_list").load(' #current_quiz_list', function() {$(this).children().unwrap()})
+                $('#current_quiz_list').load(' #current_quiz_list', function() {$(this).children().unwrap()})
                 $.notify("new quiz available")
             }
         },

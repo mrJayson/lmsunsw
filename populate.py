@@ -280,8 +280,9 @@ def populate():
     create_quiz_choice("Radio", quiz7, True)
 
     for i in xrange(10):
-        create_quiz_choice_selection(Quiz=quiz1)
-        create_quiz_choice_selection(Quiz=quiz2)
+#        create_quiz_choice_selection(Quiz=quiz1)
+#        create_quiz_choice_selection(Quiz=quiz2)
+        create_quiz_choice_selection(Quiz=quiz6)
 
     #for i in xrange(num_students * 3):
     #    create_quiz_choice_selection()

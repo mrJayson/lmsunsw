@@ -22,7 +22,7 @@ class SidebarContextMixin(BaseSidebarContextMixin):
 		#need to pass identity of current lecture into template
 		context['current_lecture'] = Lecture.objects.get(id=self.kwargs['lecture_id'])
 
-		#used on the sidebar to display tabs
+		#used on the navbar to display tabs
 
 		context['quiz_list'] = Quiz.objects.filter(Lecture = self.kwargs['lecture_id'], visible = False)
 		context['codesnippet_list'] = CodeSnippet.objects.filter(Lecture=self.kwargs['lecture_id'])

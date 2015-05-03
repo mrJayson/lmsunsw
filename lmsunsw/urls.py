@@ -11,7 +11,7 @@ from django.conf.urls import patterns, url
 from django.contrib.auth.views import login, logout
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.contrib.auth.decorators import user_passes_test, login_required
-from django.views.decorators.cache import cache_page
+#from django.views.decorators.cache import cache_page
 # check for pages that require the user to not be logged in
 login_forbidden =  user_passes_test(lambda u: u.is_anonymous(), '/', None)
 
@@ -34,7 +34,7 @@ urlpatterns = patterns('',
     # user registration page
     url(r'^createuser/?$',login_forbidden(CreateUser.as_view()), name='createuser'),
     # generic alert message page
-    url(r'^alert/(?P<tag>.*)$', cache_page(60 * 15)(AlertView.as_view()), name='alert'),
+    url(r'^alert/(?P<tag>.*)$', AlertView.as_view(), name='alert'),
     # lecture index page
     url(r'^course/(?P<lecture_id>[0-9]+)/(?P<lecture_slug>[^/]+)$', login_required(LectureView.as_view()), name='lecture'),
     # quiz page
@@ -50,7 +50,7 @@ urlpatterns = patterns('',
 
     url(r'^course/(?P<lecture_id>[0-9]+)/(?P<lecture_slug>[^/]+)/code/?$', login_required(CodeSnippetView.as_view()), name='codesnippet'),
     # generic login page
-    url(r'^login/?$', cache_page(60 * 15)(login_forbidden(login)), 
+    url(r'^login/?$', login_forbidden(login), 
         {'template_name':'app/login.html',
             #'redirect_field_name':'/',
             'authentication_form':BootstrapAuthenticationForm,

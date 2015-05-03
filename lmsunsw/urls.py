@@ -11,7 +11,6 @@ from django.conf.urls import patterns, url
 from django.contrib.auth.views import login, logout
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.contrib.auth.decorators import user_passes_test, login_required
-#from django.views.decorators.cache import cache_page
 # check for pages that require the user to not be logged in
 login_forbidden =  user_passes_test(lambda u: u.is_anonymous(), '/', None)
 

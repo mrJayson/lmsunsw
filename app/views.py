@@ -14,7 +14,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView, View
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.sessions.models import Session
-from django.views.decorators.cache import cache_page
 
 from app.models import ConfidenceMeter, Quiz, Lecture
 
@@ -48,8 +47,6 @@ def logout(request, next_page=None,
             session.delete()
     return ret_val
 
-
-@cache_page(5)
 
 def long_poll(request):
     # gets all the polling data for all needs

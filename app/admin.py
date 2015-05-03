@@ -223,20 +223,22 @@ class Admin_Site(AdminSite):
             extra_context = {} if extra_context==None else extra_context
             # get data for recent quiz
             most_recent_quiz = Quiz.objects.filter(visible=False).order_by('last_touch').last()
-            extra_context['recent_quiz'] = most_recent_quiz
-            if most_recent_quiz.quiz_type == QuizType.FREEFORM:
-                extra_context['freeform_submissions'] = len(QuizChoiceSelected.objects.filter(Quiz=most_recent_quiz))
-            else:
-                extra_context['recent_quiz_choices'] = []
-                extra_context['recent_quiz_choices_max_value'] = 0
-                for qc in QuizChoice.objects.select_related().filter(Quiz__id=most_recent_quiz.id):
-                    extra_context['recent_quiz_choices'].append({'choice':qc.choice, 'times_chosen':qc.times_chosen})
-                    extra_context['recent_quiz_choices_max_value'] = max(extra_context['recent_quiz_choices_max_value'], qc.times_chosen)
-                for qc in extra_context['recent_quiz_choices']:
-                    try:
-                        qc['relative_percentage'] = (qc['times_chosen'] * 100/extra_context['recent_quiz_choices_max_value'])
-                    except ZeroDivisionError:
-                        qc['relative_percentage'] = 0
+            if most_recent_quiz != None:
+                extra_context['recent_quiz'] = most_recent_quiz
+                if most_recent_quiz.quiz_type == QuizType.FREEFORM:
+                    extra_context['freeform_submissions'] = len(QuizChoiceSelected.objects.filter(Quiz=most_recent_quiz))
+                else:
+                    extra_context['recent_quiz_choices'] = []
+                    extra_context['recent_quiz_choices_max_value'] = 0
+                    for qc in QuizChoice.objects.select_related().filter(Quiz__id=most_recent_quiz.id):
+                        extra_context['recent_quiz_choices'].append({'choice':qc.choice, 'times_chosen':qc.times_chosen})
+                        extra_context['recent_quiz_choices_max_value'] = max(extra_context['recent_quiz_choices_max_value'], qc.times_chosen)
+                    for qc in extra_context['recent_quiz_choices']:
+                        try:
+                            qc['relative_percentage'] = (qc['times_chosen'] * 100/extra_context['recent_quiz_choices_max_value'])
+                        except ZeroDivisionError:
+                            # in the event that there are no submissions, exception will occur
+                            qc['relative_percentage'] = 0
             
             
             # do forms stuff

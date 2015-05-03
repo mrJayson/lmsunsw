@@ -75,6 +75,8 @@ class LectureMaterial(models.Model):
 
 class QuizType():
     # represents an enum
+    # no right answers
+    ZEROMCQ = 0
     # one right answer
     SINGLEMCQ = 1
     # multiple right answers
@@ -130,8 +132,11 @@ class Quiz(models.Model):
             return QuizType.SINGLEMCQ
         elif num_correct > 1:
             return QuizType.MULTIMCQ
-        elif self.answer != u"":
+        elif self.answer != u"" and self.answer != None:
             return QuizType.FREEFORM
+        else:
+            # must be ZEROMCQ
+            return QuizType.ZEROMCQ
 
 
 class QuizChoice(models.Model):

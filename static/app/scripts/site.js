@@ -7,9 +7,9 @@ $("#menu-toggle").click(function(e) {
 });
 
 function refresh_confidence(data) {
-    $("#progress-bar-good").attr("style", "width: "+ data.good +"%");
-    $("#progress-bar-neutral").attr("style", "width: "+ data.neutral +"%");
-    $("#progress-bar-bad").attr("style", "width: "+ data.bad +"%");
+    $("#progress-bar-good").attr("style", "width: "+ data["good_confidence_meter_data"] +"%");
+    $("#progress-bar-neutral").attr("style", "width: "+ data["neutral_confidence_meter_data"] +"%");
+    $("#progress-bar-bad").attr("style", "width: "+ data["bad_confidence_meter_data"] +"%");
     if (data.current == 1) {
         $("#good-btn").html("good<span class='glyphicon glyphicon-ok'></span>")
     } else {
@@ -27,16 +27,31 @@ function refresh_confidence(data) {
     }
 }
 
-function student_poll() {
+function student_poll(current_quiz_list) {
+    /* send data in poll to compare and retrieve if needed */
+    
     $.ajax({
         type: "GET",
         url:  "/student_poll/",
         dataType: 'json',
+        data: {'quiz_length': current_quiz_list},
         success: function (data) {
+            /* update confidence meter */
             refresh_confidence(data)
+            /* update new quiz badge number */
+            if (data.quiz_difference > 0) {
+                $('#current_quiz_list').load(' #current_quiz_list', function() {$(this).children().unwrap()})
+                $('#page-content-wrapper').load(' #page-content-wrapper', function() {$(this).children().unwrap()})
+                $.notify("quiz closed")
+            }
+            else if (data.quiz_difference < 0) {
+                $('#current_quiz_list').load(' #current_quiz_list', function() {$(this).children().unwrap()})
+                $('#page-content-wrapper').load(' #page-content-wrapper', function() {$(this).children().unwrap()})
+                $.notify("new quiz available")
+            }
+
         },
         error: function(response){
-
         },
     });
 }
@@ -65,10 +80,4 @@ function addClickHandlers() {
 }
 $(document).ready(addClickHandlers);
 
-/* to toggle panels in admin */
-function minimize_panel(panel_body_id, panel_btn) {
-    var panel = document.getElementById(panel_body_id);
-    $(panel).slideToggle();
-    var btn = document.getElementById(panel_btn);
-    $(btn).toggleClass("glyphicon glyphicon-chevron-down glyphicon glyphicon-chevron-up");  
-}
+

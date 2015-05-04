@@ -21,6 +21,7 @@
             /* updates the confidence meter periodically */
             var ping_interval = 1000*20
             setInterval(function() {
+                console.log($("#current_quiz_list_inner li").length)
                 student_poll($("#current_quiz_list_inner li").length)
                 }, ping_interval
             )

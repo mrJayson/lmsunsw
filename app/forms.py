@@ -123,7 +123,7 @@ class QuizSelectionForm(forms.Form):
                     )
                 )
 
-            if not quiz_answer.exists() and not quiz.visible:
+            elif not quiz_answer.exists() and not quiz.visible:
                 # Quiz not answered yet, but finished, disable fields
 
                 self.fields['answer'] = forms.CharField(label="You did not answer the quiz in time",  widget=forms.Textarea(attrs={_('class'): _('form-control')}))
@@ -333,7 +333,7 @@ class CreateThreadForm(forms.ModelForm):
 
     class Meta:
         model = Thread
-        fields = ('title', 'content', 'Creator', 'views')
+        fields = ('title', 'content', 'anonymous', 'Creator', 'views')
 
     def __init__(self, user, *args, **kwargs):
         super(CreateThreadForm, self).__init__(*args, **kwargs)
@@ -344,11 +344,13 @@ class CreateThreadForm(forms.ModelForm):
         self.fields['content'] = forms.CharField(widget=forms.Textarea(attrs={_('class'): _('form-control')}))
         self.fields['Creator'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):user.id}))
         self.fields['views'] = forms.IntegerField(widget=forms.HiddenInput(attrs={_('value'): 0}))
+        self.fields['anonymous'] = forms.BooleanField(initial=True, required=False)
         self.helper.layout.append(
             Fieldset(
                 "New Topic",
                 Field('title'),
                 Field('content'),
+                Field('anonymous'),
                 Field('Creator'),
                 Field('views'),
                 )

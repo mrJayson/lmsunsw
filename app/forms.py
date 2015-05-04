@@ -414,8 +414,16 @@ class QuickSettingsForm(forms.Form):
             quick_lecture = Lecture.objects.last().id
         else:
             quick_lecture = ""
+        visible_quizzes = []
+        invisible_quizzes = []
 
-        visible_quizzes = [(i.id, i.question) for i in Quiz.objects.filter(visible=True)]
+        for obj in Quiz.objects.select_related().all():
+            if obj.visible == True:
+                visible_quizzes.append((obj.id, obj.question))
+            elif obj.visible == False and obj.Lecture.id == int(quick_lecture):
+
+                invisible_quizzes.append((obj.id, obj.question))
+        
         self.fields['Lecture'] = forms.ChoiceField(
             label = _("Current Lecture"),
             initial = quick_lecture,
@@ -426,7 +434,13 @@ class QuickSettingsForm(forms.Form):
             self.fields['visible_quizzes'] = forms.ChoiceField(
                 label = _("Currently visible Quizzes, click to finish"),
                 choices = visible_quizzes,
-                widget=forms.SelectMultiple(attrs={_('id'):('quick_quiz_select'), _('class'): _('form-control')}),
+                widget=forms.SelectMultiple(attrs={_('id'):('quick_quiz_close'), _('class'): _('form-control')}),
+                )
+        if invisible_quizzes:
+            self.fields['invisible_quizzes'] = forms.ChoiceField(
+                label = _("Quizzes that are ready to be open"),
+                choices = invisible_quizzes,
+                widget=forms.SelectMultiple(attrs={_('id'):('quick_quiz_open'), _('class'): _('form-control')}),
                 )
 
 class QuickQuizForm(forms.ModelForm):

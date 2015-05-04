@@ -131,16 +131,23 @@ def quick_update(request):
             response['return_type'] = 'lecture'
             response['return_value'] = request.POST.get('lecture')
             response['notice'] = "Updated Current Lecture to %(lecture)s" % {'lecture':lecture.title}
-        if request.POST.has_key('quiz'):
+        if request.POST.has_key('quiz_close'):
             # mark selected quiz as not visible
-            quiz = Quiz.objects.get(id=request.POST.get('quiz'))
+
+            quiz = Quiz.objects.get(id=request.POST.get('quiz_close'))
             quiz.visible = False
             quiz.save()
-            response['return_type'] = 'quiz'
-            response['return_value'] = request.POST.get('quiz')
+            response['return_type'] = 'quiz_close'
+            response['return_value'] = request.POST.get('quiz_close')
             response['notice'] = "Turned off Quiz %(quiz)s" % {'quiz':quiz.question}
-
-
+        if request.POST.has_key('quiz_open'):
+            # mark selected quiz as not visible
+            quiz = Quiz.objects.get(id=request.POST.get('quiz_open'))
+            quiz.visible = True
+            quiz.save()
+            response['return_type'] = 'quiz_open'
+            response['return_value'] = request.POST.get('quiz_open')
+            response['notice'] = "Turned on Quiz %(quiz)s" % {'quiz':quiz.question}
         return HttpResponse(json.dumps(response), content_type=_('application/json'))
     else:
          #if not ajax request, render 404 as they are not supposed to request via non ajax

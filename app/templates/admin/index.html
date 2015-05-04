@@ -152,11 +152,14 @@
     <script src="{% static 'app/scripts/flot/jquery.flot.pie.min.js' %}"></script>
 	<script>
 		function addQuickSelectHandlers() {
-			$("#quick_lecture_select").change(function(data) {
+			$(document).on('change', "#quick_lecture_select", function(data) {
 				quick_update('lecture', this.options[this.selectedIndex].value, "{{csrf_token}}")
 			});
-			$("#quick_quiz_select").change(function(data) {
-				quick_update('quiz', this.options[this.selectedIndex].value, "{{csrf_token}}")
+			$(document).on('change', "#quick_quiz_close", function(data) {
+				quick_update('quiz_close', this.options[this.selectedIndex].value, "{{csrf_token}}")
+			});
+			$(document).on('change', "#quick_quiz_open", function(data) {
+				quick_update('quiz_open', this.options[this.selectedIndex].value, "{{csrf_token}}")
 			});
 
 		}

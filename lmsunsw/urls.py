@@ -35,9 +35,9 @@ urlpatterns = patterns('',
     # generic alert message page
     url(r'^alert/(?P<tag>.*)$', AlertView.as_view(), name='alert'),
     # lecture index page
-    url(r'^course/(?P<lecture_id>[0-9]+)/(?P<lecture_slug>[^/]+)$', login_required(LectureView.as_view()), name='lecture'),
+    url(r'^course/(?P<lecture_id>[0-9]+)/(?P<lecture_slug>[^/]+)/?$', login_required(LectureView.as_view()), name='lecture'),
     # quiz page
-    url(r'^course/(?P<lecture_id>[0-9]+)/(?P<lecture_slug>[^/]+)/quiz/(?P<quiz_id>[0-9]+)/(?P<quiz_slug>[^/]+)$', login_required(QuizView.as_view()), name='quiz'),
+    url(r'^course/(?P<lecture_id>[0-9]+)/(?P<lecture_slug>[^/]+)/quiz/(?P<quiz_id>[0-9]+)/(?P<quiz_slug>[^/]+)/?$', login_required(QuizView.as_view()), name='quiz'),
     # lecture slide page
     url(r'^course/(?P<lecture_id>[0-9]+)/(?P<lecture_slug>[^/]+)/lecture_slide/?$', login_required(LectureSlideView.as_view()), name='lecture_slide'),
     # thread index page

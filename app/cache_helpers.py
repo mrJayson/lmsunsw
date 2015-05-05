@@ -224,6 +224,29 @@ def get_last_lecture_object():
 		lecture_obj = lecture_list[index]
 	return lecture_obj
 ################################################################################
+def get_lecture_materials_list():
+    lecture_materials_list = cache.get('lecture_materials_list')
+    if lecture_materials_list == None:
+        lecture_materials_list = LectureMaterial.objects.select_related().all()
+        cache.set('lecture_materials_list', lecture_materials_list, settings.LECTUREMATERIAL_LIST_CACHE_INTERVAL)
+    return lecture_materials_list
+
+def filter_lecture_materials_list(Lecture=None):
+	kwargs = {}
+	if Lecture != None:
+		kwargs.update({'Lecture':Lecture})
+	filtered_lecture_materials_list = None
+	lecture_materials_list = get_lecture_materials_list()
+	try:
+		filtered_lecture_materials_list = [l for l in lecture_materials_list if l.Lecture==Lecture]
+		
+	except AttributeError:
+		lecture_materials_list = LectureMaterial.objects.select_related().all()
+		cache.set('lecture_materials_list', lecture_materials_list, settings.LECTUREMATERIAL_LIST_CACHE_INTERVAL)
+		filtered_lecture_materials_list = filter_lecture_materials_list(Lecture=Lecture)
+	return filtered_lecture_materials_list
+
+################################################################################
 
 def get_codesnippet_list():
     codesnippet_list = cache.get('codesnippet_list')
@@ -244,7 +267,7 @@ def filter_codesnippet_list(Lecture=None):
 	except AttributeError:
 		codesnippet_list = CodeSnippet.objects.select_related().all()
 		cache.set('codesnippet_list', codesnippet_list, settings.CODESNIPPET_LIST_CACHE_INTERVAL)
-		filtered_codesnippet_list = codesnippet_list.filter(**kwargs)
+		filtered_codesnippet_list = filter_codesnippet_list(Lecture=Lecture)
 	return filtered_codesnippet_list
 
 ################################################################################

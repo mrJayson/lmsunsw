@@ -2,9 +2,9 @@
 
 {% block content %}
 
-
-    <iframe class="googledocsviewer" src="{{ current_lecture.lecture_slide.url }}" border="0" height: "600px"></iframe>
-
+	{% for lecture_slide in lecture_slide_list %}
+    	<iframe class="googledocsviewer" src="{{ lecture_slide.serve_material }}" border="0" height: "600px"></iframe>
+    {% endfor %}
 
 {% endblock %}
 

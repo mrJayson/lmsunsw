@@ -27,7 +27,8 @@ class SidebarContextMixin(BaseSidebarContextMixin):
 
 		#used on the navbar to display tabs
 
-		context['quiz_list'] = filter_quiz_list(Lecture = self.kwargs['lecture_id'], visible = False)
-		context['codesnippet_list'] = filter_codesnippet_list(Lecture=self.kwargs['lecture_id'])
+		context['quiz_list'] = filter_quiz_list(Lecture=context['current_lecture'], visible = False)
+		context['codesnippet_list'] = filter_codesnippet_list(Lecture=context['current_lecture'])
+		context['lecture_slide_exists'] = filter_lecture_materials_list(Lecture=context['current_lecture']) != []
 		return context
 

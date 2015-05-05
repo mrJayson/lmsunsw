@@ -513,9 +513,9 @@ class LectureMaterialInLineFormset(BaseInlineFormSet):
     def clean(self):
         # check that each form has only one of the fields entered
         for form in self.forms:
-            local = form.cleaned_data['local_lecture_material']==None
-            online = form.cleaned_data['online_lecture_material']==""
-            if not (local and not online) or (not local and online):
+            local = form.cleaned_data['local_lecture_material']!=None
+            online = form.cleaned_data['online_lecture_material']!=""
+            if local and online:
                 raise forms.ValidationError('One and only one field can be filled for each slot')
         return super(LectureMaterialInLineFormset, self).clean()
 

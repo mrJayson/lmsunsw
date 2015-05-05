@@ -92,7 +92,7 @@ class Lecture(models.Model):
                 lecture_list.append(self)
             except AttributeError:
                 # first call, nothing in cache yet
-                lecture_list = [self]
+                lecture_list = Lecture.objects.select_related().all()
             cache.set('lecture_list', lecture_list)
 
         return ret_val
@@ -121,6 +121,13 @@ class LectureMaterial(models.Model):
     Lecture = models.ForeignKey(Lecture)
     local_lecture_material = models.FileField(upload_to="lecture", blank=True, null=True)
     online_lecture_material = models.URLField(blank=True, null=True)
+
+    @property
+    def serve_material(self):
+        if self.online_lecture_material == u'':
+            return self.local_lecture_material.url
+        else:
+            return self.online_lecture_material
 
 class QuizType():
     # represents an enum
@@ -166,7 +173,7 @@ class Quiz(models.Model):
                 current_quiz_list.append(self)
             except AttributeError:
                 # first call, nothing in cache yet
-                current_quiz_list = [self]
+                current_quiz_list = Quiz.objects.filter(visible=True)
 
             cache.set('current_quiz_list', current_quiz_list)
         elif self.visible == False:

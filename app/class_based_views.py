@@ -53,9 +53,7 @@ class LectureView(TemplateView, SidebarContextMixin):
 class QuizView(FormView, SidebarContextMixin):
     template_name = _('app/quiz.html')
 
-    def get_context_data(self, *args, **kwargs):
-        context = super(QuizView, self).get_context_data(*args, **kwargs)
-        return context
+
 
     def get_form(self, data=None, files=None, *args, **kwargs):
         user = self.request.user
@@ -84,6 +82,12 @@ class QuizView(FormView, SidebarContextMixin):
 
 class LectureSlideView(TemplateView, SidebarContextMixin):
     template_name = _('app/lecture_slide.html')
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(LectureSlideView, self).get_context_data(*args, **kwargs)
+        Lecture = get_lecture_object(id=self.kwargs['lecture_id'])
+        context['lecture_slide_list'] = filter_lecture_materials_list(Lecture=Lecture)
+        return context
 
 
 class ThreadView(ListView, BaseSidebarContextMixin):

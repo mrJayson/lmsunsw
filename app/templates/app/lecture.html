@@ -2,9 +2,15 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    {% if current_lecture.collab_doc %}
-    <iframe src="{{ current_lecture.collab_doc }}"></iframe>
-    {% else %}
-        No Document Linked!
-    {% endif %}
+	{% if current_lecture.collab_doc %}
+	<iframe src="{{ current_lecture.collab_doc }}"></iframe>
+	<p>
+	If you cannot access the document within the site, you can access it through this link here:
+	</p>
+	<p>
+		<a href="{{ current_lecture.collab_doc }}">{{ current_lecture.collab_doc }}</a>
+	</p>
+	{% else %}
+		No Document Linked!
+	{% endif %}
 {% endblock %}

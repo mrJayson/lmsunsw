@@ -81,38 +81,12 @@ class Lecture(models.Model):
             self.collab_doc = Lecture.get_unused_gdoc()
 
         #check if this object is a new entry in db
-        created = False
-        if self.id == None:
-            created = True
         ret_val = super(Lecture, self).save(*args, **kwargs)
-            # update cache for lecture based entries
-        if created == True:
-            lecture_list = cache.get('lecture_list')
-            try:
-                lecture_list.append(self)
-            except AttributeError:
-                # first call, nothing in cache yet
-                lecture_list = Lecture.objects.select_related().all()
-            cache.set('lecture_list', lecture_list)
-
+        cache.delete('lecture_list')
         return ret_val
 
     def delete(self, *args, **kwargs):
-
-        # remove from caches before actual delete
-
-        lecture_list = cache.get('lecture_list')
-        try:
-            lecture_list.remove(self)
-            cache.set('lecture_list', lecture_list)
-        except ValueError:
-            # not in list
-            pass
-        except AttributeError:
-            # list is not a list, but None
-            # and None does not have remove()
-            pass    
-
+        cache.delete('lecture_list')
         return super(Lecture, self).delete(*args, **kwargs)
 
 
@@ -165,48 +139,14 @@ class Quiz(models.Model):
     def save(self, *args, **kwargs):
 
         ret_val = super(Quiz, self).save(*args, **kwargs)
-
-        if self.visible == True:
-            # update current_quiz_list in cache
-            current_quiz_list = cache.get('current_quiz_list')
-            try:
-                current_quiz_list.append(self)
-            except AttributeError:
-                # first call, nothing in cache yet
-                current_quiz_list = Quiz.objects.filter(visible=True)
-
-            cache.set('current_quiz_list', current_quiz_list)
-        elif self.visible == False:
-            current_quiz_list = cache.get('current_quiz_list')
-            try:
-                current_quiz_list.remove(self)
-                cache.set('current_quiz_list', current_quiz_list)
-            except ValueError:
-                # not in list
-                pass
-            except AttributeError:
-                # list is not a list, but None
-                # and None does not have remove()
-                pass    
-            
+        cache.delete('current_quiz_list')
         return ret_val
 
     def delete(self, *args, **kwargs):
 
-        # remove from caches before actual delete
+        # remove from cache before actual delete
 
-        current_quiz_list = cache.get('current_quiz_list')
-        try:
-            current_quiz_list.remove(self)
-            cache.set('current_quiz_list', current_quiz_list)
-        except ValueError:
-            # not in list
-            pass
-        except AttributeError:
-            # list is not a list, but None
-            # and None does not have remove()
-            pass    
-
+        cache.delete('current_quiz_list')
         return super(Quiz, self).delete(*args, **kwargs)
 
 
@@ -285,39 +225,16 @@ class Thread(models.Model):
 
     def save(self, *args, **kwargs):
          #check if this object is a new entry in db
-        created = False
-        if self.id == None:
-            created = True
-        # save the object
-        ret_val = super(Thread, self).save(*args, **kwargs)
-            # update cache for lecture based entries
-        if created == True:
-            thread_list = cache.get('thread_list')
-            try:
-                thread_list.append(self)
-            except AttributeError:
-                # first call, nothing in cache yet
-                thread_list = Thread.objects.all()
-            cache.set('thread_list', thread_list, settings.THREAD_LIST_CACHE_INTERVAL)
 
+        ret_val = super(Thread, self).save(*args, **kwargs)
+        cache.delete('thread_list')
         return ret_val
 
     def delete(self, *args, **kwargs):
 
         # remove from caches before actual delete
 
-        thread_list = cache.get('thread_list')
-        try:
-            thread_list.remove(self)
-            cache.set('thread_list', thread_list, settings.THREAD_LIST_CACHE_INTERVAL)
-        except ValueError:
-            # not in list
-            pass
-        except AttributeError:
-            # list is not a list, but None
-            # and None does not have remove()
-            pass    
-
+        cache.delete('thread_list')
         return super(Thread, self).delete(*args, **kwargs)
 
     def inc_views(self):

@@ -63,6 +63,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    #'app.middleware.QueryPrintingMiddleware',
     #'app.middleware.SessionSecurityMiddleware',
     #'django.middleware.cache.FetchFromCacheMiddleware',
 )
@@ -265,10 +266,10 @@ STUDENT_POLL_INTERVAL = 10
 USER_LIST_CACHE_INTERVAL = 15
 THREAD_LIST_CACHE_INTERVAL = 15
 POST_LIST_CACHE_INTERVAL = 15
-QUIZ_LIST_CACHE_INTERVAL = 15
-QUIZCHOICE_LIST_CACHE_INTERVAL = 15
-QUIZCHOICESELECTED_LIST_CACHE_INTERVAL = 15
-LECTURE_LIST_CACHE_INTERVAL = 15
+QUIZ_LIST_CACHE_INTERVAL = 10
+QUIZCHOICE_LIST_CACHE_INTERVAL = 10
+QUIZCHOICESELECTED_LIST_CACHE_INTERVAL = 10
+LECTURE_LIST_CACHE_INTERVAL = 180
 LECTUREMATERIAL_LIST_CACHE_INTERVAL = 15
 CODESNIPPET_LIST_CACHE_INTERVAL = 15
 SESSION_CACHE_INTERVAL = 15

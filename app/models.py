@@ -223,11 +223,13 @@ class Thread(models.Model):
     def __unicode__(self):
         return unicode(self.title)
 
-    def save(self, *args, **kwargs):
+    def save(self, inc_view=None, *args, **kwargs):
          #check if this object is a new entry in db
 
         ret_val = super(Thread, self).save(*args, **kwargs)
-        cache.delete('thread_list')
+        if inc_view != True:
+            cache.delete('thread_list')
+            
         return ret_val
 
     def delete(self, *args, **kwargs):
@@ -239,7 +241,7 @@ class Thread(models.Model):
 
     def inc_views(self):
         self.views = self.views + 1
-        self.save()
+        self.save(inc_view=True)
 
     def Creator_name(self):
         return _("anonymous") if self.anonymous else self.Creator.username

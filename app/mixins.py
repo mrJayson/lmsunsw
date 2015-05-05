@@ -31,4 +31,3 @@ class SidebarContextMixin(BaseSidebarContextMixin):
 		context['codesnippet_list'] = filter_codesnippet_list(Lecture=context['current_lecture'])
 		context['lecture_slide_exists'] = filter_lecture_materials_list(Lecture=context['current_lecture']) != []
 		return context
-

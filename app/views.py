@@ -76,8 +76,6 @@ def student_poll(request):
         # if there is a change in the quiz_list by checking length
         quiz_count = len(Quiz.objects.filter(visible = True))
         if int(request.GET.get("quiz_length")) != quiz_count:
-            print int(request.GET.get("quiz_length"))
-            print  quiz_count
             difference = int(request.GET.get("quiz_length")) - quiz_count
             results.update({'quiz_difference': difference})
         return HttpResponse(json.dumps(results), content_type=_('application/json'))

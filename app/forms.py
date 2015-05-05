@@ -89,7 +89,9 @@ class QuizSelectionForm(forms.Form):
         # response cannot be checked, display answer for user to compare
 
         if quiz.quiz_type == QuizType.FREEFORM:
-            quiz_answer = Quizchoiceselected.objects.filter(User=user, Quiz=quiz)
+
+            quiz_answer = QuizChoiceSelected.objects.filter(User=user, Quiz=quiz)
+
             if quiz_answer.exists():
                 # Quiz answered, prepare form to display result
                 # filter returns a list, get first, also assume list length is 1

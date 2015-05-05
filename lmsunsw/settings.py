@@ -57,14 +57,12 @@ INSTALLED_APPS = (
 
 MIDDLEWARE_CLASSES = (
     #'django.middleware.cache.UpdateCacheMiddleware',
-    'django.middleware.gzip.GZipMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     #'app.middleware.SessionSecurityMiddleware',
     #'django.middleware.cache.FetchFromCacheMiddleware',
 )
@@ -265,5 +263,3 @@ DEFAULT_LANGUAGE = 'c'
 
 STUDENT_POLL_INTERVAL = 15
 THREAD_LIST_CACHE_INTERVAL = 15
-
-DEBUG_TOOLBAR_PATCH_SETTINGS = False

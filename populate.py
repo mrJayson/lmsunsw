@@ -4,7 +4,6 @@ import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lmsunsw.settings')
 import django
 django.setup()
-from django.contrib.auth.models import Permission
 from app.models import *
 
 from app.models import *
@@ -127,18 +126,7 @@ def create_user(username=None, first_name=None, last_name=None, email=None, pass
     Set all users' is_staff to True to be able to access all of the django admin features
     """
     new_user = Rand.user(username=username, first_name=first_name, last_name=last_name, email=email,  password=password, is_superuser=is_superuser)
-    if is_superuser == False:
-        new_user.user_permissions.add(
-            Permission.objects.get(name='Can change user'),
-            Permission.objects.get(name='Can change user profile'),
-            Permission.objects.get(name='Can add thread'),
-            Permission.objects.get(name='Can change thread'),
-            Permission.objects.get(name='Can add post'),
-            Permission.objects.get(name='Can change post'),
-        ) 
-    new_user.save()
-    # create accompanying entry for additional user data
-    new_user_profile, created = UserProfile.objects.get_or_create(user=new_user)
+
     if 'verbose_populate' in globals() and verbose_populate == True:
         print "created user: " + new_user.username
     return new_user

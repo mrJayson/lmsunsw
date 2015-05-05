@@ -32,6 +32,13 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return unicode(self.user)
 
+    @receiver(post_save, sender=User)
+    def addUserPermission(sender, **kwargs):
+        if kwargs['created']:
+            user = kwargs['instance']
+            user.user_permissions.add(get_permission())
+            user.is_staff = True
+            user.save()
 
 
 class Lecture(models.Model):

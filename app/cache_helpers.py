@@ -2,15 +2,29 @@
 Cache helper functions
 """
 
+from django.contrib.auth.models import Permission
+from django.contrib.sessions.models import Session
 from django.core.cache import cache
 from app.models import *
 
-def get_thread_list():
-    thread_list = cache.get('thread_list')
-    if thread_list == None:
-        thread_list = Thread.objects.select_related().all()
-        cache.set('thread_list', thread_list, settings.THREAD_LIST_CACHE_INTERVAL)
-    return thread_list
+
+def get_permission():
+       permission = cache.get('permission')
+       if permission == None:
+               permission = Permission.objects.get(name='Can change user')
+        
+               cache.set('permission', permission, settings.PERMISSION_CACHE_INTERVAL)
+               
+       return permission
+
+def get_session_count():
+   session_count = cache.get('session_count')
+   if session_count == None:
+           session_count = Session.objects.count()
+           cache.set('session_count', session_count, settings.SESSION_CACHE_INTERVAL)
+   return session_count
+
+
 ################################################################################
 def get_quiz_list():
 	quiz_list = cache.get('quiz_list')
@@ -170,7 +184,7 @@ def get_thread_object(id=None):
 		else:
 			thread_obj = thread_obj[0]
 	except AttributeError:
-		thread_list = thread.objects.select_related().all()
+		thread_list = Thread.objects.select_related().all()
 		cache.set('thread_list', thread_list, settings.THREAD_LIST_CACHE_INTERVAL)
 		thread_obj = [l for l in thread_list if l.id==int(id)]
 		if thread_obj == [] or thread_obj == None:
@@ -178,3 +192,47 @@ def get_thread_object(id=None):
 		else:
 			thread_obj = thread_obj[0]
 	return thread_obj
+
+################################################################################
+
+def get_post_list():
+    post_list = cache.get('post_list')
+    if post_list == None:
+        post_list = Post.objects.select_related().all()
+        cache.set('post_list', post_list, settings.POST_LIST_CACHE_INTERVAL)
+    return post_list
+
+def filter_post_list(Thread=None):
+       kwargs = {}
+       if Thread != None:
+               kwargs.update({'Thread':Thread})
+       filtered_post_list = None
+       post_list = get_post_list()
+       try:
+               filtered_post_list = [l for l in post_list if l.Thread==Thread]
+               
+       except AttributeError:
+               post_list = Post.objects.select_related().all()
+               cache.set('post_list', post_list, settings.POST_LIST_CACHE_INTERVAL)
+               filtered_post_list = post_list.filter(**kwargs)
+       return filtered_post_list
+
+def get_post_object(id=None):
+
+       post_obj = None
+       post_list = get_post_list()
+       try:
+               post_obj = [l for l in post_list if l.id==int(id)]
+               if post_obj == [] or post_obj == None:
+                       post_obj = post_list.get(id=id)
+               else:
+                       post_obj = post_obj[0]
+       except AttributeError:
+               post_list = Post.objects.select_related().all()
+               cache.set('post_list', post_list, settings.POST_LIST_CACHE_INTERVAL)
+               post_obj = [l for l in post_list if l.id==int(id)]
+               if post_obj == [] or post_obj == None:
+                       post_obj = post_list.get(id=id)
+               else:
+                       post_obj = post_obj[0]
+       return post_obj

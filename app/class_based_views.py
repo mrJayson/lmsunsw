@@ -126,7 +126,7 @@ class PostView(CreateView, BaseSidebarContextMixin):
 
         thread = get_thread_object(id=self.kwargs.get('thread_id'))
         context['thread'] = thread
-        context['posts'] = Post.objects.select_related().filter(Thread = thread)
+        context['posts'] = filter_post_list(Thread = thread)
         return context
 
     def get_form(self, data=None, files=None, *args, **kwargs):

@@ -52,21 +52,6 @@ class CreateUserForm(UserCreationForm):
         model = User
         fields = ("username", "password1", "password2", "first_name", "last_name", "email")
 
-    def save(self, *args, **kwargs):
-        new_user = super(CreateUserForm, self).save(*args, **kwargs)
-        # add permissions user upon creation
-        new_user.user_permissions.add(
-            Permission.objects.get(name=_('Can change user')),
-            Permission.objects.get(name=_('Can change user profile')),
-            Permission.objects.get(name=_('Can add thread')),
-            Permission.objects.get(name=_('Can change thread')),
-            Permission.objects.get(name=_('Can add post')),
-            Permission.objects.get(name=_('Can change post')),
-        )
-        new_user.is_staff = True
-        new_user.save()
-        return new_user
-
     def clean_username(self):
         username = self.cleaned_data.get('username')
         return username.lower()

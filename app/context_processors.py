@@ -2,7 +2,6 @@
 Definition of custom context processors.
 """
 
-from django.contrib.sessions.models import Session
 from django.utils.translation import ugettext_lazy as _
 
 from django.utils.text import capfirst
@@ -12,27 +11,16 @@ from django.contrib.admin import ModelAdmin
 from django.contrib.admin.validation import BaseValidator
 from django.core.cache import cache
 from django.conf import settings
+from app.cache_helpers import *
 
 
 from app.models import ConfidenceMeter, Quiz, Lecture, QuizChoice, QuizChoiceSelected
 
-session_refresh_interval = 60
 
 def django_sessions(request):
 	# context processor to add num of users on the site
-
-
-    num_sessions = cache.get('session_data')
-    if num_sessions == None:
-        users = []
-        sessions_decoded_data = [i.get_decoded() for i in Session.objects.all()]
-        for data in sessions_decoded_data:
-            if data.has_key('_auth_user_id'):
-                users += [data.get('_auth_user_id')]
-        num_sessions = len(set(users))
-        # update value in cache
-        cache.set('session_data', num_sessions, session_refresh_interval)
-    ret_val = {'num_sessions':num_sessions}
+    session_count = get_session_count()
+    ret_val = {'session_count':session_count}
     return ret_val
 
 def get_confidence_meter_values(request):
@@ -76,12 +64,8 @@ def get_confidence_meter_values(request):
 
 def currents(request):
 
-    current_quiz_list = cache.get('current_quiz_list')
-    if current_quiz_list == None:
-        current_quiz_list = Quiz.objects.select_related().filter(visible = True)
-        cache.set('current_quiz_list', current_quiz_list, 15)
 
-    return {'current_quiz_list': current_quiz_list,
+    return {'current_quiz_list': filter_quiz_list(visible=True),
     'current_url': request.path,
     }
 

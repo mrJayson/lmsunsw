@@ -15,6 +15,7 @@ from django.views.generic import TemplateView, View
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.sessions.models import Session
 from django.core.cache import cache
+from app.cache_helpers import set_user_confidence
 
 from app.models import ConfidenceMeter, Quiz, Lecture
 
@@ -93,14 +94,35 @@ def vote(request):
             # new vote 
             if vote == u'1':
                 confidence = 1
-                cache.incr("good_confidence_meter_data")
+                try:
+                    cache.incr("good_confidence_meter_data")
+                except ValueError:
+                    cache.set_many ({
+                    'good_confidence_meter_data': 1,
+                    'neutral_confidence_meter_data': 0,
+                    'bad_confidence_meter_data': 0,
+                    })
             elif vote == u'-1':
                 confidence = -1
-                cache.incr("bad_confidence_meter_data")
+                try:
+                    cache.incr("bad_confidence_meter_data")
+                except ValueError:
+                    cache.set_many ({
+                    'good_confidence_meter_data': 0,
+                    'neutral_confidence_meter_data': 1,
+                    'bad_confidence_meter_data': 0,
+                    })
             else:
                 #all else is neutral
                 confidence = 0
-                cache.incr("neutral_confidence_meter_data")
+                try:
+                    cache.incr("neutral_confidence_meter_data")
+                except ValueError:
+                    cache.set_many ({
+                    'good_confidence_meter_data': 0,
+                    'neutral_confidence_meter_data': 0,
+                    'bad_confidence_meter_data': 1,
+                    })
 
             if confidence_object.confidence == 1:
                 cache.decr("good_confidence_meter_data")
@@ -111,6 +133,7 @@ def vote(request):
 
             confidence_object.confidence = confidence
             confidence_object.save()
+            set_user_confidence(User=user, confidence=confidence)
         
         # once updated, return results back for html update
         # need to import in here to prevent circular imports

@@ -8,6 +8,8 @@ from django.core.cache import cache
 from app.models import *
 
 
+
+
 def get_permission():
 	permission = cache.get('permission')
 	if permission == None:
@@ -24,6 +26,18 @@ def get_session_count():
 		cache.set('session_count', session_count, settings.SESSION_CACHE_INTERVAL)
 	return session_count
 
+################################################################################
+
+def set_user_confidence(User=None, confidence=None):
+	if User==None or confidence==None:
+		return
+	key = "User_confidence_%s" % (User.id)
+	cache.set(key, confidence, settings.CONFIDENCE_CACHE_INTERVAL)
+
+def get_user_confidence(User=None):
+	key = "User_confidence_%s" % (User.id)
+	confidence = cache.get(key)
+	return confidence
 
 ################################################################################
 

@@ -214,7 +214,7 @@ TEMPLATE_LOADERS = (
 TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
     'app.context_processors.django_sessions',
-    'app.context_processors.get_confidence_meter_values',
+    'app.context_processors.prepare_confidence_meter_values',
     'app.context_processors.currents',
     'app.context_processors.app_list',
     )
@@ -272,3 +272,4 @@ LECTURE_LIST_CACHE_INTERVAL = 15
 CODESNIPPET_LIST_CACHE_INTERVAL = 15
 SESSION_CACHE_INTERVAL = 15
 PERMISSION_CACHE_INTERVAL = 60
+CONFIDENCE_CACHE_INTERVAL = 1800

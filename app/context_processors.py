@@ -23,19 +23,33 @@ def django_sessions(request):
     ret_val = {'session_count':session_count}
     return ret_val
 
+def prepare_confidence_meter_values(request):
+    confidence_meter_data = get_confidence_meter_values(request)
+    good_confidence_meter_data = confidence_meter_data['good_confidence_meter_data']
+    neutral_confidence_meter_data = confidence_meter_data['neutral_confidence_meter_data']
+    bad_confidence_meter_data = confidence_meter_data['bad_confidence_meter_data']
+
+    sum = good_confidence_meter_data+neutral_confidence_meter_data+bad_confidence_meter_data
+    good_confidence_meter_data = good_confidence_meter_data*100/sum
+    neutral_confidence_meter_data = neutral_confidence_meter_data*100/sum
+    bad_confidence_meter_data = bad_confidence_meter_data*100/sum
+    confidence_meter_data.update({'good_confidence_meter_data': good_confidence_meter_data, 'neutral_confidence_meter_data': neutral_confidence_meter_data, 'bad_confidence_meter_data': bad_confidence_meter_data})
+
+    return confidence_meter_data
+
 def get_confidence_meter_values(request):
 	# context processor for retreiving data for confidence meter
-
+    
     if not request.user.is_authenticated():
         return {}
 
     confidence_meter_data = cache.get_many(['good_confidence_meter_data', 'neutral_confidence_meter_data', 'bad_confidence_meter_data'])
-    current = None
-    if confidence_meter_data == {}:
 
+    if confidence_meter_data == {}:
         good_confidence_meter_data = 0
         neutral_confidence_meter_data = 0
         bad_confidence_meter_data = 0
+
         for vote in ConfidenceMeter.objects.select_related().all():
             if vote.confidence == 1:
                 good_confidence_meter_data += 1
@@ -43,27 +57,15 @@ def get_confidence_meter_values(request):
                 bad_confidence_meter_data += 1
             else:
                 neutral_confidence_meter_data += 1
-            if vote.User == request.user:
-                current = vote.confidence
 
-        sum = good_confidence_meter_data+bad_confidence_meter_data+neutral_confidence_meter_data
-        sum = 1 if sum==0 else sum
-        bad_confidence_meter_data = bad_confidence_meter_data * 100 / sum
-        neutral_confidence_meter_data = neutral_confidence_meter_data * 100 / sum
-        # so ensure that the total sums to 100, make good 100 - bad and neutral
-        good_confidence_meter_data = 100 - neutral_confidence_meter_data - bad_confidence_meter_data
         confidence_meter_data = {'good_confidence_meter_data': good_confidence_meter_data, 'neutral_confidence_meter_data': neutral_confidence_meter_data, 'bad_confidence_meter_data': bad_confidence_meter_data}
-        
         # store in cache
         cache.set_many(confidence_meter_data, settings.STUDENT_POLL_INTERVAL)
 
-
-
-    confidence_meter_data.update({'current': current})
+    confidence_meter_data.update({'current': get_user_confidence(request.user)})
     return confidence_meter_data
 
 def currents(request):
-
 
     return {'current_quiz_list': filter_quiz_list(visible=True),
     'current_url': request.path,

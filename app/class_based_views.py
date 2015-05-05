@@ -23,7 +23,7 @@ class IndexView(TemplateView, BaseSidebarContextMixin):
             return redirect('admin:index')
         else:
             # student index is empty, redirect to latest lecture page 
-            lecture = Lecture.objects.last()
+            lecture = get_last_lecture_object()
             if lecture == None:
                 # only display index page if in the event there are no lectures to display
                 return super(IndexView, self).dispatch(request, *args, **kwargs)
@@ -32,7 +32,7 @@ class IndexView(TemplateView, BaseSidebarContextMixin):
         
     def get_context_data(self, *args, **kwargs):
         context = super(IndexView, self).get_context_data(*args, **kwargs)
-        context['lecture_list'] = Lecture.objects.all()
+        context['lecture_list'] = get_lecture_list()
         if context.has_key('session_key'):
             context['session_key'] = self.request.session.session_key
         return context
@@ -55,12 +55,11 @@ class QuizView(FormView, SidebarContextMixin):
 
     def get_context_data(self, *args, **kwargs):
         context = super(QuizView, self).get_context_data(*args, **kwargs)
-        context['code_snippet'] = Quiz.objects.get(id=self.kwargs.get('quiz_id')).render_code
         return context
 
     def get_form(self, data=None, files=None, *args, **kwargs):
         user = self.request.user
-        quiz = Quiz.objects.get(id=self.kwargs.get('quiz_id'))
+        quiz = get_quiz_object(id=self.kwargs.get('quiz_id'))
 
         if self.request.method == "POST":
             form = QuizSelectionForm(user, quiz, data=self.request.POST)
@@ -77,8 +76,8 @@ class QuizView(FormView, SidebarContextMixin):
     def get_success_url(self):
         lecture_id = self.kwargs.get('lecture_id')
         quiz_id = self.kwargs.get('quiz_id')
-        lecture = Lecture.objects.get(id=self.kwargs.get('lecture_id'))
-        quiz = Quiz.objects.get(id=self.kwargs.get('quiz_id'))
+        lecture = get_lecture_object(id=self.kwargs['lecture_id'])
+        quiz = get_quiz_object(id=self.kwargs.get('quiz_id'))
 
         
         return reverse('quiz', kwargs={'lecture_id':lecture.id, 'lecture_slug':lecture.slug, 'quiz_id':quiz.id, 'quiz_slug':quiz.question})
@@ -118,33 +117,21 @@ class PostView(CreateView, BaseSidebarContextMixin):
     template_name = _('app/post.html')
     model = Post
 
-    @staticmethod
-    def get_thread_from_id(id):
-        thread_list = cache.get('thread_list')
-        if thread_list == None:
-            thread_list = Thread.objects.all()
-            cache.set('thread_list', thread_list, settings.THREAD_LIST_CACHE_INTERVAL)
-
-        thread = thread_list.get(id=id)
-        return thread
-
     def dispatch(self, request, *args, **kwargs):
-
-        PostView.get_thread_from_id(kwargs.get('thread_id')).inc_views()
+        get_thread_object(id=kwargs.get('thread_id')).inc_views()
         return super(PostView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *args, **kwargs):
         context = super(PostView, self).get_context_data(*args, **kwargs)
 
-        thread = PostView.get_thread_from_id(self.kwargs.get('thread_id'))
+        thread = get_thread_object(id=self.kwargs.get('thread_id'))
         context['thread'] = thread
-
         context['posts'] = Post.objects.select_related().filter(Thread = thread)
         return context
 
     def get_form(self, data=None, files=None, *args, **kwargs):
         user = self.request.user
-        thread = PostView.get_thread_from_id(self.kwargs.get('thread_id'))
+        thread = get_thread_object(id=self.kwargs.get('thread_id'))
         if self.request.method == "POST":
             form = PostReplyForm(user=user, thread=thread, data=self.request.POST)
         else: # for GET requests

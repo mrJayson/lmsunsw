@@ -42,19 +42,21 @@ def get_confidence_meter_values(request):
         return {}
 
     confidence_meter_data = cache.get_many(['good_confidence_meter_data', 'neutral_confidence_meter_data', 'bad_confidence_meter_data'])
-
+    current = None
     if confidence_meter_data == {}:
 
         good_confidence_meter_data = 0
         neutral_confidence_meter_data = 0
         bad_confidence_meter_data = 0
-        for vote in ConfidenceMeter.objects.all():
+        for vote in ConfidenceMeter.objects.select_related().all():
             if vote.confidence == 1:
                 good_confidence_meter_data += 1
             elif vote.confidence == -1:
                 bad_confidence_meter_data += 1
             else:
                 neutral_confidence_meter_data += 1
+            if vote.User == request.user:
+                current = vote.confidence
 
         sum = good_confidence_meter_data+bad_confidence_meter_data+neutral_confidence_meter_data
         sum = 1 if sum==0 else sum
@@ -67,10 +69,6 @@ def get_confidence_meter_values(request):
         # store in cache
         cache.set_many(confidence_meter_data, settings.STUDENT_POLL_INTERVAL)
 
-    try:
-        current = ConfidenceMeter.objects.get(User=request.user).confidence
-    except ConfidenceMeter.DoesNotExist:
-        current = None
 
 
     confidence_meter_data.update({'current': current})

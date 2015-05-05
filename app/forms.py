@@ -17,7 +17,9 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit, Field, Button, HTML
 from crispy_forms.bootstrap import InlineField
 
+from app.cache_helpers import *
 from app.models import *
+
 
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
@@ -69,7 +71,7 @@ class QuizSelectionForm(forms.Form):
         self.helper = FormHelper(self)
         self.helper.layout = Layout()
 
-        queryset = QuizChoice.objects.filter(Quiz=quiz.id)
+        queryset = filter_quizchoice_list(Quiz=quiz)
         #iterate through list  to create field for each choice
         quiz_choice_list = []
         for quiz_choice in queryset:
@@ -83,7 +85,7 @@ class QuizSelectionForm(forms.Form):
         # response cannot be checked, display answer for user to compare
 
         if quiz.quiz_type == QuizType.FREEFORM:
-            quiz_answer = QuizChoiceSelected.objects.filter(User=user, Quiz=quiz)
+            quiz_answer = Quizchoiceselected.objects.filter(User=user, Quiz=quiz)
             if quiz_answer.exists():
                 # Quiz answered, prepare form to display result
                 # filter returns a list, get first, also assume list length is 1
@@ -159,7 +161,7 @@ class QuizSelectionForm(forms.Form):
         if quiz.quiz_type == QuizType.SINGLEMCQ:
 
             # if quiz not answered yet, filter will return an empty list
-            quiz_choice_selected = QuizChoiceSelected.objects.filter(User=user, QuizChoice__Quiz=quiz.id)
+            quiz_choice_selected = QuizChoiceSelected.objects.select_related().filter(User=user, QuizChoice__Quiz=quiz.id)
             if len(quiz_choice_selected) == 0 and quiz.visible:
                 # Quiz not answered yet, prepare form to collect
                 self.fields['choices'] = forms.ChoiceField(
@@ -274,7 +276,7 @@ class QuizSelectionForm(forms.Form):
                         )
                     )
                 # depending on the chosen choice, display the result in place of the submit button
-                list_of_corrects = QuizChoice.objects.filter(Quiz=quiz, correct=True)
+                list_of_corrects = filter_quizchoice_list_for_correct(Quiz=quiz, correct=True)
                 overlapping_choices = set([qcs.QuizChoice for qcs in quiz_choice_selected]) & set(list_of_corrects)
 
                 if len(overlapping_choices) == 0:
@@ -295,11 +297,11 @@ class QuizSelectionForm(forms.Form):
 
     def clean_user(self):
         user = self.cleaned_data.get('user')
-        return User.objects.get(id=user)
+        return get_user_object(id=user)
 
     def clean_quiz(self):
         quiz = self.cleaned_data.get('quiz')
-        return Quiz.objects.get(id=quiz)
+        return get_quiz_object(id=quiz)
 
     def save(self, *args, **kwargs):
         data = self.cleaned_data
@@ -310,7 +312,7 @@ class QuizSelectionForm(forms.Form):
             # change a single choice into an array of single choice so that it will work in the query
             selected_choices = data.get('choices') if type(data.get('choices'))==type([]) else [data.get('choices')]
             # need user and choices to create object
-            user_object = User.objects.get(username=data.get('user'))
+            user_object = get_user_object(id=data.get('user').id)
             return [QuizChoiceSelected.objects.create(User=user_object, QuizChoice=selection)
             for selection in QuizChoice.objects.filter(id__in=selected_choices)]
 
@@ -343,7 +345,7 @@ class CreateThreadForm(forms.ModelForm):
         self.helper.add_input(Submit(_('submit'), _('Submit')))
 
     def clean_Creator(self):
-        user_object = User.objects.get(id=self.cleaned_data.get('Creator'))
+        user_object = get_user_object(id=self.cleaned_data.get('Creator'))
         return user_object
 
     
@@ -367,11 +369,11 @@ class PostReplyForm(forms.ModelForm):
         self.helper.add_input(Submit(_('submit'), _('Submit')))
 
     def clean_Thread(self):
-        thread_object = Thread.objects.get(id=self.cleaned_data.get('Thread'))
+        thread_object = get_thread_object(id=self.cleaned_data.get('Thread'))
         return thread_object
 
     def clean_Creator(self):
-        user_object = User.objects.get(id=self.cleaned_data.get('Creator'))
+        user_object = get_user_object(id=self.cleaned_data.get('Creator'))
         return user_object
 
     def save(self, *args, **kwargs):
@@ -396,15 +398,15 @@ class QuickSettingsForm(forms.Form):
         # assign current lecture from session
         if session!=None and session.has_key('quick_lecture'):
             quick_lecture = session.get('quick_lecture')
-        elif Lecture.objects.all().exists():
+        elif get_lecture_list().exists():
             # must be existing lecture to choose from
-            quick_lecture = Lecture.objects.last().id
+            quick_lecture = get_last_lecture_object().id
         else:
             quick_lecture = ""
         visible_quizzes = []
         invisible_quizzes = []
 
-        for obj in Quiz.objects.select_related().all():
+        for obj in get_quiz_list():
             if obj.visible == True:
                 visible_quizzes.append((obj.id, obj.question))
             elif obj.visible == False and obj.Lecture.id == int(quick_lecture):
@@ -414,7 +416,7 @@ class QuickSettingsForm(forms.Form):
         self.fields['Lecture'] = forms.ChoiceField(
             label = _("Current Lecture"),
             initial = quick_lecture,
-            choices = [(i.id,i.title) for i in Lecture.objects.all()],
+            choices = [(i.id,i.title) for i in get_lecture_list()],
             widget = forms.Select(attrs={_('id'):('quick_lecture_select'), _('class'): _('form-control')}),
             )
         if visible_quizzes:
@@ -445,16 +447,16 @@ class QuickQuizForm(forms.ModelForm):
         # assign current lecture from session
         if session!=None and session.has_key('quick_lecture'):
             quick_lecture = session.get('quick_lecture')
-        elif Lecture.objects.all().exists():
+        elif get_lecture_list().exists():
             # must be existing lecture to choose from
-            quick_lecture = Lecture.objects.last().id
+            quick_lecture = get_last_lecture_object().id
         else:
             quick_lecture = ""
         self.fields['Lecture'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):quick_lecture}))
         self.helper.add_input(Submit(_('quiz'), _('Submit')))
 
     def clean_Lecture(self):
-        lecture = Lecture.objects.get(id=self.cleaned_data.get('Lecture'))
+        lecture = get_lecture_object(id=self.cleaned_data.get('Lecture'))
         return lecture
 
 class QuickQuizInlineForm(forms.ModelForm):
@@ -491,9 +493,9 @@ class QuickCodeSnippetForm(forms.ModelForm):
         # assign current lecture from session
         if session!=None and session.has_key('quick_lecture'):
             quick_lecture = session.get('quick_lecture')
-        elif Lecture.objects.all().exists():
+        elif get_lecture_list().exists():
             # must be existing lecture to choose from
-            quick_lecture = Lecture.objects.last().id
+            quick_lecture = get_last_lecture_object().id
         else:
             quick_lecture = ""
         self.fields['Lecture'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):quick_lecture}))
@@ -501,7 +503,7 @@ class QuickCodeSnippetForm(forms.ModelForm):
         self.helper.add_input(Submit(_('codesnippet'), _('Submit')))
 
     def clean_Lecture(self):
-        lecture = Lecture.objects.get(id=self.cleaned_data.get('Lecture'))
+        lecture = get_lecture_object(id=self.cleaned_data.get('Lecture'))
         return lecture
 
 ###################################################################################################

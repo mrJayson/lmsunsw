@@ -9,20 +9,85 @@ from app.models import *
 
 
 def get_permission():
-       permission = cache.get('permission')
-       if permission == None:
-               permission = Permission.objects.get(name='Can change user')
-        
-               cache.set('permission', permission, settings.PERMISSION_CACHE_INTERVAL)
-               
-       return permission
+	permission = cache.get('permission')
+	if permission == None:
+		permission = Permission.objects.get(name='Can change user')
+
+		cache.set('permission', permission, settings.PERMISSION_CACHE_INTERVAL)
+
+	return permission
 
 def get_session_count():
-   session_count = cache.get('session_count')
-   if session_count == None:
-           session_count = Session.objects.count()
-           cache.set('session_count', session_count, settings.SESSION_CACHE_INTERVAL)
-   return session_count
+	session_count = cache.get('session_count')
+	if session_count == None:
+		session_count = Session.objects.count()
+		cache.set('session_count', session_count, settings.SESSION_CACHE_INTERVAL)
+	return session_count
+
+
+################################################################################
+
+def get_user_list():
+	user_list = cache.get('user_list')
+	if user_list == None:
+		user_list = User.objects.select_related().all()
+		cache.set('user_list', user_list, settings.USER_LIST_CACHE_INTERVAL)
+	return user_list
+
+def get_user_object(id=None):
+
+       user_obj = None
+       user_list = get_user_list()
+       try:
+               user_obj = [l for l in user_list if l.id==int(id)]
+               if user_obj == [] or user_obj == None:
+                       user_obj = user_list.get(id=id)
+               else:
+                       user_obj = user_obj[0]
+       except AttributeError:
+               user_list = User.objects.select_related().all()
+               cache.set('user_list', user_list, settings.USER_LIST_CACHE_INTERVAL)
+               user_obj = get_user_object(id=id)
+       return user_obj
+
+################################################################################
+
+def filter_quizchoiceselected_list(Quiz=None, User=None):
+	if Quiz == None or User == None:
+		return []
+	key = 'Quizchoiceselected_%s_%s' % (Quiz.id, User.id)
+	quizchoiceselected_list = cache.get(key)
+	if quizchoiceselected_list == None:
+		quizchoiceselected_list = Quizchoiceselected.objects.filter(Quiz=Quiz, User=User)
+		cache.set(key, quizchoiceselected_list, settings.QUIZCHOICESELECTED_LIST_CACHE_INTERVAL)
+	return quizchoiceselected_list
+
+################################################################################
+
+def filter_quizchoice_list(Quiz=None):
+	if Quiz == None:
+		return []
+	key = 'Quizchoice_%s' % (Quiz.id)
+	quizchoice_list = cache.get(key)
+	if quizchoice_list == None:
+		quizchoice_list = QuizChoice.objects.filter(Quiz=Quiz)
+
+		cache.set(key, quizchoice_list, settings.QUIZCHOICE_LIST_CACHE_INTERVAL)
+	return quizchoice_list
+
+def filter_quizchoice_list_for_correct(Quiz=None, correct=None):
+	if Quiz == None:
+		return []
+	key = 'Quizchoice_%s' % (Quiz.id)
+	quizchoice_list = filter_quizchoice_list(Quiz=Quiz)
+	try:
+		filtered_quizchoice_list = [l for l in quizchoice_list if l.correct==correct]
+		
+	except AttributeError:
+		quizchoice_list = QuizChoice.objects.select_related().all()
+		cache.set('quizchoice_list', quizchoice_list, settings.QUIZCHOICE_LIST_CACHE_INTERVAL)
+		filtered_quizchoice_list = quizchoice_list.filter(Quiz=Quiz)
+	return filtered_quizchoice_list
 
 
 ################################################################################
@@ -133,12 +198,16 @@ def get_lecture_object(id=None):
 def get_last_lecture_object():
 	lecture_obj = None
 	lecture_list = get_lecture_list()
+	index = len(lecture_list)-1
+	if index < 0:
+		#return None if there are no Lectures
+		return None
 	try:
-		lecture_obj = lecture_list[len(lecture_list)-1]
+		lecture_obj = lecture_list[index]
 	except AttributeError:
 		lecture_list = Lecture.objects.select_related().all()
 		cache.set('lecture_list', lecture_list, settings.LECTURE_LIST_CACHE_INTERVAL)
-		lecture_obj = lecture_list[len(lecture_list)-1]
+		lecture_obj = lecture_list[index]
 	return lecture_obj
 ################################################################################
 

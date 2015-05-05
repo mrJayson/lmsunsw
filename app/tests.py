@@ -26,6 +26,9 @@ class User_Case(TestCase):
 		User.objects.create(username="JJJ", first_name="J", last_name="J", email="J@test.com", password="J", is_superuser=False)
 		User.objects.create(username="KKK", first_name="K", last_name="K", email="K@test.com", password="K", is_superuser=False)
 
+	def tearDown(self):
+		cache.clear()
+
 	def test_correct_attr(self):
 		self.assertEquals(User.objects.get(id=1).username, "AAA")
 		self.assertEquals(User.objects.get(id=2).username, "BBB")
@@ -110,6 +113,8 @@ class Forum_Post_New(TestCase):
 		u5 = User.objects.create(username="EEE", first_name="E", last_name="E", email="E@test.com", password="E", is_superuser=True)
 		Thread.objects.create(title="Books", content="Types of Books", Creator=u5, views=0, anonymous=False)
 
+	def tearDown(self):
+		cache.clear()
 
 	def test_correct_attr(self):
 		self.assertEquals(Thread.objects.get(id=1).title, "Apple")		
@@ -148,6 +153,9 @@ class Forum_Post_New(TestCase):
 				self.assertEquals(Thread.objects.get(id=x).views, 4)
 
 class Forum_Thread_New(TestCase):
+
+	def tearDown(self):
+		cache.clear()
 
 	def test_correct_attr(self):
 
@@ -211,6 +219,9 @@ class Forum_Thread_New(TestCase):
 			self.assertEquals(Post.objects.get(id=m).anonymous, True)
 
 class Lecture_Model(TestCase):
+
+	def tearDown(self):
+		cache.clear()
 		
 
 	def test_correct_attr(self):
@@ -246,6 +257,9 @@ class Lecture_Model(TestCase):
 			self.assertEquals(l.collab_doc, g)
 
 class Quiz_Model(TestCase):
+
+	def tearDown(self):
+		cache.clear()
 
 	def test_correct_attr(self):
 		l1 = Lecture.objects.create(title="Lecture 1")
@@ -291,6 +305,9 @@ class Quiz_Model(TestCase):
 
 
 class Quiz_Usage(TestCase):
+
+	def tearDown(self):
+		cache.clear()
 
 	def test_usage(self):
 
@@ -348,6 +365,9 @@ class Get_Request(TestCase):
 		self.factory = RequestFactory()
 		self.client = Client()
 		self.user = User.objects.create(username="AAA", first_name="A", last_name="A", email="A@test.com", password="A", is_superuser=True)
+
+	def tearDown(self):
+		cache.clear()
 
 	def test_index_view(self):
 		# the request URL is what you type into the web browser.
@@ -428,6 +448,9 @@ class Get_Request(TestCase):
 
 class Redirect_Tests(TestCase):
 
+	def tearDown(self):
+		cache.clear()
+
 	def test_login_redirect(self):
 		create_student(username="jack", password="password")	
 		c = Client()
@@ -462,6 +485,9 @@ class Redirect_Tests(TestCase):
 
 
 class New_Form_Test(TestCase):
+
+	def tearDown(self):
+		cache.clear()
 
 	def test_new_user(self):
 
@@ -564,7 +590,8 @@ class New_Form_Test(TestCase):
 
 class Form_Error_Test(TestCase):
 
-
+	def tearDown(self):
+		cache.clear()
 	
 	def test_incorrect_login(self):
 		
@@ -605,6 +632,9 @@ class Form_Error_Test(TestCase):
 
 class Check_correct_URL(TestCase):
 
+	def tearDown(self):
+		cache.clear()
+	
 	def test_user_path(self):
 
 		u1=create_student(username="jack", password="password")

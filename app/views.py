@@ -69,10 +69,11 @@ def student_poll(request):
         from app.context_processors import get_confidence_meter_values
         results = get_confidence_meter_values(request)
         # if there is a change in the quiz_list by checking length
-        if int(request.GET.get("quiz_length")) != len(Quiz.objects.filter(visible = True)):
+        quiz_count = len(Quiz.objects.filter(visible = True))
+        if int(request.GET.get("quiz_length")) != quiz_count:
             print int(request.GET.get("quiz_length"))
-            print  len(Quiz.objects.filter(visible = True))
-            difference = int(request.GET.get("quiz_length")) - len(Quiz.objects.filter(visible = True))
+            print  quiz_count
+            difference = int(request.GET.get("quiz_length")) - quiz_count
             results.update({'quiz_difference': difference})
         return HttpResponse(json.dumps(results), content_type=_('application/json'))
     else:

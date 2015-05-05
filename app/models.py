@@ -9,7 +9,6 @@ from django.contrib.auth.models import User
 from django.utils.text import Truncator
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
-from django.utils.functional import cached_property
 from django.core.cache import cache
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -26,6 +25,7 @@ from pygments.styles import STYLE_MAP
 
 from app.docsURL import glist
 
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='UserProfile')
     # like a toString
@@ -34,6 +34,7 @@ class UserProfile(models.Model):
 
     @receiver(post_save, sender=User)
     def addUserPermission(sender, **kwargs):
+        from app.cache_helpers import get_permission
         if kwargs['created']:
             user = kwargs['instance']
             user.user_permissions.add(get_permission())
@@ -216,12 +217,14 @@ class Quiz(models.Model):
 
         return ""
 
-    @cached_property
+    @property
     def quiz_type(self):
     # must return an enum of QuizType
-        quiz_choice_list = QuizChoice.objects.filter(Quiz=self.id)
+        from app.cache_helpers import filter_quizchoice_list, filter_quizchoice_list_for_correct
+        quiz_choice_list = filter_quizchoice_list(Quiz=self)
+
         # acan ssume that for each quiz, there must always be at least 2 choice associated
-        num_correct = len(QuizChoice.objects.filter(Quiz=self.id, correct=True))
+        num_correct = len(filter_quizchoice_list_for_correct(Quiz=self, correct=True))
         
         
         if num_correct == 1:
@@ -242,7 +245,6 @@ class QuizChoice(models.Model):
 
     def __unicode__(self):
         return unicode(self.choice)
-
 
     @property
     def times_chosen(self):

@@ -45,8 +45,12 @@ class CreateUserForm(UserCreationForm):
         self.fields['password1'].widget = forms.PasswordInput(attrs={_('placeholder'): _('Password'), _('class'): _('form-control')})
         self.fields['password2'].widget = forms.PasswordInput(attrs={_('placeholder'): _('Type in your password again'), _('class'): _('form-control')})
         self.fields['first_name'].widget = forms.TextInput(attrs={_('placeholder'): _('First Name'), _('class'): _('form-control')})
+        self.fields['first_name'].label = "first name is optional"
         self.fields['last_name'].widget = forms.TextInput(attrs={_('placeholder'): _('Last Name'), _('class'): _('form-control')})
+        self.fields['first_name'].label = "last name is optional"
         self.fields['email'].widget = forms.TextInput(attrs={_('placeholder'): _('Email Address'), _('class'): _('form-control')})
+        self.fields['email'].required = False
+        self.fields['email'].label = "Email is optional"
         self.helper.add_input(Submit(_('submit'), _('Submit')))
 
     class Meta:

@@ -8,8 +8,6 @@ from django.core.cache import cache
 from app.models import *
 
 
-
-
 def get_permission():
 	permission = cache.get('permission')
 	if permission == None:

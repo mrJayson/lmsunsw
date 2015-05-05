@@ -3,8 +3,18 @@
 
 
 {% block content %}
+
+
+
 <div class="login-form">
-    <h2>{{ title }}</h2>
+    {% if created %}
+    <h1></h1>
+    <div class="alert alert-success alert-dismissable" role="alert">
+        Account Created! Please log in
+    </div>
+    {% endif %}
+    <h2>LMSUNSW</h2>
+
     <form  method="post">
         <!--need to place submit button out of standard order, must manually add in-->
         {% csrf_token %}

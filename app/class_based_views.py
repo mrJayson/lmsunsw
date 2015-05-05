@@ -43,7 +43,7 @@ class CreateUser(CreateView):
     form_class = CreateUserForm
 
     def get_success_url(self):
-        return reverse('alert', kwargs={'tag':'create_user_success'})
+        return reverse('login_')
 
 
 class LectureView(TemplateView, SidebarContextMixin):

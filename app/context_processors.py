@@ -24,6 +24,8 @@ def django_sessions(request):
     return ret_val
 
 def prepare_confidence_meter_values(request):
+    if not request.user.is_authenticated():
+        return {}
     confidence_meter_data = get_confidence_meter_values(request)
     good_confidence_meter_data = confidence_meter_data['good_confidence_meter_data']
     neutral_confidence_meter_data = confidence_meter_data['neutral_confidence_meter_data']
@@ -38,7 +40,7 @@ def prepare_confidence_meter_values(request):
     return confidence_meter_data
 
 def get_confidence_meter_values(request):
-	# context processor for retreiving data for confidence meter
+	# context processor for retrieving data for confidence meter
     
     if not request.user.is_authenticated():
         return {}

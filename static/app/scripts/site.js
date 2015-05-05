@@ -7,9 +7,17 @@ $("#menu-toggle").click(function(e) {
 });
 
 function refresh_confidence(data) {
-    $("#progress-bar-good").attr("style", "width: "+ data["good_confidence_meter_data"] +"%");
-    $("#progress-bar-neutral").attr("style", "width: "+ data["neutral_confidence_meter_data"] +"%");
-    $("#progress-bar-bad").attr("style", "width: "+ data["bad_confidence_meter_data"] +"%");
+    good = data["good_confidence_meter_data"]
+    neutral = data["neutral_confidence_meter_data"]
+    bad = data["bad_confidence_meter_data"]
+    sum = good+neutral+bad
+    good = good*100/sum
+    neutral = neutral*100/sum
+    bad = bad*100/sum
+
+    $("#progress-bar-good").attr("style", "width: "+ good +"%");
+    $("#progress-bar-neutral").attr("style", "width: "+ neutral +"%");
+    $("#progress-bar-bad").attr("style", "width: "+ bad +"%");
     if (data.current == 1) {
         $("#good-btn").html("good<span class='glyphicon glyphicon-ok'></span>")
     } else {

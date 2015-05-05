@@ -27,11 +27,13 @@ def prepare_confidence_meter_values(request):
     if not request.user.is_authenticated():
         return {}
     confidence_meter_data = get_confidence_meter_values(request)
+
     good_confidence_meter_data = confidence_meter_data['good_confidence_meter_data']
     neutral_confidence_meter_data = confidence_meter_data['neutral_confidence_meter_data']
     bad_confidence_meter_data = confidence_meter_data['bad_confidence_meter_data']
 
     sum = good_confidence_meter_data+neutral_confidence_meter_data+bad_confidence_meter_data
+    sum = 1 if sum == 0 else sum
     good_confidence_meter_data = good_confidence_meter_data*100/sum
     neutral_confidence_meter_data = neutral_confidence_meter_data*100/sum
     bad_confidence_meter_data = bad_confidence_meter_data*100/sum

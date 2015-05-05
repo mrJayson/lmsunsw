@@ -48,6 +48,8 @@ urlpatterns = patterns('',
     url(r'^course/threads/(?P<thread_id>[0-9]+)/(?P<thread_slug>[^/]+)$', login_required(PostView.as_view()), name='post'),
 
     url(r'^course/(?P<lecture_id>[0-9]+)/(?P<lecture_slug>[^/]+)/code/?$', login_required(CodeSnippetView.as_view()), name='codesnippet'),
+
+    url(r'^forgot_password/?$', ForgotPasswordView.as_view(), name='forgot_password'),
     # generic login page
     url(r'^login/?$', login_forbidden(login), 
         {'template_name':'app/login.html',
@@ -79,7 +81,6 @@ urlpatterns = patterns('',
 
     url(r'session_security/', include('session_security.urls')),
 
-    url(r'password_reset/', include('password_reset.urls')),
 )
 
 if settings.DEBUG:

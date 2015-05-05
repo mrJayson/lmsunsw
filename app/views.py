@@ -33,6 +33,10 @@ class AlertView(TemplateView):
             raise Http404
         return context
 
+class ForgotPasswordView(TemplateView):
+    template_name = _("app/forgot_password.html")
+
+
 def logout(request, next_page=None,
            template_name=_('registration/logged_out.html'),
            redirect_field_name=REDIRECT_FIELD_NAME,

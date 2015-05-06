@@ -412,7 +412,7 @@ class QuickSettingsForm(forms.Form):
         visible_quizzes = []
         invisible_quizzes = []
 
-        for obj in get_quiz_list():
+        for obj in Quiz.objects.all():
             if obj.visible == True:
                 visible_quizzes.append((obj.id, obj.question))
             elif obj.visible == False and obj.Lecture.id == int(quick_lecture):

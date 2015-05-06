@@ -48,7 +48,7 @@ INSTALLED_APPS = (
     'app',
     'crispy_forms',
     'storages',
-    'session_security',
+    #'session_security',
     'autoslug',
     #'password_reset',
     #'debug_toolbar',

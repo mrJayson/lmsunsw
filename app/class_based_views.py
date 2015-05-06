@@ -53,6 +53,11 @@ class LectureView(TemplateView, SidebarContextMixin):
 class QuizView(FormView, SidebarContextMixin):
     template_name = _('app/quiz.html')
 
+    def get_context_data(self, *args, **kwargs):
+        context = super(QuizView, self).get_context_data(*args, **kwargs)
+        quiz = get_quiz_object(id=self.kwargs.get('quiz_id'))
+        context['code_snippet'] = quiz.render_code
+        return context
 
 
     def get_form(self, data=None, files=None, *args, **kwargs):

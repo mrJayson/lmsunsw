@@ -79,7 +79,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(adminsite.urls)),
     url(r'^settings/', include(adminsite.urls)),
 
-    url(r'session_security/', include('session_security.urls')),
+    #url(r'session_security/', include('session_security.urls')),
 
 )
 

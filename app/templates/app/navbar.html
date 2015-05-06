@@ -31,18 +31,6 @@
                 </li>
             {% endif %}
 
-            {% if quiz_list %}<!--Quiz sub-list-->
-				<li class="dropdown {% current 'quiz' %}">
-		          	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Quiz History<span class="caret"></span></a>
-		          	<ul class="dropdown-menu" role="menu">
-		          		{% for quiz in quiz_list %}
-		                    <li>
-		                        <a href="{% url 'quiz' current_lecture.id current_lecture.slug quiz.id quiz.slug %}"> {{ quiz.question }} </a>
-		                    </li>
-		                {% endfor %}<!--end for quiz_list-->
-		          	</ul>
-		        </li>
-            {% endif %}<!--end if quiz_list-->
 
             {% if codesnippet_list %}<!--codesnippet sub-list-->
 

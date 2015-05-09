@@ -7,26 +7,39 @@ function plot_confidence(data) {
     	if (key=='good_confidence_meter_data') {
     		color="#5cb85c"
     		flot_data.push({label: 'good', data: value, color: color})
+            $("#good_confidence_meter_data").html('Good: '+data[key])
     	}
     	if (key=='neutral_confidence_meter_data') {
     		color="#f0ad4e"
     		flot_data.push({label: 'neutral', data: value, color: color})
+            $("#neutral_confidence_meter_data").html('Neutral: '+data[key])
     	}
     	if (key=='bad_confidence_meter_data') {
     		color="#d9534f"
     		flot_data.push({label: 'bad', data: value, color: color})
+            $("#bad_confidence_meter_data").html('Bad: '+data[key])
     	}
     });
 	$.plot('#confidence-graph', flot_data, {
-    series: {
-        pie: {
-            show: true
+        series: {
+            pie: {
+                show: true,
+                radius: 1,
+                label: {
+                    show: true,
+                    radius: 3/4,
+                    background: {
+                        opacity: 0.5,
+                        color: '#000',
+                    }
+                },
+
         	}
     	}
     });
 }
 
-var ping_interval = 1000*15
+var ping_interval = 1000
 setInterval(function() {
     $.ajax({
         type: "GET",

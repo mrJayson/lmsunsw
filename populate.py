@@ -209,7 +209,7 @@ def populate():
 
     create_superuser(username="admin", first_name="administration", last_name="account", email="admin@admin.com", password="admin")
     create_student(username="Jack", first_name="Jack", last_name="James", email="Jack@James.com", password="password")
-    num_students = 300
+    num_students = 30
 
     for i in xrange(num_students):
         create_student()
@@ -267,16 +267,15 @@ def populate():
     create_quiz_choice("Iphone", quiz7, False)
     create_quiz_choice("Radio", quiz7, True)
 
-    User_list = User.objects.all()
-    for i in xrange(300):
-        create_quiz_choice_selection(Quiz=quiz1, User=User_list[i])
-        create_quiz_choice_selection(Quiz=quiz2, User=User_list[i])
-        create_quiz_choice_selection(Quiz=quiz6, User=User_list[i])
+    for user in User.objects.all():
+        create_quiz_choice_selection(Quiz=quiz1, User=user)
+        create_quiz_choice_selection(Quiz=quiz2, User=user)
+        create_quiz_choice_selection(Quiz=quiz6, User=user)
 
     #for i in xrange(num_students * 3):
     #    create_quiz_choice_selection()
 
-    for i in xrange(50):
+    for i in xrange(num_students/3):
         create_thread(anonymous=False)
     for i in xrange(num_students):
         create_post(anonymous=False)

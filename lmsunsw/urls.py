@@ -13,6 +13,7 @@ from django.views.decorators.clickjacking import xframe_options_exempt
 from django.contrib.auth.decorators import user_passes_test, login_required
 # check for pages that require the user to not be logged in
 login_forbidden =  user_passes_test(lambda u: u.is_anonymous(), '/', None)
+login_superuser =  user_passes_test(lambda u: u.is_superuser, '/', None)
 
 from app.views import *
 from app.class_based_views import *
@@ -78,14 +79,12 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(adminsite.urls)),
     url(r'^settings/', include(adminsite.urls)),
-
-    #url(r'session_security/', include('session_security.urls')),
+    url(r'^dump/(?P<dump>.*)$', login_superuser(dump), name='dump'),
+    
+    # Django server serves the media files, not an external service, do not think it is needed
+    url(r'media/(?P<path>.*)$','django.views.static.serve', {
+        'document_root': settings.MEDIA_ROOT
+        })
 
 )
 
-if settings.DEBUG:
-    urlpatterns += patterns('',
-        url(r'media/(?P<path>.*)$','django.views.static.serve', {
-        'document_root': settings.MEDIA_ROOT
-        })
-    )

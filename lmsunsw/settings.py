@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = '__-*0p(yvr=tgqny@l-459y@f68bjtre9kddy@gopn+l!iad#l'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = False
 
@@ -48,24 +48,18 @@ INSTALLED_APPS = (
     'app',
     'crispy_forms',
     'storages',
-    #'session_security',
     'autoslug',
-    #'password_reset',
     #'debug_toolbar',
 
 )
 
 MIDDLEWARE_CLASSES = (
-    #'django.middleware.cache.UpdateCacheMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    #'app.middleware.QueryPrintingMiddleware',
-    #'app.middleware.SessionSecurityMiddleware',
-    #'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 ROOT_URLCONF = 'lmsunsw.urls'
@@ -77,12 +71,6 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 # Caching for performance boost
 
-#CACHE = {
-#    'default': {
-#        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-#        'LOCATION': 'cache_table',
-#    }
-#}
 if 'CACHE_LOCATION' in os.environ:
     CACHES = {
         'default': {
@@ -219,22 +207,6 @@ TEMPLATE_CONTEXT_PROCESSORS += (
     'app.context_processors.currents',
     'app.context_processors.app_list',
     )
-
-# Session security
-
-SESSION_SECURITY_WARN_AFTER = 3300
-SESSION_SECURITY_EXPIRE_AFTER = 3600
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-
-# Email settings
-
-EMAIL_HOST = 'smtp-mail.outlook.com'
-EMAIL_HOST_USER = 'jasonhuang.2014@outlook.com'
-EMAIL_HOST_PASSWORD = ''
-EMAIL_PORT = '587'
-EMAIL_USE_TLS = True
-
-DEFAULT_FROM_EMAIL = 'jasonhuang.2014@outlook.com'
 
 # Code Snippet settings
 

@@ -17,7 +17,45 @@ from django.contrib.sessions.models import Session
 from django.core.cache import cache
 from app.cache_helpers import set_user_confidence
 
-from app.models import ConfidenceMeter, Quiz, Lecture
+from app.models import *
+
+import djqscsv
+
+'''dev view for displaying all data'''
+def dump(request, dump):
+    if dump == 'user':
+        qs = User.objects.all()
+        return djqscsv.render_to_csv_response(qs)
+    elif dump == 'lecture':
+        qs = Lecture.objects.all()
+        return djqscsv.render_to_csv_response(qs)
+    elif dump == 'lecturematerial':
+        qs = LectureMaterial.objects.all()
+        return djqscsv.render_to_csv_response(qs)
+    elif dump == 'quiz':
+        qs = Quiz.objects.all()
+        return djqscsv.render_to_csv_response(qs)
+    elif dump == 'quizchoice':
+        qs = QuizChoice.objects.all()
+        return djqscsv.render_to_csv_response(qs)
+    elif dump == 'quizchoiceselected':
+        qs = QuizChoiceSelected.objects.all()
+        return djqscsv.render_to_csv_response(qs)
+    elif dump == 'confidencemeter':
+        qs = ConfidenceMeter.objects.all()
+        return djqscsv.render_to_csv_response(qs)
+    elif dump == 'thread':
+        qs = Thread.objects.all()
+        return djqscsv.render_to_csv_response(qs)
+    elif dump == 'post':
+        qs = Post.objects.all()
+        return djqscsv.render_to_csv_response(qs)
+    elif dump == 'codesnippet':
+        qs = CodeSnippet.objects.all()
+        return djqscsv.render_to_csv_response(qs)
+    else:
+        return  render(request, 'app/dump.html')
+
 
 '''generic view for displaying single messages to the user'''
 class AlertView(TemplateView):
@@ -35,7 +73,6 @@ class AlertView(TemplateView):
 
 class ForgotPasswordView(TemplateView):
     template_name = _("app/forgot_password.html")
-
 
 def logout(request, next_page=None,
            template_name=_('registration/logged_out.html'),

@@ -96,9 +96,13 @@ class QuizSelectionForm(forms.Form):
                 # Quiz answered, prepare form to display result
                 # filter returns a list, get first, also assume list length is 1
                 quiz_answer=quiz_answer[0]
+                label = "Compare your answer to the correct answer"
+                if quiz.answer == '':
+                    label = "Your answer has been submitted"
 
-                self.fields['answer'] = forms.CharField(label="Compare your answer to the correct answer",initial=quiz_answer.answer, widget=forms.Textarea(attrs={_('class'): _('form-control')}))
-                self.fields['correct_answer'] = forms.CharField(initial=quiz.answer, widget=forms.Textarea(attrs={_('class'): _('form-control')}))
+                self.fields['answer'] = forms.CharField(label=label, initial=quiz_answer.answer, widget=forms.Textarea(attrs={_('class'): _('form-control')}))
+                if not quiz.answer == '':
+                    self.fields['correct_answer'] = forms.CharField(initial=quiz.answer, widget=forms.Textarea(attrs={_('class'): _('form-control')}))
 
                 # add hidden values into form
                 self.fields['user'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):user.id}))
@@ -106,21 +110,32 @@ class QuizSelectionForm(forms.Form):
 
                 # determining whether to display code is handled in the view and passed in as context
                 # since crispy form displays code all in one line
-                self.helper.layout.append(
-                    Fieldset(
-                        quiz.question,
-                        Field('answer', disabled=_('true')),
-                        Field('correct_answer', disabled=_('true')),
-                        Field('user'),
-                        Field('quiz'),
+                if quiz.answer == '':
+                    self.helper.layout.append(
+                        Fieldset(
+                            quiz.question,
+                            Field('answer', disabled=_('true')),
+                            Field('user'),
+                            Field('quiz'),
+                        )
                     )
-                )
+                else:
+                    self.helper.layout.append(
+                        Fieldset(
+                            quiz.question,
+                            Field('answer', disabled=_('true')),
+                            Field('correct_answer', disabled=_('true')),
+                            Field('user'),
+                            Field('quiz'),
+                        )
+                    )
 
             elif not quiz_answer.exists() and not quiz.visible:
                 # Quiz not answered yet, but finished, disable fields
 
                 self.fields['answer'] = forms.CharField(label="You did not answer the quiz in time",  widget=forms.Textarea(attrs={_('class'): _('form-control')}))
-                self.fields['correct_answer'] = forms.CharField(initial=quiz.answer, widget=forms.Textarea(attrs={_('class'): _('form-control')}))
+                if not quiz.answer == '':
+                    self.fields['correct_answer'] = forms.CharField(initial=quiz.answer, widget=forms.Textarea(attrs={_('class'): _('form-control')}))
 
                 # add hidden values into form
                 self.fields['user'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):user.id}))
@@ -128,7 +143,17 @@ class QuizSelectionForm(forms.Form):
 
                 # determining whether to display code is handled in the view and passed in as context
                 # since crispy form displays code all in one line
-                self.helper.layout.append(
+                if quiz.answer == '':
+                    self.helper.layout.append(
+                        Fieldset(
+                            quiz.question,
+                            Field('answer', disabled=_('true')),
+                            Field('user'),
+                            Field('quiz'),
+                        )
+                    )
+                else:
+                    self.helper.layout.append(
                     Fieldset(
                         quiz.question,
                         Field('answer', disabled=_('true')),

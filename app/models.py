@@ -170,10 +170,11 @@ class Quiz(models.Model):
         from app.cache_helpers import filter_quizchoice_list, filter_quizchoice_list_for_correct
         quiz_choice_list = filter_quizchoice_list(Quiz=self)
 
-        # acan ssume that for each quiz, there must always be at least 2 choice associated
+        if len(quiz_choice_list) == 0:
+            return QuizType.FREEFORM
+
         num_correct = len(filter_quizchoice_list_for_correct(Quiz=self, correct=True))
-        
-        
+
         if num_correct == 1:
             return QuizType.SINGLEMCQ
         elif num_correct > 1:

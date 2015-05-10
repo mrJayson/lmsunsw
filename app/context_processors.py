@@ -92,7 +92,6 @@ IGNORE_APPS = (
 	"Permission",
 	"Group",
     "LectureMaterial",
-    "Thread",
 )
 
 # apps to ignore for students

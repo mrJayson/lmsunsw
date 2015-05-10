@@ -28,18 +28,21 @@ from app.docsURL import glist
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='UserProfile')
+    personal_collab_doc = models.URLField(blank=True, null=True, help_text=_("Optional, Provide a URL Link to a specific google docs which will override the default public doc, you can share this with your friends to create small groups"))
     # like a toString
     def __unicode__(self):
         return unicode(self.user)
 
     @receiver(post_save, sender=User)
     def addUserPermission(sender, **kwargs):
-        from app.cache_helpers import get_permission
+        from app.cache_helpers import get_user_permission, get_profile_permission
         if kwargs['created']:
             user = kwargs['instance']
-            user.user_permissions.add(get_permission())
+            user.user_permissions.add(get_user_permission())
+            user.user_permissions.add(get_profile_permission())
             user.is_staff = True
             user.save()
+            UserProfile.objects.create(user=user)
 
 
 class Lecture(models.Model):

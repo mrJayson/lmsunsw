@@ -11,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 
 from app.mixins import BaseSidebarContextMixin, SidebarContextMixin
-from app.forms import QuizSelectionForm, CreateThreadForm, CreateUserForm, PostReplyForm
+from app.forms import QuizSelectionForm, CreateThreadForm, CreateUserForm, PostReplyForm, ChangeCollabDocForm
 from app.models import *
 from app.cache_helpers import *
 
@@ -48,6 +48,12 @@ class CreateUser(CreateView):
 
 class LectureView(TemplateView, SidebarContextMixin):
     template_name = _('app/lecture.html')
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(LectureView, self).get_context_data(*args, **kwargs)
+
+
+        return context
 
 
 class QuizView(FormView, SidebarContextMixin):

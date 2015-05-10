@@ -416,6 +416,21 @@ class PostReplyForm(forms.ModelForm):
         post_object = Post.objects.create(Thread=thread_object, content=content, Creator=Creator, rank=rank, anonymous=anonymous)
         return post_object
 
+class ChangeCollabDocForm(forms.ModelForm):
+
+    class Meta:
+        model = UserProfile
+        fields = ('personal_collab_doc',)
+
+    def __init__(self, user, thread, *args, **kwargs):
+        super(ChangeCollabDocForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout()
+
+        self.fields['personal_collab_doc'] = forms.URLField()
+        self.helper.add_input(Submit(_('submit'), _('Submit')))
+
+
 ###################################################################################################
 # Admin Dashboard forms
 

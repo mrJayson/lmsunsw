@@ -31,6 +31,12 @@ class CustomUserAdmin(UserAdmin):
         else:
             return super(CustomUserAdmin, self).get_fieldsets(request, obj)
 
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        if not request.user.is_superuser:
+            object_id = unicode(request.user.id)
+
+        return super(CustomUserAdmin, self).change_view(request, object_id, form_url, extra_context)
+
     def changelist_view(self, request, extra_context=None):
         if not request.user.is_superuser:
             return redirect(reverse('admin:%s_%s_change' % (self.model._meta.app_label, self.model._meta.model_name), args=(request.user.id,)))
@@ -92,6 +98,8 @@ class UserProfileAdmin(admin.ModelAdmin):
 
     # once user profile has been made, you should not be able to change the FK
     def change_view(self, request, object_id, form_url='', extra_context=None):
+        if not request.user.is_superuser:
+            object_id = unicode(request.user.UserProfile.id)
         self.exclude = ('user',)
         return super(UserProfileAdmin, self).change_view(request, object_id, form_url, extra_context)
 

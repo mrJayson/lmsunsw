@@ -8,12 +8,21 @@ from django.core.cache import cache
 from app.models import *
 
 
-def get_permission():
-	permission = cache.get('permission')
+def get_user_permission():
+	permission = cache.get('user_permission')
 	if permission == None:
 		permission = Permission.objects.get(name='Can change user')
 
-		cache.set('permission', permission, settings.PERMISSION_CACHE_INTERVAL)
+		cache.set('user_permission', permission, settings.PERMISSION_CACHE_INTERVAL)
+
+	return permission
+
+def get_profile_permission():
+	permission = cache.get('profile_permission')
+	if permission == None:
+		permission = Permission.objects.get(name='Can change user profile')
+
+		cache.set('profile_permission', permission, settings.PERMISSION_CACHE_INTERVAL)
 
 	return permission
 

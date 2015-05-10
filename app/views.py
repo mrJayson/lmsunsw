@@ -26,6 +26,9 @@ def dump(request, dump):
     if dump == 'user':
         qs = User.objects.all()
         return djqscsv.render_to_csv_response(qs)
+    elif dump == 'userprofile':
+        qs = UserProfile.objects.all()
+        return djqscsv.render_to_csv_response(qs)
     elif dump == 'lecture':
         qs = Lecture.objects.all()
         return djqscsv.render_to_csv_response(qs)

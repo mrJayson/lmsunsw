@@ -4,7 +4,7 @@
 
 Submissions collected: {{ submission_count }}
 
-{% if quizchoices %}
+
 <table class="table">
 	<thead>
 		<tr>
@@ -12,19 +12,22 @@ Submissions collected: {{ submission_count }}
 		</tr>
 	</thead>
 	<tbody>
-		{% for quiz_choice in quiz_choices_summary %}
-			<tr>
-				<td>{{quiz_choice.choice}}</td>
-				<td>
-					  <div class="progress-bar {% cycle 'progress-bar-info' 'progress-bar-success' 'progress-bar-warning' 'progress-bar-danger'%}" role="progressbar" style="min-width: 2em; width: {{quiz_choice.relative_percentage}}%;">
-					  	{{quiz_choice.times_chosen}}
-							</div>
-					</td>
-			</tr>
-		{% endfor %}
+		{% if quizchoices %}
+			{% for quiz_choice in quiz_choices_summary %}
+				<tr>
+					<td>{{quiz_choice.choice}}</td>
+					<td>
+						  <div class="progress-bar {% cycle 'progress-bar-info' 'progress-bar-success' 'progress-bar-warning' 'progress-bar-danger'%}" role="progressbar" style="min-width: 2em; width: {{quiz_choice.relative_percentage}}%;">
+						  	{{quiz_choice.times_chosen}}
+								</div>
+						</td>
+				</tr>
+			{% endfor %}
+		{% endif %}
 	</tbody>
 </table>
-{% endif %}
+
+
 
 Submission details
 <table class="table">

@@ -100,8 +100,6 @@ IGNORE_APPS_FOR_STUDENTS = (
 	"Thread",
 	)
 
-
-
 def app_list(request):
     '''
     Get all models and add them to the context apps variable.

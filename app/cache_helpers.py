@@ -38,8 +38,12 @@ def get_user_confidence(User=None):
 	key = "User_confidence_%s" % (User.id)
 	confidence = cache.get(key)
 	if confidence == None:
-		confidence = ConfidenceMeter.objects.get(User=User).confidence
-		cache.set(key, confidence, settings.CONFIDENCE_CACHE_INTERVAL)
+		try:
+			confidence = ConfidenceMeter.objects.get(User=User).confidence
+			cache.set(key, confidence, settings.CONFIDENCE_CACHE_INTERVAL)
+		except ConfidenceMeter.DoesNotExist:
+			# User has not cast a vote yet, no entry in db
+			confidence = None
 	return confidence
 
 ################################################################################

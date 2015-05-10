@@ -255,17 +255,17 @@ def populate():
     create_quiz_choice("Western Hemisphere", quiz6, True)
     create_quiz_choice("Eastern Hemisphere", quiz6, False)
 
-    quiz6 = create_quiz("What is your favourite colour?", True, lecture3)
-    create_quiz_choice("Orange", quiz6, False)
-    create_quiz_choice("Red", quiz6, False)
-    create_quiz_choice("Green", quiz6, False)
-    create_quiz_choice("None of the above", quiz6, False)
+    quiz7 = create_quiz("What is your favourite colour?", True, lecture3)
+    create_quiz_choice("Orange", quiz7, False)
+    create_quiz_choice("Red", quiz7, False)
+    create_quiz_choice("Green", quiz7, False)
+    create_quiz_choice("None of the above", quiz7, False)
 
-    quiz7 = create_quiz("Which was created first?", True, lecture3)
-    create_quiz_choice("Google", quiz7, False)
-    create_quiz_choice("TV", quiz7, False)
-    create_quiz_choice("Iphone", quiz7, False)
-    create_quiz_choice("Radio", quiz7, True)
+    quiz8 = create_quiz("Which was created first?", True, lecture3)
+    create_quiz_choice("Google", quiz8, False)
+    create_quiz_choice("TV", quiz8, False)
+    create_quiz_choice("Iphone", quiz8, False)
+    create_quiz_choice("Radio", quiz8, True)
 
     for user in User.objects.all():
         create_quiz_choice_selection(Quiz=quiz1, User=user)

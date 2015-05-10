@@ -169,9 +169,26 @@ class AdminQuizResultsDetailView(TemplateView):
         context = super(AdminQuizResultsDetailView, self).get_context_data(*args, **kwargs)
         quiz = Quiz.objects.get(id=kwargs.get('quiz_id'))
         context['quiz'] = quiz
-        context['quizchoices'] = QuizChoice.objects.filter(Quiz=quiz)
-        context['quizchoiceselected'] = QuizChoiceSelected.objects.select_related().filter(QuizChoice__Quiz=quiz.id)
-        context['submission_count'] = QuizChoiceSelected.objects.select_related().filter(QuizChoice__Quiz=quiz.id).count()
+        quiz_type = quiz.quiz_type
+        if quiz_type == QuizType.FREEFORM:
+            context['answers'] = QuizChoiceSelected.objects.select_related().filter(Quiz=quiz)
+            context['submission_count'] = QuizChoiceSelected.objects.select_related().filter(Quiz=quiz).count()
+        else:
+            quizchoices = QuizChoice.objects.filter(Quiz=quiz)
+            context['quizchoices'] = quizchoices
+            context['quiz_choices_summary'] = []
+            context['quiz_choices_summary_max_value'] = 0
+            for qc in quizchoices:
+                context['quiz_choices_summary'].append({'choice':qc.choice, 'times_chosen':qc.times_chosen})
+                context['quiz_choices_summary_max_value'] = max(context['quiz_choices_summary_max_value'], qc.times_chosen)
+            for qc in context['quiz_choices_summary']:
+                try:
+                    qc['relative_percentage'] = (qc['times_chosen'] * 100/context['quiz_choices_summary_max_value'])
+                except ZeroDivisionError:
+                    # in the event that there are no submissions, exception will occur
+                    qc['relative_percentage'] = 0
+            context['quizchoiceselecteds'] = QuizChoiceSelected.objects.select_related().filter(QuizChoice__Quiz=quiz.id)
+            context['submission_count'] = QuizChoiceSelected.objects.select_related().filter(QuizChoice__Quiz=quiz.id).count()
         return context
 
 

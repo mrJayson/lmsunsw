@@ -4,22 +4,64 @@
 
 Submissions collected: {{ submission_count }}
 
+{% if quizchoices %}
+<table class="table">
+	<thead>
+		<tr>
+			<th>{{quiz.question}}</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for quiz_choice in quiz_choices_summary %}
+			<tr>
+				<td>{{quiz_choice.choice}}</td>
+				<td>
+					  <div class="progress-bar {% cycle 'progress-bar-info' 'progress-bar-success' 'progress-bar-warning' 'progress-bar-danger'%}" role="progressbar" style="min-width: 2em; width: {{quiz_choice.relative_percentage}}%;">
+					  	{{quiz_choice.times_chosen}}
+							</div>
+					</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endif %}
+
+Submission details
 <table class="table">
 	<thead>
 		<tr>
 			<th>
-				{{quiz.question}}
+				User
+			</th>
+			<th>
+				Submission
 			</th>
 		</tr>
 	</thead>
 	<tbody>
-		{% for quizchoice in quizchoices %}
+	{% if quizchoiceselecteds %}
+		{% for quizchoiceselected in quizchoiceselecteds %}
 		<tr>
 			<td>
-				{{quizchoice}}
+				{{quizchoiceselected.User.username}}
+			</td>
+			<td>
+				{{quizchoiceselected.QuizChoice.choice}}
 			</td>
 		</tr>
 		{% endfor %}
+	{% else %}
+		{% for answer in answers %}
+		<tr>
+			<td>
+				{{answer.User.username}}
+			</td>
+			<td>
+				{{answer.answer}}
+			</td>
+		</tr>
+		{% endfor %}
+	{% endif %}
 	</tbody>
 </table>
 

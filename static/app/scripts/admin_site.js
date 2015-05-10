@@ -43,7 +43,7 @@ var ping_interval = 1000
 setInterval(function() {
     $.ajax({
         type: "GET",
-        url:  "/poll/",
+        url:  "/admin_poll/",
         dataType: 'json',
         success: function (data) {
         	plot_confidence(data)

@@ -15,7 +15,9 @@ from django.views.generic import TemplateView, View
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.sessions.models import Session
 from django.core.cache import cache
+from django.contrib.sessions.models import Session
 from app.cache_helpers import set_user_confidence
+
 
 from app.models import *
 
@@ -55,6 +57,9 @@ def dump(request, dump):
         return djqscsv.render_to_csv_response(qs)
     elif dump == 'codesnippet':
         qs = CodeSnippet.objects.all()
+        return djqscsv.render_to_csv_response(qs)
+    elif dump == 'session':
+        qs = Session.objects.all()
         return djqscsv.render_to_csv_response(qs)
     else:
         return render(request, 'app/dump.html')

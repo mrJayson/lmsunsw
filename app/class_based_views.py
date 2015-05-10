@@ -166,21 +166,22 @@ class AdminQuizResultsView(ListView):
     model = Quiz
 
     def get_queryset(self, *args, **kwargs):
-        return Quiz.objects.all()
+        return get_quiz_list()
 
 class AdminQuizResultsDetailView(TemplateView):
     template_name = _('admin/quiz_results_detail.html')
 
     def get_context_data(self, *args, **kwargs):
         context = super(AdminQuizResultsDetailView, self).get_context_data(*args, **kwargs)
-        quiz = Quiz.objects.get(id=kwargs.get('quiz_id'))
+        quiz = get_quiz_object(id=kwargs.get('quiz_id'))
         context['quiz'] = quiz
         quiz_type = quiz.quiz_type
         if quiz_type == QuizType.FREEFORM:
-            context['answers'] = QuizChoiceSelected.objects.select_related().filter(Quiz=quiz)
-            context['submission_count'] = QuizChoiceSelected.objects.select_related().filter(Quiz=quiz).count()
+            answers = QuizChoiceSelected.objects.select_related().filter(Quiz=quiz)
+            context['answers'] = answers
+            context['submission_count'] = answers.count()
         else:
-            quizchoices = QuizChoice.objects.filter(Quiz=quiz)
+            quizchoices = filter_quizchoice_list(Quiz=quiz)
             context['quizchoices'] = quizchoices
             context['quiz_choices_summary'] = []
             context['quiz_choices_summary_max_value'] = 0
@@ -193,8 +194,9 @@ class AdminQuizResultsDetailView(TemplateView):
                 except ZeroDivisionError:
                     # in the event that there are no submissions, exception will occur
                     qc['relative_percentage'] = 0
-            context['quizchoiceselecteds'] = QuizChoiceSelected.objects.select_related().filter(QuizChoice__Quiz=quiz.id)
-            context['submission_count'] = QuizChoiceSelected.objects.select_related().filter(QuizChoice__Quiz=quiz.id).count()
+            quizchoiceselecteds = QuizChoiceSelected.objects.select_related().filter(QuizChoice__Quiz=quiz.id)
+            context['quizchoiceselecteds'] = quizchoiceselecteds
+            context['submission_count'] = len(quizchoiceselecteds)
         return context
 
 

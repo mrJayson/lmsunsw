@@ -57,7 +57,9 @@
             <li>
                 <a href="/settings/app/userprofile/{{ user.UserProfile.id }}">Profile</a>
             </li>
-
+            <li>
+                <a href="{% url 'help' %}">help</a>
+            </li>
             {% endif %}
             <li>
                 <a href="/logout">Logout</a>

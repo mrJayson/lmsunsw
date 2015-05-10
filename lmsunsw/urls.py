@@ -28,6 +28,8 @@ urlpatterns = patterns('',
     url(r'^student_poll/$', login_required(student_poll), name='student_poll'),
     url(r'^quick_update/$', login_required(quick_update), name='quick_update'),
 
+    url(r'^help/?$', help, name='help'),
+
     # index page
     url(r'^$', login_required(IndexView.as_view()), name='root'),
     url(r'^index/?$', login_required(IndexView.as_view()), name='index'),

@@ -57,8 +57,10 @@ def dump(request, dump):
         qs = CodeSnippet.objects.all()
         return djqscsv.render_to_csv_response(qs)
     else:
-        return  render(request, 'app/dump.html')
+        return render(request, 'app/dump.html')
 
+def help(request):
+    return render(request, 'app/help.html')
 
 '''generic view for displaying single messages to the user'''
 class AlertView(TemplateView):

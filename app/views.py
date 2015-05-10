@@ -91,7 +91,7 @@ def logout(request, next_page=None,
     return ret_val
 
 
-def long_poll(request):
+def admin_poll(request):
     # gets all the polling data for all needs
     if request.is_ajax():
         user = request.user
@@ -133,42 +133,13 @@ def vote(request):
             # new vote 
             if vote == u'1':
                 confidence = 1
-                try:
-                    cache.incr("good_confidence_meter_data")
-                except ValueError:
-                    cache.set_many ({
-                    'good_confidence_meter_data': 1,
-                    'neutral_confidence_meter_data': 0,
-                    'bad_confidence_meter_data': 0,
-                    })
+
             elif vote == u'-1':
                 confidence = -1
-                try:
-                    cache.incr("bad_confidence_meter_data")
-                except ValueError:
-                    cache.set_many ({
-                    'good_confidence_meter_data': 0,
-                    'neutral_confidence_meter_data': 1,
-                    'bad_confidence_meter_data': 0,
-                    })
+
             else:
                 #all else is neutral
                 confidence = 0
-                try:
-                    cache.incr("neutral_confidence_meter_data")
-                except ValueError:
-                    cache.set_many ({
-                    'good_confidence_meter_data': 0,
-                    'neutral_confidence_meter_data': 0,
-                    'bad_confidence_meter_data': 1,
-                    })
-
-            if confidence_object.confidence == 1:
-                cache.decr("good_confidence_meter_data")
-            elif confidence_object.confidence == -1:
-                cache.decr("bad_confidence_meter_data")
-            else:
-                cache.decr("neutral_confidence_meter_data")
 
             confidence_object.confidence = confidence
             confidence_object.save()

@@ -28,13 +28,18 @@ def get_session_count():
 
 def set_user_confidence(User=None, confidence=None):
 	if User==None or confidence==None:
-		return
+		return None
 	key = "User_confidence_%s" % (User.id)
 	cache.set(key, confidence, settings.CONFIDENCE_CACHE_INTERVAL)
 
 def get_user_confidence(User=None):
+	if User==None:
+		return None
 	key = "User_confidence_%s" % (User.id)
 	confidence = cache.get(key)
+	if confidence == None:
+		confidence = ConfidenceMeter.objects.get(User=User).confidence
+		cache.set(key, confidence, settings.CONFIDENCE_CACHE_INTERVAL)
 	return confidence
 
 ################################################################################

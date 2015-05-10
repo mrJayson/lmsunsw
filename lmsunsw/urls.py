@@ -24,7 +24,7 @@ urlpatterns = patterns('',
     # Examples:
 
     url(r'^vote/$', login_required(vote), name='vote'),
-    url(r'^poll/$', login_required(long_poll), name='poll'),
+    url(r'^admin_poll/$', login_required(admin_poll), name='admin_poll'),
     url(r'^student_poll/$', login_required(student_poll), name='student_poll'),
     url(r'^quick_update/$', login_required(quick_update), name='quick_update'),
 
@@ -78,6 +78,8 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(adminsite.urls)),
+    url(r'^admin/quiz-results/?$', login_required(AdminQuizResultsView.as_view()), name='quiz_results'),
+    url(r'^admin/quiz-results/(?P<quiz_id>.+)/?$', login_required(AdminQuizResultsDetailView.as_view()), name='quiz_results_detail'),
     url(r'^settings/', include(adminsite.urls)),
     url(r'^dump/(?P<dump>.*)$', login_superuser(dump), name='dump'),
     

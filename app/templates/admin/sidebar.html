@@ -1,5 +1,4 @@
-{% load cache %}
-{% cache 3600 admin-sidebar %}
+
 <div id="sidebar-wrapper">
     <ul class="nav nav-pills nav-stacked">
     	
@@ -16,7 +15,11 @@
 		            {% endif %}
 		        {% endfor %}
 		    {% endfor %}
+		    <li>
+		    	<a href="{% url 'quiz_results' %}">Quiz Results</a>
+		    </li>
     	{% endif %}
+
     </ul>
 </div>
-{% endcache %}
+

@@ -209,7 +209,7 @@ def populate():
 
     create_superuser(username="admin", first_name="administration", last_name="account", email="admin@admin.com", password="admin")
     create_student(username="Jack", first_name="Jack", last_name="James", email="Jack@James.com", password="password")
-    num_students = 30
+    num_students = 100
 
     for i in xrange(num_students):
         create_student()

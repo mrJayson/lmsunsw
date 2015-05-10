@@ -65,48 +65,6 @@ class QuizAdmin(admin.ModelAdmin):
         ),
     )
 
-class QuizProxy(Quiz):
-    # need proxy model since django admin does not allow a model to be registered twice
-    class Meta:
-        proxy = True
-        verbose_name = "Quiz Result"
-        verbose_name_plural = "Quiz Results"
-
-class QuizChoiceResultsInLine(admin.StackedInline):
-    # inline models of quiz results
-    model = QuizChoice
-    extra = 4
-    min_num = 0
-    fields = ('choice', 'times_chosen')
-    readonly_fields = fields
-
-    def has_add_permission(self, request, obj=None):
-        return False
-
-    def has_edit_permission(self, request, obj=None):
-        return False
-
-    def has_delete_permission(self, request, obj=None):
-        return False
-
-class QuizResultsAdmin(admin.ModelAdmin):
-    """
-    the admin view for displaying quiz results
-    """
-    inlines = [QuizChoiceResultsInLine]
-
-    fields = ('question',)
-    readonly_fields = fields
-
-    def has_add_permission(self, request, obj=None):
-        return False
-
-    def has_edit_permission(self, request, obj=None):
-        return False
-
-    def has_delete_permission(self, request, obj=None):
-        return False
-
 class LectureMaterialInLine(admin.StackedInline):
     model = LectureMaterial
     extra = 0
@@ -262,7 +220,6 @@ adminsite = Admin_Site()
 adminsite.register(User, CustomUserAdmin)
 adminsite.register(UserProfile, UserProfileAdmin)
 adminsite.register(Quiz, QuizAdmin)
-adminsite.register(QuizProxy, QuizResultsAdmin)
 adminsite.register(Lecture, LectureAdmin)
 adminsite.register(CodeSnippet, CodeSnippetAdmin)
 adminsite.register(Thread, ThreadAdmin)

@@ -155,8 +155,24 @@ class CodeSnippetView(ListView, SidebarContextMixin):
     template_name = _('app/code_snippet.html')
     model = CodeSnippet
 
-    #def get_queryset(self, *args, **kwargs):
+class AdminQuizResultsView(ListView):
+    template_name = _('admin/quiz_results.html')
+    model = Quiz
 
+    def get_queryset(self, *args, **kwargs):
+        return Quiz.objects.all()
+
+class AdminQuizResultsDetailView(TemplateView):
+    template_name = _('admin/quiz_results_detail.html')
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(AdminQuizResultsDetailView, self).get_context_data(*args, **kwargs)
+        quiz = Quiz.objects.get(id=kwargs.get('quiz_id'))
+        context['quiz'] = quiz
+        context['quizchoices'] = QuizChoice.objects.filter(Quiz=quiz)
+        context['quizchoiceselected'] = QuizChoiceSelected.objects.select_related().filter(QuizChoice__Quiz=quiz.id)
+        context['submission_count'] = QuizChoiceSelected.objects.select_related().filter(QuizChoice__Quiz=quiz.id).count()
+        return context
 
 
 

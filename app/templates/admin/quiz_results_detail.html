@@ -1,0 +1,26 @@
+{% extends "admin/admin_layout.html" %}
+
+{% block content %}
+
+Submissions collected: {{ submission_count }}
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				{{quiz.question}}
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for quizchoice in quizchoices %}
+		<tr>
+			<td>
+				{{quizchoice}}
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% endblock %}

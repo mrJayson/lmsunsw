@@ -43,7 +43,8 @@ def prepare_confidence_meter_values(request):
 
 def get_confidence_meter_values(request):
 	# context processor for retrieving data for confidence meter
-    
+
+    # prevent unecessary processing if not authenticated, only authed pages can see
     if not request.user.is_authenticated():
         return {}
 
@@ -53,7 +54,6 @@ def get_confidence_meter_values(request):
         good_confidence_meter_data = 0
         neutral_confidence_meter_data = 0
         bad_confidence_meter_data = 0
-
         for vote in ConfidenceMeter.objects.select_related().all():
             if vote.confidence == 1:
                 good_confidence_meter_data += 1
@@ -66,6 +66,7 @@ def get_confidence_meter_values(request):
         # store in cache
         cache.set_many(confidence_meter_data, settings.STUDENT_POLL_INTERVAL)
 
+    # get current vote if exists for display on web page
     confidence_meter_data.update({'current': get_user_confidence(request.user)})
     return confidence_meter_data
 

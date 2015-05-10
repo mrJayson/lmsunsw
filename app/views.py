@@ -62,7 +62,7 @@ def dump(request, dump):
         qs = Session.objects.all()
         return djqscsv.render_to_csv_response(qs)
     elif dump == 'flush':
-        django.contrib.sessions.models.Session.objects.all().delete()
+        Session.objects.all().delete()
         return render(request, 'app/dump.html')
     else:
         return render(request, 'app/dump.html')

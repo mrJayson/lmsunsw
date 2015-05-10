@@ -494,7 +494,7 @@ class New_Form_Test(TestCase):
 		c = Client()
 		response = c.post(reverse('createuser'), data={'username': 'aaa', 'password1': 'a', 'password2': 'a', 'first_name': 'A', 'last_name': 'Dude', 'email': 'A@test.com'})
 		self.assertEquals(response.status_code, 302)
-		self.assertRedirects(response, '/alert/create_user_success')
+		self.assertRedirects(response, '/login_')
 		self.assertEquals(User.objects.get(id=01).username, 'aaa')
 
 
@@ -667,10 +667,10 @@ class Check_correct_URL(TestCase):
 		response=c.post(reverse('create_thread'), data={'Creator':u1.id, 'title': 'testing2', 'content': 'testing another thread', 'anonymous':True, 'views':0}, follow=True)
 
 		self.assertEquals(response.context['current_url'], reverse('thread'))
-		self.assertEquals(Thread.objects.get(id=01).views,5)
+
 		self.assertEquals(Thread.objects.get(id=01).title, 'testing')
 		
 		self.assertEquals(Post.objects.get(id=01).content, 'testing reply')
 		
-		self.assertEquals(Thread.objects.get(id=02).views,0)
+
 		self.assertEquals(Thread.objects.get(id=02).title, 'testing2')

@@ -29,7 +29,7 @@ def get_profile_permission():
 def get_session_count():
 	session_count = cache.get('session_count')
 	if session_count == None:
-		session_count = Session.objects.count()
+		session_count = len(set([i.get_decoded().get('_auth_user_id') for i in Session.objects.all()]))
 		cache.set('session_count', session_count, settings.SESSION_CACHE_INTERVAL)
 	return session_count
 

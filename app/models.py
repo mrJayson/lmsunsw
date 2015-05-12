@@ -268,6 +268,7 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         self.Thread.replies = self.Thread.replies + 1
         self.Thread.save()
+        cache.delete('post_list')
         return super(Post, self).save(*args, **kwargs)
 
 

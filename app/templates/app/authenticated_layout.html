@@ -17,11 +17,11 @@
 <script src="{% static 'app/scripts/site.min.js' %}"></script>
 
     <!-- ensure refreshes only occur when logged in and not in admin view-->
-        <script type="text/javascript">
-            var ping_interval = 1000*1
-            setInterval(function() {
-                student_poll($("#current_quiz_list_inner li").length)
-                }, ping_interval
-            )
-        </script>
+    <script type="text/javascript">
+        var ping_interval = 1000*1
+        setInterval(function() {
+            student_poll($("#current_quiz_list_inner li").length)
+            }, ping_interval
+        )
+    </script>
 {% endblock %}

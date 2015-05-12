@@ -1,4 +1,4 @@
-
+{% load crispy_forms_tags %}
 <div id="progress-bar" class="progress">
     <div id="progress-bar-good" class="progress-bar progress-bar-success" style='width: {{ good_confidence_meter_data }}%'></div>
     <div id="progress-bar-neutral" class="progress-bar progress-bar-warning" style='width: {{ neutral_confidence_meter_data }}%'></div>
@@ -27,4 +27,7 @@
             <span class="glyphicon glyphicon-ok"></span>
         {% endif %}
     </button>
+
+
 </div>
+    {% crispy confidence_message_form %}

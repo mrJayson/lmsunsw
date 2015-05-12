@@ -5,7 +5,7 @@ Definition of views.
 from datetime import datetime
 import json
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 from django.http import Http404 
@@ -18,10 +18,20 @@ from django.core.cache import cache
 from django.contrib.sessions.models import Session
 from app.cache_helpers import set_user_confidence
 
-
 from app.models import *
+from app.forms import ConfidenceMessageForm
 
 import djqscsv
+
+def confidence_message(request):
+    if request.method == "POST":
+        form = ConfidenceMessageForm(path=request.path,data=request.POST, instance=request.user.UserProfile)
+        if form.is_valid():
+            form.save()
+    else:
+        form = ConfidenceMessageForm(path=request.path,instance=request.user.UserProfile)
+        # redirect back to current page, to make it appear ajaxy
+    return redirect(request.POST['path'])
 
 '''dev view for displaying all data'''
 def dump(request, dump):

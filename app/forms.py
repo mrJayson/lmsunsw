@@ -422,13 +422,30 @@ class ChangeCollabDocForm(forms.ModelForm):
         model = UserProfile
         fields = ('personal_collab_doc',)
 
-    def __init__(self, user, thread, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super(ChangeCollabDocForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.layout = Layout()
 
         self.fields['personal_collab_doc'] = forms.URLField()
         self.helper.add_input(Submit(_('submit'), _('Submit')))
+
+class ConfidenceMessageForm(forms.ModelForm):
+
+    class Meta:
+        model = UserProfile
+        fields = ('confidence_message',)
+
+    def __init__(self, path, *args, **kwargs):
+        super(ConfidenceMessageForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout()
+
+        self.helper.form_action = _('/confidence_message/')
+
+        self.fields['path'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):path}))
+        self.fields['confidence_message'] = forms.CharField(widget=forms.TextInput(attrs={_('class'): _('form-control'),_('placeholder'):_("What don't you understand?")}))
+        self.helper.form_show_labels = False
 
 
 ###################################################################################################

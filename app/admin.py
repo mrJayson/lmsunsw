@@ -90,6 +90,13 @@ class LectureAdmin(admin.ModelAdmin):
 class UserProfileAdmin(admin.ModelAdmin):
 
     list_display = ('__unicode__','personal_collab_doc',)
+    fieldsets = (
+        (None, {
+            'fields': ('personal_collab_doc',)
+            }
+        ),
+
+    )
 
     # should not be able to create or delete any, must be done in conjunction with User model
     def has_add_permission(self, request, obj=None):

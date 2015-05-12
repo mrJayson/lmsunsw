@@ -8,14 +8,21 @@ from django.core.cache import cache
 
 from app.models import Lecture, Quiz, QuizChoiceSelected, CodeSnippet
 from app.cache_helpers import *
+from app.forms import ConfidenceMessageForm
 
 class BaseSidebarContextMixin(ContextMixin):
+
+	# basic sidebar contexts
+
 	def get_context_data(self, *args, **kwargs):
 		context = super(BaseSidebarContextMixin, self).get_context_data(*args, **kwargs)
 		context['lecture_list'] = get_lecture_list()
+		context['confidence_message_form'] = ConfidenceMessageForm(path=self.request.path,instance=self.request.user.UserProfile)
 		return context
 
 class SidebarContextMixin(BaseSidebarContextMixin):
+
+	# more specific sidebar contexts
 
 	def get_context_data(self, *args, **kwargs):
 		context = super(SidebarContextMixin, self).get_context_data(*args, **kwargs)

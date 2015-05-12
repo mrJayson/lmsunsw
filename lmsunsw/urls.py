@@ -27,6 +27,7 @@ urlpatterns = patterns('',
     url(r'^admin_poll/$', login_required(admin_poll), name='admin_poll'),
     url(r'^student_poll/$', login_required(student_poll), name='student_poll'),
     url(r'^quick_update/$', login_required(quick_update), name='quick_update'),
+    url(r'^confidence_message/$', login_required(confidence_message), name='confidence_message'),
 
     url(r'^help/?$', help, name='help'),
 

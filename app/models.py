@@ -29,6 +29,7 @@ from app.docsURL import glist
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='UserProfile')
     personal_collab_doc = models.URLField(blank=True, null=True, help_text=_("Optional, Provide a URL Link to a specific google docs which will override the default public doc, you can share this with your friends to create small groups"))
+    confidence_message = models.CharField(blank=True, null=True, max_length=50)
     # like a toString
     def __unicode__(self):
         return unicode(self.user)

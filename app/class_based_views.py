@@ -15,7 +15,7 @@ from app.forms import QuizSelectionForm, CreateThreadForm, CreateUserForm, PostR
 from app.models import *
 from app.cache_helpers import *
 
-class IndexView(TemplateView, BaseSidebarContextMixin):
+class IndexView(TemplateView):
     template_name = _('app/index.html')
 
     def dispatch(self, request, *args, **kwargs):

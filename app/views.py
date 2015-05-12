@@ -73,7 +73,7 @@ def dump(request, dump):
         return djqscsv.render_to_csv_response(qs)
     elif dump == 'showsession':
         qs = [session.get_decoded() for session in Session.objects.all()]
-        context = {'session_list':User.objects.filter(id__in=qs)}
+        context = {'session_list':qs}
         #context = {'session_list':qs}
         return render(request, 'app/show_session.html', context_instance=RequestContext(request, context))
     elif dump == 'flush':

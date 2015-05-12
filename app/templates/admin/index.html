@@ -65,6 +65,32 @@
 	<div class="panel panel-primary">
 		<div class="panel panel-heading">
 			<div id="float-left">
+				Confidence messages
+			</div>
+			<div id="float-text-right">
+				<button class="btn btn-default" onclick="minimize_panel('confidence-messages-panel', 'confidence-messages-btn');">
+	                    <span id="confidence-messages-btn" class="glyphicon glyphicon-chevron-up"></span>
+	            </button>
+			</div>
+		</div>
+		<div class="panel panel-body" id="confidence-messages-panel">
+			<table class="table">
+			<thead>
+				<tr>
+					<th>User</th>
+					<th>Message</th>
+				</tr>
+			</thead>
+			<tbody id="confidence-messages">
+
+			</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class="panel panel-primary">
+		<div class="panel panel-heading">
+			<div id="float-left">
 				Quick Settings
 			</div>
 			<div id="float-text-right">

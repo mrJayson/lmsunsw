@@ -39,6 +39,17 @@ function plot_confidence(data) {
     });
 }
 
+function update_confidence_messages(data) {
+    
+    html = "";
+    for (var i = 0; i < data.length; i++) {
+        if (data[i]['confidence_message'] != null || data[i]['user'] != null ) {
+            html += "<tr><td>"+data[i]['user']+"</td><<td>"+data[i]['confidence_message']+"</td></tr>";
+        }
+    }
+    $("#confidence-messages").html(html)
+}
+
 var ping_interval = 1000
 setInterval(function() {
     $.ajax({
@@ -46,7 +57,9 @@ setInterval(function() {
         url:  "/admin_poll/",
         dataType: 'json',
         success: function (data) {
-        	plot_confidence(data)
+        	plot_confidence({'good_confidence_meter_data':data['good_confidence_meter_data'], 'neutral_confidence_meter_data':data['neutral_confidence_meter_data'], 'bad_confidence_meter_data':data['bad_confidence_meter_data']});
+            update_confidence_messages(data['confidence_messages']);
+
         },
         error: function(response){
         },

@@ -181,7 +181,6 @@ def create_post(Thread=None, content=None, Creator=None, anonymous=None):
     return new_post
 
 
-
 def clear():
     print "Clearing database"
     User.objects.all().delete()
@@ -212,7 +211,9 @@ def populate():
     num_students = 100
 
     for i in xrange(num_students):
-        create_student()
+        u = create_student()
+        u.UserProfile.confidence_message = Rand.randomString(10)
+        u.UserProfile.save()
 
     vote()
     

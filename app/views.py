@@ -126,6 +126,7 @@ def admin_poll(request):
         # need to import in here to prevent circular imports
         from app.context_processors import get_confidence_meter_values
         results = get_confidence_meter_values(request)
+        results.update({'confidence_messages':[{'user':u.user.__str__(), 'confidence_message':u.confidence_message} for u in UserProfile.objects.exclude(confidence_message__isnull=True).exclude(confidence_message='')]})
         return HttpResponse(json.dumps(results), content_type=_('application/json'))
     else:
         #if not ajax request, render index page as they are not supposed to request via non ajax

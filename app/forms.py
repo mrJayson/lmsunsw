@@ -62,6 +62,9 @@ class CreateUserForm(UserCreationForm):
         username = self.cleaned_data.get('username')
         return username.lower()
 
+    def save(self, *args, **kwargs):
+        return super(CreateUserForm, self).save(*args, **kwargs)
+
 class QuizSelectionForm(forms.Form):
 
     class Meta:
@@ -319,6 +322,61 @@ class QuizSelectionForm(forms.Form):
                 else:
                     # somewhere in between, partially correct
                     self.helper.add_input(Button(name = _(""), value="PARTIALLY CORRECT", css_class='btn-warning'))
+
+        ################### ZEROMCQ ###################
+        # forms are checkboxes, can have multiple correct answers, but at least one correct
+        # response can be correct, partially correct or wrong
+
+        if quiz.quiz_type == QuizType.ZEROMCQ:
+            # if quiz not answered yet, filter will return an empty list
+            quiz_choice_selected = QuizChoiceSelected.objects.select_related().filter(User=user, QuizChoice__Quiz=quiz.id)
+            if len(quiz_choice_selected) == 0 and quiz.visible:
+                self.fields['choices'] = forms.ChoiceField(
+                    choices = quiz_choice_list,
+                    required=True,
+                    widget=forms.RadioSelect
+                    )
+                # add hidden values into form
+                self.fields['user'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):user.id}))
+                self.helper.layout.append(
+                    Fieldset(
+                        quiz.question,
+                        Field('choices'),
+                        Field('user')
+                        )
+                    )
+                # form is to have a submit button since it needs to collect data
+                self.helper.add_input(Submit(_('submit'), _('Submit')))
+            elif len(quiz_choice_selected) == 0 and not quiz.visible:
+                # Quiz not answered yet, but finished, disable fields
+
+                self.fields['choices'] = forms.ChoiceField(
+                    label="You did not answer the quiz in time",
+                    choices = quiz_choice_list,
+                    required=True,
+                    widget=forms.RadioSelect
+                    )
+                self.helper.layout.append(
+                    Fieldset(
+                        quiz.question,
+                        Field('choices', disabled=_('true'))
+                        )
+                    )
+            elif len(quiz_choice_selected) != 0:
+                # Quiz answered, prepare form to display result
+                initial_value = quiz_choice_selected.first().QuizChoice.id
+                self.fields['choices'] = forms.ChoiceField(
+                    choices = quiz_choice_list,
+                    required=True,
+                    initial=initial_value,
+                    widget=forms.RadioSelect
+                    )
+                self.helper.layout.append(
+                    Fieldset(
+                        quiz.question,
+                        Field('choices', disabled=_('true'))
+                        )
+                    )
 
         # to prevent default form messages from being displayed, answer selection can never be wrong
         #self.helper.form_show_labels = False

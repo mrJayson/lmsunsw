@@ -76,8 +76,13 @@ def dump(request, dump):
         context = {'session_list':User.objects.filter(id__in=qs)}
         #context = {'session_list':qs}
         return render(request, 'app/show_session.html', context_instance=RequestContext(request, context))
-    elif dump == 'flush':
+    elif dump == 'flushsession':
         Session.objects.all().delete()
+        return render(request, 'app/dump.html')
+    elif dump == 'flushmessage':
+        for u in UserProfile.objects.exclude(confidence_message__isnull=True).exclude(confidence_message=''):
+            u.confidence_message = None
+            u.save()
         return render(request, 'app/dump.html')
     else:
         return render(request, 'app/dump.html')

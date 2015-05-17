@@ -19,6 +19,15 @@ function plot_confidence(data) {
     		flot_data.push({label: 'bad', data: value, color: color})
             $("#bad_confidence_meter_data").html('Bad: '+data[key])
     	}
+        if (key=='bad_left') {        
+            $("#bad-seat-location-left").html(data[key])
+        }
+        if (key=='bad_middle') {
+            $("#bad-seat-location-middle").html(data[key])
+        }
+        if (key=='bad_right') {
+            $("#bad-seat-location-right").html(data[key])
+        }
     });
 	$.plot('#confidence-graph', flot_data, {
         series: {
@@ -33,7 +42,6 @@ function plot_confidence(data) {
                         color: '#000',
                     }
                 },
-
         	}
     	}
     });
@@ -57,9 +65,15 @@ setInterval(function() {
         url:  "/admin_poll/",
         dataType: 'json',
         success: function (data) {
-        	plot_confidence({'good_confidence_meter_data':data['good_confidence_meter_data'], 'neutral_confidence_meter_data':data['neutral_confidence_meter_data'], 'bad_confidence_meter_data':data['bad_confidence_meter_data']});
+        	plot_confidence({
+                'good_confidence_meter_data':data['good_confidence_meter_data'], 
+                'neutral_confidence_meter_data':data['neutral_confidence_meter_data'], 
+                'bad_confidence_meter_data':data['bad_confidence_meter_data'],
+                'bad_left':data['bad_left'],
+                'bad_middle':data['bad_middle'],
+                'bad_right':data['bad_right']
+            });
             update_confidence_messages(data['confidence_messages']);
-
         },
         error: function(response){
         },
@@ -83,13 +97,9 @@ function quick_update(data_id, value, csrf_token) {
 				$("#quick-settings-panel").load(" #quick-settings-panel", function() {$(this).children().unwrap()});
 			}
             if (data.return_type == 'quiz_close') {
-                /*$("#quick_quiz_close option[value='" + data.return_value + "']").remove();*/
-                $("#quiz-results-panel").load(" #quiz-results-panel", function() {$(this).children().unwrap()});
                 $("#quick-settings-panel").load(" #quick-settings-panel", function() {$(this).children().unwrap()});
             }
             if (data.return_type == 'quiz_open') {
-                /*$("#quick_quiz_open option[value='" + data.return_value + "']").remove();*/
-                $("#quiz-results-panel").load(" #quiz-results-panel", function() {$(this).children().unwrap()});
                 $("#quick-settings-panel").load(" #quick-settings-panel", function() {$(this).children().unwrap()});
             }
 			if (typeof data.notice !== 'undefined') {
@@ -98,7 +108,6 @@ function quick_update(data_id, value, csrf_token) {
 								'</button>'
 				$("#admin_alerts").html('<div class="alert alert-success alert-dismissable" role="alert">' + data.notice + close_button + '</div>')
 			}
-
 		},
 		error: function(response){
 		},

@@ -48,21 +48,45 @@ def get_confidence_meter_values(request):
     if not request.user.is_authenticated():
         return {}
 
-    confidence_meter_data = cache.get_many(['good_confidence_meter_data', 'neutral_confidence_meter_data', 'bad_confidence_meter_data'])
+    confidence_meter_data = cache.get_many(
+        [
+        'good_confidence_meter_data',
+        'neutral_confidence_meter_data',
+        'bad_confidence_meter_data',
+        'bad_left',
+        'bad_middle',
+        'bad_right'
+        ])
 
     if confidence_meter_data == {}:
         good_confidence_meter_data = 0
         neutral_confidence_meter_data = 0
         bad_confidence_meter_data = 0
+        bad_left = 0
+        bad_middle = 0
+        bad_right = 0
         for vote in ConfidenceMeter.objects.select_related().all():
             if vote.confidence == 1:
                 good_confidence_meter_data += 1
             elif vote.confidence == -1:
                 bad_confidence_meter_data += 1
+                if vote.User.UserProfile.seat_location == 0:
+                    bad_left += 1
+                elif vote.User.UserProfile.seat_location == 1:
+                    bad_middle += 1
+                elif vote.User.UserProfile.seat_location == 2:
+                    bad_right += 1
             else:
                 neutral_confidence_meter_data += 1
 
-        confidence_meter_data = {'good_confidence_meter_data': good_confidence_meter_data, 'neutral_confidence_meter_data': neutral_confidence_meter_data, 'bad_confidence_meter_data': bad_confidence_meter_data}
+        confidence_meter_data = {
+        'good_confidence_meter_data': good_confidence_meter_data,
+        'neutral_confidence_meter_data': neutral_confidence_meter_data,
+        'bad_confidence_meter_data': bad_confidence_meter_data,
+        'bad_left':bad_left,
+        'bad_middle':bad_middle,
+        'bad_right':bad_right
+        }
         # store in cache
         cache.set_many(confidence_meter_data, settings.STUDENT_POLL_INTERVAL)
 

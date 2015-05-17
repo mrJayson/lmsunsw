@@ -78,6 +78,8 @@ class CreateUserForm(UserCreationForm):
 
     def clean_seat_location(self):
         seat_location = self.cleaned_data.get('seat_location')
+        if seat_location == '':
+            seat_location = 1
         return seat_location
 
     def save(self, *args, **kwargs):
@@ -524,9 +526,7 @@ class ConfidenceMessageForm(forms.ModelForm):
         self.helper.form_action = _('/confidence_message/')
 
         self.fields['path'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):path}))
-        self.fields['confidence_message'] = forms.CharField(label="Press enter to submit",required=False, widget=forms.TextInput(attrs={_('class'): _('form-control'),_('placeholder'):_("Anything you don't understand?")}))
-
-
+        self.fields['confidence_message'] = forms.CharField(label="Is there anything you don't understand about today's content?",required=False, widget=forms.TextInput(attrs={_('class'): _('form-control'),_('placeholder'):_("Press Enter to submit")}))
 
 ###################################################################################################
 # Admin Dashboard forms
@@ -574,80 +574,6 @@ class QuickSettingsForm(forms.Form):
                 choices = invisible_quizzes,
                 widget=forms.SelectMultiple(attrs={_('id'):('quick_quiz_open'), _('class'): _('form-control')}),
                 )
-
-class QuickQuizForm(forms.ModelForm):
-    class Meta:
-        model = Quiz
-        fields = ('question', 'Lecture', 'visible')
-
-    def __init__(self, session=None, *args, **kwargs):
-        super(QuickQuizForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper(self)
-        self.helper.layout = Layout()
-
-        self.fields['question'] = forms.CharField(label=_("Question"), widget=forms.TextInput(attrs={_('class'): _('form-control')}))
-        self.fields['visible'] = forms.BooleanField(initial=True, required=False)
-        # assign current lecture from session
-        if session!=None and session.has_key('quick_lecture'):
-            quick_lecture = session.get('quick_lecture')
-        elif get_lecture_list().exists():
-            # must be existing lecture to choose from
-            quick_lecture = get_last_lecture_object().id
-        else:
-            quick_lecture = ""
-        self.fields['Lecture'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):quick_lecture}))
-        self.helper.add_input(Submit(_('quiz'), _('Submit')))
-
-    def clean_Lecture(self):
-        lecture = get_lecture_object(id=self.cleaned_data.get('Lecture'))
-        return lecture
-
-class QuickQuizInlineForm(forms.ModelForm):
-    # forms for inlines
-    class Meta:
-        model = QuizChoice
-        exclude = ()
-
-    def __init__(self, *args, **kwargs):
-        super(QuickQuizInlineForm, self).__init__(*args, **kwargs)
-        self.fields['choice'] = forms.CharField(label='', widget=forms.TextInput( attrs={_('class'): _('form-control'), _('placeholder'): _('Quiz Choice')}))
-
-# inlineForm factory to generate multiple forms
-QuickQuizInlineFormSet = inlineformset_factory(
-    Quiz,
-    QuizChoice,
-    form=QuickQuizInlineForm,
-    can_delete=False,
-    extra=4,
-    )
-
-
-class QuickCodeSnippetForm(forms.ModelForm):
-    class Meta:
-        model = CodeSnippet
-        fields = ('syntax', 'code', 'Lecture')
-
-    def __init__(self, session=None, *args, **kwargs):
-        super(QuickCodeSnippetForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper(self)
-        self.helper.layout = Layout()
-
-        self.fields['code'] = forms.CharField(label=_("Code"), widget=forms.Textarea(attrs={_('class'): _('form-control')}))
-        # assign current lecture from session
-        if session!=None and session.has_key('quick_lecture'):
-            quick_lecture = session.get('quick_lecture')
-        elif get_lecture_list().exists():
-            # must be existing lecture to choose from
-            quick_lecture = get_last_lecture_object().id
-        else:
-            quick_lecture = ""
-        self.fields['Lecture'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):quick_lecture}))
-
-        self.helper.add_input(Submit(_('codesnippet'), _('Submit')))
-
-    def clean_Lecture(self):
-        lecture = get_lecture_object(id=self.cleaned_data.get('Lecture'))
-        return lecture
 
 ###################################################################################################
 # Custom Admin forms

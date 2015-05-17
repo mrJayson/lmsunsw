@@ -15,8 +15,7 @@ from django.shortcuts import render, redirect
 
 from app.models import *
 from app.forms import (LectureAdminForm, QuizAdminForm, QuizChoiceInLineForm, 
-CodeSnippetAdminForm, ThreadAdminForm, QuickSettingsForm, QuickQuizForm, QuickQuizInlineFormSet,
-QuickCodeSnippetForm, LectureMaterialInLineFormset)
+CodeSnippetAdminForm, ThreadAdminForm, QuickSettingsForm, LectureMaterialInLineFormset)
 
 ###################################################################################################
 
@@ -138,53 +137,12 @@ class ThreadAdmin(admin.ModelAdmin):
 class Admin_Site(AdminSite):
 
     def get(self, request, extra_context=None):
-        
-        extra_context['quick_quiz_form'] = QuickQuizForm(session=request.session)
-        extra_context['quick_quiz_inline_form'] = QuickQuizInlineFormSet(instance=Quiz())
-        extra_context['quick_codesnippet_form'] = QuickCodeSnippetForm(session=request.session)
+
         extra_context['quick_settings_form'] = QuickSettingsForm(session=request.session)
 
 
     def post(self, request, extra_context=None):
-
-        if 'quiz' in request.POST:
-            form = QuickQuizForm(data=request.POST)
-            if form.is_valid():
-                quiz = form.save(commit=False)
-                # quiz from valid, now check inline forms
-                inline_form = QuickQuizInlineFormSet(data=request.POST, instance=quiz)
-                if inline_form.is_valid():
-                    quiz.save()
-                    inline_form.save()
-                    # successful, give new form for next submission
-                    extra_context['quick_quiz_form'] = QuickQuizForm(session=request.session)
-                    extra_context['quick_quiz_inline_form'] = QuickQuizInlineFormSet(instance=Quiz())
-                else:
-                    # errors present, give back form with error messages
-                    extra_context['quick_quiz_form'] = form
-                    extra_context['quick_quiz_inline_form'] = QuickQuizInlineFormSet(data=request.POST, instance=Quiz())
-            else:
-                # errors present, give back form with error messages
-                extra_context['quick_quiz_form'] = form
-                extra_context['quick_quiz_inline_form'] = QuickQuizInlineFormSet(data=request.POST, instance=Quiz())
-        else:
-            # if not Post, give new form
-            extra_context['quick_quiz_form'] = QuickQuizForm(session=request.session)
-            extra_context['quick_quiz_inline_form'] = QuickQuizInlineFormSet(instance=Quiz())
-
-
-        if 'codesnippet' in request.POST:
-            form = QuickCodeSnippetForm(data=request.POST)
-            if form.is_valid():
-                form.save()
-                # successful, give new form for next submission
-                extra_context['quick_codesnippet_form'] = QuickCodeSnippetForm(session=request.session)
-            else:
-                # errors present, give back form with error messages
-                extra_context['quick_codesnippet_form'] = form
-        else:
-            # if not Post, give new form
-            extra_context['quick_codesnippet_form'] = QuickCodeSnippetForm(session=request.session)
+        
 
         # quick_settings_form is never processed, just used as a placeholder for ajax submissions
         extra_context['quick_settings_form'] = QuickSettingsForm(session=request.session)
@@ -196,26 +154,7 @@ class Admin_Site(AdminSite):
             return redirect('index')
         else:
             extra_context = {} if extra_context==None else extra_context
-            # get data for recent quiz
-            most_recent_quiz = Quiz.objects.filter(visible=False).order_by('last_touch').last()
-            if most_recent_quiz != None:
-                extra_context['recent_quiz'] = most_recent_quiz
-                if most_recent_quiz.quiz_type == QuizType.FREEFORM:
-                    extra_context['freeform_submissions'] = len(QuizChoiceSelected.objects.filter(Quiz=most_recent_quiz))
-                else:
-                    extra_context['recent_quiz_choices'] = []
-                    extra_context['recent_quiz_choices_max_value'] = 0
-                    for qc in QuizChoice.objects.select_related().filter(Quiz__id=most_recent_quiz.id):
-                        extra_context['recent_quiz_choices'].append({'choice':qc.choice, 'times_chosen':qc.times_chosen})
-                        extra_context['recent_quiz_choices_max_value'] = max(extra_context['recent_quiz_choices_max_value'], qc.times_chosen)
-                    for qc in extra_context['recent_quiz_choices']:
-                        try:
-                            qc['relative_percentage'] = (qc['times_chosen'] * 100/extra_context['recent_quiz_choices_max_value'])
-                        except ZeroDivisionError:
-                            # in the event that there are no submissions, exception will occur
-                            qc['relative_percentage'] = 0
-            
-            
+
             # do forms stuff
             if request.method == 'POST':
                 self.post(request, extra_context)

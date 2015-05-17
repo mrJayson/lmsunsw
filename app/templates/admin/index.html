@@ -34,32 +34,36 @@
 				
 			</div>
 			<div id="confidence-graph" style="width:100%;height:300px"></div>
+			<div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>
+							</th>
+							<th>Left
+							</th>
+							<th>Middle
+							</th>
+							<th>Right
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Seat Locations frequency of bad confidence students
+							</td>
+							<td id="bad-seat-location-left">
+							</td>
+							<td id="bad-seat-location-middle">
+							</td>
+							<td id="bad-seat-location-right">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
-
-	<div class="panel panel-primary">
-		<div class="panel panel-heading">
-			<div id="float-left">
-				Quick Create Quiz
-			</div>
-			<div id="float-text-right">
-				<button class="btn btn-default" onclick="minimize_panel('quick-quiz-panel', 'quick-quiz-btn');">
-	                    <span id="quick-quiz-btn" class="glyphicon glyphicon-chevron-up"></span>
-	            </button>
-			</div>
-		</div>
-		<div class="panel panel-body" id="quick-quiz-panel">
-			<form method="post">
-				<input type="hidden" name="csrfmiddlewaretoken" value='{{csrf_token}}'>
-				{{ quick_quiz_form|crispy }}
-				{{ quick_quiz_inline_form|crispy }}
-				<div class="form_actions">
-					<input type="submit" name="quiz" value="Submit" class="btn btn-primary" id="submit-id-quiz">
-				</div>
-			</form>
-		</div>
-	</div>
-
 </div>
 <div class="col-md-6 col-xs-12">
 	<div class="panel panel-primary">
@@ -103,76 +107,6 @@
 			{% crispy quick_settings_form %}
 		</div>
 	</div>
-
-	<div class="panel panel-primary">
-		<div class="panel panel-heading">
-			<div id="float-left">
-				Quiz Results Summaries
-			</div>
-			<div id="float-text-right">
-				<button class="btn btn-default" onclick="minimize_panel('quiz-results-panel', 'quiz-results-btn');">
-	                    <span id="quiz-results-btn" class="glyphicon glyphicon-chevron-up"></span>
-	            </button>
-			</div>
-		</div>
-		<div class="panel panel-body" id="quiz-results-panel">
-			{% if recent_quiz %}
-				<table class="table">
-					<thead>
-						<tr>{{ recent_quiz.question }}</tr>
-					</thead>
-					<tbody>
-						{% if recent_quiz.quiz_type == 3 %}
-							<tr>
-								<td>
-									{{freeform_submissions}} submissions collected
-								</td>
-							</tr>
-						{% endif %}
-
-						{% if recent_quiz_choices %}
-							{% for recent_quiz_choice in recent_quiz_choices %}
-								<tr>
-									<td>{{recent_quiz_choice.choice}}</td>
-									<td>
-										  <div class="progress-bar {% cycle 'progress-bar-info' 'progress-bar-success' 'progress-bar-warning' 'progress-bar-danger'%}" role="progressbar" style="min-width: 2em; width: {{recent_quiz_choice.relative_percentage}}%;">
-										  	{{recent_quiz_choice.times_chosen}}
-	  										</div>
-										</td>
-								</tr>
-							{% endfor %}
-						{% endif %}
-						
-					</tbody>
-					{% if recent_quiz.quiz_type == 2 %}
-					<tfooter>
-						<tr>
-							<td>Numbers will be higher as this is an MCQ with multiple right answers</td>
-						</tr>
-					</tfooter>
-					{% endif %}
-				</table>
-			{% endif %}
-		</div>
-
-	</div>
-
-	<div class="panel panel-primary">
-		<div class="panel panel-heading">
-			<div id="float-left">
-				Quick Create Code Snippet
-			</div>
-			<div id="float-text-right">
-				<button class="btn btn-default" onclick="minimize_panel('quick-code-panel', 'quick-code-btn');">
-	                    <span id="quick-code-btn" class="glyphicon glyphicon-chevron-up"></span>
-	            </button>
-			</div>
-		</div>
-		<div class="panel panel-body" id="quick-code-panel">
-			{% crispy quick_codesnippet_form %}
-		</div>
-	</div>
-
 </div>
 
 

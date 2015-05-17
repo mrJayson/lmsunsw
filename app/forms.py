@@ -47,10 +47,24 @@ class CreateUserForm(UserCreationForm):
         self.fields['first_name'].widget = forms.TextInput(attrs={_('placeholder'): _('First Name'), _('class'): _('form-control')})
         self.fields['first_name'].label = "first name is optional"
         self.fields['last_name'].widget = forms.TextInput(attrs={_('placeholder'): _('Last Name'), _('class'): _('form-control')})
-        self.fields['first_name'].label = "last name is optional"
+        self.fields['last_name'].label = "last name is optional"
         self.fields['email'].widget = forms.TextInput(attrs={_('placeholder'): _('Email Address'), _('class'): _('form-control')})
         self.fields['email'].required = False
         self.fields['email'].label = "Email is optional"
+
+        self.fields['seat_location'] = forms.ChoiceField(
+                    label='Which side of the lecture are you sitting on?',
+                    choices=[(0,'left'),(1,'middle'),(2,'right')],
+                    required=False,
+                    widget=forms.RadioSelect, 
+                    )
+        self.helper.layout.append(
+            Fieldset(
+                None,
+                Field('seat_location')
+                )
+            )
+
         self.helper.add_input(Submit(_('submit'), _('Submit')))
 
     class Meta:
@@ -62,8 +76,16 @@ class CreateUserForm(UserCreationForm):
         username = self.cleaned_data.get('username')
         return username.lower()
 
+    def clean_seat_location(self):
+        seat_location = self.cleaned_data.get('seat_location')
+        return seat_location
+
     def save(self, *args, **kwargs):
-        return super(CreateUserForm, self).save(*args, **kwargs)
+        
+        user = super(CreateUserForm, self).save(commit=False, *args, **kwargs)
+        user._seat_location = self.cleaned_data.get('seat_location')
+        user.save()
+        return user
 
 class QuizSelectionForm(forms.Form):
 
@@ -502,8 +524,8 @@ class ConfidenceMessageForm(forms.ModelForm):
         self.helper.form_action = _('/confidence_message/')
 
         self.fields['path'] = forms.CharField(widget=forms.HiddenInput(attrs={_('value'):path}))
-        self.fields['confidence_message'] = forms.CharField(widget=forms.TextInput(attrs={_('class'): _('form-control'),_('placeholder'):_("What don't you understand?")}))
-        self.helper.form_show_labels = False
+        self.fields['confidence_message'] = forms.CharField(label="Press enter to submit",required=False, widget=forms.TextInput(attrs={_('class'): _('form-control'),_('placeholder'):_("Anything you don't understand?")}))
+
 
 
 ###################################################################################################

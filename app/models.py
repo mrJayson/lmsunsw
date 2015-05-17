@@ -25,12 +25,19 @@ from pygments.styles import STYLE_MAP
 
 from app.docsURL import glist
 
+class SeatLocation():
+    # enum for seating categorisation
+    # add to this class for more categories
+    LEFT = 0
+    MIDDLE = 1
+    RIGHT = 2
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='UserProfile')
     personal_collab_doc = models.URLField(blank=True, null=True, help_text=_("Optional, Provide a URL Link to a specific google docs which will override the default public doc, you can share this with your friends to create small groups"))
     confidence_message = models.CharField(blank=True, null=True, max_length=50)
-    seat_location = models.SmallIntegerField(default=0)
+    seat_location = models.SmallIntegerField(default=SeatLocation.MIDDLE)
     # like a toString
     def __unicode__(self):
         return unicode(self.user)
@@ -44,7 +51,11 @@ class UserProfile(models.Model):
             user.user_permissions.add(get_profile_permission())
             user.is_staff = True
             user.save()
-            UserProfile.objects.create(user=user)
+            try:
+                UserProfile.objects.create(user=user, seat_location=user._seat_location)
+            except AttributeError:
+                # for programmatically creating users, default seat_location is middle, according to the model
+                UserProfile.objects.create(user=user)
 
 
 class Lecture(models.Model):
@@ -118,6 +129,8 @@ class QuizType():
     MULTIMCQ = 2
     # freeform question
     FREEFORM = 3
+
+
 
 class Quiz(models.Model):
 

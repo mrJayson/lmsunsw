@@ -89,7 +89,7 @@ class LectureAdmin(admin.ModelAdmin):
 
 class UserProfileAdmin(admin.ModelAdmin):
 
-    list_display = ('__unicode__','personal_collab_doc',)
+    list_display = ('__unicode__','personal_collab_doc','seat_location')
     fieldsets = (
         (None, {
             'fields': ('personal_collab_doc',)

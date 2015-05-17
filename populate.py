@@ -212,7 +212,7 @@ def populate():
 
     for i in xrange(num_students):
         u = create_student()
-        u.UserProfile.confidence_message = Rand.randomString(10)
+        #u.UserProfile.confidence_message = Rand.randomString(10)
         u.UserProfile.save()
 
     vote()

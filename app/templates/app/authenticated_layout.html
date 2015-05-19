@@ -20,7 +20,8 @@
     <script type="text/javascript">
         var ping_interval = 1000*1
         setInterval(function() {
-            student_poll($("#current_quiz_list_inner li").length)
+            student_poll($("#current_quiz_list_inner li").length);
+            $("#footer-div").load(" #footer-div", function() {$(this).children().unwrap()});
             }, ping_interval
         )
     </script>

@@ -78,6 +78,7 @@ setInterval(function() {
         error: function(response){
         },
 	});
+    $("#footer-div").load(" #footer-div", function() {$(this).children().unwrap()});
     }, ping_interval
 )
 

@@ -83,6 +83,9 @@ def dump(request, dump):
         for u in UserProfile.objects.exclude(confidence_message__isnull=True).exclude(confidence_message=''):
             u.confidence_message = None
             u.save()
+    elif dump == 'resetconfidence':
+        ConfidenceMeter.objects.all().delete()
+        ConfidenceMeter.objects.create(User=User.objects.get(username='admin'), confidence=1)
         return render(request, 'app/dump.html')
     else:
         return render(request, 'app/dump.html')

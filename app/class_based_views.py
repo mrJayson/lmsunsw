@@ -175,6 +175,7 @@ class AdminQuizResultsDetailView(TemplateView):
         context = super(AdminQuizResultsDetailView, self).get_context_data(*args, **kwargs)
         quiz = get_quiz_object(id=kwargs.get('quiz_id'))
         context['quiz'] = quiz
+        context['code_snippet'] = quiz.render_code
         quiz_type = quiz.quiz_type
         if quiz_type == QuizType.FREEFORM:
             answers = QuizChoiceSelected.objects.select_related().filter(Quiz=quiz)

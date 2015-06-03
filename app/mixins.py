@@ -21,7 +21,7 @@ class BaseSidebarContextMixin(ContextMixin):
 		return context
 
 class SidebarContextMixin(BaseSidebarContextMixin):
-
+	# provides context for the top nav bar
 	# more specific sidebar contexts
 
 	def get_context_data(self, *args, **kwargs):

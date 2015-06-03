@@ -1,5 +1,8 @@
 """
 Cache helper functions
+All functions check django cache before going to the database
+eases the stress placed on database during times of heavy load
+cache refresh intervals specfied in settings.py
 """
 
 from django.contrib.auth.models import Permission

@@ -208,11 +208,11 @@ def populate():
 
     create_superuser(username="admin", first_name="administration", last_name="account", email="admin@admin.com", password="admin")
     create_student(username="Jack", first_name="Jack", last_name="James", email="Jack@James.com", password="password")
-    num_students = 100
+    num_students = 50
 
     for i in xrange(num_students):
         u = create_student()
-        #u.UserProfile.confidence_message = Rand.randomString(10)
+        u.UserProfile.confidence_message = Rand.randomString(10)
         u.UserProfile.save()
 
     vote()
@@ -220,6 +220,46 @@ def populate():
     lecture1 = create_lecture("Lecture 1")
     lecture2 = create_lecture("Lecture 2")
     lecture3 = create_lecture("Lecture 3")
+    lecture4 = create_lecture("Lecture 4")
+    lecture5 = create_lecture("Lecture 5")
+    lecture6 = create_lecture("Lecture 6")
+    lecture7 = create_lecture("Lecture 7")
+    lecture7 = create_lecture("Week 11 Lecture 1")
+
+    quiz0 = create_quiz("Rate Assignment 1 a", True, lecture7)
+    qc_1 = create_quiz_choice("1", quiz0, False)
+    qc_2 = create_quiz_choice("2", quiz0, False)
+    qc_3 = create_quiz_choice("3", quiz0, False)
+    qc_4 = create_quiz_choice("4", quiz0, False)
+    qc_5 = create_quiz_choice("5", quiz0, False)
+    qc_6 = create_quiz_choice("6", quiz0, False)
+    qc_7 = create_quiz_choice("7", quiz0, False)
+    qc_8 = create_quiz_choice("8", quiz0, False)
+    qc_9 = create_quiz_choice("9", quiz0, False)
+    qc_10 = create_quiz_choice("10", quiz0, False)
+    qc_11 = create_quiz_choice("11", quiz0, False)
+    qc_12 = create_quiz_choice("12", quiz0, False)
+    qc_13 = create_quiz_choice("13", quiz0, False)
+    qc_14 = create_quiz_choice("14", quiz0, False)
+    qc_15 = create_quiz_choice("15", quiz0, False)
+    qc_16 = create_quiz_choice("16", quiz0, False)
+    qc_17 = create_quiz_choice("17", quiz0, False)
+    qc_18 = create_quiz_choice("18", quiz0, False)
+    qc_19 = create_quiz_choice("19", quiz0, False)
+    qc_20 = create_quiz_choice("20", quiz0, False)
+
+    ans = [qc_17,qc_18,qc_17,qc_16,qc_15,qc_15,qc_16,qc_19,qc_20,
+    qc_20,qc_17,qc_18,qc_15,qc_15,qc_17,qc_17,qc_16,qc_18,qc_17,
+    qc_19,qc_20,qc_18,qc_16,qc_16,qc_18,qc_19,qc_16,qc_13,qc_16,
+    qc_17,qc_17,qc_17,qc_18,qc_16,qc_14,qc_14,qc_17,qc_17,qc_17,
+    qc_18,qc_19,qc_16,qc_17,qc_17,qc_18,qc_17,qc_17,qc_18,qc_16,
+    qc_16,qc_16,qc_16]
+    
+    i = 0
+    for user in User.objects.all():
+        print i
+        create_quiz_choice_selection(Quiz=quiz0, User=user, Quiz_Choice=ans[i])
+        i = i + 1
 
     quiz1 = create_quiz("What colour is the sky?", False, lecture1)
     create_quiz_choice("Red", quiz1, False)
@@ -227,58 +267,68 @@ def populate():
     create_quiz_choice("Green", quiz1, False)
     create_quiz_choice("Purple", quiz1, False)
 
-    quiz2 = create_quiz("What is the Capital of Australia?", True, lecture2)
+    quiz2 = create_quiz("What is the Capital of Australia?", False, lecture7)
     create_quiz_choice("London", quiz2, False)
     create_quiz_choice("Beijing", quiz2, False)
     create_quiz_choice("Sydney", quiz2, False)
     create_quiz_choice("New York", quiz2, False)
     create_quiz_choice("Canberra", quiz2, True)
 
-    quiz3 = create_quiz("Which side of the road do Australians drive on?", True, lecture2)
+    quiz3 = create_quiz("Which side of the road do Australians drive on?", False, lecture7)
     create_quiz_choice("Left", quiz3, True)
     create_quiz_choice("Right", quiz3, False)
 
-    quiz4 = create_quiz("Which one of these translates a high level language to machine code?", True, lecture3)
+    quiz4 = create_quiz("Which one of these translates a high level language to machine code?", False, lecture6)
     create_quiz_choice("Assembler", quiz4, False)
     create_quiz_choice("Modem", quiz4, False)
     create_quiz_choice("Compiler", quiz4, True)
     create_quiz_choice("Computer", quiz4, False)
 
-    quiz5 = create_quiz("What is the fourth layer of the OSI model?", True, lecture3)
+    quiz5 = create_quiz("What is the fourth layer of the OSI model?", False, lecture6)
     create_quiz_choice("Network", quiz5, False)
     create_quiz_choice("Transport", quiz5, True)
     create_quiz_choice("Data Link", quiz5, False)
     create_quiz_choice("Physical", quiz5, False)
 
-    quiz6 = create_quiz("Where is America Located?", True, lecture2)
+    quiz6 = create_quiz("Where is America Located?", False, lecture7)
     create_quiz_choice("Northern Hemisphere", quiz6, True)
     create_quiz_choice("Southern Hemisphere", quiz6, False)
     create_quiz_choice("Western Hemisphere", quiz6, True)
     create_quiz_choice("Eastern Hemisphere", quiz6, False)
 
-    quiz7 = create_quiz("What is your favourite colour?", True, lecture3)
+    quiz7 = create_quiz("What is your favourite colour?", False, lecture6)
     create_quiz_choice("Orange", quiz7, False)
     create_quiz_choice("Red", quiz7, False)
     create_quiz_choice("Green", quiz7, False)
     create_quiz_choice("None of the above", quiz7, False)
 
-    quiz8 = create_quiz("Which was created first?", True, lecture3)
+    quiz8 = create_quiz("Which was created first?", False, lecture6)
     create_quiz_choice("Google", quiz8, False)
     create_quiz_choice("TV", quiz8, False)
     create_quiz_choice("Iphone", quiz8, False)
     create_quiz_choice("Radio", quiz8, True)
 
+    quiz9 = create_quiz("Where in memory is the heap located?", True, lecture7)
+    create_quiz_choice("In lower memory addresses", quiz9, True)
+    create_quiz_choice("In middle memory addresses", quiz9, False)
+    create_quiz_choice("In bottom memory addresses", quiz9, False)
+    create_quiz_choice("In random memory addresses", quiz9, False)
+
+
     for user in User.objects.all():
         create_quiz_choice_selection(Quiz=quiz1, User=user)
         create_quiz_choice_selection(Quiz=quiz2, User=user)
+        create_quiz_choice_selection(Quiz=quiz3, User=user)
+        create_quiz_choice_selection(Quiz=quiz4, User=user)
         create_quiz_choice_selection(Quiz=quiz6, User=user)
+        create_quiz_choice_selection(Quiz=quiz8, User=user)
 
-    #for i in xrange(num_students * 3):
-    #    create_quiz_choice_selection()
+    for i in xrange(num_students * 3):
+        create_quiz_choice_selection()
 
-    for i in xrange(num_students/3):
+    for i in xrange(10):
         create_thread(anonymous=False)
-    for i in xrange(num_students):
+    for i in xrange(100):
         create_post(anonymous=False)
     
 

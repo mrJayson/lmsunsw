@@ -22,7 +22,7 @@ from app.models import *
 from app.forms import ConfidenceMessageForm
 
 import djqscsv
-
+# process request that submits a confidence message
 def confidence_message(request):
     if request.method == "POST":
         form = ConfidenceMessageForm(path=request.path,data=request.POST, instance=request.user.UserProfile)
@@ -34,6 +34,7 @@ def confidence_message(request):
     return redirect(request.POST['path'])
 
 '''dev view for displaying all data'''
+'''access via /admin/dump'''
 def dump(request, dump):
     if dump == 'user':
         qs = User.objects.all()

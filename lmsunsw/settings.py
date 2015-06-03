@@ -79,13 +79,13 @@ if 'CACHE_LOCATION' in os.environ:
 
         }
     }
-else:
-    CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-            'LOCATION': '127.0.0.1:11211',
-        }
-    }
+#else:
+#    CACHES = {
+#        'default': {
+#            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+#            'LOCATION': '127.0.0.1:11211',
+#        }
+#    }
 
 
 # Database
@@ -234,6 +234,8 @@ LANGUAGE_CHOICES = (
 
 DEFAULT_LANGUAGE = 'c'
 
+
+# cache interval settings
 STUDENT_POLL_INTERVAL = 1
 USER_LIST_CACHE_INTERVAL = 15
 THREAD_LIST_CACHE_INTERVAL = 10 # update faster so thread count updates realistically

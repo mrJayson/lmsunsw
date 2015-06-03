@@ -4,6 +4,8 @@ from django.core import urlresolvers
 
 register = Library()
 
+# override functions from django admin to make it do what i want
+
 @register.inclusion_tag("admin/app/change_list_results.html")
 def result_list(cl):
     """

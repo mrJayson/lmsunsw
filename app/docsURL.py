@@ -2,6 +2,7 @@
 # The google documents are located at:
 # jasonhuang.2015@gmail.com
 # password: passpassword
+# until i find a way to programmatically generate new google docs, i will use this
 glist = [
 'https://docs.google.com/document/d/1QTvDx4NaaGugjwWB-TgceNAZsE9Re1wEyY4wY0Bd1cw/edit?usp=sharing',
 'https://docs.google.com/document/d/1igFNUwj3bbyp-mPX9GcAQfUwG5AuXm71X9jKCtn52A0/edit?usp=sharing',

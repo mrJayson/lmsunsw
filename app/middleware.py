@@ -3,6 +3,9 @@ from django.conf import settings
 from django.db import connection
 from django.utils import termcolors
 
+# function used during debug to determine number of db queries
+# use debug toolbar instead
+
 
 class QueryPrintingMiddleware(object):
     start = None
